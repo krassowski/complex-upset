@@ -34,7 +34,8 @@ upset(
     ),
     min_size=10,
     width_ratio=0.1
-)```
+)
+```
 
 
 Click [here for more examples with the full source code here](Examples.ipynb). Also contains instructions for using from Python.
