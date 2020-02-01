@@ -1,0 +1,5 @@
+pandas
+pydataset
+jupyterlab
+rpy2
+scikit_learn
