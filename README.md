@@ -1,6 +1,8 @@
 # ComplexUpset
 
-A library for creating complex UpSet plots based on `ggplot2` and [`patchwork`](https://github.com/thomasp85/patchwork). Status: experimental.
+[![DOI](https://zenodo.org/badge/236336935.svg)](https://zenodo.org/badge/latestdoi/236336935)
+
+A library for creating complex UpSet plots based on `ggplot2` and [`patchwork`](https://github.com/thomasp85/patchwork). Status: experimental. 
 
 [Examples](Examples.ipynb) | [Installation](https://github.com/krassowski/complex-upset#Install)
 
