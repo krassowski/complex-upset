@@ -59,7 +59,38 @@ gather = function(data, idvar, col_name, value_name='value') {
 }
 
 
-upset_data = function(data, intersect, min_size=0, keep_empty_groups=FALSE, warn_when_dropping_groups=TRUE) {
+compute_matrix = function(sorted_intersections, sorted_groups) {
+    rows = c()
+    for (group in sorted_groups) {
+        row = c()
+        for (intersection in sorted_intersections) {
+            i_groups = unlist(strsplit(intersection, '-'))
+            row = cbind(row, group %in% i_groups)
+        }
+        rows = rbind(rows, row)
+    }
+
+    matrix_data = as.data.frame(rows, row.names=sorted_groups)
+    colnames(matrix_data) = sorted_intersections
+    matrix_data
+}
+
+
+compute_unions = function(data, sorted_intersections) {
+    rows = c()
+
+    for (intersection in sorted_intersections) {
+        i_groups = unlist(strsplit(intersection, '-'))
+        union_for_intersection = data[data$group %in% i_groups, ]
+        rows = c(rows, nrow(union_for_intersection))
+    }
+
+    names(rows) = sorted_intersections
+    rows
+}
+
+
+upset_data = function(data, intersect, min_size=0, keep_empty_groups=FALSE, warn_when_dropping_groups=TRUE, union_count_column='union_count') {
     intersect = unlist(intersect)
     if (length(intersect) == 1) {
         stop('Needs at least two indicator variables')
@@ -106,18 +137,7 @@ upset_data = function(data, intersect, min_size=0, keep_empty_groups=FALSE, warn
     intersections_by_size = intersections_by_size[order(intersections_by_size)]
     sorted_intersections = names(intersections_by_size)
 
-    rows = c()
-    for (group in sorted_groups) {
-        row = c()
-        for (intersection in sorted_intersections) {
-            i_groups = unlist(strsplit(intersection, '-'))
-            row = cbind(row, group %in% i_groups)
-        }
-    rows = rbind(rows, row)
-    }
-
-    matrix_data = as.data.frame(rows, row.names=sorted_groups)
-    colnames(matrix_data) = sorted_intersections
+    matrix_data = compute_matrix(sorted_intersections, sorted_groups)
 
     group = rownames(matrix_data)
 
@@ -128,6 +148,10 @@ upset_data = function(data, intersect, min_size=0, keep_empty_groups=FALSE, warn
         'value'
     )
 
+   union_sizes = compute_unions(stacked, sorted_intersections)
+
+   data[[union_count_column]] = sapply(data$intersection, function(intersection) { union_sizes[intersection] })
+
   list(
     intersected=data,
     presence=stacked,
@@ -136,7 +160,8 @@ upset_data = function(data, intersect, min_size=0, keep_empty_groups=FALSE, warn
     sorted=list(
       groups=sorted_groups,
       intersections=sorted_intersections
-    )
+    ),
+    union_sizes=union_sizes
   )
 }
 
@@ -245,8 +270,7 @@ intersection_size = function(
   bar_number_threshold=0.85,
   text_colors=c(on_background='black', on_bar='white'),
   text=list(),
-  aest=aes_string(),
-  stat='count'
+  aest=aes_string()
 ) {
   if (counts) {
     text = modifyList(intersection_size_text, text)
@@ -263,14 +287,13 @@ intersection_size = function(
             'on_bar'
         )
     )
-      text
-      
+
     counts_geoms = list(
       do.call(
         geom_text,
         c(
             list(
-                stat=stat,
+                stat='count',
                 text_aes
             ),
             text
@@ -395,6 +418,7 @@ upset = function(
     if (show_overall_sizes) {
         rows[[length(rows) + 1]] = plot_spacer()
     }
+
     rows[[length(rows) + 1]] = (
       ggplot(data$intersected, annotation$aes)
       + annotation$geom
