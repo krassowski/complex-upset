@@ -89,6 +89,7 @@ upset_data = function(data, intersect, min_size=0, keep_empty_groups=FALSE, warn
                     paste('Dropping empty groups:', paste(empty_groups, sep=', ')),
                     paste('Dropping', length(empty_groups), 'empty groups')
                 )
+                print(to_display)
             }
             intersect = intersect[!(intersect %in% empty_groups)]
         }
