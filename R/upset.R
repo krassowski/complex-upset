@@ -84,7 +84,11 @@ upset_data = function(data, intersect, min_size=0, keep_empty_groups=FALSE, warn
             is_non_empty = sapply(itersect_data, any)
             empty_groups = names(itersect_data[!is_non_empty])
             if (length(empty_groups) != 0 && warn_when_dropping_groups) {
-               print(paste('Dropping empty groups: ', empty_groups))
+                to_display = ifelse(
+                    length(empty_groups) <= 5,
+                    paste('Dropping empty groups:', paste(empty_groups, sep=', ')),
+                    paste('Dropping', length(empty_groups), 'empty groups')
+                )
             }
             intersect = intersect[!(intersect %in% empty_groups)]
         }
