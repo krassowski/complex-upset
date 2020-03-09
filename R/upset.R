@@ -59,7 +59,7 @@ gather = function(data, idvar, col_name, value_name='value') {
 }
 
 
-upset_data = function(data, intersect, min_size=0) {
+upset_data = function(data, intersect, min_size=0, keep_empty_groups=FALSE, warn_when_dropping_groups=TRUE) {
     intersect = unlist(intersect)
     if (length(intersect) == 1) {
         stop('Needs at least two indicator variables')
@@ -72,9 +72,22 @@ upset_data = function(data, intersect, min_size=0) {
     data$intersection[data$intersection == ''] = 'NOT_IN_EITHER_GROUP'
 
     intersections_by_size = table(data$intersection)
+
     if(min_size > 0) {
         intersections_by_size = intersections_by_size[intersections_by_size >= min_size]
-        data = data[data$intersection %in% names(intersections_by_size),]
+        data = data[data$intersection %in% names(intersections_by_size), ]
+
+        # once the unused intersections are removed, we need to decide
+        # if the groups not participating in any of the intersections should be kept or removed
+        if (!keep_empty_groups) {
+            itersect_data = data[, intersect]
+            is_non_empty = sapply(itersect_data, any)
+            empty_groups = names(itersect_data[!is_non_empty])
+            if (length(empty_groups) != 0 && warn_when_dropping_groups) {
+               print(paste('Dropping empty groups: ', empty_groups))
+            }
+            intersect = intersect[!(intersect %in% empty_groups)]
+        }
     }
 
     stacked = stack(data, intersect)
@@ -301,7 +314,8 @@ upset_test = function(
 }
 
 #' @export
-#' #' Compose and UpSet plot
+#' Compose and UpSet plot
+#' ... is passed to upset_data() which accepts: (min_size=0, keep_empty_groups=FALSE, warn_when_dropping_groups=TRUE)
 #'
 upset = function(
   data,
