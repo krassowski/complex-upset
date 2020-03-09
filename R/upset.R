@@ -49,6 +49,15 @@ compare_between_intersections = function(data, intersect, test=kruskal.test, tes
 }
 
 
+gather = function(data, idvar, col_name, value_name='value') {
+    not_idvar = colnames(data)
+    not_idvar = not_idvar[not_idvar != idvar]
+    result <- stack(data, select=not_idvar)
+    result$group <- rep(data[[idvar]], times=ncol(data) - 1)
+    colnames(result) = c(value_name, col_name, idvar)
+    result
+}
+
 
 upset_data = function(data, intersect, min_size=0) {
     intersect = unlist(intersect)
@@ -93,11 +102,12 @@ upset_data = function(data, intersect, min_size=0) {
     colnames(matrix_data) = sorted_intersections
 
     group = rownames(matrix_data)
-    matrix_frame = tidyr::gather(
+
+    matrix_frame = gather(
         cbind(group, matrix_data),
-        intersection,
-        value,
-        -group
+        'group',
+        'intersection',
+        'value'
     )
 
   list(
