@@ -338,12 +338,15 @@ upset = function(
   height_ratio=0.5,
   width_ratio=0.3,
   wrap=FALSE,
+  overall_sizes=TRUE,
   overall_sizes_bar_width=0.6,
   ...
 ) {
   annotations = c(annotations, base_annotations)
 
   data = upset_data(data, intersect, ...)
+
+  show_overall_sizes = overall_sizes
 
   overall_sizes = (
     ggplot(data$presence, aes(x=group))
@@ -389,7 +392,9 @@ upset = function(
       theme = themes[['default']]
     }
 
-    rows[[length(rows) + 1]] = plot_spacer()
+    if (show_overall_sizes) {
+        rows[[length(rows) + 1]] = plot_spacer()
+    }
     rows[[length(rows) + 1]] = (
       ggplot(data$intersected, annotation$aes)
       + annotation$geom
@@ -400,17 +405,30 @@ upset = function(
     )
   }
 
+  if (show_overall_sizes) {
+      matrix_row = list(overall_sizes, intersections_matrix)
+  } else {
+      matrix_row = list(intersections_matrix)
+  }
+
   if (length(rows)) {
     annotations_plots = Reduce(f='+', rows)
-    plot = annotations_plots + overall_sizes + intersections_matrix
+    matrix_row = c(list(annotations_plots), matrix_row)
   } else {
     annotations_plots = list()
-    plot = overall_sizes + intersections_matrix
+  }
+
+  plot = Reduce(f='+', matrix_row)
+
+  if (show_overall_sizes) {
+      width_ratios = c(width_ratio, 1 - width_ratio)
+  } else {
+      width_ratios = 1
   }
 
   plot = plot + plot_layout(
-    widths=c(width_ratio, 1 - width_ratio),
-    ncol=2,
+    widths=width_ratios,
+    ncol=1 + ifelse(show_overall_sizes, 1, 0),
     nrow=length(annotations) + 1,
     heights=c(
       rep(1, length(annotations)),
