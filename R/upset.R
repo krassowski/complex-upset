@@ -241,10 +241,12 @@ intersection_size_text = list(vjust=-0.25)
 
 #' @export
 intersection_size = function(
-  counts=TRUE, bar_number_threshold=0.85,
+  counts=TRUE,
+  bar_number_threshold=0.85,
   text_colors=c(on_background='black', on_bar='white'),
   text=list(),
-  aest=aes_string()
+  aest=aes_string(),
+  stat='count'
 ) {
   if (counts) {
     text = modifyList(intersection_size_text, text)
@@ -268,7 +270,7 @@ intersection_size = function(
         geom_text,
         c(
             list(
-                stat='count',
+                stat=stat,
                 text_aes
             ),
             text
