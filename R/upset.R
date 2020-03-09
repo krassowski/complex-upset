@@ -82,7 +82,14 @@ compute_unions = function(data, sorted_intersections) {
     for (intersection in sorted_intersections) {
         i_groups = unlist(strsplit(intersection, '-'))
         union_for_intersection = data[data$group %in% i_groups, ]
-        rows = c(rows, nrow(union_for_intersection))
+
+        ids = union_for_intersection$id
+        deduplicated = union_for_intersection[!duplicated(ids), ]
+
+        # NOTE:
+        # union: nrow(deduplicated)
+        # sum of counts: nrow(union_for_intersection)
+        rows = c(rows, nrow(deduplicated))
     }
 
     names(rows) = sorted_intersections
@@ -90,7 +97,11 @@ compute_unions = function(data, sorted_intersections) {
 }
 
 
-upset_data = function(data, intersect, min_size=0, keep_empty_groups=FALSE, warn_when_dropping_groups=TRUE, union_count_column='union_count') {
+upset_data = function(
+    data, intersect, min_size=0,
+    keep_empty_groups=FALSE, warn_when_dropping_groups=TRUE,
+    union_count_column='union_size', intersection_count_column='intersection_size'
+) {
     intersect = unlist(intersect)
     if (length(intersect) == 1) {
         stop('Needs at least two indicator variables')
@@ -127,6 +138,9 @@ upset_data = function(data, intersect, min_size=0, keep_empty_groups=FALSE, warn
     }
 
     stacked = stack(data, intersect)
+
+    stacked$id = rep(1:nrow(data), length(intersect))
+
     stacked = stacked[stacked$values == TRUE, ]
     stacked$group = stacked$ind
 
@@ -151,6 +165,7 @@ upset_data = function(data, intersect, min_size=0, keep_empty_groups=FALSE, warn
    union_sizes = compute_unions(stacked, sorted_intersections)
 
    data[[union_count_column]] = sapply(data$intersection, function(intersection) { union_sizes[intersection] })
+   data[[intersection_count_column]] = sapply(data$intersection, function(intersection) { intersections_by_size[intersection] })
 
   list(
     intersected=data,
@@ -312,6 +327,63 @@ intersection_size = function(
     aes=modifyList(aes(x=intersection), aest),
     geom=list(
       geom_bar(),
+      counts_geoms
+    )
+  )
+}
+
+
+# sometimes the large intersection size is driven by the large number of members in a group
+# to account for that, one can divide the intersection size by the union size of the same groups
+# obviosuly, this canot be calculated for the null intersection (observations which do not belong to either of the groups)
+intersection_ratio = function(
+  counts=TRUE,
+  bar_number_threshold=0.75,
+  text_colors=c(on_background='black', on_bar='white'),
+  text=list(),
+  aest=aes_string()
+) {
+
+  if (counts) {
+    text = modifyList(intersection_size_text, text)
+    text_aes = aes(
+        label=paste(intersection_size, '/', union_size),
+        y=ifelse(
+            intersection_size/union_size <= bar_number_threshold * max((intersection_size/union_size)[union_size!=0]),
+            intersection_size/union_size,
+            bar_number_threshold * intersection_size/union_size
+        ),
+        colour=ifelse(
+            intersection_size/union_size <= bar_number_threshold * max((intersection_size/union_size)[union_size!=0]),
+            'on_background',
+            'on_bar'
+        )
+    )
+
+    counts_geoms = list(
+      do.call(
+        geom_text,
+        c(
+            list(
+                text_aes,
+                check_overlap=TRUE
+            ),
+            text
+        )
+      ),
+      scale_color_manual(
+        values=text_colors,
+        guide=FALSE
+      )
+    )
+  } else {
+    counts_geoms = list()
+  }
+
+  list(
+    aes=modifyList(aes(x=intersection), aest),
+    geom=list(
+      geom_col(aes(y=ifelse(union_size == 0, 0, 1/union_size))),
       counts_geoms
     )
   )
