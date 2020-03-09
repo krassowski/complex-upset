@@ -164,10 +164,13 @@ upset_data = function(
 
    union_sizes = compute_unions(stacked, sorted_intersections)
 
-   data[[union_count_column]] = sapply(data$intersection, function(intersection) { union_sizes[intersection] })
-   data[[intersection_count_column]] = sapply(data$intersection, function(intersection) { intersections_by_size[intersection] })
+   with_sizes = data.frame(data)
+
+   with_sizes[[union_count_column]] = sapply(data$intersection, function(intersection) { union_sizes[intersection] })
+   with_sizes[[intersection_count_column]] = sapply(data$intersection, function(intersection) { intersections_by_size[intersection] })
 
   list(
+    with_sizes=with_sizes,
     intersected=data,
     presence=stacked,
     matrix=matrix_data,
@@ -492,7 +495,7 @@ upset = function(
     }
 
     rows[[length(rows) + 1]] = (
-      ggplot(data$intersected, annotation$aes)
+      ggplot(data$with_sizes, annotation$aes)
       + annotation$geom
       + scale_x_discrete(limits=rev(data$sorted$intersections))
       + xlab(name)
