@@ -60,6 +60,8 @@ devtools::install_github("krassowski/complex-upset")
 
 Use whichever tool you find the most useful for your particular use. The rational of making this repository public is not only to share the code, but also to demonstrate how simple it is now to create complex visualisations with patchwork (without the need to learn the ggplot internals).
 
+For the interactive use, check out the [VCG/upset](https://github.com/VCG/upset). Regardless of the tool chosen, you may want to cite [(Lex et al, 2014)](https://dx.doi.org/10.1109/TVCG.2014.2346248) when using UpSet plots, especially in fields still dominated by Venn diagrams.
+
 ## Acknowledgements
 
 Originally developed in course of a DPhil programme in Women's & Reproductive Health at [OxfordNuffieldWRH](https://github.com/OxfordNuffieldWRH).
