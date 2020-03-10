@@ -288,22 +288,26 @@ intersection_size = function(
   bar_number_threshold=0.85,
   text_colors=c(on_background='black', on_bar='white'),
   text=list(),
+  text_aes=aes_string(),
   aest=aes_string()
 ) {
   if (counts) {
     text = modifyList(intersection_size_text, text)
-    text_aes = aes(
-        label=..count..,
-        y=ifelse(
-            ..count.. <= bar_number_threshold * max(..count..),
-            ..count..,
-            bar_number_threshold * ..count..
+    text_aes = modifyList(
+        aes(
+            label=..count..,
+            y=ifelse(
+                ..count.. <= bar_number_threshold * max(..count..),
+                ..count..,
+                bar_number_threshold * ..count..
+            ),
+            colour=ifelse(
+                ..count.. <= bar_number_threshold * max(..count..),
+                'on_background',
+                'on_bar'
+            )
         ),
-        colour=ifelse(
-            ..count.. <= bar_number_threshold * max(..count..),
-            'on_background',
-            'on_bar'
-        )
+        text_aes
     )
 
     counts_geoms = list(
@@ -336,6 +340,19 @@ intersection_size = function(
 }
 
 
+upset_text_percentage = function(digits=0) {
+    substitute(
+        paste(
+            round(
+                intersection_size / union_size * 100,
+                digits
+            ),
+            '%'
+        )
+    )
+}
+
+
 # sometimes the large intersection size is driven by the large number of members in a group
 # to account for that, one can divide the intersection size by the union size of the same groups
 # obviosuly, this canot be calculated for the null intersection (observations which do not belong to either of the groups)
@@ -344,23 +361,27 @@ intersection_ratio = function(
   bar_number_threshold=0.75,
   text_colors=c(on_background='black', on_bar='white'),
   text=list(),
+  text_aes=aes_string(),
   aest=aes_string()
 ) {
 
   if (counts) {
     text = modifyList(intersection_size_text, text)
-    text_aes = aes(
-        label=paste(intersection_size, '/', union_size),
-        y=ifelse(
-            intersection_size/union_size <= bar_number_threshold * max((intersection_size/union_size)[union_size!=0]),
-            intersection_size/union_size,
-            bar_number_threshold * intersection_size/union_size
+    text_aes = modifyList(
+        aes(
+            label=paste(intersection_size, '/', union_size),
+            y=ifelse(
+                intersection_size/union_size <= bar_number_threshold * max((intersection_size/union_size)[union_size!=0]),
+                intersection_size/union_size,
+                bar_number_threshold * intersection_size/union_size
+            ),
+            colour=ifelse(
+                intersection_size/union_size <= bar_number_threshold * max((intersection_size/union_size)[union_size!=0]),
+                'on_background',
+                'on_bar'
+            )
         ),
-        colour=ifelse(
-            intersection_size/union_size <= bar_number_threshold * max((intersection_size/union_size)[union_size!=0]),
-            'on_background',
-            'on_bar'
-        )
+        text_aes
     )
 
     counts_geoms = list(
