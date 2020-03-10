@@ -41,7 +41,7 @@ upset(
 ```
 
 
-Click [here for more examples with the full source code here](Examples.ipynb). Also contains instructions for using from Python.
+Click [here for more examples with the full source code](Examples.ipynb). Also contains instructions for using from Python.
 
 ## Install
 
