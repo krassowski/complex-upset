@@ -98,7 +98,7 @@ compute_unions = function(data, sorted_intersections) {
 
 
 upset_data = function(
-    data, intersect, min_size=0,
+    data, intersect, min_size=0, max_size=Inf,
     keep_empty_groups=FALSE, warn_when_dropping_groups=TRUE,
     union_count_column='union_size', intersection_count_column='intersection_size'
 ) {
@@ -115,8 +115,12 @@ upset_data = function(
 
     intersections_by_size = table(data$intersection)
 
-    if(min_size > 0) {
-        intersections_by_size = intersections_by_size[intersections_by_size >= min_size]
+    if(min_size > 0 || max_size != Inf) {
+        intersections_by_size = intersections_by_size[
+            (intersections_by_size >= min_size)
+            &
+            (intersections_by_size <= max_size)
+        ]
         data = data[data$intersection %in% names(intersections_by_size), ]
 
         # once the unused intersections are removed, we need to decide
