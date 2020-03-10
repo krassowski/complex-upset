@@ -340,14 +340,15 @@ intersection_size = function(
 }
 
 
-upset_text_percentage = function(digits=0) {
+upset_text_percentage = function(digits=0, sep='') {
     substitute(
         paste(
             round(
                 intersection_size / union_size * 100,
                 digits
             ),
-            '%'
+            '%',
+            sep=sep
         )
     )
 }
