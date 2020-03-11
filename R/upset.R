@@ -522,6 +522,17 @@ highlight_layer = function(geom, data, args=list()) {
     }
 }
 
+
+#' @export
+#' only_components - which components to modify; by default all eligible components will be modified; the available components are 'overall_sizes', 'intersections_matrix', 'Intersection size', and any annotations specified
+#' ... - passed to geoms in modified components
+upset_query = function(set=NULL, intersect=NULL, only_components=NULL, ...) {
+    if (!is.null(set) && !is.null(intersect)) {
+        stop('pass set or intersect, not both')
+    }
+    list(set=set, intersect=intersect, only_components=only_components, ...)
+}
+
 #' @export
 #' Compose and UpSet plot
 #' ... is passed to upset_data() which accepts: (min_size=0, keep_empty_groups=FALSE, warn_when_dropping_groups=TRUE)
