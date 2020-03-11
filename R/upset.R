@@ -628,6 +628,10 @@ upset = function(
     annotation = annotations[[name]]
     geoms = annotation$geom
 
+    if (class(geoms) != 'list') {
+        geoms = list(geoms)
+    }
+
     annotation_queries = intersect_queries(queries_for(queries, name), data)
 
     if (nrow(annotation_queries) != 0) {
