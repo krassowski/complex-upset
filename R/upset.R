@@ -1,5 +1,5 @@
 names_of_true = function(row) {
-  paste(names(which(row)), collapse="-")
+  paste(names(which(row)), collapse='-')
 }
 
 compare_between_intersections = function(data, intersect, test=kruskal.test, tests=list(), ignore=list(), ...) {
@@ -175,6 +175,7 @@ upset_data = function(
 
   list(
     with_sizes=with_sizes,
+    sets_ordering_in_ids=intersect,
     intersected=data,
     presence=stacked,
     matrix=matrix_data,
@@ -235,8 +236,8 @@ upset_annotate = function(y, geom) {
   )
 }
 
-segment_end = function(data, intersection, end) {
-  corresponding = data$matrix_frame[data$matrix_frame$intersection == intersection, ]
+segment_end = function(matrix_frame, data, intersection, end) {
+  corresponding = matrix_frame[matrix_frame$intersection == intersection, ]
   ordering_reference = data$sorted$groups
   reference_order = order(data$sorted$groups)
 
@@ -336,8 +337,8 @@ intersection_size = function(
 
   list(
     aes=modifyList(aes(x=intersection), aest),
-    geom=list(
-      geom_bar(),
+    geom=c(
+      list(geom_bar()),
       counts_geoms
     )
   )
@@ -411,8 +412,8 @@ intersection_ratio = function(
 
   list(
     aes=modifyList(aes(x=intersection), aest),
-    geom=list(
-      geom_col(aes(y=ifelse(union_size == 0, 0, 1/union_size))),
+    geom=c(
+      list(geom_col(aes(y=ifelse(union_size == 0, 0, 1/union_size)))),
       counts_geoms
     )
   )
@@ -444,6 +445,83 @@ upset_test = function(
     result
 }
 
+queries_for = function(queries, component) {
+    df = list()
+    for (query in queries) {
+        if (!is.null(query$only_components) && !(component %in% query$only_components)) {
+            next
+        }
+        query$method = ifelse(is.null(query$intersect), 'set', 'intersect')
+        query$query = query[[query$method]]
+        df[[length(df) + 1]] = query
+    }
+    as.data.frame(do.call(rbind, df))
+}
+
+
+set_queries = function(queries) {
+    queries[queries$method == 'set', ]
+}
+
+
+intersect_queries = function(queries, data) {
+    queries = queries[queries$method == 'intersect', ]
+    queries$intersect = sapply(
+        queries$intersect,
+        function(sets) {
+            paste(data$sets_ordering_in_ids[data$sets_ordering_in_ids %in% sets], collapse='-')
+        }
+    )
+    queries$query = queries$intersect
+    queries
+}
+
+
+without_query_columns = function(queries) {
+    queries[, !(colnames(queries) %in% c('only_components', 'set', 'intersect', 'method', 'query', 'intersection', 'value', 'group')), drop=FALSE]
+}
+
+
+extract_geom_params_for = function(queries, geom) {
+    accepted_params = c(geom$geom$aesthetics(), geom$geom$parameters())
+    accepted_params[accepted_params == 'colour'] = 'color'
+    user_params = as.data.frame(without_query_columns(queries))
+
+    params = user_params[, colnames(user_params) %in% accepted_params, drop=FALSE]
+    if (length(unique(params)) == 1)
+    {
+        params = unique(params)
+    }
+
+    params
+}
+
+
+get_highlights_data = function(data, key, queries) {
+    if (nrow(queries) > 0) {
+        merge(data, queries, by.x=key, by.y='query', all.y=TRUE)
+    } else {
+        data.frame()
+    }
+}
+
+
+highlight_layer = function(geom, data, args=list()) {
+    if (nrow(data) == 0) {
+        list()
+    } else {
+        list(
+            do.call(
+                geom,
+                modifyList(
+                    c(list(data=data), args),
+                    extract_geom_params_for(data, geom())
+                )
+            )
+        )
+    }
+}
+
 #' @export
 #' Compose and UpSet plot
 #' ... is passed to upset_data() which accepts: (min_size=0, keep_empty_groups=FALSE, warn_when_dropping_groups=TRUE)
@@ -464,6 +542,8 @@ upset = function(
   wrap=FALSE,
   overall_sizes=TRUE,
   overall_sizes_bar_width=0.6,
+  queries=list(),
+  dot_size=3,
   ...
 ) {
   annotations = c(annotations, base_annotations)
@@ -472,10 +552,14 @@ upset = function(
 
   show_overall_sizes = overall_sizes
 
+  overall_sizes_queries = set_queries(queries_for(queries, 'overall_sizes'))
+  overall_sizes_highlights_data = get_highlights_data(data$presence, 'group', overall_sizes_queries)
+
   overall_sizes = (
     ggplot(data$presence, aes(x=group))
     + matrix_background_stripes(data, stripes, 'vertical')
     + geom_bar(width=overall_sizes_bar_width)
+    + highlight_layer(geom_bar, overall_sizes_highlights_data, args=list(width=overall_sizes_bar_width))
     + coord_flip()
     + scale_y_reverse()
     + scale_x_discrete(limits=data$sorted$groups)
@@ -483,21 +567,43 @@ upset = function(
     + themes$overall_sizes
   )
 
+  matrix_intersect_queries = intersect_queries(queries_for(queries, 'intersections_matrix'), data)
+
+  query_matrix = get_highlights_data(data$matrix_frame, 'intersection', matrix_intersect_queries)
+  query_matrix = query_matrix[query_matrix$value == TRUE, ]
+
   intersections_matrix = (
     ggplot(data$matrix_frame, aes(x=intersection, y=group))
     + matrix_background_stripes(data, stripes)
     # the dots outline
-    + geom_point(color=ifelse(data$matrix_frame$value, 'black', 'grey70'), size=3.5)
+    + geom_point(color=ifelse(data$matrix_frame$value, 'black', 'grey70'), size=dot_size * 7/6)
     # the dot
-    + geom_point(aes(color=value), size=3)
+    + geom_point(aes(color=value), size=dot_size)
+    # the highlighted dot
+    + highlight_layer(
+        geom_point,
+        query_matrix,
+        args=list(size=dot_size)
+    )
     # interconnectors on the dots
-    + geom_segment(
-      aes(
-        x=intersection,
-        xend=intersection,
-        y=segment_end(data, intersection, head),
-        yend=segment_end(data, intersection, tail)
-      )
+    + geom_segment(aes(
+          x=intersection,
+          xend=intersection,
+          y=segment_end(data$matrix_frame, data, intersection, head),
+          yend=segment_end(data$matrix_frame, data, intersection, tail)
+    ))
+    # highlighted interconnectors
+    + highlight_layer(
+        geom_segment,
+        query_matrix,
+        args=list(
+            aes(
+                x=intersection,
+                xend=intersection,
+                y=segment_end(query_matrix, data, intersection, head),
+                yend=segment_end(query_matrix, data, intersection, tail)
+             )
+        )
     )
     + xlab(name)
     + scale_y_discrete(limits=data$sorted$groups, labels=labeller)
@@ -509,6 +615,39 @@ upset = function(
 
   for (name in names(annotations)) {
     annotation = annotations[[name]]
+    geoms = annotation$geom
+
+    annotation_queries = intersect_queries(queries_for(queries, name), data)
+
+    if (nrow(annotation_queries) != 0) {
+        highlight_data = merge(data$with_sizes, annotation_queries, by.x='intersection', by.y='intersect', all.y=TRUE)
+
+        geoms_plus_highlights = list()
+
+        for (geom in geoms) {
+            geoms_plus_highlights[[length(geoms_plus_highlights) + 1]] = geom
+            if (is.null(geom$geom)) { # TODO and on accepted geoms list if any
+                next
+            }
+            highlight_geom = geom
+
+            highlight_geom$geom_params = modifyList(
+                geom$geom_params,
+                extract_geom_params_for(annotation_queries, geom)
+            )
+
+            geoms_plus_highlights[[length(geoms_plus_highlights) + 1]] = layer(
+
+                geom=highlight_geom$geom, params=c(highlight_geom$geom_params, highlight_geom$stat_params),
+                stat=highlight_geom$stat,
+                data=highlight_data,
+                mapping=highlight_geom$mapping,
+                position=highlight_geom$position
+            )
+        }
+    } else {
+        geoms_plus_highlights = geoms
+    }
 
     if (name %in% names(themes)) {
       theme = themes[[name]]
@@ -522,7 +661,7 @@ upset = function(
 
     rows[[length(rows) + 1]] = (
       ggplot(data$with_sizes, annotation$aes)
-      + annotation$geom
+      + geoms_plus_highlights
       + scale_x_discrete(limits=rev(data$sorted$intersections))
       + xlab(name)
       + ylab(name)
