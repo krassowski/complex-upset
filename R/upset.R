@@ -2,6 +2,8 @@ names_of_true = function(row) {
   paste(names(which(row)), collapse='-')
 }
 
+
+#' @export
 compare_between_intersections = function(data, intersect, test=kruskal.test, tests=list(), ignore=list(), ...) {
   data = upset_data(data, intersect, ...)
   isect = data$intersected
@@ -97,6 +99,7 @@ compute_unions = function(data, sorted_intersections) {
 }
 
 
+#' @export
 upset_data = function(
     data, intersect, min_size=0, max_size=Inf,
     keep_empty_groups=FALSE, warn_when_dropping_groups=TRUE,
@@ -188,6 +191,8 @@ upset_data = function(
   )
 }
 
+
+#' @export
 upset_themes = list(
   intersections_matrix=list(
     theme_minimal(),
@@ -228,6 +233,20 @@ upset_themes = list(
   )
 )
 
+
+#' Return the default UpSet themes modified with specified arguments
+#'
+#' @param ... arguments passed to theme()
+#' @export
+upset_default_themes = function(...)  {
+    sapply(upset_themes, function(default) { c(default, list(theme(...))) })
+}
+
+
+#' Shorthand for annotations creation, using prespecified aes(x=intersection)
+#'
+#' @param y A string with the name of the y aesthetic
+#' @param y A geom to be used as an annotation
 #' @export
 upset_annotate = function(y, geom) {
   list(
@@ -345,6 +364,16 @@ intersection_size = function(
 }
 
 
+#' Generate percentage label of the interestion/union sizes ratio
+#'
+#' For use together with `intersection_size` or `intersection_ratio`
+#'
+#' @param digits How many digits to show when rounding the percentage?
+#' @param sep set to space (' ') if you prefer a whitespace between the number and the '%' sign.
+#'
+#' @export
+#' @examples
+#' intersection_size(text_aes=aes_(label=upset_text_percentage()))
 upset_text_percentage = function(digits=0, sep='') {
     substitute(
         paste(
@@ -445,6 +474,7 @@ upset_test = function(
     result
 }
 
+
 queries_for = function(queries, component) {
     df = list()
     for (query in queries) {
@@ -523,9 +553,16 @@ highlight_layer = function(geom, data, args=list()) {
 }
 
 
+#' Highlight sets or intersections matching specific query
+#'
+#' @param set name of the set to highlight
+#' @param intersect a vector of names for the intersection to highlight
+#' @param only_components which components to modify; by default all eligible components will be modified; the available components are 'overall_sizes', 'intersections_matrix', 'Intersection size', and any annotations specified
+#' @param ... - passed to geoms in modified components
 #' @export
-#' only_components - which components to modify; by default all eligible components will be modified; the available components are 'overall_sizes', 'intersections_matrix', 'Intersection size', and any annotations specified
-#' ... - passed to geoms in modified components
+#' @examples
+#' upset_query(intersect=c('Drama', 'Comedy'), color='red', fill='red')
+#' upset_query(set='Drama', fill='blue')
 upset_query = function(set=NULL, intersect=NULL, only_components=NULL, ...) {
     if (!is.null(set) && !is.null(intersect)) {
         stop('pass set or intersect, not both')
@@ -533,10 +570,14 @@ upset_query = function(set=NULL, intersect=NULL, only_components=NULL, ...) {
     list(set=set, intersect=intersect, only_components=only_components, ...)
 }
 
-#' @export
-#' Compose and UpSet plot
-#' ... is passed to upset_data() which accepts: (min_size=0, keep_empty_groups=FALSE, warn_when_dropping_groups=TRUE)
+
+#' Compose an UpSet plot
 #'
+#' @param data a dataframe including binary columns representing membership in classes
+#' @param intersect which columns should be used to compose the intersection
+#' @param queries a list of queries generated with `upset_query()`
+#' @param ... passed to upset_data() which accepts: `(min_size=0, keep_empty_groups=FALSE, warn_when_dropping_groups=TRUE)`
+#' @export
 upset = function(
   data,
   intersect,
