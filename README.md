@@ -2,7 +2,7 @@
 
 [![DOI](https://zenodo.org/badge/236336935.svg)](https://zenodo.org/badge/latestdoi/236336935)
 
-Quick links: [Documentation with examples](Examples.ipynb) | [Installation](https://github.com/krassowski/complex-upset#Install)
+Quick links: [Documentation & all examples](Examples.ipynb) | [Installation](https://github.com/krassowski/complex-upset#Install) | [R example](R_example.ipynb) | [Python example](Examples.ipynb)
 
 ## Showcase
 
