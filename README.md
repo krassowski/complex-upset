@@ -54,7 +54,7 @@ devtools::install_github("krassowski/complex-upset")
 
 ## How it compares to other packags?
 
-- [UpSetR](https://github.com/hms-dbmi/UpSetR) is a powerful tool and the pioneer in the UpSet visualisations; it uses base R graphic rather than ggplot. Unfortunately, the repository is no longer active (for two years now).
+- [UpSetR](https://github.com/hms-dbmi/UpSetR) is a powerful tool and the pioneer in the UpSet visualisations; it was not designed to be extended with ggplot components. Unfortunately, the repository is no longer active (for two years now).
 - [ggupset](https://github.com/const-ae/ggupset) uses scales to convert a single plot to upsets plots, e.g. with `scale_x_upset` - a really nice approach, recommended for simple ggplot.
 - a cowplot-based upset was demonstrated in an [online publication](https://rpubs.com/alexeilutay/upsetr), however cowplot (a great tool at the time) got superceed by even greater tool: [pathwork](https://github.com/thomasp85/patchwork), which is what is used by ComplexUpset.
 
