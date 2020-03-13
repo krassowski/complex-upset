@@ -110,6 +110,14 @@ upset_data = function(
         stop('Needs at least two indicator variables')
     }
 
+    # convert to logical if needed
+    is_column_logical = sapply(data[, intersect], is.logical)
+    if (any(!is_column_logical)) {
+        non_logical = names(is_column_logical[is_column_logical == FALSE])
+        print(paste('Converting non-logical columns to binary:', paste(non_logical, collapse=', ')))
+        data[, non_logical] = sapply(data[, non_logical], as.logical)
+    }
+
     data$intersection = apply(
       data[intersect], 1,
       names_of_true
