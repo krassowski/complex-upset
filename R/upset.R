@@ -1,5 +1,15 @@
 names_of_true = function(row) {
-  paste(names(which(row)), collapse='-')
+  sanitized_names = c()
+  for (name in names(which(row))) {
+      if (grepl('-', name, fixed=TRUE)) {
+          name = gsub('-', '_-_')
+          if (name %in% names(which(row))) {
+              stop('The group names contain a combination of minus characters (-) which could not be simplified; please remove those.')
+          }
+      }
+      sanitized_names = c(sanitized_names, name)
+  }
+  paste(sanitized_names, collapse='-')
 }
 
 
