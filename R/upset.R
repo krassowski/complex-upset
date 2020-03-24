@@ -99,14 +99,50 @@ compute_unions = function(data, sorted_intersections) {
 }
 
 
+check_sort_order = function(sort_order) {
+    allowed_sort_orders = c('descending', 'ascending')
+
+    if (sort_order == FALSE) {
+        return()
+    }
+
+    if(!(sort_order %in% allowed_sort_orders)) {
+        stop(
+            paste0(
+                'Sort order has to be one of: ',
+                paste(allowed_sort_orders, collapse=' or '),
+                ', not "',
+                sort_order,
+                '""'
+
+            )
+        )
+    }
+}
+
+
+get_sort_order = function(data, sort_order) {
+    check_sort_order(sort_order)
+
+    if (sort_order == 'descending') {
+        order(data)
+    } else {
+        order(-data)
+    }
+}
+
+
 #' @export
 upset_data = function(
     data, intersect, min_size=0, max_size=Inf,
     keep_empty_groups=FALSE, warn_when_dropping_groups=TRUE,
-    sort_sets=TRUE,
-    sort_intersections=TRUE,
+    sort_sets='descending',
+    sort_intersections='descending',
     union_count_column='union_size', intersection_count_column='intersection_size'
 ) {
+    check_sort_order(sort_sets)
+    check_sort_order(sort_intersections)
+
     intersect = unlist(intersect)
     if (length(intersect) == 1) {
         stop('Needs at least two indicator variables')
@@ -162,14 +198,16 @@ upset_data = function(
     stacked$group = stacked$ind
 
     groups_by_size = table(stacked$group)
-    if (sort_sets)
-        groups_by_size = groups_by_size[order(groups_by_size)]
-    else
-        groups_by_size = groups_by_size[names(rev(groups_by_size))]
+    if (sort_sets != FALSE) {
+        groups_by_size = groups_by_size[get_sort_order(groups_by_size, sort_sets)]
+    } else {
+        groups_by_size = groups_by_size[names(groups_by_size)]
+    }
     sorted_groups = names(groups_by_size)
 
-    if (sort_intersections)
-        intersections_by_size = intersections_by_size[order(intersections_by_size)]
+    if (sort_intersections != FALSE) {
+        intersections_by_size = intersections_by_size[get_sort_order(intersections_by_size, sort_intersections)]
+    }
     sorted_intersections = names(intersections_by_size)
 
     matrix_data = compute_matrix(sorted_intersections, sorted_groups)
