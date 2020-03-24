@@ -257,6 +257,23 @@ upset_default_themes = function(...)  {
 }
 
 
+#' Return the default UpSet themes with specific themes modified with provided themes
+#'
+#' @param ... arguments passed to theme()
+#' @export
+upset_modify_themes = function(to_update)  {
+    c(
+        sapply(
+            names(to_update),
+            function(name) {
+                c(upset_themes[[name]], to_update[name])
+            }
+        ),
+        upset_themes[setdiff(names(upset_themes), names(to_update))]
+    )
+}
+
+
 #' Shorthand for annotations creation, using prespecified aes(x=intersection)
 #'
 #' @param y A string with the name of the y aesthetic

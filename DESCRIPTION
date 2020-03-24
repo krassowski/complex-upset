@@ -1,7 +1,7 @@
 Package: ComplexUpset
 Type: Package
 Title: Create Complex UpSet Plots Using ggplot2 Components
-Version: 0.3.0
+Version: 0.4.0
 Author: Michał Krassowski
 Maintainer: Michał Krassowski <michal.krassowski@wrh.ox.ac.uk>
 Description: UpSet plots are an improvement over Venn Diagram for set overlap visualizations.
