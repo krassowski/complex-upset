@@ -103,6 +103,8 @@ compute_unions = function(data, sorted_intersections) {
 upset_data = function(
     data, intersect, min_size=0, max_size=Inf,
     keep_empty_groups=FALSE, warn_when_dropping_groups=TRUE,
+    sort_sets=TRUE,
+    sort_intersections=TRUE,
     union_count_column='union_size', intersection_count_column='intersection_size'
 ) {
     intersect = unlist(intersect)
@@ -160,10 +162,14 @@ upset_data = function(
     stacked$group = stacked$ind
 
     groups_by_size = table(stacked$group)
-    groups_by_size = groups_by_size[order(groups_by_size)]
+    if (sort_sets)
+        groups_by_size = groups_by_size[order(groups_by_size)]
+    else
+        groups_by_size = groups_by_size[names(rev(groups_by_size))]
     sorted_groups = names(groups_by_size)
 
-    intersections_by_size = intersections_by_size[order(intersections_by_size)]
+    if (sort_intersections)
+        intersections_by_size = intersections_by_size[order(intersections_by_size)]
     sorted_intersections = names(intersections_by_size)
 
     matrix_data = compute_matrix(sorted_intersections, sorted_groups)
