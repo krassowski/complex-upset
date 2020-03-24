@@ -2,7 +2,7 @@ names_of_true = function(row) {
   sanitized_names = c()
   for (name in names(which(row))) {
       if (grepl('-', name, fixed=TRUE)) {
-          name = gsub('-', '___')
+          name = gsub('-', '_')
           if (name %in% names(which(row))) {
               stop('The group names contain a combination of minus characters (-) which could not be simplified; please remove those.')
           }
