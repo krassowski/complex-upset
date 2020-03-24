@@ -297,7 +297,7 @@ upset_default_themes = function(...)  {
 
 #' Return the default UpSet themes with specific themes modified with provided themes
 #'
-#' @param ... arguments passed to theme()
+#' @param to_update a named list of themes to be used to modify themes of specific components; see names(upset_themes) for components names.
 #' @export
 upset_modify_themes = function(to_update)  {
     c(
@@ -645,7 +645,14 @@ upset_query = function(set=NULL, intersect=NULL, only_components=NULL, ...) {
 #' @param data a dataframe including binary columns representing membership in classes
 #' @param intersect which columns should be used to compose the intersection
 #' @param queries a list of queries generated with `upset_query()`
-#' @param ... passed to upset_data() which accepts: `(min_size=0, keep_empty_groups=FALSE, warn_when_dropping_groups=TRUE)`
+#' @param height_ratio ratio of the intersection matrix to intersection size height
+#' @param width_ratio ratio of the overall set size width to intersection matrix width
+#' @param dot_size size of the points on the intersection matrix
+#' @param overall_sizes whether to show the overall set sizes (barplot to the left), default TRUE
+#' @param overall_sizes_bar_width the thickness of the bars in the overal set sizes barplot
+#' @param ... passed to upset_data() which accepts: `(min_size=0, keep_empty_groups=FALSE, warn_when_dropping_groups=TRUE, sort_sets='descending', sort_intersections='descending')`
+#' @param sort_sets whether to sort the rows in the intersection matrix (descending sort by default); one of: `'ascending'`, `'descending'`, `FALSE`
+#' @param sort_intersections whether to sort the columns in the intersection matrix (descending sort by default); one of: `'ascending'`, `'descending'`, `FALSE`
 #' @export
 upset = function(
   data,
