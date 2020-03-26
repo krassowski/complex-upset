@@ -2,13 +2,15 @@
 
 [![DOI](https://zenodo.org/badge/236336935.svg)](https://zenodo.org/badge/latestdoi/236336935)
 
-Quick links: [Documentation & all examples](Examples.ipynb) | [Installation](https://github.com/krassowski/complex-upset#Install) | [R example](R_example.ipynb) | [Python example](Examples.ipynb)
+Quick links: [Documentation & all examples](Examples.ipynb) | [Installation](https://github.com/krassowski/complex-upset#Install) | [R example](R_example.ipynb) | [Python example](Examples.ipynb) | [Reference](https://krassowski.github.io/complex-upset/)
 
 ## Showcase
 
 Get all the goodies of `UpSetR`, but with full extensibility of `ggplot2`. 
 
-![Example UpSet plot](/movies.png)
+![Example UpSet plot](https://raw.githubusercontent.com/krassowski/complex-upset/master/movies.png)
+
+Click on "details" to show the source code: <details>
 
 ```R
 library(ggplot2)
@@ -16,7 +18,8 @@ library(ComplexUpset)
 
 
 upset(
-    movies, genres,
+    movies,
+    genres,
     annotations = list(
         'Length'=list(
             aes=aes(x=intersection, y=length),
@@ -29,16 +32,31 @@ upset(
                 geom_jitter(aes(color=log10(votes))),
                 geom_violin(width=1.1, alpha=0.5)
             )
+        )
+    ),
+    queries=list(
+        upset_query(
+            intersect=c('Drama', 'Comedy'),
+            color='red',
+            fill='red',
+            only_components=c('intersections_matrix', 'Intersection size')
         ),
-        'Budget'=list(
-            aes=aes(x=intersection, y=budget),
-            geom=geom_boxplot()
+        upset_query(
+            set='Drama',
+            fill='blue'
+        ),
+        upset_query(
+            intersect=c('Romance', 'Comedy'),
+            fill='yellow',
+            only_components=c('Length')
         )
     ),
     min_size=10,
     width_ratio=0.1
 )
 ```
+
+</details>
 
 
 Click [here for more examples with the full source code](Examples.ipynb). Also contains instructions for using from Python.

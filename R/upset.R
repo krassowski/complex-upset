@@ -385,6 +385,7 @@ matrix_background_stripes = function(data, stripes, orient='horizontal') {
 
 intersection_size_text = list(vjust=-0.25)
 
+#' Barplot annotation of intersections sizes
 #' @export
 intersection_size = function(
   counts=TRUE,
@@ -467,9 +468,12 @@ upset_text_percentage = function(digits=0, sep='') {
 }
 
 
-# sometimes the large intersection size is driven by the large number of members in a group
-# to account for that, one can divide the intersection size by the union size of the same groups
-# obviosuly, this canot be calculated for the null intersection (observations which do not belong to either of the groups)
+#' Barplot annotation of relative intersections sizes
+#'
+#' sometimes the large intersection size is driven by the large number of members in a group
+#' to account for that, one can divide the intersection size by the union size of the same groups
+#' obviosuly, this canot be calculated for the null intersection (observations which do not belong to either of the groups)
+#' @export
 intersection_ratio = function(
   counts=TRUE,
   bar_number_threshold=0.75,
@@ -655,8 +659,10 @@ upset_query = function(set=NULL, intersect=NULL, only_components=NULL, ...) {
 #' @param data a dataframe including binary columns representing membership in classes
 #' @param intersect which columns should be used to compose the intersection
 #' @param queries a list of queries generated with `upset_query()`
+#' @param labeller function modifying the names of the sets (rows in the matrix)
 #' @param height_ratio ratio of the intersection matrix to intersection size height
 #' @param width_ratio ratio of the overall set size width to intersection matrix width
+#' @param stripes a two-element characters vector, specifying the background colors for odd and even rows
 #' @param dot_size size of the points on the intersection matrix
 #' @param overall_sizes whether to show the overall set sizes (barplot to the left), default TRUE
 #' @param overall_sizes_bar_width the thickness of the bars in the overal set sizes barplot

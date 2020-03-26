@@ -28,6 +28,10 @@ upset(
 
 \item{intersect}{which columns should be used to compose the intersection}
 
+\item{stripes}{a two-element characters vector, specifying the background colors for odd and even rows}
+
+\item{labeller}{function modifying the names of the sets (rows in the matrix)}
+
 \item{height_ratio}{ratio of the intersection matrix to intersection size height}
 
 \item{width_ratio}{ratio of the overall set size width to intersection matrix width}
