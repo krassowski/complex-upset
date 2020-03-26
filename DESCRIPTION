@@ -20,3 +20,4 @@ Imports:
     ggplot2,
     patchwork
 VignetteBuilder: knitr
+RoxygenNote: 7.0.2
