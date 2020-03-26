@@ -448,7 +448,7 @@ intersection_size = function(
 #' For use together with `intersection_size` or `intersection_ratio`
 #'
 #' @param digits How many digits to show when rounding the percentage?
-#' @param sep set to space (' ') if you prefer a whitespace between the number and the '%' sign.
+#' @param sep set to space (`' '`) if you prefer a whitespace between the number and the '\%` sign.
 #'
 #' @export
 #' @examples
