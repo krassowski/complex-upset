@@ -95,8 +95,8 @@ Click on “details” to show the source code:
         <span class="st">'Rating'</span><span class="kw">=</span><span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span>(
             <span class="kw">aes</span><span class="kw">=</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span>(<span class="kw">x</span><span class="kw">=</span><span class="no">intersection</span>, <span class="kw">y</span><span class="kw">=</span><span class="no">rating</span>),
             <span class="kw">geom</span><span class="kw">=</span><span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span>(
-                <span class="co"># checkout ggbeeswarm::geom_quasirandom for better results!</span>
-                <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_jitter.html">geom_jitter</a></span>(<span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span>(<span class="kw">color</span><span class="kw">=</span><span class="fu"><a href="https://rdrr.io/r/base/Log.html">log10</a></span>(<span class="no">votes</span>))),
+                <span class="co"># if you do not want to install ggbeeswarm, you can use geom_jitter</span>
+                <span class="kw pkg">ggbeeswarm</span><span class="kw ns">::</span><span class="fu"><a href="https://rdrr.io/pkg/ggbeeswarm/man/geom_quasirandom.html">geom_quasirandom</a></span>(<span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span>(<span class="kw">color</span><span class="kw">=</span><span class="fu"><a href="https://rdrr.io/r/base/Log.html">log10</a></span>(<span class="no">votes</span>))),
                 <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_violin.html">geom_violin</a></span>(<span class="kw">width</span><span class="kw">=</span><span class="fl">1.1</span>, <span class="kw">alpha</span><span class="kw">=</span><span class="fl">0.5</span>)
             )
         )
@@ -113,7 +113,7 @@ Click on “details” to show the source code:
             <span class="kw">fill</span><span class="kw">=</span><span class="st">'blue'</span>
         ),
         <span class="fu"><a href="reference/upset_query.html">upset_query</a></span>(
-            <span class="kw">intersect</span><span class="kw">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">'Romance'</span>, <span class="st">'Comedy'</span>),
+            <span class="kw">intersect</span><span class="kw">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">'Romance'</span>, <span class="st">'Drama'</span>),
             <span class="kw">fill</span><span class="kw">=</span><span class="st">'yellow'</span>,
             <span class="kw">only_components</span><span class="kw">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">'Length'</span>)
         )
@@ -170,7 +170,7 @@ Click on “details” to show the source code:
 <div class="developers">
 <h2>Developers</h2>
 <ul class="list-unstyled">
-<li>Michał Krassowski <br><small class="roles"> Maintainer </small>  </li>
+<li>Michał Krassowski <br><small class="roles"> Author, maintainer </small> <a href="https://orcid.org/0000-0002-9638-7785" target="orcid.widget" aria-label="ORCID"><span class="fab fa-orcid orcid" aria-hidden="true"></span></a> </li>
 </ul>
 </div>
 
