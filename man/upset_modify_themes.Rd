@@ -7,7 +7,7 @@
 upset_modify_themes(to_update)
 }
 \arguments{
-\item{to_update}{a named list of themes to be used to modify themes of specific components; see names(upset_themes) for components names.}
+\item{to_update}{a named list of themes to be used to modify themes of specific components; see `names(upset_themes)` for components names.}
 }
 \description{
 Return the default UpSet themes with specific themes modified with provided themes

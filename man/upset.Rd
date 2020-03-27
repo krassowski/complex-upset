@@ -44,7 +44,7 @@ upset(
 
 \item{dot_size}{size of the points on the intersection matrix}
 
-\item{...}{passed to upset_data() which accepts: `(min_size=0, keep_empty_groups=FALSE, warn_when_dropping_groups=TRUE, sort_sets='descending', sort_intersections='descending')`}
+\item{...}{passed to `upset_data()` which accepts: `(min_size=0, keep_empty_groups=FALSE, warn_when_dropping_groups=TRUE, sort_sets='descending', sort_intersections='descending')`}
 
 \item{sort_sets}{whether to sort the rows in the intersection matrix (descending sort by default); one of: `'ascending'`, `'descending'`, `FALSE`}
 

@@ -2,7 +2,7 @@
 % Please edit documentation in R/upset.R
 \name{upset_annotate}
 \alias{upset_annotate}
-\title{Shorthand for annotations creation, using prespecified aes(x=intersection)}
+\title{Annotation panel shorthand}
 \usage{
 upset_annotate(y, geom)
 }
@@ -10,5 +10,6 @@ upset_annotate(y, geom)
 \item{y}{A geom to be used as an annotation}
 }
 \description{
-Shorthand for annotations creation, using prespecified aes(x=intersection)
+Simplifies creation of annotation panels, automatically building aesthetics mappings,
+at a cost of lower flexibility than when providing a custom mapping; `aes(x=intersection)` is prespecified.
 }
