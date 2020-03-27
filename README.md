@@ -10,12 +10,16 @@ Get all the goodies of `UpSetR`, but with full extensibility of `ggplot2`.
 
 ![Example UpSet plot](https://raw.githubusercontent.com/krassowski/complex-upset/master/movies.png)
 
-Click on "details" to show the source code: <details>
+<details>
+    <summary>Click here to display the source code</summary>
 
 ```R
 library(ggplot2)
 library(ComplexUpset)
 
+if(!require(ggplot2movies)) install.packages('ggplot2movies')
+movies = ggplot2movies::movies
+genres = c('Action', 'Animation', 'Comedy', 'Drama', 'Documentary', 'Romance')
 
 upset(
     movies,
