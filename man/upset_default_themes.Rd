@@ -7,7 +7,7 @@
 upset_default_themes(...)
 }
 \arguments{
-\item{...}{arguments passed to `theme()`}
+\item{...}{arguments passed to \code{theme()}}
 }
 \description{
 Return the default UpSet themes with all themes modified with provided arguments

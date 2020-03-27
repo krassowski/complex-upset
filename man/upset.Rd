@@ -40,15 +40,15 @@ upset(
 
 \item{overall_sizes_bar_width}{the thickness of the bars in the overal set sizes barplot}
 
-\item{queries}{a list of queries generated with `upset_query()`}
+\item{queries}{a list of queries generated with \code{upset_query()}}
 
 \item{dot_size}{size of the points on the intersection matrix}
 
-\item{...}{passed to `upset_data()` which accepts: `(min_size=0, keep_empty_groups=FALSE, warn_when_dropping_groups=TRUE, sort_sets='descending', sort_intersections='descending')`}
+\item{...}{passed to \code{upset_data()} which accepts: \verb{(min_size=0, keep_empty_groups=FALSE, warn_when_dropping_groups=TRUE, sort_sets='descending', sort_intersections='descending')}}
 
-\item{sort_sets}{whether to sort the rows in the intersection matrix (descending sort by default); one of: `'ascending'`, `'descending'`, `FALSE`}
+\item{sort_sets}{whether to sort the rows in the intersection matrix (descending sort by default); one of: \code{'ascending'}, \code{'descending'}, \code{FALSE}}
 
-\item{sort_intersections}{whether to sort the columns in the intersection matrix (descending sort by default); one of: `'ascending'`, `'descending'`, `FALSE`}
+\item{sort_intersections}{whether to sort the columns in the intersection matrix (descending sort by default); one of: \code{'ascending'}, \code{'descending'}, \code{FALSE}}
 }
 \description{
 Compose an UpSet plot

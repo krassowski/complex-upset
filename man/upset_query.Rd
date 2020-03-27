@@ -13,7 +13,9 @@ upset_query(set = NULL, intersect = NULL, only_components = NULL, ...)
 
 \item{only_components}{which components to modify; by default all eligible components will be modified; the available components are 'overall_sizes', 'intersections_matrix', 'Intersection size', and any annotations specified}
 
-\item{...}{- passed to geoms in modified components}
+\item{...}{\itemize{
+\item passed to geoms in modified components
+}}
 }
 \description{
 Highlight sets or intersections matching specified query.

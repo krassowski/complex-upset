@@ -11,5 +11,5 @@ upset_annotate(y, geom)
 }
 \description{
 Simplifies creation of annotation panels, automatically building aesthetics mappings,
-at a cost of lower flexibility than when providing a custom mapping; `aes(x=intersection)` is prespecified.
+at a cost of lower flexibility than when providing a custom mapping; \code{aes(x=intersection)} is prespecified.
 }

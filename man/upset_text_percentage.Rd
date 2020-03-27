@@ -9,10 +9,10 @@ upset_text_percentage(digits = 0, sep = "")
 \arguments{
 \item{digits}{How many digits to show when rounding the percentage?}
 
-\item{sep}{set to space (`' '`) if you prefer a whitespace between the number and the `\%` sign.}
+\item{sep}{set to space (\code{' '}) if you prefer a whitespace between the number and the \verb{\\\%} sign.}
 }
 \description{
-For use together with `intersection_size` or `intersection_ratio`
+For use together with \code{intersection_size} or \code{intersection_ratio}
 }
 \examples{
 intersection_size(text_aes=aes_(label=upset_text_percentage()))
