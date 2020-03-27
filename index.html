@@ -91,10 +91,13 @@
 <a href="#showcase" class="anchor"></a>Showcase</h2>
 <p>Get all the goodies of <code>UpSetR</code>, but with full extensibility of <code>ggplot2</code>.</p>
 <p><img src="https://raw.githubusercontent.com/krassowski/complex-upset/master/movies.png" alt="Example UpSet plot"></p>
-Click on “details” to show the source code:
-<details><div class="sourceCode" id="cb1"><pre class="r"><span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">ggplot2</span>)
+<details><p><summary>Click here to display the source code</summary></p>
+<div class="sourceCode" id="cb1"><pre class="r"><span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">ggplot2</span>)
 <span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">ComplexUpset</span>)
 
+<span class="kw">if</span>(!<span class="fu"><a href="https://rdrr.io/r/base/library.html">require</a></span>(<span class="no">ggplot2movies</span>)) <span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span>(<span class="st">'ggplot2movies'</span>)
+<span class="no">movies</span> <span class="kw">=</span> <span class="kw pkg">ggplot2movies</span><span class="kw ns">::</span><span class="no"><a href="https://rdrr.io/pkg/ggplot2movies/man/movies.html">movies</a></span>
+<span class="no">genres</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">'Action'</span>, <span class="st">'Animation'</span>, <span class="st">'Comedy'</span>, <span class="st">'Drama'</span>, <span class="st">'Documentary'</span>, <span class="st">'Romance'</span>)
 
 <span class="fu"><a href="reference/upset.html">upset</a></span>(
     <span class="no">movies</span>,
