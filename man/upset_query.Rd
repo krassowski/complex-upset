@@ -2,7 +2,7 @@
 % Please edit documentation in R/upset.R
 \name{upset_query}
 \alias{upset_query}
-\title{Highlight sets or intersections matching specific query}
+\title{Highlight chosen sets or intersections}
 \usage{
 upset_query(set = NULL, intersect = NULL, only_components = NULL, ...)
 }
@@ -16,7 +16,7 @@ upset_query(set = NULL, intersect = NULL, only_components = NULL, ...)
 \item{...}{- passed to geoms in modified components}
 }
 \description{
-Highlight sets or intersections matching specific query
+Highlight sets or intersections matching specified query.
 }
 \examples{
 upset_query(intersect=c('Drama', 'Comedy'), color='red', fill='red')

@@ -2,7 +2,7 @@
 % Please edit documentation in R/upset.R
 \name{upset_default_themes}
 \alias{upset_default_themes}
-\title{Return the default UpSet themes modified with specified arguments}
+\title{Default themes modified by specified arguments}
 \usage{
 upset_default_themes(...)
 }
@@ -10,5 +10,5 @@ upset_default_themes(...)
 \item{...}{arguments passed to `theme()`}
 }
 \description{
-Return the default UpSet themes modified with specified arguments
+Return the default UpSet themes with all themes modified with provided arguments
 }

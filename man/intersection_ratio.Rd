@@ -14,7 +14,7 @@ intersection_ratio(
 )
 }
 \description{
-sometimes the large intersection size is driven by the large number of members in a group
-to account for that, one can divide the intersection size by the union size of the same groups
-obviosuly, this canot be calculated for the null intersection (observations which do not belong to either of the groups)
+A large intersection size can be driven by a large number of members in a group;
+to account for that, one can divide the intersection size by the size of a union of the same groups.
+This cannot be calculated for the null intersection (observations which do not belong to either of the groups).
 }

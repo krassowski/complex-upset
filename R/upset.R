@@ -297,7 +297,9 @@ upset_themes = list(
 )
 
 
-#' Return the default UpSet themes modified with specified arguments
+#' Default themes modified by specified arguments
+#'
+#' Return the default UpSet themes with all themes modified with provided arguments
 #'
 #' @param ... arguments passed to `theme()`
 #' @export
@@ -306,6 +308,8 @@ upset_default_themes = function(...)  {
 }
 
 
+#' Default themes modified by specified component-specific arguments
+#'
 #' Return the default UpSet themes with specific themes modified with provided themes
 #'
 #' @param to_update a named list of themes to be used to modify themes of specific components; see `names(upset_themes)` for components names.
@@ -474,9 +478,9 @@ upset_text_percentage = function(digits=0, sep='') {
 
 #' Barplot annotation of relative intersections sizes
 #'
-#' sometimes the large intersection size is driven by the large number of members in a group
-#' to account for that, one can divide the intersection size by the union size of the same groups
-#' obviosuly, this canot be calculated for the null intersection (observations which do not belong to either of the groups)
+#' A large intersection size can be driven by a large number of members in a group;
+#' to account for that, one can divide the intersection size by the size of a union of the same groups.
+#' This cannot be calculated for the null intersection (observations which do not belong to either of the groups).
 #' @export
 intersection_ratio = function(
   counts=TRUE,
@@ -536,6 +540,7 @@ intersection_ratio = function(
 }
 
 
+#' @export
 upset_test = function(
     data,
     intersect,
@@ -640,7 +645,9 @@ highlight_layer = function(geom, data, args=list()) {
 }
 
 
-#' Highlight sets or intersections matching specific query
+#' Highlight chosen sets or intersections
+#'
+#' Highlight sets or intersections matching specified query.
 #'
 #' @param set name of the set to highlight
 #' @param intersect a vector of names for the intersection to highlight
