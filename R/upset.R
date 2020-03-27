@@ -142,6 +142,7 @@ get_sort_order = function(data, sort_order) {
 }
 
 
+#' Prepare data for UpSet plots
 #' @export
 upset_data = function(
     data, intersect, min_size=0, max_size=Inf,
@@ -298,7 +299,7 @@ upset_themes = list(
 
 #' Return the default UpSet themes modified with specified arguments
 #'
-#' @param ... arguments passed to theme()
+#' @param ... arguments passed to `theme()`
 #' @export
 upset_default_themes = function(...)  {
     sapply(upset_themes, function(default) { c(default, list(theme(...))) })
@@ -307,7 +308,7 @@ upset_default_themes = function(...)  {
 
 #' Return the default UpSet themes with specific themes modified with provided themes
 #'
-#' @param to_update a named list of themes to be used to modify themes of specific components; see names(upset_themes) for components names.
+#' @param to_update a named list of themes to be used to modify themes of specific components; see `names(upset_themes)` for components names.
 #' @export
 upset_modify_themes = function(to_update)  {
     c(
@@ -322,7 +323,10 @@ upset_modify_themes = function(to_update)  {
 }
 
 
-#' Shorthand for annotations creation, using prespecified aes(x=intersection)
+#' Annotation panel shorthand
+#'
+#' Simplifies creation of annotation panels, automatically building aesthetics mappings,
+#' at a cost of lower flexibility than when providing a custom mapping; `aes(x=intersection)` is prespecified.
 #'
 #' @param y A string with the name of the y aesthetic
 #' @param y A geom to be used as an annotation
@@ -449,7 +453,7 @@ intersection_size = function(
 #' For use together with `intersection_size` or `intersection_ratio`
 #'
 #' @param digits How many digits to show when rounding the percentage?
-#' @param sep set to space (`' '`) if you prefer a whitespace between the number and the '\%` sign.
+#' @param sep set to space (`' '`) if you prefer a whitespace between the number and the `\%` sign.
 #'
 #' @export
 #' @examples
@@ -666,7 +670,7 @@ upset_query = function(set=NULL, intersect=NULL, only_components=NULL, ...) {
 #' @param dot_size size of the points on the intersection matrix
 #' @param overall_sizes whether to show the overall set sizes (barplot to the left), default TRUE
 #' @param overall_sizes_bar_width the thickness of the bars in the overal set sizes barplot
-#' @param ... passed to upset_data() which accepts: `(min_size=0, keep_empty_groups=FALSE, warn_when_dropping_groups=TRUE, sort_sets='descending', sort_intersections='descending')`
+#' @param ... passed to `upset_data()` which accepts: `(min_size=0, keep_empty_groups=FALSE, warn_when_dropping_groups=TRUE, sort_sets='descending', sort_intersections='descending')`
 #' @param sort_sets whether to sort the rows in the intersection matrix (descending sort by default); one of: `'ascending'`, `'descending'`, `FALSE`
 #' @param sort_intersections whether to sort the columns in the intersection matrix (descending sort by default); one of: `'ascending'`, `'descending'`, `FALSE`
 #' @export
