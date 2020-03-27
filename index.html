@@ -73,18 +73,20 @@
 <div class="page-header"><h1 class="hasAnchor">
 <a href="#complexupset" class="anchor"></a>ComplexUpset</h1></div>
 
-<p>Quick links: <a href="Examples.ipynb">Documentation &amp; all examples</a> | <a href="https://github.com/krassowski/complex-upset#Install">Installation</a> | <a href="R_example.ipynb">R example</a> | <a href="Examples.ipynb">Python example</a></p>
+<p>Quick links: <a href="Examples.ipynb">Documentation &amp; all examples</a> | <a href="https://github.com/krassowski/complex-upset#Install">Installation</a> | <a href="R_example.ipynb">R example</a> | <a href="Examples.ipynb">Python example</a> | <a href="https://krassowski.github.io/complex-upset/">Reference</a></p>
 <div id="showcase" class="section level2">
 <h2 class="hasAnchor">
 <a href="#showcase" class="anchor"></a>Showcase</h2>
 <p>Get all the goodies of <code>UpSetR</code>, but with full extensibility of <code>ggplot2</code>.</p>
-<p><img src="/movies.png" alt="Example UpSet plot"></p>
-<div class="sourceCode" id="cb1"><pre class="r"><span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">ggplot2</span>)
+<p><img src="https://raw.githubusercontent.com/krassowski/complex-upset/master/movies.png" alt="Example UpSet plot"></p>
+Click on “details” to show the source code:
+<details><div class="sourceCode" id="cb1"><pre class="r"><span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">ggplot2</span>)
 <span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">ComplexUpset</span>)
 
 
 <span class="fu"><a href="reference/upset.html">upset</a></span>(
-    <span class="no">movies</span>, <span class="no">genres</span>,
+    <span class="no">movies</span>,
+    <span class="no">genres</span>,
     <span class="kw">annotations</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span>(
         <span class="st">'Length'</span><span class="kw">=</span><span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span>(
             <span class="kw">aes</span><span class="kw">=</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span>(<span class="kw">x</span><span class="kw">=</span><span class="no">intersection</span>, <span class="kw">y</span><span class="kw">=</span><span class="no">length</span>),
@@ -97,16 +99,29 @@
                 <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_jitter.html">geom_jitter</a></span>(<span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span>(<span class="kw">color</span><span class="kw">=</span><span class="fu"><a href="https://rdrr.io/r/base/Log.html">log10</a></span>(<span class="no">votes</span>))),
                 <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_violin.html">geom_violin</a></span>(<span class="kw">width</span><span class="kw">=</span><span class="fl">1.1</span>, <span class="kw">alpha</span><span class="kw">=</span><span class="fl">0.5</span>)
             )
+        )
+    ),
+    <span class="kw">queries</span><span class="kw">=</span><span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span>(
+        <span class="fu"><a href="reference/upset_query.html">upset_query</a></span>(
+            <span class="kw">intersect</span><span class="kw">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">'Drama'</span>, <span class="st">'Comedy'</span>),
+            <span class="kw">color</span><span class="kw">=</span><span class="st">'red'</span>,
+            <span class="kw">fill</span><span class="kw">=</span><span class="st">'red'</span>,
+            <span class="kw">only_components</span><span class="kw">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">'intersections_matrix'</span>, <span class="st">'Intersection size'</span>)
         ),
-        <span class="st">'Budget'</span><span class="kw">=</span><span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span>(
-            <span class="kw">aes</span><span class="kw">=</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span>(<span class="kw">x</span><span class="kw">=</span><span class="no">intersection</span>, <span class="kw">y</span><span class="kw">=</span><span class="no">budget</span>),
-            <span class="kw">geom</span><span class="kw">=</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_boxplot.html">geom_boxplot</a></span>()
+        <span class="fu"><a href="reference/upset_query.html">upset_query</a></span>(
+            <span class="kw">set</span><span class="kw">=</span><span class="st">'Drama'</span>,
+            <span class="kw">fill</span><span class="kw">=</span><span class="st">'blue'</span>
+        ),
+        <span class="fu"><a href="reference/upset_query.html">upset_query</a></span>(
+            <span class="kw">intersect</span><span class="kw">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">'Romance'</span>, <span class="st">'Comedy'</span>),
+            <span class="kw">fill</span><span class="kw">=</span><span class="st">'yellow'</span>,
+            <span class="kw">only_components</span><span class="kw">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">'Length'</span>)
         )
     ),
     <span class="kw">min_size</span><span class="kw">=</span><span class="fl">10</span>,
     <span class="kw">width_ratio</span><span class="kw">=</span><span class="fl">0.1</span>
 )</pre></div>
-<p>Click <a href="Examples.ipynb">here for more examples with the full source code</a>. Also contains instructions for using from Python.</p>
+</details><p>Click <a href="Examples.ipynb">here for more examples with the full source code</a>. Also contains instructions for using from Python.</p>
 </div>
 <div id="install" class="section level2">
 <h2 class="hasAnchor">

@@ -123,7 +123,7 @@
     <pre class="usage"><span class='fu'>upset</span>(
   <span class='no'>data</span>,
   <span class='no'>intersect</span>,
-  <span class='kw'>base_annotations</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(<span class='kw'>`Intersection size`</span> <span class='kw'>=</span> <span class='fu'>intersection_size</span>(<span class='kw'>counts</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)),
+  <span class='kw'>base_annotations</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(<span class='kw'>`Intersection size`</span> <span class='kw'>=</span> <span class='fu'><a href='intersection_size.html'>intersection_size</a></span>(<span class='kw'>counts</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)),
   <span class='kw'>name</span> <span class='kw'>=</span> <span class='st'>"group"</span>,
   <span class='kw'>annotations</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(),
   <span class='kw'>themes</span> <span class='kw'>=</span> <span class='no'>upset_themes</span>,
@@ -149,6 +149,14 @@
     <tr>
       <th>intersect</th>
       <td><p>which columns should be used to compose the intersection</p></td>
+    </tr>
+    <tr>
+      <th>stripes</th>
+      <td><p>a two-element characters vector, specifying the background colors for odd and even rows</p></td>
+    </tr>
+    <tr>
+      <th>labeller</th>
+      <td><p>function modifying the names of the sets (rows in the matrix)</p></td>
     </tr>
     <tr>
       <th>height_ratio</th>
