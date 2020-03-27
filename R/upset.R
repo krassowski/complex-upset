@@ -153,6 +153,14 @@ count_occurrences = function(x, symbol) {
 
 
 #' Prepare data for UpSet plots
+#'
+#' @param min_size minimal number of observations in an intersection for it to be included
+#' @param max_size maximal number of observations in an intersection for it to be included
+#' @param keep_empty_groups whether empty sets should be kept (including sets which are only empty after filtering by size)
+#' @param warn_when_dropping_groups whether a warning should be issued when empty sets are being removed
+#' @param sort_sets whether to sort the rows in the intersection matrix (descending sort by default); one of: `'ascending'`, `'descending'`, `FALSE`
+#' @param sort_intersections whether to sort the columns in the intersection matrix (descending sort by default); one of: `'ascending'`, `'descending'`, `FALSE`
+#' @param sort_intersections_by the mode of sorting, the size of the intersection (cardinality) by default; one of: `'cardinality'`, `'degree'`, `'ratio'`
 #' @export
 upset_data = function(
     data, intersect, min_size=0, max_size=Inf,
@@ -704,11 +712,8 @@ upset_query = function(set=NULL, intersect=NULL, only_components=NULL, ...) {
 #' @param stripes a two-element characters vector, specifying the background colors for odd and even rows
 #' @param dot_size size of the points on the intersection matrix
 #' @param overall_sizes whether to show the overall set sizes (barplot to the left), default TRUE
-#' @param overall_sizes_bar_width the thickness of the bars in the overal set sizes barplot
-#' @param ... passed to `upset_data()` which accepts: `(min_size=0, keep_empty_groups=FALSE, warn_when_dropping_groups=TRUE, sort_sets='descending', sort_intersections='descending')`
-#' @param sort_sets whether to sort the rows in the intersection matrix (descending sort by default); one of: `'ascending'`, `'descending'`, `FALSE`
-#' @param sort_intersections whether to sort the columns in the intersection matrix (descending sort by default); one of: `'ascending'`, `'descending'`, `FALSE`
-#' @param sort_intersections_by the mode of sorting, the size of the intersection (cardinality) by default; one of: `'cardinality'`, `'degree'`, `'ratio'`
+#' @param overall_sizes_bar_width the thickness of the bars in the overall set sizes barplot
+#' @param ... passed to `upset_data()`
 #' @export
 upset = function(
   data,
