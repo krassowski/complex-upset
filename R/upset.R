@@ -109,18 +109,23 @@ compute_unions = function(data, sorted_intersections) {
 }
 
 
-check_sort_order = function(sort_order) {
-    allowed_sort_orders = c('descending', 'ascending')
+check_sort = function(
+    sort_order,
+    allowed = c('descending', 'ascending'),
+    what = 'order'
+) {
 
     if (sort_order == FALSE) {
         return()
     }
 
-    if(!(sort_order %in% allowed_sort_orders)) {
+    if(!(sort_order %in% allowed)) {
         stop(
             paste0(
-                'Sort order has to be one of: ',
-                paste(allowed_sort_orders, collapse=' or '),
+                'Sort ',
+                what,
+                ' has to be one of: ',
+                paste(allowed, collapse=' or '),
                 ', not "',
                 sort_order,
                 '""'
@@ -132,13 +137,18 @@ check_sort_order = function(sort_order) {
 
 
 get_sort_order = function(data, sort_order) {
-    check_sort_order(sort_order)
+    check_sort(sort_order)
 
     if (sort_order == 'descending') {
         order(data)
     } else {
         order(-data)
     }
+}
+
+
+count_occurrences = function(x, symbol) {
+    lengths(regmatches(x, gregexpr(symbol, x)))
 }
 
 
@@ -149,10 +159,13 @@ upset_data = function(
     keep_empty_groups=FALSE, warn_when_dropping_groups=TRUE,
     sort_sets='descending',
     sort_intersections='descending',
+    sort_intersections_by='cardinality',
     union_count_column='union_size', intersection_count_column='intersection_size'
 ) {
-    check_sort_order(sort_sets)
-    check_sort_order(sort_intersections)
+    check_sort(sort_sets)
+    check_sort(sort_intersections)
+
+    check_sort(sort_intersections_by, allowed=c('cardinality', 'degree', 'ratio'), what='method')
 
     intersect = unlist(intersect)
     if (length(intersect) == 1) {
@@ -217,7 +230,22 @@ upset_data = function(
     sorted_groups = names(groups_by_size)
 
     if (sort_intersections != FALSE) {
-        intersections_by_size = intersections_by_size[get_sort_order(intersections_by_size, sort_intersections)]
+
+        if (sort_intersections_by == 'cardinality') {
+            sort_value = intersections_by_size
+        } else if (sort_intersections_by == 'degree') {
+            original_intersections_names = names(intersections_by_size)
+            sort_value = count_occurrences(original_intersections_names, '-')
+            names(sort_value) = original_intersections_names
+        } else if (sort_intersections_by == 'ratio') {
+           unsorted_union_sizes = compute_unions(stacked, names(intersections_by_size))
+            sort_value = intersections_by_size
+            sort_value = sort_value / unsorted_union_sizes
+        }
+
+        intersections_by_size = intersections_by_size[
+            get_sort_order(sort_value, sort_intersections)
+        ]
     }
     sorted_intersections = names(intersections_by_size)
 
