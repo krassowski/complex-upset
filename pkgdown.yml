@@ -2,6 +2,7 @@ pandoc: '2.5'
 pkgdown: 1.5.0
 pkgdown_sha: ~
 articles:
-  Examples: Examples.html
-last_built: 2020-03-28T01:35Z
+  Examples_Python: Examples_Python.html
+  Examples_R: Examples_R.html
+last_built: 2020-03-28T02:11Z
 
