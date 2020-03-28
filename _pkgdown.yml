@@ -1,0 +1,12 @@
+destination: docs
+
+home:
+  title: UpSet (Venn diagrams alternative) plots extensible with ggplot2 geoms
+  description: Get all the goodies of UpSet, but with full extensibility of ggplot2
+
+template:
+  opengraph:
+    twitter:
+      creator: "@krassowski"
+      card: summary_large_image
+
