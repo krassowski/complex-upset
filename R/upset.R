@@ -356,7 +356,8 @@ upset_modify_themes = function(to_update)  {
             names(to_update),
             function(name) {
                 c(upset_themes[[name]], to_update[name])
-            }
+            },
+            simplify=FALSE
         ),
         upset_themes[setdiff(names(upset_themes), names(to_update))]
     )
