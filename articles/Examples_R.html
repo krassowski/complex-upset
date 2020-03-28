@@ -574,29 +574,28 @@ TRUE
 <p>To keep the examples fast to complie we will operate on a subset of the movies with complete data:</p>
 <div class="sourceCode" id="cb5"><html><body><pre class="r"><span class="no">movies</span>[<span class="no">movies</span>$<span class="no">mpaa</span> <span class="kw">==</span> <span class="st">''</span>, <span class="st">'mpaa'</span>] <span class="kw">=</span> <span class="fl">NA</span>
 <span class="no">movies</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/na.fail.html">na.omit</a></span>(<span class="no">movies</span>)</pre></body></html></div>
+<div class="sourceCode" id="cb6"><html><body><pre class="r"><span class="co"># utility for changing output parameters in Jupyter notebooks - please ignore!</span>
+<span class="no">set_size</span> <span class="kw">=</span> <span class="kw">function</span>(<span class="no">w</span>, <span class="no">h</span>, <span class="no">s</span><span class="kw">=</span><span class="fl">1.5</span>) { <span class="fu"><a href="https://rdrr.io/r/base/options.html">options</a></span>(<span class="kw">repr.plot.width</span><span class="kw">=</span><span class="no">w</span>*<span class="no">s</span>, <span class="kw">repr.plot.height</span><span class="kw">=</span><span class="no">h</span>*<span class="no">s</span>, <span class="kw">repr.plot.res</span><span class="kw">=</span><span class="fl">150</span>, <span class="kw">jupyter.plot_mimetypes</span><span class="kw">=</span><span class="st">'image/png'</span>) }</pre></body></html></div>
 </div>
 <div id="basic-usage" class="section level2">
 <h2 class="hasAnchor">
 <a href="#basic-usage" class="anchor"></a>0. Basic usage</h2>
 <p>There are two required arguments: - the first argument is expected to be a dataframe with both group indicator variables and covariates, - the second argument specifies a list with names of column which indicate the group membership.</p>
 <p>Additional arguments can be provided, such as <code>name</code> (specifies xlab for intersection matrix) or <code>width_ratio</code> (specifies how much space should be occupied by the set size panel). Other such arguments are discussed at length later in this document.</p>
-<div class="sourceCode" id="cb6"><html><body><pre class="r"><span class="co"># utility for changing output parameters in Jupyter notebooks - please ignore!</span>
-<span class="no">set_size</span> <span class="kw">=</span> <span class="kw">function</span>(<span class="no">w</span>, <span class="no">h</span>, <span class="no">s</span><span class="kw">=</span><span class="fl">1.5</span>) { <span class="fu"><a href="https://rdrr.io/r/base/options.html">options</a></span>(<span class="kw">repr.plot.width</span><span class="kw">=</span><span class="no">w</span>*<span class="no">s</span>, <span class="kw">repr.plot.height</span><span class="kw">=</span><span class="no">h</span>*<span class="no">s</span>, <span class="kw">repr.plot.res</span><span class="kw">=</span><span class="fl">150</span>, <span class="kw">jupyter.plot_mimetypes</span><span class="kw">=</span><span class="st">'image/png'</span>) }</pre></body></html></div>
-<div class="sourceCode" id="cb7"><html><body><pre class="r"><span class="fu">set_size</span>(<span class="fl">10</span>, <span class="fl">3</span>)
+<div class="sourceCode" id="cb7"><html><body><pre class="r"><span class="fu">set_size</span>(<span class="fl">8</span>, <span class="fl">3</span>)
 <span class="fu"><a href="../reference/upset.html">upset</a></span>(<span class="no">movies</span>, <span class="no">genres</span>, <span class="kw">name</span><span class="kw">=</span><span class="st">'genre'</span>, <span class="kw">width_ratio</span><span class="kw">=</span><span class="fl">0.1</span>)</pre></body></html></div>
 <p><img src="Examples_R_files/Examples_R_11_0.png"></p>
-<div id="selecting-the-intersections-of-specific-size" class="section level3">
+<div id="selecting-intersections-by-size" class="section level3">
 <h3 class="hasAnchor">
-<a href="#selecting-the-intersections-of-specific-size" class="anchor"></a>0.1) Selecting the intersections of specific size</h3>
+<a href="#selecting-intersections-by-size" class="anchor"></a>0.1) Selecting intersections by size</h3>
 <p>We will focus on the intersections with at least ten members <code>(min_size=10)</code> and on a few variables which are significantly different between the intersections (see 2. Running statistical tests).</p>
 <p>When using <code>min_size</code>, the empty groups will be skipped by default (e.g. <em>Short</em> movies would have no overlap with size of 10). To keep all groups pass <code>keep_empty_groups=TRUE</code>:</p>
 <div class="sourceCode" id="cb8"><html><body><pre class="r"><span class="fu">set_size</span>(<span class="fl">8</span>, <span class="fl">3</span>)
-<span class="no">feature_movies</span> <span class="kw">=</span> <span class="no">movies</span>[<span class="no">movies</span>$<span class="no">Short</span> <span class="kw">!=</span> <span class="fl">TRUE</span>, ]
 (
-    <span class="fu"><a href="../reference/upset.html">upset</a></span>(<span class="no">feature_movies</span>, <span class="no">genres</span>, <span class="kw">name</span><span class="kw">=</span><span class="st">'genre'</span>, <span class="kw">width_ratio</span><span class="kw">=</span><span class="fl">0.1</span>, <span class="kw">min_size</span><span class="kw">=</span><span class="fl">10</span>, <span class="kw">wrap</span><span class="kw">=</span><span class="fl">TRUE</span>, <span class="kw">overall_sizes</span><span class="kw">=</span><span class="fl">FALSE</span>)
+    <span class="fu"><a href="../reference/upset.html">upset</a></span>(<span class="no">movies</span>, <span class="no">genres</span>, <span class="kw">name</span><span class="kw">=</span><span class="st">'genre'</span>, <span class="kw">width_ratio</span><span class="kw">=</span><span class="fl">0.1</span>, <span class="kw">min_size</span><span class="kw">=</span><span class="fl">10</span>, <span class="kw">wrap</span><span class="kw">=</span><span class="fl">TRUE</span>, <span class="kw">overall_sizes</span><span class="kw">=</span><span class="fl">FALSE</span>)
     + <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">ggtitle</a></span>(<span class="st">'Without empty groups (Short dropped)'</span>)
-    +
-    <span class="fu"><a href="../reference/upset.html">upset</a></span>(<span class="no">feature_movies</span>, <span class="no">genres</span>, <span class="kw">name</span><span class="kw">=</span><span class="st">'genre'</span>, <span class="kw">width_ratio</span><span class="kw">=</span><span class="fl">0.1</span>, <span class="kw">min_size</span><span class="kw">=</span><span class="fl">10</span>, <span class="kw">keep_empty_groups</span><span class="kw">=</span><span class="fl">TRUE</span>, <span class="kw">wrap</span><span class="kw">=</span><span class="fl">TRUE</span>, <span class="kw">overall_sizes</span><span class="kw">=</span><span class="fl">FALSE</span>)
+    +    <span class="co"># adding plots is possible thanks to patchwork</span>
+    <span class="fu"><a href="../reference/upset.html">upset</a></span>(<span class="no">movies</span>, <span class="no">genres</span>, <span class="kw">name</span><span class="kw">=</span><span class="st">'genre'</span>, <span class="kw">width_ratio</span><span class="kw">=</span><span class="fl">0.1</span>, <span class="kw">min_size</span><span class="kw">=</span><span class="fl">10</span>, <span class="kw">keep_empty_groups</span><span class="kw">=</span><span class="fl">TRUE</span>, <span class="kw">wrap</span><span class="kw">=</span><span class="fl">TRUE</span>, <span class="kw">overall_sizes</span><span class="kw">=</span><span class="fl">FALSE</span>)
     + <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">ggtitle</a></span>(<span class="st">'With empty groups'</span>)
 )</pre></body></html></div>
 <pre><code>[1] "Dropping empty groups: Short"</code></pre>
@@ -609,6 +608,7 @@ TRUE
 <a href="#adding-components" class="anchor"></a>1. Adding components</h2>
 <p>We can add multiple annotation components (also called panels):</p>
 <div class="sourceCode" id="cb10"><html><body><pre class="r"><span class="fu">set_size</span>(<span class="fl">8</span>, <span class="fl">8</span>)
+
 <span class="fu"><a href="https://rdrr.io/r/base/Random.html">set.seed</a></span>(<span class="fl">0</span>)   <span class="co"># keep the same jitter for identical plots</span>
 
 <span class="fu"><a href="../reference/upset.html">upset</a></span>(
@@ -656,7 +656,7 @@ Warning message:
 )</pre></body></html></div>
 <pre><code>[1] "Dropping empty groups: Short"</code></pre>
 <p><img src="Examples_R_files/Examples_R_20_1.png"></p>
-<p>You can also use of barplots to demonstrate difference in proportions of categorical variables:</p>
+<p>You can also barplots to demonstrate difference in proportions of categorical variables:</p>
 <div class="sourceCode" id="cb14"><html><body><pre class="r"><span class="fu">set_size</span>(<span class="fl">8</span>, <span class="fl">5</span>)
 
 <span class="fu"><a href="../reference/upset.html">upset</a></span>(
@@ -1268,7 +1268,10 @@ Kruskal-Wallis rank sum test
 </tbody>
 </table>
 <p>Many tests will require at least two observations in each group. You can skip intersections with less than two members with <code>min_size=2</code>.</p>
-<div class="sourceCode" id="cb20"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/base/warning.html">suppressWarnings</a></span>(<span class="fu"><a href="https://rdrr.io/r/utils/head.html">tail</a></span>(<span class="fu">upset_test</span>(<span class="no">movies</span>, <span class="no">genres</span>, <span class="kw">comparisons</span><span class="kw">=</span><span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span>(<span class="kw">test</span><span class="kw">=</span><span class="no">bartlett.test</span>, <span class="kw">min_size</span><span class="kw">=</span><span class="fl">2</span>))))</pre></body></html></div>
+<div class="sourceCode" id="cb20"><html><body><pre class="r"><span class="no">bartlett_results</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/warning.html">suppressWarnings</a></span>(
+    <span class="fu">upset_test</span>(<span class="no">movies</span>, <span class="no">genres</span>, <span class="kw">comparisons</span><span class="kw">=</span><span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span>(<span class="kw">test</span><span class="kw">=</span><span class="no">bartlett.test</span>, <span class="kw">min_size</span><span class="kw">=</span><span class="fl">2</span>))
+)
+<span class="fu"><a href="https://rdrr.io/r/utils/head.html">tail</a></span>(<span class="no">bartlett_results</span>)</pre></body></html></div>
 <pre><code>[1] "NA, year, length, budget, rating, votes, r1, r2, r3, r4, r5, r6, r7, r8, r9, r10, NA differ significantly between intersections"</code></pre>
 <table class="table">
 <caption>
@@ -1502,9 +1505,9 @@ NA
 </ol>
 </div>
 </div>
-<div id="adjusting-intersection-size-aesthetics" class="section level2">
+<div id="adjusting-intersection-size" class="section level2">
 <h2 class="hasAnchor">
-<a href="#adjusting-intersection-size-aesthetics" class="anchor"></a>3. Adjusting “Intersection size” aesthetics</h2>
+<a href="#adjusting-intersection-size" class="anchor"></a>3. Adjusting “Intersection size”</h2>
 <div id="counts" class="section level3">
 <h3 class="hasAnchor">
 <a href="#counts" class="anchor"></a>3.1 Counts</h3>
@@ -1523,7 +1526,9 @@ NA
 <pre><code>[1] "Dropping empty groups: Short"</code></pre>
 <p><img src="Examples_R_files/Examples_R_37_1.png"></p>
 <p>The colors can be changed:</p>
-<div class="sourceCode" id="cb26"><html><body><pre class="r"><span class="fu"><a href="../reference/upset.html">upset</a></span>(
+<div class="sourceCode" id="cb26"><html><body><pre class="r"><span class="fu">set_size</span>(<span class="fl">8</span>, <span class="fl">3</span>)
+
+<span class="fu"><a href="../reference/upset.html">upset</a></span>(
     <span class="no">movies</span>,
     <span class="no">genres</span>,
     <span class="kw">base_annotations</span><span class="kw">=</span><span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span>(
@@ -1539,7 +1544,9 @@ NA
 <pre><code>[1] "Dropping empty groups: Short"</code></pre>
 <p><img src="Examples_R_files/Examples_R_39_1.png"></p>
 <p>Any parameter supported by <code>geom_text</code> can be passed in <code>text</code> list:</p>
-<div class="sourceCode" id="cb28"><html><body><pre class="r"><span class="fu"><a href="../reference/upset.html">upset</a></span>(
+<div class="sourceCode" id="cb28"><html><body><pre class="r"><span class="fu">set_size</span>(<span class="fl">8</span>, <span class="fl">3</span>)
+
+<span class="fu"><a href="../reference/upset.html">upset</a></span>(
     <span class="no">movies</span>,
     <span class="no">genres</span>,
     <span class="kw">base_annotations</span><span class="kw">=</span><span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span>(
@@ -1560,7 +1567,9 @@ NA
 <div id="fill-the-bars" class="section level3">
 <h3 class="hasAnchor">
 <a href="#fill-the-bars" class="anchor"></a>3.2 Fill the bars</h3>
-<div class="sourceCode" id="cb30"><html><body><pre class="r"><span class="fu"><a href="../reference/upset.html">upset</a></span>(
+<div class="sourceCode" id="cb30"><html><body><pre class="r"><span class="fu">set_size</span>(<span class="fl">8</span>, <span class="fl">3</span>)
+
+<span class="fu"><a href="../reference/upset.html">upset</a></span>(
     <span class="no">movies</span>,
     <span class="no">genres</span>,
     <span class="kw">base_annotations</span><span class="kw">=</span><span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span>(
@@ -1577,7 +1586,9 @@ NA
 <h3 class="hasAnchor">
 <a href="#adjusting-the-height-of-the-matrixintersection-size" class="anchor"></a>3.3 Adjusting the height of the matrix/intersection size</h3>
 <p>Setting <code>height_ratio=1</code> will cause the intersection matrix and the intersection size to have an equal height:</p>
-<div class="sourceCode" id="cb31"><html><body><pre class="r"><span class="fu"><a href="../reference/upset.html">upset</a></span>(
+<div class="sourceCode" id="cb31"><html><body><pre class="r"><span class="fu">set_size</span>(<span class="fl">8</span>, <span class="fl">3</span>)
+
+<span class="fu"><a href="../reference/upset.html">upset</a></span>(
     <span class="no">movies</span>,
     <span class="no">genres</span>,
     <span class="kw">height_ratio</span><span class="kw">=</span><span class="fl">1</span>,
@@ -1590,7 +1601,6 @@ NA
 <a href="#hiding-intersection-size" class="anchor"></a>3.5 Hiding intersection size</h3>
 <p>You can always disable the intersection size altogether:</p>
 <div class="sourceCode" id="cb32"><html><body><pre class="r"><span class="fu">set_size</span>(<span class="fl">8</span>, <span class="fl">1.6</span>)
-
 <span class="fu"><a href="../reference/upset.html">upset</a></span>(
     <span class="no">movies</span>,
     <span class="no">genres</span>,
@@ -1606,7 +1616,6 @@ NA
 <a href="#showing-intersection-sizeunion-size-ratio" class="anchor"></a>3.6 Showing intersection size/union size ratio</h3>
 <p>While this cannot be computed for the null intersection (observations which do not belong to either of the groups), it is usefull to visualise which intersections might be large due to the chance (i.e. corrsponding groups being proportionally larger) alone:</p>
 <div class="sourceCode" id="cb34"><html><body><pre class="r"><span class="fu">set_size</span>(<span class="fl">8</span>, <span class="fl">6</span>)
-
 <span class="fu"><a href="../reference/upset.html">upset</a></span>(
     <span class="no">movies</span>, <span class="no">genres</span>, <span class="kw">name</span><span class="kw">=</span><span class="st">'genre'</span>, <span class="kw">width_ratio</span><span class="kw">=</span><span class="fl">0.1</span>, <span class="kw">min_size</span><span class="kw">=</span><span class="fl">10</span>,
     <span class="kw">base_annotations</span><span class="kw">=</span><span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span>(
@@ -1622,7 +1631,8 @@ NA
 <h3 class="hasAnchor">
 <a href="#showing-percentages" class="anchor"></a>3.7 Showing percentages</h3>
 <p><code>text_aes</code> can be used to manipulate the aesthetics of the labels. Using the <code>intersection_size</code> and <code>union_size</code> one can calculate percentage of items in the intersection (relative to the potential size of the intersection). A <code><a href="../reference/upset_text_percentage.html">upset_text_percentage(digits=0, sep='')</a></code> shorthand is provided for convenience; please note that it has to be used with <code>aes_</code> rather than <code>aes</code>:</p>
-<div class="sourceCode" id="cb36"><html><body><pre class="r"><span class="fu"><a href="../reference/upset.html">upset</a></span>(
+<div class="sourceCode" id="cb36"><html><body><pre class="r"><span class="fu">set_size</span>(<span class="fl">8</span>, <span class="fl">6</span>)
+<span class="fu"><a href="../reference/upset.html">upset</a></span>(
     <span class="no">movies</span>, <span class="no">genres</span>, <span class="kw">name</span><span class="kw">=</span><span class="st">'genre'</span>, <span class="kw">width_ratio</span><span class="kw">=</span><span class="fl">0.1</span>, <span class="kw">min_size</span><span class="kw">=</span><span class="fl">10</span>,
     <span class="kw">base_annotations</span><span class="kw">=</span><span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span>(
         <span class="co"># with manual aes specification:</span>
@@ -1642,7 +1652,6 @@ NA
 <h3 class="hasAnchor">
 <a href="#stripes" class="anchor"></a>Stripes</h3>
 <div class="sourceCode" id="cb38"><html><body><pre class="r"><span class="fu">set_size</span>(<span class="fl">8</span>, <span class="fl">4</span>)
-
 <span class="fu"><a href="../reference/upset.html">upset</a></span>(
     <span class="no">movies</span>,
     <span class="no">genres</span>,
@@ -1652,7 +1661,8 @@ NA
 <pre><code>[1] "Dropping empty groups: Short"</code></pre>
 <p><img src="Examples_R_files/Examples_R_59_1.png"></p>
 <p>To effectively disable the stripes:</p>
-<div class="sourceCode" id="cb40"><html><body><pre class="r"><span class="fu"><a href="../reference/upset.html">upset</a></span>(
+<div class="sourceCode" id="cb40"><html><body><pre class="r"><span class="fu">set_size</span>(<span class="fl">8</span>, <span class="fl">4</span>)
+<span class="fu"><a href="../reference/upset.html">upset</a></span>(
     <span class="no">movies</span>,
     <span class="no">genres</span>,
     <span class="kw">stripes</span><span class="kw">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">'white'</span>, <span class="st">'white'</span>),
@@ -1665,11 +1675,13 @@ NA
 <h3 class="hasAnchor">
 <a href="#adding-title" class="anchor"></a>Adding title</h3>
 <p>Adding title with <code>ggtitle</code> with add it to the intesection matrix:</p>
-<div class="sourceCode" id="cb42"><html><body><pre class="r"><span class="fu"><a href="../reference/upset.html">upset</a></span>(<span class="no">movies</span>, <span class="no">genres</span>, <span class="kw">min_size</span><span class="kw">=</span><span class="fl">10</span>) + <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">ggtitle</a></span>(<span class="st">'Intersection matrix title'</span>)</pre></body></html></div>
+<div class="sourceCode" id="cb42"><html><body><pre class="r"><span class="fu">set_size</span>(<span class="fl">8</span>, <span class="fl">4</span>)
+<span class="fu"><a href="../reference/upset.html">upset</a></span>(<span class="no">movies</span>, <span class="no">genres</span>, <span class="kw">min_size</span><span class="kw">=</span><span class="fl">10</span>) + <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">ggtitle</a></span>(<span class="st">'Intersection matrix title'</span>)</pre></body></html></div>
 <pre><code>[1] "Dropping empty groups: Short"</code></pre>
 <p><img src="Examples_R_files/Examples_R_64_1.png"></p>
 <p>In order to add a title for the entire plot, you need to wrap the plot:</p>
-<div class="sourceCode" id="cb44"><html><body><pre class="r"><span class="fu"><a href="../reference/upset.html">upset</a></span>(<span class="no">movies</span>, <span class="no">genres</span>, <span class="kw">min_size</span><span class="kw">=</span><span class="fl">10</span>, <span class="kw">wrap</span><span class="kw">=</span><span class="fl">TRUE</span>) + <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">ggtitle</a></span>(<span class="st">'The overlap between genres'</span>)</pre></body></html></div>
+<div class="sourceCode" id="cb44"><html><body><pre class="r"><span class="fu">set_size</span>(<span class="fl">8</span>, <span class="fl">4</span>)
+<span class="fu"><a href="../reference/upset.html">upset</a></span>(<span class="no">movies</span>, <span class="no">genres</span>, <span class="kw">min_size</span><span class="kw">=</span><span class="fl">10</span>, <span class="kw">wrap</span><span class="kw">=</span><span class="fl">TRUE</span>) + <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">ggtitle</a></span>(<span class="st">'The overlap between genres'</span>)</pre></body></html></div>
 <pre><code>[1] "Dropping empty groups: Short"</code></pre>
 <p><img src="Examples_R_files/Examples_R_66_1.png"></p>
 </div>
@@ -1699,7 +1711,8 @@ NA
 </li>
 </ol>
 <p>You can substitute this list for your own using <code>themes</code> argument. While you can specify a theme for every component, if you omit one or more components those will be taken from the element named <code>default</code>.</p>
-<div class="sourceCode" id="cb47"><html><body><pre class="r"><span class="fu"><a href="../reference/upset.html">upset</a></span>(<span class="no">movies</span>, <span class="no">genres</span>, <span class="kw">min_size</span><span class="kw">=</span><span class="fl">10</span>, <span class="kw">themes</span><span class="kw">=</span><span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span>(<span class="kw">default</span><span class="kw">=</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html">theme</a></span>()))</pre></body></html></div>
+<div class="sourceCode" id="cb47"><html><body><pre class="r"><span class="fu">set_size</span>(<span class="fl">8</span>, <span class="fl">4</span>)
+<span class="fu"><a href="../reference/upset.html">upset</a></span>(<span class="no">movies</span>, <span class="no">genres</span>, <span class="kw">min_size</span><span class="kw">=</span><span class="fl">10</span>, <span class="kw">themes</span><span class="kw">=</span><span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span>(<span class="kw">default</span><span class="kw">=</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html">theme</a></span>()))</pre></body></html></div>
 <pre><code>[1] "Dropping empty groups: Short"</code></pre>
 <p><img src="Examples_R_files/Examples_R_71_1.png"></p>
 <p>You can also add themes for your custom panels/annotations:</p>
@@ -1750,7 +1763,6 @@ Warning message:
 <p>Pass a list of lists generated with <code><a href="../reference/upset_query.html">upset_query()</a></code> utility to the optional <code>queries</code> argument to selectively modify aesthetics of specific intersections or sets.</p>
 <p>Use one of the arguments: <code>set</code> or <code>intersection</code> (not both) to specify what to highlight: - <code>set</code> will highlight the bar of the set size, - <code>intersection</code> will highlight an intersection on all components (by default), or on components chosen with <code>only_components</code> - all other parameters will be used to modify the geoms</p>
 <div class="sourceCode" id="cb53"><html><body><pre class="r"><span class="fu">set_size</span>(<span class="fl">8</span>, <span class="fl">6</span>)
-
 
 <span class="fu"><a href="../reference/upset.html">upset</a></span>(
     <span class="no">movies</span>, <span class="no">genres</span>, <span class="kw">name</span><span class="kw">=</span><span class="st">'genre'</span>, <span class="kw">width_ratio</span><span class="kw">=</span><span class="fl">0.1</span>, <span class="kw">min_size</span><span class="kw">=</span><span class="fl">10</span>,
@@ -1830,7 +1842,8 @@ Warning message in grid.Call.graphics(C_rect, x$x, x$y, x$width, x$height, resol
 <h3 class="hasAnchor">
 <a href="#sorting-sets" class="anchor"></a>7.1) Sorting sets</h3>
 <p>Ascending:</p>
-<div class="sourceCode" id="cb60"><html><body><pre class="r"><span class="fu"><a href="../reference/upset.html">upset</a></span>(<span class="no">movies</span>, <span class="no">genres</span>, <span class="kw">width_ratio</span><span class="kw">=</span><span class="fl">0.1</span>, <span class="kw">sort_sets</span><span class="kw">=</span><span class="st">'ascending'</span>)</pre></body></html></div>
+<div class="sourceCode" id="cb60"><html><body><pre class="r"><span class="fu">set_size</span>(<span class="fl">8</span>, <span class="fl">3</span>)
+<span class="fu"><a href="../reference/upset.html">upset</a></span>(<span class="no">movies</span>, <span class="no">genres</span>, <span class="kw">width_ratio</span><span class="kw">=</span><span class="fl">0.1</span>, <span class="kw">sort_sets</span><span class="kw">=</span><span class="st">'ascending'</span>)</pre></body></html></div>
 <p><img src="Examples_R_files/Examples_R_91_0.png"></p>
 <p>Without sorting - preserving the order as in genres:</p>
 <div class="sourceCode" id="cb61"><html><body><pre class="r"><span class="no">genres</span></pre></body></html></div>
@@ -1862,7 +1875,8 @@ Warning message in grid.Call.graphics(C_rect, x$x, x$y, x$width, x$height, resol
 ‘Short’
 </li>
 </ol>
-<div class="sourceCode" id="cb62"><html><body><pre class="r"><span class="fu"><a href="../reference/upset.html">upset</a></span>(<span class="no">movies</span>, <span class="no">genres</span>, <span class="kw">width_ratio</span><span class="kw">=</span><span class="fl">0.1</span>, <span class="kw">sort_sets</span><span class="kw">=</span><span class="fl">FALSE</span>)</pre></body></html></div>
+<div class="sourceCode" id="cb62"><html><body><pre class="r"><span class="fu">set_size</span>(<span class="fl">8</span>, <span class="fl">3</span>)
+<span class="fu"><a href="../reference/upset.html">upset</a></span>(<span class="no">movies</span>, <span class="no">genres</span>, <span class="kw">width_ratio</span><span class="kw">=</span><span class="fl">0.1</span>, <span class="kw">sort_sets</span><span class="kw">=</span><span class="fl">FALSE</span>)</pre></body></html></div>
 <p><img src="Examples_R_files/Examples_R_94_0.png"></p>
 </div>
 </div>
