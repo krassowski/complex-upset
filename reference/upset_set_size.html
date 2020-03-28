@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Compose an UpSet plot — upset • ComplexUpset</title>
+<title>Prepare layers for sets sizes plot — upset_set_size • ComplexUpset</title>
 
 
 <!-- jquery -->
@@ -39,8 +39,8 @@
 
 
 
-<meta property="og:title" content="Compose an UpSet plot — upset" />
-<meta property="og:description" content="Compose an UpSet plot" />
+<meta property="og:title" content="Prepare layers for sets sizes plot — upset_set_size" />
+<meta property="og:description" content="Prepare layers for sets sizes plot" />
 <meta name="twitter:card" content="summary_large_image" />
 <meta name="twitter:creator" content="@krassowski" />
 <meta name="twitter:site" content="@krassowski" />
@@ -126,84 +126,31 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Compose an UpSet plot</h1>
+    <h1>Prepare layers for sets sizes plot</h1>
     <small class="dont-index">Source: <a href='https://github.com/krassowski/complex-upset/blob/master/R/upset.R'><code>R/upset.R</code></a></small>
-    <div class="hidden name"><code>upset.Rd</code></div>
+    <div class="hidden name"><code>upset_set_size.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Compose an UpSet plot</p>
+    <p>Prepare layers for sets sizes plot</p>
     </div>
 
-    <pre class="usage"><span class='fu'>upset</span>(
-  <span class='no'>data</span>,
-  <span class='no'>intersect</span>,
-  <span class='kw'>base_annotations</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(<span class='kw'>`Intersection size`</span> <span class='kw'>=</span> <span class='fu'><a href='intersection_size.html'>intersection_size</a></span>(<span class='kw'>counts</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)),
-  <span class='kw'>name</span> <span class='kw'>=</span> <span class='st'>"group"</span>,
-  <span class='kw'>annotations</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(),
-  <span class='kw'>themes</span> <span class='kw'>=</span> <span class='no'>upset_themes</span>,
-  <span class='kw'>stripes</span> <span class='kw'>=</span> <span class='no'>upset_stripes</span>,
-  <span class='kw'>labeller</span> <span class='kw'>=</span> <span class='no'>identity</span>,
-  <span class='kw'>height_ratio</span> <span class='kw'>=</span> <span class='fl'>0.5</span>,
-  <span class='kw'>width_ratio</span> <span class='kw'>=</span> <span class='fl'>0.3</span>,
-  <span class='kw'>wrap</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>set_sizes</span> <span class='kw'>=</span> <span class='fu'><a href='upset_set_size.html'>upset_set_size</a></span>(<span class='kw'>width</span> <span class='kw'>=</span> <span class='fl'>0.6</span>),
-  <span class='kw'>queries</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(),
-  <span class='kw'>dot_size</span> <span class='kw'>=</span> <span class='fl'>3</span>,
-  <span class='no'>...</span>
-)</pre>
+    <pre class="usage"><span class='fu'>upset_set_size</span>(<span class='kw'>geom</span> <span class='kw'>=</span> <span class='no'>geom_bar</span>, <span class='kw'>layers</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(), <span class='no'>...</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>data</th>
-      <td><p>a dataframe including binary columns representing membership in classes</p></td>
+      <th>geom</th>
+      <td><p>the geom to use</p></td>
     </tr>
     <tr>
-      <th>intersect</th>
-      <td><p>which columns should be used to compose the intersection</p></td>
-    </tr>
-    <tr>
-      <th>stripes</th>
-      <td><p>a two-element characters vector, specifying the background colors for odd and even rows</p></td>
-    </tr>
-    <tr>
-      <th>labeller</th>
-      <td><p>function modifying the names of the sets (rows in the matrix)</p></td>
-    </tr>
-    <tr>
-      <th>height_ratio</th>
-      <td><p>ratio of the intersection matrix to intersection size height</p></td>
-    </tr>
-    <tr>
-      <th>width_ratio</th>
-      <td><p>ratio of the overall set size width to intersection matrix width</p></td>
-    </tr>
-    <tr>
-      <th>set_sizes</th>
-      <td><p>a list of layers defining the overall set sizes, e.g. from <code><a href='upset_set_size.html'>upset_set_size()</a></code> (<code>FALSE</code> to hide)</p></td>
-    </tr>
-    <tr>
-      <th>queries</th>
-      <td><p>a list of queries generated with <code><a href='upset_query.html'>upset_query()</a></code></p></td>
-    </tr>
-    <tr>
-      <th>dot_size</th>
-      <td><p>size of the points on the intersection matrix</p></td>
+      <th>layers</th>
+      <td><p>a list of additonal layers (scales, geoms) to be included on the plot</p></td>
     </tr>
     <tr>
       <th>...</th>
-      <td><p>Arguments passed on to <code><a href='upset_data.html'>upset_data</a></code></p><dl'>
-    <dt><code>min_size</code></dt><dd><p>minimal number of observations in an intersection for it to be included</p></dd>
-    <dt><code>max_size</code></dt><dd><p>maximal number of observations in an intersection for it to be included</p></dd>
-    <dt><code>keep_empty_groups</code></dt><dd><p>whether empty sets should be kept (including sets which are only empty after filtering by size)</p></dd>
-    <dt><code>warn_when_dropping_groups</code></dt><dd><p>whether a warning should be issued when empty sets are being removed</p></dd>
-    <dt><code>sort_sets</code></dt><dd><p>whether to sort the rows in the intersection matrix (descending sort by default); one of: <code>'ascending'</code>, <code>'descending'</code>, <code>FALSE</code></p></dd>
-    <dt><code>sort_intersections</code></dt><dd><p>whether to sort the columns in the intersection matrix (descending sort by default); one of: <code>'ascending'</code>, <code>'descending'</code>, <code>FALSE</code></p></dd>
-    <dt><code>sort_intersections_by</code></dt><dd><p>the mode of sorting, the size of the intersection (cardinality) by default; one of: <code>'cardinality'</code>, <code>'degree'</code>, <code>'ratio'</code></p></dd>
-  
-</dl></td>
+      <td><p>passed to the geom</p></td>
     </tr>
     </table>
 
