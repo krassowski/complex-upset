@@ -2,7 +2,7 @@
 
 [![DOI](https://zenodo.org/badge/236336935.svg)](https://zenodo.org/badge/latestdoi/236336935)
 
-Quick links: [Documentation](https://krassowski.github.io/complex-upset/) | [Installation](https://github.com/krassowski/complex-upset#Install) | [R example](https://github.com/krassowski/complex-upset/blob/master/R_example.ipynb) | [Python example](https://krassowski.github.io/complex-upset/articles/Examples.html)
+Quick links: [Documentation](https://krassowski.github.io/complex-upset/) | [Installation](https://github.com/krassowski/complex-upset#Install) | [R examples](https://krassowski.github.io/complex-upset/articles/Examples_R.html) | [Python examples](https://krassowski.github.io/complex-upset/articles/Examples_Python.html)
 
 ## Showcase
 
@@ -63,7 +63,7 @@ upset(
 </details>
 
 
-The full list of examples is available in the [documentation](https://krassowski.github.io/complex-upset/articles/Examples.html); it also contains instructions for the use from Python.
+The full list of examples is available in the [documentation](https://krassowski.github.io/complex-upset/articles/Examples_Python.html); it also contains instructions for the use from Python.
 
 ## Install
 
