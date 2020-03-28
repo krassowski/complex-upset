@@ -713,7 +713,7 @@ upset_query = function(set=NULL, intersect=NULL, only_components=NULL, ...) {
 #' @param dot_size size of the points on the intersection matrix
 #' @param overall_sizes whether to show the overall set sizes (barplot to the left), default TRUE
 #' @param overall_sizes_bar_width the thickness of the bars in the overall set sizes barplot
-#' @param ... passed to `upset_data()`
+#' @inheritDotParams upset_data
 #' @export
 upset = function(
   data,
