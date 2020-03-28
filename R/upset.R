@@ -759,7 +759,6 @@ upset = function(
   matrix_intersect_queries = intersect_queries(queries_for(queries, 'intersections_matrix'), data)
 
   query_matrix = get_highlights_data(data$matrix_frame, 'intersection', matrix_intersect_queries)
-  query_matrix = query_matrix[query_matrix$value == TRUE, ]
 
   intersections_matrix = (
     ggplot(data$matrix_frame, aes(x=intersection, y=group))
@@ -780,7 +779,7 @@ upset = function(
           xend=intersection,
           y=segment_end(data$matrix_frame, data, intersection, head),
           yend=segment_end(data$matrix_frame, data, intersection, tail)
-    ))
+    ), na.rm=T)
     # highlighted interconnectors
     + highlight_layer(
         geom_segment,
@@ -791,7 +790,8 @@ upset = function(
                 xend=intersection,
                 y=segment_end(query_matrix, data, intersection, head),
                 yend=segment_end(query_matrix, data, intersection, tail)
-             )
+             ),
+             na.rm=T
         )
     )
     + xlab(name)
