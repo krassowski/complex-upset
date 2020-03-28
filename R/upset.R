@@ -806,7 +806,7 @@ upset = function(
     annotation = annotations[[name]]
     geoms = annotation$geom
 
-    if (class(geoms) != 'list') {
+    if (!inherits(geoms, 'list')) {
         geoms = list(geoms)
     }
 
