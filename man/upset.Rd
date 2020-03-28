@@ -16,8 +16,7 @@ upset(
   height_ratio = 0.5,
   width_ratio = 0.3,
   wrap = FALSE,
-  overall_sizes = TRUE,
-  overall_sizes_bar_width = 0.6,
+  set_sizes = upset_set_size(width = 0.6),
   queries = list(),
   dot_size = 3,
   ...
@@ -36,9 +35,7 @@ upset(
 
 \item{width_ratio}{ratio of the overall set size width to intersection matrix width}
 
-\item{overall_sizes}{whether to show the overall set sizes (barplot to the left), default TRUE}
-
-\item{overall_sizes_bar_width}{the thickness of the bars in the overall set sizes barplot}
+\item{set_sizes}{a list of layers defining the overall set sizes, e.g. from \code{upset_set_size()} (\code{FALSE} to hide)}
 
 \item{queries}{a list of queries generated with \code{upset_query()}}
 

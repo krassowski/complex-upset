@@ -710,6 +710,41 @@ upset_query = function(set=NULL, intersect=NULL, only_components=NULL, ...) {
 }
 
 
+#' Prepare layers for sets sizes plot
+#'
+#' @param geom the geom to use
+#' @param layers a list of additonal layers (scales, geoms) to be included on the plot
+#' @param ... passed to the geom
+#' @export
+upset_set_size = function(geom=geom_bar, layers=list(), ...) {
+    args = eval(list(...))
+    c(
+        list(
+            geom(...),
+            scale_y_reverse(),
+            ylab('Set size'),
+            substitute(highlight_layer(geom, overall_sizes_highlights_data, args=args))
+        ),
+        layers
+    )
+}
+
+
+eval_if_needed = function(layers, ...) {
+    lapply(
+        layers,
+        function(layer) {
+            if (inherits(layer, 'call')) {
+                layer_evaluated = eval.parent(layer, n=3)
+                layer_evaluated
+            } else {
+                layer
+            }
+        }
+    )
+}
+
+
 #' Compose an UpSet plot
 #'
 #' @param data a dataframe including binary columns representing membership in classes
@@ -720,8 +755,7 @@ upset_query = function(set=NULL, intersect=NULL, only_components=NULL, ...) {
 #' @param width_ratio ratio of the overall set size width to intersection matrix width
 #' @param stripes a two-element characters vector, specifying the background colors for odd and even rows
 #' @param dot_size size of the points on the intersection matrix
-#' @param overall_sizes whether to show the overall set sizes (barplot to the left), default TRUE
-#' @param overall_sizes_bar_width the thickness of the bars in the overall set sizes barplot
+#' @param set_sizes a list of layers defining the overall set sizes, e.g. from `upset_set_size()` (`FALSE` to hide)
 #' @inheritDotParams upset_data
 #' @export
 upset = function(
@@ -738,8 +772,7 @@ upset = function(
   height_ratio=0.5,
   width_ratio=0.3,
   wrap=FALSE,
-  overall_sizes=TRUE,
-  overall_sizes_bar_width=0.6,
+  set_sizes=upset_set_size(width=0.6),
   queries=list(),
   dot_size=3,
   ...
@@ -748,22 +781,7 @@ upset = function(
 
   data = upset_data(data, intersect, ...)
 
-  show_overall_sizes = overall_sizes
-
-  overall_sizes_queries = set_queries(queries_for(queries, 'overall_sizes'))
-  overall_sizes_highlights_data = get_highlights_data(data$presence, 'group', overall_sizes_queries)
-
-  overall_sizes = (
-    ggplot(data$presence, aes(x=group))
-    + matrix_background_stripes(data, stripes, 'vertical')
-    + geom_bar(width=overall_sizes_bar_width)
-    + highlight_layer(geom_bar, overall_sizes_highlights_data, args=list(width=overall_sizes_bar_width))
-    + coord_flip()
-    + scale_y_reverse()
-    + scale_x_discrete(limits=data$sorted$groups)
-    + ylab('Set size')
-    + themes$overall_sizes
-  )
+  show_overall_sizes = !(inherits(set_sizes, 'logical') && set_sizes == FALSE)
 
   matrix_intersect_queries = intersect_queries(queries_for(queries, 'intersections_matrix'), data)
 
@@ -873,6 +891,18 @@ upset = function(
   }
 
   if (show_overall_sizes) {
+      overall_sizes_queries = set_queries(queries_for(queries, 'overall_sizes'))
+      overall_sizes_highlights_data = get_highlights_data(data$presence, 'group', overall_sizes_queries)
+
+      overall_sizes = (
+        ggplot(data$presence, aes(x=group))
+        + matrix_background_stripes(data, stripes, 'vertical')
+        + coord_flip()
+        + eval_if_needed(set_sizes, overall_sizes_highlights_data=overall_sizes_highlights_data)
+        + scale_x_discrete(limits=data$sorted$groups)
+        + themes$overall_sizes
+      )
+
       matrix_row = list(overall_sizes, intersections_matrix)
   } else {
       matrix_row = list(intersections_matrix)
