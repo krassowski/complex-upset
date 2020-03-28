@@ -340,7 +340,11 @@ upset_themes = list(
 #' @param ... arguments passed to `theme()`
 #' @export
 upset_default_themes = function(...)  {
-    sapply(upset_themes, function(default) { c(default, list(theme(...))) })
+    sapply(
+        upset_themes, function(default) {
+            c(default, list(theme(...)))
+        }
+    )
 }
 
 
@@ -637,7 +641,11 @@ intersect_queries = function(queries, data) {
 
 
 without_query_columns = function(queries) {
-    queries[, !(colnames(queries) %in% c('only_components', 'set', 'intersect', 'method', 'query', 'intersection', 'value', 'group')), drop=FALSE]
+    queries[
+        ,
+        !(colnames(queries) %in% c('only_components', 'set', 'intersect', 'method', 'query', 'intersection', 'value', 'group')),
+        drop=FALSE
+    ]
 }
 
 
