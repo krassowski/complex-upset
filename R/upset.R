@@ -1,4 +1,12 @@
+#' @importFrom utils head modifyList tail
+#' @importFrom ggplot2 ggplot aes aes_string coord_flip theme xlab ylab
+#' @importFrom ggplot2 ggplot scale_color_manual scale_x_discrete scale_y_discrete scale_y_reverse
+#' @importFrom ggplot2 ggplot geom_text geom_bar geom_col geom_point geom_segment
+#' @importFrom patchwork plot_layout plot_spacer wrap_elements
+
+
 #' @export
+#' @importFrom ggplot2 theme_minimal element_blank
 upset_themes = list(
   intersections_matrix=list(
     theme_minimal(),
@@ -209,7 +217,7 @@ intersection_size = function(
 #'
 #' @export
 #' @examples
-#' intersection_size(text_aes=aes_(label=upset_text_percentage()))
+#' intersection_size(text_aes=ggplot2::aes_(label=upset_text_percentage()))
 upset_text_percentage = function(digits=0, sep='') {
     substitute(
         paste(

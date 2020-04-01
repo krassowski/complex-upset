@@ -8,7 +8,7 @@ Authors@R: person(
 Description: UpSet plots are an improvement over Venn Diagram for set overlap visualizations.
     Striving to bring the best of the UpSetR and ggplot2, this package offers a way to create
     complex overlap visualisations, using simple and familiar tools, i.e. geoms of ggplot2.
-License: MIT
+License: MIT + file LICENSE
 Encoding: UTF-8
 URL: https://github.com/krassowski/complex-upset
 BugReports: https://github.com/krassowski/complex-upset/issues

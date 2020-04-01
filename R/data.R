@@ -1,3 +1,6 @@
+#' @importFrom utils stack
+
+
 names_of_true = function(row) {
   sanitized_names = c()
   for (name in names(which(row))) {

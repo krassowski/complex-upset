@@ -1,3 +1,6 @@
+#' @importFrom stats as.formula kruskal.test p.adjust
+
+
 #' @export
 compare_between_intersections = function(data, intersect, test=kruskal.test, tests=list(), ignore=list(), ...) {
   data = upset_data(data, intersect, ...)
