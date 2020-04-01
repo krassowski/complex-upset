@@ -16,7 +16,8 @@ LazyData: true
 Suggests: 
     testthat (>= 2.1.0),
     knitr,
-    rmarkdown
+    rmarkdown,
+    covr
 Imports:
     ggplot2,
     patchwork

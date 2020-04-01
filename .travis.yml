@@ -1,0 +1,10 @@
+language: R
+
+r:
+  - oldrel
+  - release
+  - devel
+
+after_success:
+    - Rscript -e 'covr::codecov()'
+
