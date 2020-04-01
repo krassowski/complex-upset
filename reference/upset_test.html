@@ -75,7 +75,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">ComplexUpset</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.4.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.5.0</span>
       </span>
     </div>
 
@@ -135,8 +135,29 @@
     <p>This is a wrapper around <code><a href='compare_between_intersections.html'>compare_between_intersections()</a></code>, adding sorting by fdr, warnings, etc.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>upset_test</span>(<span class='no'>data</span>, <span class='no'>intersect</span>, <span class='kw'>comparisons</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>())</pre>
+    <pre class="usage"><span class='fu'>upset_test</span>(<span class='no'>data</span>, <span class='no'>intersect</span>, <span class='no'>...</span>)</pre>
 
+    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
+    <table class="ref-arguments">
+    <colgroup><col class="name" /><col class="desc" /></colgroup>
+    <tr>
+      <th>data</th>
+      <td><p>a dataframe including binary columns representing membership in classes</p></td>
+    </tr>
+    <tr>
+      <th>intersect</th>
+      <td><p>which columns should be used to compose the intersection</p></td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td><p>Arguments passed on to <code><a href='compare_between_intersections.html'>compare_between_intersections</a></code></p><dl'>
+    <dt><code>test</code></dt><dd><p>the default test function; it is expected to accept <code>formula</code> and <code>data</code> parameters, and a list with <code>p.value</code>, <code>statistic</code>, and <code>method</code></p></dd>
+    <dt><code>tests</code></dt><dd><p>a named list with tests for specific variables, overwriting the default test</p></dd>
+    <dt><code>ignore</code></dt><dd><p>a list with names of variables to exclude from testing</p></dd>
+  
+</dl></td>
+    </tr>
+    </table>
 
 
   </div>

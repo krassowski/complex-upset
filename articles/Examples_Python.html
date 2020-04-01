@@ -34,7 +34,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">ComplexUpset</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.4.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.5.0</span>
       </span>
     </div>
 
@@ -1124,8 +1124,17 @@ Kruskal-Wallis rank sum test
 </table>
 </div>
 <p><code>Kruskal-Wallis rank sum test</code> is not always the best choice.</p>
-<p>You can either change the test for: - all the variables (<code>test=your.test</code>), or - specific variables (using <code>tests=list(variable=some.test)</code> argument)</p>
-<p>The tests are called with <code>(formula=variable ~ intersection, data)</code> signature, such as accepted by <code>kruskal.test</code>. The result is expected to be a list with following members: - <code>p.value</code> - <code>statistic</code> - <code>method</code></p>
+<p>You can either change the test for:</p>
+<ul>
+<li>all the variables (<code>test=your.test</code>), or</li>
+<li>specific variables (using <code>tests=list(variable=some.test)</code> argument)</li>
+</ul>
+<p>The tests are called with <code>(formula=variable ~ intersection, data)</code> signature, such as accepted by <code>kruskal.test</code>. The result is expected to be a list with following members:</p>
+<ul>
+<li><code>p.value</code></li>
+<li><code>statistic</code></li>
+<li><code>method</code></li>
+</ul>
 <p>It is easy to adapt tests which do not obey this signature/output convention; for example the Chi-squared test and anova can be wrapped with two-line functions as follows:</p>
 <div class="sourceCode" id="cb15"><html><body><pre class="r">%%R
 chisq_from_formula = function(formula, data) {
@@ -1147,7 +1156,7 @@ custom_tests = list(
     mpaa=chisq_from_formula,
     budget=anova_single
 )</pre></body></html></div>
-<div class="sourceCode" id="cb16"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb16-1" title="1"><span class="op">%</span>R head(upset_test(movies, genres, comparisons<span class="op">=</span><span class="bu">list</span>(tests<span class="op">=</span>custom_tests)))</a></code></pre></div>
+<div class="sourceCode" id="cb16"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb16-1" title="1"><span class="op">%</span>R head(upset_test(movies, genres, tests<span class="op">=</span>custom_tests))</a></code></pre></div>
 <p>[1] “year, length, budget, rating, votes, r1, r2, r3, r4, r5, r6, r7, r8, r9, r10, mpaa differ significantly between intersections”</p>
 <div>
 <style scoped>
@@ -1310,7 +1319,7 @@ Kruskal-Wallis rank sum test
 <p>Many tests will require at least two observations in each group. You can skip intersections with less than two members with <code>min_size=2</code>.</p>
 <div class="sourceCode" id="cb17"><html><body><pre class="r">%%R
 bartlett_results = suppressWarnings(
-    upset_test(movies, genres, comparisons=list(test=bartlett.test, min_size=2))
+    upset_test(movies, genres, test=bartlett.test, min_size=2)
 )
 tail(bartlett_results)</pre></body></html></div>
 <p>[1] “NA, year, length, budget, rating, votes, r1, r2, r3, r4, r5, r6, r7, r8, r9, r10, NA differ significantly between intersections” variable p.value statistic year year 1.041955e-67 386.53699 length length 3.982729e-67 383.70148 budget budget 7.637563e-50 298.89911 rating rating 3.980194e-06 66.63277 title title NA NA mpaa mpaa NA NA test fdr year Bartlett test of homogeneity of variances 1.302444e-67 length Bartlett test of homogeneity of variances 4.595457e-67 budget Bartlett test of homogeneity of variances 8.183103e-50 rating Bartlett test of homogeneity of variances 3.980194e-06 title Bartlett test of homogeneity of variances NA mpaa Bartlett test of homogeneity of variances NA</p>
@@ -1321,7 +1330,7 @@ tail(bartlett_results)</pre></body></html></div>
 <p>In the movies example, the title variable is not a reasonable thing to compare. We can ignore it using:</p>
 <div class="sourceCode" id="cb18"><html><body><pre class="r">%%R
 # note: title no longer present
-rownames(upset_test(movies, genres, comparisons=list(ignore=c('title'))))</pre></body></html></div>
+rownames(upset_test(movies, genres, ignore=c('title')))</pre></body></html></div>
 <p>[1] “year, length, budget, rating, votes, r1, r2, r3, r4, r5, r6, r7, r8, r9, r10, mpaa differ significantly between intersections” [1] “length” “rating” “budget” “r8” “mpaa” “r9” “r1” “r4”<br>
 [9] “r3” “r5” “r7” “r2” “r10” “votes” “r6” “year”</p>
 </div>

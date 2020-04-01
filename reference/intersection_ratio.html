@@ -77,7 +77,7 @@ This cannot be calculated for the null intersection (observations which do not b
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">ComplexUpset</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.4.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.5.0</span>
       </span>
     </div>
 
@@ -148,6 +148,34 @@ This cannot be calculated for the null intersection (observations which do not b
   <span class='kw'>aest</span> <span class='kw'>=</span> <span class='fu'>aes_string</span>()
 )</pre>
 
+    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
+    <table class="ref-arguments">
+    <colgroup><col class="name" /><col class="desc" /></colgroup>
+    <tr>
+      <th>counts</th>
+      <td><p>whether to display count number labels above the bars</p></td>
+    </tr>
+    <tr>
+      <th>bar_number_threshold</th>
+      <td><p>if less than one, labels for bars height greater than this threshold will be placed on (not above) the bars</p></td>
+    </tr>
+    <tr>
+      <th>text_colors</th>
+      <td><p>a name vector of characters specifying the color when <code>on_background</code> and <code>on_bar</code> (see <code>bar_number_threshold</code>)</p></td>
+    </tr>
+    <tr>
+      <th>text</th>
+      <td><p>additional parameters passed to <code>geom_text</code></p></td>
+    </tr>
+    <tr>
+      <th>text_aes</th>
+      <td><p>additional aethetics for <code>geom_text</code></p></td>
+    </tr>
+    <tr>
+      <th>aest</th>
+      <td><p>additional aesthetics for <code>geom_bar</code></p></td>
+    </tr>
+    </table>
 
 
   </div>

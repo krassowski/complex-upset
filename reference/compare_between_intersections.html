@@ -75,7 +75,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">ComplexUpset</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.4.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.5.0</span>
       </span>
     </div>
 
@@ -144,6 +144,34 @@
   <span class='no'>...</span>
 )</pre>
 
+    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
+    <table class="ref-arguments">
+    <colgroup><col class="name" /><col class="desc" /></colgroup>
+    <tr>
+      <th>data</th>
+      <td><p>a dataframe including binary columns representing membership in classes</p></td>
+    </tr>
+    <tr>
+      <th>intersect</th>
+      <td><p>which columns should be used to compose the intersection</p></td>
+    </tr>
+    <tr>
+      <th>test</th>
+      <td><p>the default test function; it is expected to accept <code>formula</code> and <code>data</code> parameters, and a list with <code>p.value</code>, <code>statistic</code>, and <code>method</code></p></td>
+    </tr>
+    <tr>
+      <th>tests</th>
+      <td><p>a named list with tests for specific variables, overwriting the default test</p></td>
+    </tr>
+    <tr>
+      <th>ignore</th>
+      <td><p>a list with names of variables to exclude from testing</p></td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td><p>passed to <code><a href='upset_data.html'>upset_data()</a></code></p></td>
+    </tr>
+    </table>
 
 
   </div>
