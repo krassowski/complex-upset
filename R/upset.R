@@ -465,6 +465,7 @@ eval_if_needed = function(layers, ...) {
 #' @param stripes a two-element characters vector, specifying the background colors for odd and even rows
 #' @param dot_size size of the points on the intersection matrix
 #' @param set_sizes a list of layers defining the overall set sizes, e.g. from `upset_set_size()` (`FALSE` to hide)
+#' @param wrap whether the plot should be wrapped into a group (makes addding a tile/combining with other plots easier)
 #' @inheritDotParams upset_data
 #' @export
 upset = function(

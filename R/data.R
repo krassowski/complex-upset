@@ -128,7 +128,6 @@ count_occurrences = function(x, symbol) {
 #' @param sort_intersections_by the mode of sorting, the size of the intersection (cardinality) by default; one of: `'cardinality'`, `'degree'`, `'ratio'`
 #' @param union_count_column name of the column to store the union size (adjust if conflicts with your data)
 #' @param intersection_count_column name of the column to store the intersection size (adjust if conflicts with your data)
-#' @param wrap whether the plot should be wrapped into a group (makes addding a tile/combining with other plots easier)
 #' @export
 upset_data = function(
     data, intersect, min_size=0, max_size=Inf,
