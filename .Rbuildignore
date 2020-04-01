@@ -1,0 +1,11 @@
+^.*\.Rproj$
+^\.Rproj\.user$
+^_pkgdown\.yml$
+^\.travis\.yml$
+^.*\.ipynb$
+^docs$
+^pkgdown$
+^scripts$
+.ipynb_checkpoints
+^.python-version$
+^.idea$

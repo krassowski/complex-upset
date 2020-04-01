@@ -19,6 +19,10 @@ upset_data(
 )
 }
 \arguments{
+\item{data}{a dataframe including binary columns representing membership in classes}
+
+\item{intersect}{which columns should be used to compose the intersection}
+
 \item{min_size}{minimal number of observations in an intersection for it to be included}
 
 \item{max_size}{maximal number of observations in an intersection for it to be included}
@@ -32,6 +36,10 @@ upset_data(
 \item{sort_intersections}{whether to sort the columns in the intersection matrix (descending sort by default); one of: \code{'ascending'}, \code{'descending'}, \code{FALSE}}
 
 \item{sort_intersections_by}{the mode of sorting, the size of the intersection (cardinality) by default; one of: \code{'cardinality'}, \code{'degree'}, \code{'ratio'}}
+
+\item{union_count_column}{name of the column to store the union size (adjust if conflicts with your data)}
+
+\item{intersection_count_column}{name of the column to store the intersection size (adjust if conflicts with your data)}
 }
 \description{
 Prepare data for UpSet plots

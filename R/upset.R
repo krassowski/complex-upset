@@ -5,6 +5,15 @@
 #' @importFrom patchwork plot_layout plot_spacer wrap_elements
 NULL
 
+globalVariables(c(
+    'intersection',
+    'group',
+    'union_size',
+    '..count..',
+    'layer',
+    'value'
+))
+
 #' List of default themes for upset components
 #'
 #' @export
@@ -91,7 +100,7 @@ upset_modify_themes = function(to_update)  {
 #' at a cost of lower flexibility than when providing a custom mapping; `aes(x=intersection)` is prespecified.
 #'
 #' @param y A string with the name of the y aesthetic
-#' @param y A geom to be used as an annotation
+#' @param geom A geom to be used as an annotation
 #' @export
 upset_annotate = function(y, geom) {
   list(
@@ -436,9 +445,11 @@ eval_if_needed = function(layers, ...) {
 
 
 #' Compose an UpSet plot
-#'
-#' @param data a dataframe including binary columns representing membership in classes
-#' @param intersect which columns should be used to compose the intersection
+#' @inheritParams upset_data
+#' @param name the label shown below the intersection matrix
+#' @param annotations a named list of annotations in form a `list(aes=`mapping`, geom=`geom or list of geoms`)`
+#' @param base_annotations a named list with default annotations (i.e. the intersection size barplot)
+#' @param themes a named list of themes for components and annotations, see `upset_default_themes()`/`upset_modify_themes()`
 #' @param queries a list of queries generated with `upset_query()`
 #' @param labeller function modifying the names of the sets (rows in the matrix)
 #' @param height_ratio ratio of the intersection matrix to intersection size height

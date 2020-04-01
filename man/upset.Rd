@@ -27,6 +27,14 @@ upset(
 
 \item{intersect}{which columns should be used to compose the intersection}
 
+\item{base_annotations}{a named list with default annotations (i.e. the intersection size barplot)}
+
+\item{name}{the label shown below the intersection matrix}
+
+\item{annotations}{a named list of annotations in form a \verb{list(aes=}mapping\verb{, geom=}geom or list of geoms\verb{)}}
+
+\item{themes}{a named list of themes for components and annotations, see \code{upset_default_themes()}/\code{upset_modify_themes()}}
+
 \item{stripes}{a two-element characters vector, specifying the background colors for odd and even rows}
 
 \item{labeller}{function modifying the names of the sets (rows in the matrix)}
@@ -51,6 +59,8 @@ upset(
     \item{\code{sort_sets}}{whether to sort the rows in the intersection matrix (descending sort by default); one of: \code{'ascending'}, \code{'descending'}, \code{FALSE}}
     \item{\code{sort_intersections}}{whether to sort the columns in the intersection matrix (descending sort by default); one of: \code{'ascending'}, \code{'descending'}, \code{FALSE}}
     \item{\code{sort_intersections_by}}{the mode of sorting, the size of the intersection (cardinality) by default; one of: \code{'cardinality'}, \code{'degree'}, \code{'ratio'}}
+    \item{\code{union_count_column}}{name of the column to store the union size (adjust if conflicts with your data)}
+    \item{\code{intersection_count_column}}{name of the column to store the intersection size (adjust if conflicts with your data)}
   }}
 }
 \description{

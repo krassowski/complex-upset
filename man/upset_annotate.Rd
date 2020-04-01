@@ -7,7 +7,9 @@
 upset_annotate(y, geom)
 }
 \arguments{
-\item{y}{A geom to be used as an annotation}
+\item{y}{A string with the name of the y aesthetic}
+
+\item{geom}{A geom to be used as an annotation}
 }
 \description{
 Simplifies creation of annotation panels, automatically building aesthetics mappings,

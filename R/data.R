@@ -117,6 +117,8 @@ count_occurrences = function(x, symbol) {
 
 #' Prepare data for UpSet plots
 #'
+#' @param data a dataframe including binary columns representing membership in classes
+#' @param intersect which columns should be used to compose the intersection
 #' @param min_size minimal number of observations in an intersection for it to be included
 #' @param max_size maximal number of observations in an intersection for it to be included
 #' @param keep_empty_groups whether empty sets should be kept (including sets which are only empty after filtering by size)
@@ -124,6 +126,8 @@ count_occurrences = function(x, symbol) {
 #' @param sort_sets whether to sort the rows in the intersection matrix (descending sort by default); one of: `'ascending'`, `'descending'`, `FALSE`
 #' @param sort_intersections whether to sort the columns in the intersection matrix (descending sort by default); one of: `'ascending'`, `'descending'`, `FALSE`
 #' @param sort_intersections_by the mode of sorting, the size of the intersection (cardinality) by default; one of: `'cardinality'`, `'degree'`, `'ratio'`
+#' @param union_count_column name of the column to store the union size (adjust if conflicts with your data)
+#' @param intersection_count_column name of the column to store the intersection size (adjust if conflicts with your data)
 #' @export
 upset_data = function(
     data, intersect, min_size=0, max_size=Inf,
