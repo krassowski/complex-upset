@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Generate percentage label of the interestion/union sizes ratio — upset_text_percentage • ComplexUpset</title>
+<title>List of default themes for upset components — upset_themes • ComplexUpset</title>
 
 
 <!-- jquery -->
@@ -39,8 +39,8 @@
 
 
 
-<meta property="og:title" content="Generate percentage label of the interestion/union sizes ratio — upset_text_percentage" />
-<meta property="og:description" content="For use together with intersection_size or intersection_ratio" />
+<meta property="og:title" content="List of default themes for upset components — upset_themes" />
+<meta property="og:description" content="List of default themes for upset components" />
 <meta name="twitter:card" content="summary_large_image" />
 <meta name="twitter:creator" content="@krassowski" />
 <meta name="twitter:site" content="@krassowski" />
@@ -126,94 +126,22 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Generate percentage label of the interestion/union sizes ratio</h1>
+    <h1>List of default themes for upset components</h1>
     <small class="dont-index">Source: <a href='https://github.com/krassowski/complex-upset/blob/master/R/upset.R'><code>R/upset.R</code></a></small>
-    <div class="hidden name"><code>upset_text_percentage.Rd</code></div>
+    <div class="hidden name"><code>upset_themes.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>For use together with <code>intersection_size</code> or <code>intersection_ratio</code></p>
+    <p>List of default themes for upset components</p>
     </div>
 
-    <pre class="usage"><span class='fu'>upset_text_percentage</span>(<span class='kw'>digits</span> <span class='kw'>=</span> <span class='fl'>0</span>, <span class='kw'>sep</span> <span class='kw'>=</span> <span class='st'>""</span>)</pre>
-
-    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
-    <table class="ref-arguments">
-    <colgroup><col class="name" /><col class="desc" /></colgroup>
-    <tr>
-      <th>digits</th>
-      <td><p>How many digits to show when rounding the percentage?</p></td>
-    </tr>
-    <tr>
-      <th>sep</th>
-      <td><p>set to space (<code>' '</code>) if you prefer a whitespace between the number and the <code>\%</code> sign.</p></td>
-    </tr>
-    </table>
+    <pre class="usage"><span class='no'>upset_themes</span></pre>
 
 
-    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'><a href='intersection_size.html'>intersection_size</a></span>(<span class='kw'>text_aes</span><span class='kw'>=</span><span class='kw pkg'>ggplot2</span><span class='kw ns'>::</span><span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes_.html'>aes_</a></span>(<span class='kw'>label</span><span class='kw'>=</span><span class='fu'>upset_text_percentage</span>()))</div><div class='output co'>#&gt; $aes
-#&gt; Aesthetic mapping: 
-#&gt; * `x` -&gt; `intersection`
-#&gt; 
-#&gt; $geom
-#&gt; $geom[[1]]
-#&gt; geom_bar: width = NULL, na.rm = FALSE
-#&gt; stat_count: width = NULL, na.rm = FALSE
-#&gt; position_stack 
-#&gt; 
-#&gt; $geom[[2]]
-#&gt; mapping: y = ~ifelse(..count.. &lt;= bar_number_threshold * max(..count..), ..count.., bar_number_threshold * ..count..), label = ~paste(round(intersection_size/union_size * 100, 0), "%", sep = ""), colour = ~ifelse(..count.. &lt;= bar_number_threshold * max(..count..), "on_background", "on_bar") 
-#&gt; geom_text: parse = FALSE, check_overlap = FALSE, na.rm = FALSE
-#&gt; stat_count: na.rm = FALSE
-#&gt; position_identity 
-#&gt; 
-#&gt; $geom[[3]]
-#&gt; &lt;ggproto object: Class ScaleDiscrete, Scale, gg&gt;
-#&gt;     aesthetics: colour
-#&gt;     axis_order: function
-#&gt;     break_info: function
-#&gt;     break_positions: function
-#&gt;     breaks: waiver
-#&gt;     call: call
-#&gt;     clone: function
-#&gt;     dimension: function
-#&gt;     drop: TRUE
-#&gt;     expand: waiver
-#&gt;     get_breaks: function
-#&gt;     get_breaks_minor: function
-#&gt;     get_labels: function
-#&gt;     get_limits: function
-#&gt;     guide: FALSE
-#&gt;     is_discrete: function
-#&gt;     is_empty: function
-#&gt;     labels: waiver
-#&gt;     limits: NULL
-#&gt;     make_sec_title: function
-#&gt;     make_title: function
-#&gt;     map: function
-#&gt;     map_df: function
-#&gt;     n.breaks.cache: NULL
-#&gt;     na.translate: TRUE
-#&gt;     na.value: NA
-#&gt;     name: waiver
-#&gt;     palette: function
-#&gt;     palette.cache: NULL
-#&gt;     position: left
-#&gt;     range: &lt;ggproto object: Class RangeDiscrete, Range, gg&gt;
-#&gt;         range: NULL
-#&gt;         reset: function
-#&gt;         train: function
-#&gt;         super:  &lt;ggproto object: Class RangeDiscrete, Range, gg&gt;
-#&gt;     reset: function
-#&gt;     scale_name: manual
-#&gt;     train: function
-#&gt;     train_df: function
-#&gt;     transform: function
-#&gt;     transform_df: function
-#&gt;     super:  &lt;ggproto object: Class ScaleDiscrete, Scale, gg&gt;
-#&gt; 
-#&gt; </div></pre>
+    <h2 class="hasAnchor" id="format"><a class="anchor" href="#format"></a>Format</h2>
+
+    <p>An object of class <code>list</code> of length 4.</p>
+
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

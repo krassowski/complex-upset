@@ -127,7 +127,7 @@
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Prepare data for UpSet plots</h1>
-    <small class="dont-index">Source: <a href='https://github.com/krassowski/complex-upset/blob/master/R/upset.R'><code>R/upset.R</code></a></small>
+    <small class="dont-index">Source: <a href='https://github.com/krassowski/complex-upset/blob/master/R/data.R'><code>R/data.R</code></a></small>
     <div class="hidden name"><code>upset_data.Rd</code></div>
     </div>
 
@@ -152,6 +152,14 @@
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
+    <tr>
+      <th>data</th>
+      <td><p>a dataframe including binary columns representing membership in classes</p></td>
+    </tr>
+    <tr>
+      <th>intersect</th>
+      <td><p>which columns should be used to compose the intersection</p></td>
+    </tr>
     <tr>
       <th>min_size</th>
       <td><p>minimal number of observations in an intersection for it to be included</p></td>
@@ -179,6 +187,14 @@
     <tr>
       <th>sort_intersections_by</th>
       <td><p>the mode of sorting, the size of the intersection (cardinality) by default; one of: <code>'cardinality'</code>, <code>'degree'</code>, <code>'ratio'</code></p></td>
+    </tr>
+    <tr>
+      <th>union_count_column</th>
+      <td><p>name of the column to store the union size (adjust if conflicts with your data)</p></td>
+    </tr>
+    <tr>
+      <th>intersection_count_column</th>
+      <td><p>name of the column to store the intersection size (adjust if conflicts with your data)</p></td>
     </tr>
     </table>
 

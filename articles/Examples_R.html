@@ -682,7 +682,7 @@ Warning message:
 <div id="running-statistical-tests" class="section level2">
 <h2 class="hasAnchor">
 <a href="#running-statistical-tests" class="anchor"></a>2. Running statistical tests</h2>
-<div class="sourceCode" id="cb15"><html><body><pre class="r"><span class="fu">upset_test</span>(<span class="no">movies</span>, <span class="no">genres</span>)</pre></body></html></div>
+<div class="sourceCode" id="cb15"><html><body><pre class="r"><span class="fu"><a href="../reference/upset_test.html">upset_test</a></span>(<span class="no">movies</span>, <span class="no">genres</span>)</pre></body></html></div>
 <pre><code>[1] "year, length, budget, rating, votes, r1, r2, r3, r4, r5, r6, r7, r8, r9, r10, mpaa differ significantly between intersections"</code></pre>
 <table class="table">
 <caption>
@@ -1094,7 +1094,7 @@ Kruskal-Wallis rank sum test
     <span class="kw">mpaa</span><span class="kw">=</span><span class="no">chisq_from_formula</span>,
     <span class="kw">budget</span><span class="kw">=</span><span class="no">anova_single</span>
 )</pre></body></html></div>
-<div class="sourceCode" id="cb18"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span>(<span class="fu">upset_test</span>(<span class="no">movies</span>, <span class="no">genres</span>, <span class="kw">comparisons</span><span class="kw">=</span><span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span>(<span class="kw">tests</span><span class="kw">=</span><span class="no">custom_tests</span>)))</pre></body></html></div>
+<div class="sourceCode" id="cb18"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span>(<span class="fu"><a href="../reference/upset_test.html">upset_test</a></span>(<span class="no">movies</span>, <span class="no">genres</span>, <span class="kw">comparisons</span><span class="kw">=</span><span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span>(<span class="kw">tests</span><span class="kw">=</span><span class="no">custom_tests</span>)))</pre></body></html></div>
 <pre><code>Warning message in chisq.test(ftable(formula, data)):
 “Chi-squared approximation may be incorrect”
 
@@ -1269,7 +1269,7 @@ Kruskal-Wallis rank sum test
 </table>
 <p>Many tests will require at least two observations in each group. You can skip intersections with less than two members with <code>min_size=2</code>.</p>
 <div class="sourceCode" id="cb20"><html><body><pre class="r"><span class="no">bartlett_results</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/warning.html">suppressWarnings</a></span>(
-    <span class="fu">upset_test</span>(<span class="no">movies</span>, <span class="no">genres</span>, <span class="kw">comparisons</span><span class="kw">=</span><span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span>(<span class="kw">test</span><span class="kw">=</span><span class="no">bartlett.test</span>, <span class="kw">min_size</span><span class="kw">=</span><span class="fl">2</span>))
+    <span class="fu"><a href="../reference/upset_test.html">upset_test</a></span>(<span class="no">movies</span>, <span class="no">genres</span>, <span class="kw">comparisons</span><span class="kw">=</span><span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span>(<span class="kw">test</span><span class="kw">=</span><span class="no">bartlett.test</span>, <span class="kw">min_size</span><span class="kw">=</span><span class="fl">2</span>))
 )
 <span class="fu"><a href="https://rdrr.io/r/utils/head.html">tail</a></span>(<span class="no">bartlett_results</span>)</pre></body></html></div>
 <pre><code>[1] "NA, year, length, budget, rating, votes, r1, r2, r3, r4, r5, r6, r7, r8, r9, r10, NA differ significantly between intersections"</code></pre>
@@ -1446,7 +1446,7 @@ NA
 <p>You may want to exclude variables which are: - highly correlated and therefore interfering with the FDR calculation, or - simply irrelevant</p>
 <p>In the movies example, the title variable is not a reasonable thing to compare. We can ignore it using:</p>
 <div class="sourceCode" id="cb22"><html><body><pre class="r"><span class="co"># note: title no longer present</span>
-<span class="fu"><a href="https://rdrr.io/r/base/colnames.html">rownames</a></span>(<span class="fu">upset_test</span>(<span class="no">movies</span>, <span class="no">genres</span>, <span class="kw">comparisons</span><span class="kw">=</span><span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span>(<span class="kw">ignore</span><span class="kw">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">'title'</span>))))</pre></body></html></div>
+<span class="fu"><a href="https://rdrr.io/r/base/colnames.html">rownames</a></span>(<span class="fu"><a href="../reference/upset_test.html">upset_test</a></span>(<span class="no">movies</span>, <span class="no">genres</span>, <span class="kw">comparisons</span><span class="kw">=</span><span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span>(<span class="kw">ignore</span><span class="kw">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">'title'</span>))))</pre></body></html></div>
 <pre><code>[1] "year, length, budget, rating, votes, r1, r2, r3, r4, r5, r6, r7, r8, r9, r10, mpaa differ significantly between intersections"</code></pre>
 <style>
 .list-inline {list-style: none; margin:0; padding: 0}
