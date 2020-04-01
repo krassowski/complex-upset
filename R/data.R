@@ -73,7 +73,7 @@ check_sort = function(
 ) {
 
     if (sort_order == FALSE) {
-        return()
+        return(TRUE)
     }
 
     if (!(sort_order %in% allowed)) {
@@ -90,6 +90,8 @@ check_sort = function(
             )
         )
     }
+
+    TRUE
 }
 
 

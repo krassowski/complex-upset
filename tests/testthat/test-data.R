@@ -19,3 +19,27 @@ test_that("intersections names assembly", {
         'The group names contain minus characters \\(-\\) which prevent intersections names composition.*'
     )
 })
+
+
+test_that("sort order parameter verification works", {
+    expect_equal(
+        check_sort('ascending'),
+        TRUE
+    )
+
+    expect_equal(
+        check_sort('descending'),
+        TRUE
+    )
+
+    expect_equal(
+        check_sort(FALSE),
+        TRUE
+    )
+
+    expect_error(
+        check_sort('abcd'),
+        'Sort order has to be one of: descending or ascending, not "abcd"',
+        fixed=TRUE
+    )
+})
