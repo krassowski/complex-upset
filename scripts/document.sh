@@ -11,6 +11,7 @@ do
     sed 's/```r/```{r eval=FALSE}/g' "vignettes/${v}.Rmd" -i
     sed 's/```python/```{python eval=FALSE}/g' "vignettes/${v}.Rmd" -i
     sed 's/\[png\]/[ ]/g' "vignettes/${v}.Rmd" -i
-    sed -i "1s/^/---\ntitle: \"${v/_/ - }\"\n---\n/" "vignettes/${v}.Rmd"
+    title=${v/_/ - }
+    sed -i "1s/^/---\ntitle: \"${title}\"\nvignette: >\n  %\\\\VignetteEngine{knitr::rmarkdown}\n  %\\\\VignetteIndexEntry{${title}}\n  %\\\\usepackage[utf8]{inputenc}\n---\n/" "vignettes/${v}.Rmd"
 done
 Rscript -e 'pkgdown::build_site()'
