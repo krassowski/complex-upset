@@ -13,6 +13,19 @@ compare_between_intersections(
   ...
 )
 }
+\arguments{
+\item{data}{a dataframe including binary columns representing membership in classes}
+
+\item{intersect}{which columns should be used to compose the intersection}
+
+\item{test}{the default test function; it is expected to accept \code{formula} and \code{data} parameters, and a list with \code{p.value}, \code{statistic}, and \code{method}}
+
+\item{tests}{a named list with tests for specific variables, overwriting the default test}
+
+\item{ignore}{a list with names of variables to exclude from testing}
+
+\item{...}{passed to \code{upset_data()}}
+}
 \description{
 Compare covariates between intesections
 }

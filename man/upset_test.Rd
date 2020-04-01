@@ -4,7 +4,20 @@
 \alias{upset_test}
 \title{Test for differences between intersections}
 \usage{
-upset_test(data, intersect, comparisons = list())
+upset_test(data, intersect, ...)
+}
+\arguments{
+\item{data}{a dataframe including binary columns representing membership in classes}
+
+\item{intersect}{which columns should be used to compose the intersection}
+
+\item{...}{
+  Arguments passed on to \code{\link[=compare_between_intersections]{compare_between_intersections}}
+  \describe{
+    \item{\code{test}}{the default test function; it is expected to accept \code{formula} and \code{data} parameters, and a list with \code{p.value}, \code{statistic}, and \code{method}}
+    \item{\code{tests}}{a named list with tests for specific variables, overwriting the default test}
+    \item{\code{ignore}}{a list with names of variables to exclude from testing}
+  }}
 }
 \description{
 This is a wrapper around \code{compare_between_intersections()}, adding sorting by fdr, warnings, etc.

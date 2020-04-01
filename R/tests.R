@@ -3,6 +3,11 @@ NULL
 
 #' Compare covariates between intesections
 #'
+#' @inheritParams upset_data
+#' @param test the default test function; it is expected to accept `formula` and `data` parameters, and a list with `p.value`, `statistic`, and `method`
+#' @param tests a named list with tests for specific variables, overwriting the default test
+#' @param ignore a list with names of variables to exclude from testing
+#' @param ... passed to `upset_data()`
 #' @export
 compare_between_intersections = function(data, intersect, test=kruskal.test, tests=list(), ignore=list(), ...) {
   data = upset_data(data, intersect, ...)
@@ -54,14 +59,15 @@ compare_between_intersections = function(data, intersect, test=kruskal.test, tes
 #' Test for differences between intersections
 #'
 #' This is a wrapper around `compare_between_intersections()`, adding sorting by fdr, warnings, etc.
+#' @inheritParams upset_data
+#' @inheritDotParams compare_between_intersections
 #' @export
 upset_test = function(
     data,
     intersect,
-    comparisons=list()
+    ...
 ) {
-
-    comparison = do.call(compare_between_intersections, c(list(data, intersect), comparisons))
+    comparison = do.call(compare_between_intersections, c(list(data, intersect), list(...)))
 
     if (nrow(comparison) == 0) {
         stop('No variables to compare')
