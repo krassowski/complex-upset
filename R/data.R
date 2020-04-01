@@ -1,4 +1,5 @@
 #' @importFrom utils stack
+NULL
 
 
 names_of_true = function(row) {

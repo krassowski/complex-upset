@@ -3,8 +3,10 @@
 #' @importFrom ggplot2 ggplot scale_color_manual scale_x_discrete scale_y_discrete scale_y_reverse
 #' @importFrom ggplot2 ggplot geom_text geom_bar geom_col geom_point geom_segment
 #' @importFrom patchwork plot_layout plot_spacer wrap_elements
+NULL
 
-
+#' List of default themes for upset components
+#'
 #' @export
 #' @importFrom ggplot2 theme_minimal element_blank
 upset_themes = list(

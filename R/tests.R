@@ -1,6 +1,8 @@
 #' @importFrom stats as.formula kruskal.test p.adjust
+NULL
 
-
+#' Compare covariates between intesections
+#'
 #' @export
 compare_between_intersections = function(data, intersect, test=kruskal.test, tests=list(), ignore=list(), ...) {
   data = upset_data(data, intersect, ...)
@@ -49,6 +51,9 @@ compare_between_intersections = function(data, intersect, test=kruskal.test, tes
 }
 
 
+#' Test for differences between intersections
+#'
+#' This is a wrapper around `compare_between_intersections()`, adding sorting by fdr, warnings, etc.
 #' @export
 upset_test = function(
     data,
@@ -59,7 +64,7 @@ upset_test = function(
     comparison = do.call(compare_between_intersections, c(list(data, intersect), comparisons))
 
     if (nrow(comparison) == 0) {
-        stop('No varaibles to compare')
+        stop('No variables to compare')
     }
 
     significant_hits = comparison[comparison$fdr < 0.05, 'variable']
