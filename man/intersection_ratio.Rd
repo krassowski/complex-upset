@@ -13,6 +13,19 @@ intersection_ratio(
   aest = aes_string()
 )
 }
+\arguments{
+\item{counts}{whether to display count number labels above the bars}
+
+\item{bar_number_threshold}{if less than one, labels for bars height greater than this threshold will be placed on (not above) the bars}
+
+\item{text_colors}{a name vector of characters specifying the color when \code{on_background} and \code{on_bar} (see \code{bar_number_threshold})}
+
+\item{text}{additional parameters passed to \code{geom_text}}
+
+\item{text_aes}{additional aethetics for \code{geom_text}}
+
+\item{aest}{additional aesthetics for \code{geom_bar}}
+}
 \description{
 A large intersection size can be driven by a large number of members in a group;
 to account for that, one can divide the intersection size by the size of a union of the same groups.

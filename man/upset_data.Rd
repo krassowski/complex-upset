@@ -40,6 +40,8 @@ upset_data(
 \item{union_count_column}{name of the column to store the union size (adjust if conflicts with your data)}
 
 \item{intersection_count_column}{name of the column to store the intersection size (adjust if conflicts with your data)}
+
+\item{wrap}{whether the plot should be wrapped into a group (makes addding a tile/combining with other plots easier)}
 }
 \description{
 Prepare data for UpSet plots

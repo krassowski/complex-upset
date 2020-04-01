@@ -161,6 +161,13 @@ matrix_background_stripes = function(data, stripes, orient='horizontal') {
 intersection_size_text = list(vjust=-0.25)
 
 #' Barplot annotation of intersections sizes
+#'
+#' @param counts whether to display count number labels above the bars
+#' @param bar_number_threshold if less than one, labels for bars height greater than this threshold will be placed on (not above) the bars
+#' @param text_colors a name vector of characters specifying the color when `on_background` and `on_bar` (see `bar_number_threshold`)
+#' @param text additional parameters passed to `geom_text`
+#' @param text_aes additional aethetics for `geom_text`
+#' @param aest additional aesthetics for `geom_bar`
 #' @export
 intersection_size = function(
   counts=TRUE,
@@ -248,6 +255,7 @@ upset_text_percentage = function(digits=0, sep='') {
 #' A large intersection size can be driven by a large number of members in a group;
 #' to account for that, one can divide the intersection size by the size of a union of the same groups.
 #' This cannot be calculated for the null intersection (observations which do not belong to either of the groups).
+#' @inheritParams intersection_size
 #' @export
 intersection_ratio = function(
   counts=TRUE,

@@ -10,3 +10,5 @@
 ^.python-version$
 ^.idea$
 ^codecov\.yml$
+movies.png
+requirements.txt
