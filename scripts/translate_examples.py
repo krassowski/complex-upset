@@ -18,7 +18,6 @@ with open(python_input_path) as f:
     for cell in nb_in['cells']:
         if cell['cell_type'] == 'code':
             first = cell['source'][0].strip()
-            #code = ''.join(cell['source'])
             if first.strip() == '%run Prepare_Python.ipynb':
                 cell['source'] = [
                     '%run Prepare_R.ipynb'
