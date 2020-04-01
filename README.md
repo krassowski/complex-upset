@@ -1,5 +1,6 @@
 # ComplexUpset
 
+[![Build Status](https://travis-ci.org/krassowski/complex-upset.svg?branch=master)](https://travis-ci.org/krassowski/complex-upset)
 [![DOI](https://zenodo.org/badge/236336935.svg)](https://zenodo.org/badge/latestdoi/236336935)
 
 Quick links: [Documentation](https://krassowski.github.io/complex-upset/) | [Installation](https://github.com/krassowski/complex-upset#Install) | [R examples](https://krassowski.github.io/complex-upset/articles/Examples_R.html) | [Python examples](https://krassowski.github.io/complex-upset/articles/Examples_Python.html)
