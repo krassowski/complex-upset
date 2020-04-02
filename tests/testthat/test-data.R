@@ -43,3 +43,85 @@ test_that("sort order parameter verification works", {
         fixed=TRUE
     )
 })
+
+
+test_that("upset_data() works", {
+    df = data.frame(
+        a=c(TRUE, FALSE),
+        b=c(TRUE, TRUE),
+        c=c(FALSE, TRUE),
+        d=c(FALSE, FALSE),
+        # x should be ignored
+        x=c(2, 5)
+    )
+
+    result = upset_data(df, c('a', 'b', 'c', 'd'))
+
+    expected_matrix = data.frame(
+        `a-b`=c(d=FALSE, a=TRUE, c=FALSE, b=TRUE),
+        `b-c`=c(d=FALSE, a=FALSE, c=TRUE, b=TRUE),
+        check.names = FALSE
+    )
+
+    expect_equal(
+        result$matrix,
+        expected_matrix
+    )
+})
+
+
+test_that("upset_data() sorts sets", {
+    # Note: the sort order is reversed, as it is reversed by coord_filp in upset_plot;
+    # Ideally, it should be corret there and reversed in upset_plot!
+
+    df = data.frame(
+        # a - 3 times
+        a=c(TRUE, TRUE, TRUE),
+        # b - 2 times
+        b=c(TRUE, TRUE, FALSE),
+        # c - 1 time
+        c=c(TRUE, FALSE, FALSE)
+    )
+
+    expect_equal(
+        upset_data(df, c('a', 'b', 'c'), sort_sets='descending')$sorted$groups,
+        c('c', 'b', 'a')
+    )
+
+    expect_equal(
+        upset_data(df, c('a', 'b', 'c'), sort_sets='ascending')$sorted$groups,
+        c('a', 'b', 'c')
+    )
+})
+
+
+
+test_that("upset_data() accepts non logical columns (and warns about conversion)", {
+    df = data.frame(
+        a=c(1, 0),
+        b=c(1, 1),
+        c=c(0, 1),
+        d=c(0, 0),
+        # x should be ignored
+        x=c(2, 5)
+    )
+
+    # TODO: should it use a warning instead (expect_warning)?
+    expect_output(
+        upset_data(df, c('a', 'b', 'c', 'd')),
+        regexp='Converting non-logical columns to binary: .*'
+    )
+
+    result = upset_data(df, c('a', 'b', 'c', 'd'))
+
+    expected_matrix = data.frame(
+        `a-b`=c(d=FALSE, a=TRUE, c=FALSE, b=TRUE),
+        `b-c`=c(d=FALSE, a=FALSE, c=TRUE, b=TRUE),
+        check.names = FALSE
+    )
+
+    expect_equal(
+        result$matrix,
+        expected_matrix
+    )
+})
