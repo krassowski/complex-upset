@@ -139,6 +139,10 @@ upset_data = function(
     sort_intersections_by='cardinality',
     union_count_column='union_size', intersection_count_column='intersection_size'
 ) {
+    if ('tbl' %in% class(data)) {
+        data = as.data.frame(data)
+    }
+
     check_sort(sort_sets)
     check_sort(sort_intersections)
 

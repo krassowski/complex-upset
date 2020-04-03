@@ -150,3 +150,27 @@ test_that("upset_data() filters by min_size, max_size, min_degree and max_degree
     result = upset_data(df, c('a', 'b', 'c', 'd'), min_degree=2, sort_intersections=FALSE)
     expect_equal(result$sorted$intersections, c('a-b-d'))
 })
+
+test_that("upset_data() works with a tibble", {
+    # see https://github.com/krassowski/complex-upset/issues/20
+    df = data.frame(
+        a=c(1, 0),
+        b=c(1, 1),
+        c=c(0, 1),
+        d=c(0, 0),
+        x=c(2, 5)
+    )
+
+    result = upset_data(tibble::tibble(df), c('a', 'b', 'c', 'd'))
+
+    expected_matrix = data.frame(
+        `a-b`=c(d=FALSE, a=TRUE, c=FALSE, b=TRUE),
+        `b-c`=c(d=FALSE, a=FALSE, c=TRUE, b=TRUE),
+        check.names = FALSE
+    )
+
+    expect_equal(
+        result$matrix,
+        expected_matrix
+    )
+})
