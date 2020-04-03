@@ -121,6 +121,8 @@ count_occurrences = function(x, symbol) {
 #' @param intersect which columns should be used to compose the intersection
 #' @param min_size minimal number of observations in an intersection for it to be included
 #' @param max_size maximal number of observations in an intersection for it to be included
+#' @param min_degree minimal degree of an intersection for it to be included
+#' @param max_degree minimal degree of an intersection for it to be included
 #' @param keep_empty_groups whether empty sets should be kept (including sets which are only empty after filtering by size)
 #' @param warn_when_dropping_groups whether a warning should be issued when empty sets are being removed
 #' @param sort_sets whether to sort the rows in the intersection matrix (descending sort by default); one of: `'ascending'`, `'descending'`, `FALSE`
@@ -130,7 +132,7 @@ count_occurrences = function(x, symbol) {
 #' @param intersection_count_column name of the column to store the intersection size (adjust if conflicts with your data)
 #' @export
 upset_data = function(
-    data, intersect, min_size=0, max_size=Inf,
+    data, intersect, min_size=0, max_size=Inf, min_degree=0, max_degree=Inf,
     keep_empty_groups=FALSE, warn_when_dropping_groups=TRUE,
     sort_sets='descending',
     sort_intersections='descending',
@@ -163,12 +165,21 @@ upset_data = function(
 
     intersections_by_size = table(data$intersection)
 
-    if(min_size > 0 || max_size != Inf) {
+    if (min_size > 0 || max_size != Inf || min_degree > 0 || max_degree != Inf) {
         intersections_by_size = intersections_by_size[
             (intersections_by_size >= min_size)
             &
             (intersections_by_size <= max_size)
         ]
+        if (min_degree > 0 || max_degree != Inf) {
+            degrees = count_occurrences(names(intersections_by_size), '-')
+            intersections_by_size = intersections_by_size[
+                (degrees >= min_degree)
+                &
+                (degrees <= max_degree)
+            ]
+        }
+
         data = data[data$intersection %in% names(intersections_by_size), ]
 
         # once the unused intersections are removed, we need to decide

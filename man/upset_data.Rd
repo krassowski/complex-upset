@@ -9,6 +9,8 @@ upset_data(
   intersect,
   min_size = 0,
   max_size = Inf,
+  min_degree = 0,
+  max_degree = Inf,
   keep_empty_groups = FALSE,
   warn_when_dropping_groups = TRUE,
   sort_sets = "descending",
@@ -26,6 +28,10 @@ upset_data(
 \item{min_size}{minimal number of observations in an intersection for it to be included}
 
 \item{max_size}{maximal number of observations in an intersection for it to be included}
+
+\item{min_degree}{minimal degree of an intersection for it to be included}
+
+\item{max_degree}{minimal degree of an intersection for it to be included}
 
 \item{keep_empty_groups}{whether empty sets should be kept (including sets which are only empty after filtering by size)}
 

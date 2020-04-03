@@ -125,3 +125,28 @@ test_that("upset_data() accepts non logical columns (and warns about conversion)
         expected_matrix
     )
 })
+
+test_that("upset_data() filters by min_size, max_size, min_degree and max_degree", {
+    # intersection: size, degree
+    # a-b:   2, 1
+    # b-c:   1, 1
+    # a-b-d: 1, 2
+    df = data.frame(
+        a=c(TRUE, FALSE, TRUE, TRUE),
+        b=c(TRUE, TRUE, TRUE, TRUE),
+        c=c(FALSE, TRUE, FALSE, FALSE),
+        d=c(FALSE, FALSE, FALSE, TRUE)
+    )
+
+    result = upset_data(df, c('a', 'b', 'c', 'd'), min_size=2, sort_intersections=FALSE)
+    expect_equal(result$sorted$intersections, c('a-b'))
+
+    result = upset_data(df, c('a', 'b', 'c', 'd'), max_size=1, sort_intersections=FALSE)
+    expect_equal(result$sorted$intersections, c('a-b-d', 'b-c'))
+
+    result = upset_data(df, c('a', 'b', 'c', 'd'), max_degree=1, sort_intersections=FALSE)
+    expect_equal(result$sorted$intersections, c('a-b', 'b-c'))
+
+    result = upset_data(df, c('a', 'b', 'c', 'd'), min_degree=2, sort_intersections=FALSE)
+    expect_equal(result$sorted$intersections, c('a-b-d'))
+})
