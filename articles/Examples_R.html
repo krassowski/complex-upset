@@ -34,7 +34,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">ComplexUpset</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.5.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.5.2</span>
       </span>
     </div>
 
@@ -100,14 +100,16 @@
 <div id="prepare-the-datasets" class="section level2">
 <h2 class="hasAnchor">
 <a href="#prepare-the-datasets" class="anchor"></a>Prepare the datasets</h2>
-<div class="sourceCode" id="cb2"><html><body><pre class="r"><span class="no">movies</span> <span class="kw">=</span> <span class="kw pkg">ggplot2movies</span><span class="kw ns">::</span><span class="no"><a href="https://rdrr.io/pkg/ggplot2movies/man/movies.html">movies</a></span>
+<div class="sourceCode" id="cb2"><html><body><pre class="r"><span class="no">movies</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/as.data.frame.html">as.data.frame</a></span>(<span class="kw pkg">ggplot2movies</span><span class="kw ns">::</span><span class="no"><a href="https://rdrr.io/pkg/ggplot2movies/man/movies.html">movies</a></span>)
 <span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span>(<span class="no">movies</span>, <span class="fl">3</span>)</pre></body></html></div>
 <table class="table">
 <caption>
-A tibble: 3 × 24
+A data.frame: 3 × 24
 </caption>
 <thead>
 <tr>
+<th>
+</th>
 <th scope="col">
 title
 </th>
@@ -173,6 +175,8 @@ Short
 </th>
 </tr>
 <tr>
+<th>
+</th>
 <th scope="col">
 &lt;chr&gt;
 </th>
@@ -240,6 +244,9 @@ Short
 </thead>
 <tbody>
 <tr>
+<th scope="row">
+1
+</th>
 <td>
 $
 </td>
@@ -304,6 +311,9 @@ NA
 </td>
 </tr>
 <tr>
+<th scope="row">
+2
+</th>
 <td>
 $1000 a Touchdown
 </td>
@@ -368,6 +378,9 @@ NA
 </td>
 </tr>
 <tr>
+<th scope="row">
+3
+</th>
 <td>
 $21 a Day Once a Month
 </td>
@@ -470,6 +483,19 @@ NA
 <caption>
 A matrix: 7 × 3 of type lgl
 </caption>
+<thead><tr>
+<th>
+</th>
+<th scope="col">
+1
+</th>
+<th scope="col">
+2
+</th>
+<th scope="col">
+3
+</th>
+</tr></thead>
 <tbody>
 <tr>
 <th scope="row">
@@ -1990,11 +2016,11 @@ Warning message:
 Warning message in (function (..., deparse.level = 1) :
 “number of columns of result is not a multiple of vector length (arg 2)”
 Warning message:
-“Duplicated aesthetics after name standardisation: na.rm”
+“Duplicated aesthetics after name standardisation: na.rm, orientation”
 Warning message in (function (..., deparse.level = 1) :
 “number of columns of result is not a multiple of vector length (arg 2)”
 Warning message:
-“Duplicated aesthetics after name standardisation: width, na.rm”
+“Duplicated aesthetics after name standardisation: width, na.rm, orientation”
 Warning message:
 “Duplicated aesthetics after name standardisation: na.rm”
 Warning message in grid.Call.graphics(C_rect, x$x, x$y, x$width, x$height, resolveHJust(x$just, :

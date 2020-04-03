@@ -75,7 +75,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">ComplexUpset</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.5.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.5.2</span>
       </span>
     </div>
 
@@ -140,6 +140,8 @@
   <span class='no'>intersect</span>,
   <span class='kw'>min_size</span> <span class='kw'>=</span> <span class='fl'>0</span>,
   <span class='kw'>max_size</span> <span class='kw'>=</span> <span class='fl'>Inf</span>,
+  <span class='kw'>min_degree</span> <span class='kw'>=</span> <span class='fl'>0</span>,
+  <span class='kw'>max_degree</span> <span class='kw'>=</span> <span class='fl'>Inf</span>,
   <span class='kw'>keep_empty_groups</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
   <span class='kw'>warn_when_dropping_groups</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
   <span class='kw'>sort_sets</span> <span class='kw'>=</span> <span class='st'>"descending"</span>,
@@ -167,6 +169,14 @@
     <tr>
       <th>max_size</th>
       <td><p>maximal number of observations in an intersection for it to be included</p></td>
+    </tr>
+    <tr>
+      <th>min_degree</th>
+      <td><p>minimal degree of an intersection for it to be included</p></td>
+    </tr>
+    <tr>
+      <th>max_degree</th>
+      <td><p>minimal degree of an intersection for it to be included</p></td>
     </tr>
     <tr>
       <th>keep_empty_groups</th>
