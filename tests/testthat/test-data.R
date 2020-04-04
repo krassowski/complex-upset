@@ -45,17 +45,35 @@ test_that("sort order parameter verification works", {
 })
 
 
-test_that("upset_data() works", {
-    df = data.frame(
-        a=c(TRUE, FALSE),
-        b=c(TRUE, TRUE),
-        c=c(FALSE, TRUE),
-        d=c(FALSE, FALSE),
-        # x should be ignored
-        x=c(2, 5)
-    )
+test_df = data.frame(
+    a=c(TRUE, FALSE),
+    b=c(TRUE, TRUE),
+    c=c(FALSE, TRUE),
+    d=c(FALSE, FALSE),
+    # x should be ignored
+    x=c(2, 5)
+)
 
-    result = upset_data(df, c('a', 'b', 'c', 'd'))
+
+expected_intersections_frame = read.table(
+    text = (
+        "value intersection group
+        FALSE          a-b     d
+         TRUE          a-b     a
+        FALSE          a-b     c
+         TRUE          a-b     b
+        FALSE          b-c     d
+        FALSE          b-c     a
+         TRUE          b-c     c
+         TRUE          b-c     b"
+    ),
+    header = TRUE,
+    stringsAsFactors = TRUE
+)
+
+test_that("upset_data() works", {
+
+    result = upset_data(test_df, c('a', 'b', 'c', 'd'))
 
     expected_matrix = data.frame(
         `a-b`=c(d=FALSE, a=TRUE, c=FALSE, b=TRUE),
@@ -66,6 +84,23 @@ test_that("upset_data() works", {
     expect_equal(
         result$matrix,
         expected_matrix
+    )
+
+    expect_equal(
+        result$matrix_frame,
+        expected_intersections_frame
+    )
+})
+
+
+test_that("factors are consistently returned by upset_data()", {
+    options(stringsAsFactors=F)
+
+    result = upset_data(test_df, c('a', 'b', 'c', 'd'))
+
+    expect_equal(
+        result$matrix_frame,
+        expected_intersections_frame
     )
 })
 
