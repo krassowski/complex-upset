@@ -1,8 +1,19 @@
+movies = ggplot2movies::movies
+genres = c('Action', 'Animation', 'Comedy', 'Drama', 'Documentary', 'Romance')
+
+
+test_that("Simple plot works", {
+    expect_warning(
+        upset(movies, genres, min_size=100),
+        regexp=NA
+    )
+
+    print(upset(movies, genres, min_size=100))
+})
+
+
 test_that("The example plot works", {
     library(ggplot2)
-
-    movies = ggplot2movies::movies
-    genres = c('Action', 'Animation', 'Comedy', 'Drama', 'Documentary', 'Romance')
 
     example_plot = function() {
         upset(

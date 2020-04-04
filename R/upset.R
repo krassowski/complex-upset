@@ -329,9 +329,11 @@ queries_for = function(queries, component) {
         columns = union(columns, names(query))
     }
 
-    for (row_id in 1:length(df)) {
-        row = df[[row_id]]
-        df[[row_id]] = row[columns]
+    if (length(df) != 0) {
+        for (row_id in 1:length(df)) {
+            row = df[[row_id]]
+            df[[row_id]] = row[columns]
+        }
     }
 
     as.data.frame(do.call(rbind, df))
