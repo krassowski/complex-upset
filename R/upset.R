@@ -420,7 +420,10 @@ highlight_layer = function(geom, data, args=list()) {
 #' upset_query(set='Drama', fill='blue')
 upset_query = function(set=NULL, intersect=NULL, only_components=NULL, ...) {
     if (!is.null(set) && !is.null(intersect)) {
-        stop('pass set or intersect, not both')
+        stop('Please pass either "set" or "intersect", not both')
+    }
+    if (is.null(set) && is.null(intersect)) {
+        stop('Please pass "set" or "intersect"')
     }
     list(set=set, intersect=intersect, only_components=only_components, ...)
 }

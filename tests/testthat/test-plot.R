@@ -50,3 +50,30 @@ test_that("The example plot works", {
 
     print(example_plot())
 })
+
+
+test_that("upset_query requires set or intersect, and not both", {
+    # accepts set
+    expect_error(
+        upset_query(set='Drama'),
+        NA
+    )
+
+    # accepts intersect
+    expect_error(
+        upset_query(intersect=c('Romance', 'Drama')),
+        NA
+    )
+
+    # does not accept set and intersect together
+    expect_error(
+        upset_query(set='Drama', intersect=c('Romance', 'Drama')),
+        'Please pass either "set" or "intersect", not both'
+    )
+
+    # requires are least set or intersect is present
+    expect_error(
+        upset_query(),
+        'Please pass "set" or "intersect"'
+    )
+})
