@@ -16,8 +16,7 @@ test_that("The example plot works", {
                 'Rating'=list(
                     aes=aes(x=intersection, y=rating),
                     geom=list(
-                        # if you do not want to install ggbeeswarm, you can use geom_jitter
-                        ggbeeswarm::geom_quasirandom(aes(color=log10(votes))),
+                        geom_jitter(aes(color=log10(votes))),
                         geom_violin(width=1.1, alpha=0.5)
                     )
                 )
