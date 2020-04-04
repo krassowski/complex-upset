@@ -485,7 +485,7 @@ add_highlights_to_geoms = function(geoms, highlight_data, annotation_queries) {
                     warning(paste0('A param in both geom and stat differs in value: ', shared_param))
                     next
                 }
-                geom$stat_params[shared_param] = NULL
+                geom$stat_params = geom$stat_params[names(geom$stat_params) != shared_param]
             }
         }
 
