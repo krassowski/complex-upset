@@ -317,6 +317,8 @@ intersection_ratio = function(
 
 queries_for = function(queries, component) {
     df = list()
+    columns = character()
+
     for (query in queries) {
         if (!is.null(query$only_components) && !(component %in% query$only_components)) {
             next
@@ -324,7 +326,14 @@ queries_for = function(queries, component) {
         query$method = ifelse(is.null(query$intersect), 'set', 'intersect')
         query$query = query[[query$method]]
         df[[length(df) + 1]] = query
+        columns = union(columns, names(query))
     }
+
+    for (row_id in 1:length(df)) {
+        row = df[[row_id]]
+        df[[row_id]] = row[columns]
+    }
+
     as.data.frame(do.call(rbind, df))
 }
 
@@ -452,6 +461,52 @@ eval_if_needed = function(layers, ...) {
 }
 
 
+add_highlights_to_geoms = function(geoms, highlight_data, annotation_queries) {
+    geoms_plus_highlights = list()
+
+    for (geom in geoms) {
+        geoms_plus_highlights[[length(geoms_plus_highlights) + 1]] = geom
+        if (is.null(geom$geom)) {
+            # TODO and on accepted geoms list if any
+            next
+        }
+        highlight_geom = geom
+
+        params_in_geom_and_stat = intersect(
+            names(geom$geom_params),
+            names(geom$stat_params)
+        )
+
+        # if there is a param in both stat and geom, and value is the same, remove it from stat params
+        # as otherwise we will get a spurious warning from ggplot: "Duplicated aesthetics after name standardisation"
+        if (length(params_in_geom_and_stat) != 0) {
+            for (shared_param in params_in_geom_and_stat) {
+                if (!identical(geom$geom_params[[shared_param]], geom$stat_params[[shared_param]])) {
+                    warning(paste0('A param in both geom and stat differs in value: ', shared_param))
+                    next
+                }
+                geom$stat_params[shared_param] = NULL
+            }
+        }
+
+        highlight_geom$geom_params = modifyList(
+            geom$geom_params,
+            extract_geom_params_for(annotation_queries, geom)
+        )
+
+        geoms_plus_highlights[[length(geoms_plus_highlights) + 1]] = layer(
+            geom=highlight_geom$geom,
+            params=c(geom$aes_params, highlight_geom$geom_params, highlight_geom$stat_params),
+            stat=highlight_geom$stat,
+            data=highlight_data,
+            mapping=highlight_geom$mapping,
+            position=highlight_geom$position
+        )
+    }
+    geoms_plus_highlights
+}
+
+
 #' Compose an UpSet plot
 #' @inheritParams upset_data
 #' @param name the label shown below the intersection matrix
@@ -552,30 +607,7 @@ upset = function(
 
     if (nrow(annotation_queries) != 0) {
         highlight_data = merge(data$with_sizes, annotation_queries, by.x='intersection', by.y='intersect', all.y=TRUE)
-
-        geoms_plus_highlights = list()
-
-        for (geom in geoms) {
-            geoms_plus_highlights[[length(geoms_plus_highlights) + 1]] = geom
-            if (is.null(geom$geom)) { # TODO and on accepted geoms list if any
-                next
-            }
-            highlight_geom = geom
-
-            highlight_geom$geom_params = modifyList(
-                geom$geom_params,
-                extract_geom_params_for(annotation_queries, geom)
-            )
-
-            geoms_plus_highlights[[length(geoms_plus_highlights) + 1]] = layer(
-
-                geom=highlight_geom$geom, params=c(highlight_geom$geom_params, highlight_geom$stat_params),
-                stat=highlight_geom$stat,
-                data=highlight_data,
-                mapping=highlight_geom$mapping,
-                position=highlight_geom$position
-            )
-        }
+        geoms_plus_highlights = add_highlights_to_geoms(geoms, highlight_data, annotation_queries)
     } else {
         geoms_plus_highlights = geoms
     }
