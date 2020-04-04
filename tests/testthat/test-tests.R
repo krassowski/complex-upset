@@ -24,4 +24,9 @@ test_that("upset_test() does not fail", {
         as.character(result$test),
         'Kruskal-Wallis rank sum test'
     )
+
+    expect_equal(
+        result$p.value,
+        0.3173105
+    )
 })

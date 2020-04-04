@@ -29,6 +29,11 @@ compare_between_intersections = function(data, intersect, test=kruskal.test, tes
     # TODO: there should be another test:
     #     variable ~ group_1 + group_2 + ... + group_n
     #  to assess "dose effect"
+
+    # only needed for compatibility with 3.5.x
+    # see: https://stackoverflow.com/q/18139195/6646912
+    isect$intersection = as.factor(isect$intersection)
+
     result = var_test(as.formula(paste(variable, '~ intersection')), data=isect)
 
     results[[length(results) + 1]] = list(
