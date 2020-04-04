@@ -27,7 +27,7 @@ compare_between_intersections = function(data, intersect, test=kruskal.test, tes
       var_test = test
     }
     # TODO: there should be another test:
-    #     varaible ~ group_1 + group_2 + ... + group_n
+    #     variable ~ group_1 + group_2 + ... + group_n
     #  to assess "dose effect"
     result = var_test(as.formula(paste(variable, '~ intersection')), data=isect)
 
