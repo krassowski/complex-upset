@@ -479,13 +479,14 @@ add_highlights_to_geoms = function(geoms, highlight_data, annotation_queries) {
 
         # if there is a param in both stat and geom, and value is the same, remove it from stat params
         # as otherwise we will get a spurious warning from ggplot: "Duplicated aesthetics after name standardisation"
+        stat_params = geom$stat_params
         if (length(params_in_geom_and_stat) != 0) {
             for (shared_param in params_in_geom_and_stat) {
                 if (!identical(geom$geom_params[[shared_param]], geom$stat_params[[shared_param]])) {
                     warning(paste0('A param in both geom and stat differs in value: ', shared_param))
                     next
                 }
-                geom$stat_params = geom$stat_params[names(geom$stat_params) != shared_param]
+                stat_params = stat_params[names(stat_params) != shared_param]
             }
         }
 
@@ -496,7 +497,7 @@ add_highlights_to_geoms = function(geoms, highlight_data, annotation_queries) {
 
         geoms_plus_highlights[[length(geoms_plus_highlights) + 1]] = layer(
             geom=highlight_geom$geom,
-            params=c(geom$aes_params, highlight_geom$geom_params, highlight_geom$stat_params),
+            params=c(geom$aes_params, highlight_geom$geom_params, stat_params),
             stat=highlight_geom$stat,
             data=highlight_data,
             mapping=highlight_geom$mapping,
