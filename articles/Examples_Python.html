@@ -34,7 +34,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">ComplexUpset</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.5.6</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.5.7</span>
       </span>
     </div>
 
@@ -645,7 +645,11 @@ False
 <div id="basic-usage" class="section level2">
 <h2 class="hasAnchor">
 <a href="#basic-usage" class="anchor"></a>0. Basic usage</h2>
-<p>There are two required arguments: - the first argument is expected to be a dataframe with both group indicator variables and covariates, - the second argument specifies a list with names of column which indicate the group membership.</p>
+<p>There are two required arguments:</p>
+<ul>
+<li>the first argument is expected to be a dataframe with both group indicator variables and covariates,</li>
+<li>the second argument specifies a list with names of column which indicate the group membership.</li>
+</ul>
 <p>Additional arguments can be provided, such as <code>name</code> (specifies xlab for intersection matrix) or <code>width_ratio</code> (specifies how much space should be occupied by the set size panel). Other such arguments are discussed at length later in this document.</p>
 <div class="sourceCode" id="cb9"><html><body><pre class="r">%%R -w 800 -h 300
 upset(movies, genres, name='genre', width_ratio=0.1)</pre></body></html></div>
@@ -717,7 +721,7 @@ upset(
 )</pre></body></html></div>
 <p>[1] “Dropping empty groups: Short”</p>
 <p><img src="Examples_Python_files/Examples_Python_28_1.png"></p>
-<p>You can also barplots to demonstrate difference in proportions of categorical variables:</p>
+<p>You can also use barplots to demonstrate differences in proportions of categorical variables:</p>
 <div class="sourceCode" id="cb13"><html><body><pre class="r">%%R -w 800 -h 500
 
 upset(
@@ -1326,7 +1330,11 @@ tail(bartlett_results)</pre></body></html></div>
 <div id="ignore-specific-variables" class="section level3">
 <h3 class="hasAnchor">
 <a href="#ignore-specific-variables" class="anchor"></a>2.1 Ignore specific variables</h3>
-<p>You may want to exclude variables which are: - highly correlated and therefore interfering with the FDR calculation, or - simply irrelevant</p>
+<p>You may want to exclude variables which are:</p>
+<ul>
+<li>highly correlated and therefore interfering with the FDR calculation, or</li>
+<li>simply irrelevant</li>
+</ul>
 <p>In the movies example, the title variable is not a reasonable thing to compare. We can ignore it using:</p>
 <div class="sourceCode" id="cb18"><html><body><pre class="r">%%R
 # note: title no longer present
@@ -1444,7 +1452,10 @@ upset(
 <div id="showing-intersection-sizeunion-size-ratio" class="section level3">
 <h3 class="hasAnchor">
 <a href="#showing-intersection-sizeunion-size-ratio" class="anchor"></a>3.6 Showing intersection size/union size ratio</h3>
-<p>While this cannot be computed for the null intersection (observations which do not belong to either of the groups), it is usefull to visualise which intersections might be large due to the chance (i.e. corrsponding groups being proportionally larger) alone:</p>
+<p>It can be useful to visualise which intersections are larger than expected by chance (assuming equal probability of belonging to multiple sets); this can be achieved using the intersection size/union size ratio.</p>
+<blockquote>
+<p>Note: this ratio cannot be computed for the null intersection (observations which do not belong to either of the groups), as denominator would be 0.</p>
+</blockquote>
 <div class="sourceCode" id="cb25"><html><body><pre class="r">%%R -w 800 -h 600
 upset(
     movies, genres, name='genre', width_ratio=0.1, min_size=10,
@@ -1481,7 +1492,7 @@ upset(
 <div id="rotate-labels" class="section level3">
 <h3 class="hasAnchor">
 <a href="#rotate-labels" class="anchor"></a>4.1 Rotate labels</h3>
-<p>To rotate the labels modify correposnding theme:</p>
+<p>To rotate the labels modify corresponding theme:</p>
 <div class="sourceCode" id="cb27"><html><body><pre class="r">%%R -w 400 -h 300
 upset(
     movies, genres,
@@ -1636,7 +1647,7 @@ upset(
 <div id="adding-title" class="section level3">
 <h3 class="hasAnchor">
 <a href="#adding-title" class="anchor"></a>Adding title</h3>
-<p>Adding title with <code>ggtitle</code> with add it to the intesection matrix:</p>
+<p>Adding title with <code>ggtitle</code> with add it to the intersection matrix:</p>
 <div class="sourceCode" id="cb36"><html><body><pre class="r">%%R -w 800 -h 400
 upset(movies, genres, min_size=10) + ggtitle('Intersection matrix title')</pre></body></html></div>
 <p>[1] “Dropping empty groups: Short”</p>
