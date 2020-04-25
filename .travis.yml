@@ -6,11 +6,8 @@ r:
   - devel
 
 before_script:
-    - Rscript -e 'install.packages("pkgdown")'
-    - wget -qO- https://bootstrap.pypa.io/get-pip.py | sudo python3
-    - sudo apt-get install python3-rpy2
-    - python3 -m pip install --user jupyter nbconvert
-    - scripts/document.sh
+    - scripts/translate_examples.py Examples.ipynb _R_Examples.ipynb
+    - scripts/expand_run_magic.py _R_Examples.ipynb Examples_R.ipynb
 
 after_success:
     - Rscript -e 'covr::codecov()'
