@@ -4,8 +4,8 @@ expect_doppelganger = vdiffr::expect_doppelganger
 
 test_that("The examples in documentation work as expected", {
 
-    examples_notebook = jsonlite::fromJSON('../../vignettes/Examples_R.ipynb')
-    cells = jsonlite::fromJSON('../../vignettes/Examples_R.ipynb')[['cells']]
+    examples_notebook = jsonlite::fromJSON(system.file('Examples_R.ipynb', package='ComplexUpset'))
+    cells = examples_notebook[['cells']]
 
     example_title = 'Example'
     last_title = example_title
