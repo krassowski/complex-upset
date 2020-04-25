@@ -19,7 +19,8 @@ Suggests:
     rmarkdown,
     covr,
     tibble,
-    ggplot2movies
+    ggplot2movies,
+    vdiffr
 Imports:
     ggplot2,
     patchwork
