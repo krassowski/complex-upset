@@ -5,6 +5,13 @@ r:
   - release
   - devel
 
+before_cache:
+    - Rscript -e 'install.packages("pkgdown")'
+    - python3 -m pip install --user jupyter nbconvert
+
+before_script:
+    - scripts/document.sh
+
 after_success:
     - Rscript -e 'covr::codecov()'
 

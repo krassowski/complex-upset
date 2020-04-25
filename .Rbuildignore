@@ -12,3 +12,4 @@
 ^codecov\.yml$
 movies.png
 requirements.txt
+document.sh
