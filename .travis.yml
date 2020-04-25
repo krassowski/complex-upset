@@ -6,8 +6,10 @@ r:
   - devel
 
 before_script:
-    - scripts/translate_examples.py Examples.ipynb _R_Examples.ipynb
-    - scripts/expand_run_magic.py _R_Examples.ipynb Examples_R.ipynb
+    - cd vignettes
+    - ../scripts/translate_examples.py Examples.ipynb _R_Examples.ipynb
+    - ../scripts/expand_run_magic.py _R_Examples.ipynb Examples_R.ipynb
+    - cd ..
 
 after_success:
     - Rscript -e 'covr::codecov()'
