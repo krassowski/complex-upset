@@ -8,7 +8,7 @@ r_output_path = sys.argv[2]
 
 prepare_changed = False
 
-print(f'Will translate Python exampels from {python_input_path} into R examples')
+print('Will translate Python examples from {python_input_path} into R examples'.format(python_input_path=python_input_path))
 
 with open(python_input_path) as f:
     nb_in = json.load(f)
@@ -37,12 +37,12 @@ with open(python_input_path) as f:
                     if round(w) == w:
                         w = int(w)
                     else:
-                        w = f'{w:.1f}'
+                        w = '{w:.1f}'.format(w=w)
                     if round(h) == h:
                         h = int(h)
                     else:
-                        h = f'{h:.1f}'
-                    first = f'set_size({w}, {h})\n'
+                        h = '{h:.1f}'.format(h=h)
+                    first = 'set_size({w}, {h})\n'.format(w=w, h=h)
                 cell['source'][0] = first
             elif first.startswith('%R'): 
                 first = first[2:].strip()
@@ -70,4 +70,4 @@ with open(r_output_path, 'w') as f:
     nb_in['cells'] = new_cells
     json.dump(nb_in, f)
 
-print(f'Saved as {r_output_path}')
+print('Saved as {r_output_path}'.format(r_output_path=r_output_path))
