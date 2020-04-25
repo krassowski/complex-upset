@@ -5,11 +5,9 @@ r:
   - release
   - devel
 
-before_cache:
+before_script:
     - Rscript -e 'install.packages("pkgdown")'
     - python3 -m pip install --user jupyter nbconvert
-
-before_script:
     - scripts/document.sh
 
 after_success:
