@@ -27,10 +27,10 @@ with open(input_path) as f:
             new_cells.append(cell)
 
 assert expanded
-print(f'Expanded {expanded} run magics')
+print('Expanded {expanded} run magics'.format(expanded=expanded))
 
 with open(output_path, 'w') as f:
     nb_in['cells'] = new_cells
     json.dump(nb_in, f)
 
-print(f'Saved as {output_path}')
+print('Saved as {output_path}'.format(output_path=output_path))

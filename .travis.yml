@@ -5,6 +5,9 @@ r:
   - release
   - devel
 
+before_script:
+    - scripts/prepare_for_tests.sh
+
 after_success:
     - Rscript -e 'covr::codecov()'
 
