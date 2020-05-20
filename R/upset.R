@@ -555,7 +555,7 @@ upset = function(
   intersections_sorted = rev(data$sorted$intersections)
   intersections_limits = intersections_sorted[intersections_sorted %in% data$plot_intersections_subset]
 
-  scale_intersections = scale_x_discrete(limits=intersections_sorted)
+  scale_intersections = scale_x_discrete(limits=intersections_limits)
 
   sets_limits = data$sorted$groups[data$sorted$groups %in% data$plot_sets_subset]
 
