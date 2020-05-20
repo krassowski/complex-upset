@@ -173,17 +173,22 @@ test_that("upset_data() filters by min_size, max_size, min_degree and max_degree
         d=c(FALSE, FALSE, FALSE, TRUE)
     )
 
-    result = upset_data(df, c('a', 'b', 'c', 'd'), min_size=2, sort_intersections=FALSE)
+    result = upset_data(df, c('a', 'b', 'c', 'd'), min_size=2, sort_intersections=FALSE, min_max_early=TRUE)
     expect_equal(result$sorted$intersections, c('a-b'))
+    expect_equal(result$plot_intersections_subset, c('a-b'))
+
+    result = upset_data(df, c('a', 'b', 'c', 'd'), min_size=2, sort_intersections=FALSE, min_max_early=FALSE)
+    expect_equal(result$sorted$intersections, c('a-b', 'a-b-d', 'b-c'))
+    expect_equal(result$plot_intersections_subset, c('a-b'))
 
     result = upset_data(df, c('a', 'b', 'c', 'd'), max_size=1, sort_intersections=FALSE)
-    expect_equal(result$sorted$intersections, c('a-b-d', 'b-c'))
+    expect_equal(result$plot_intersections_subset, c('a-b-d', 'b-c'))
 
     result = upset_data(df, c('a', 'b', 'c', 'd'), max_degree=1, sort_intersections=FALSE)
-    expect_equal(result$sorted$intersections, c('a-b', 'b-c'))
+    expect_equal(result$plot_intersections_subset, c('a-b', 'b-c'))
 
     result = upset_data(df, c('a', 'b', 'c', 'd'), min_degree=2, sort_intersections=FALSE)
-    expect_equal(result$sorted$intersections, c('a-b-d'))
+    expect_equal(result$plot_intersections_subset, c('a-b-d'))
 })
 
 test_that("upset_data() works with a tibble", {

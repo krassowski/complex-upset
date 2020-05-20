@@ -552,6 +552,13 @@ upset = function(
 
   data = upset_data(data, intersect, ...)
 
+  intersections_sorted = rev(data$sorted$intersections)
+  intersections_limits = intersections_sorted[intersections_sorted %in% data$plot_intersections_subset]
+
+  scale_intersections = scale_x_discrete(limits=intersections_sorted)
+
+  sets_limits = data$sorted$groups[data$sorted$groups %in% data$plot_sets_subset]
+
   show_overall_sizes = !(inherits(set_sizes, 'logical') && set_sizes == FALSE)
 
   matrix_intersect_queries = intersect_queries(queries_for(queries, 'intersections_matrix'), data)
@@ -594,8 +601,8 @@ upset = function(
         )
     )
     + xlab(name)
-    + scale_y_discrete(limits=data$sorted$groups, labels=labeller)
-    + scale_x_discrete(limits=rev(data$sorted$intersections))
+    + scale_y_discrete(limits=sets_limits, labels=labeller)
+    + scale_intersections
     + themes$intersections_matrix
   )
 
@@ -631,7 +638,7 @@ upset = function(
     rows[[length(rows) + 1]] = (
       ggplot(data$with_sizes, annotation$aes)
       + geoms_plus_highlights
-      + scale_x_discrete(limits=rev(data$sorted$intersections))
+      + scale_intersections
       + xlab(name)
       + ylab(name)
       + theme
@@ -647,7 +654,7 @@ upset = function(
         + matrix_background_stripes(data, stripes, 'vertical')
         + coord_flip()
         + eval_if_needed(set_sizes, overall_sizes_highlights_data=overall_sizes_highlights_data)
-        + scale_x_discrete(limits=data$sorted$groups)
+        + scale_x_discrete(limits=sets_limits)
         + themes$overall_sizes
       )
 

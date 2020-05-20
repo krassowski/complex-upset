@@ -1,7 +1,7 @@
 Package: ComplexUpset
 Type: Package
 Title: Create Complex UpSet Plots Using ggplot2 Components
-Version: 0.5.7
+Version: 0.5.8
 Authors@R: person(
   "Michał", "Krassowski", email = "michal.krassowski@wrh.ox.ac.uk", role = c("aut", "cre"), 
   comment = c(ORCID = "0000-0002-9638-7785"))
