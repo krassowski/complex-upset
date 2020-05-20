@@ -145,7 +145,7 @@ trim_intersections = function(intersections_by_size, min_size=0, max_size=Inf, m
 #' @param sort_sets whether to sort the rows in the intersection matrix (descending sort by default); one of: `'ascending'`, `'descending'`, `FALSE`
 #' @param sort_intersections whether to sort the columns in the intersection matrix (descending sort by default); one of: `'ascending'`, `'descending'`, `FALSE`
 #' @param sort_intersections_by the mode of sorting, the size of the intersection (cardinality) by default; one of: `'cardinality'`, `'degree'`, `'ratio'`
-#' @min_max_early whether the min and max limits should be applied early (for faster plotting), or late (for accurate depiction of ratios)
+#' @param min_max_early whether the min and max limits should be applied early (for faster plotting), or late (for accurate depiction of ratios)
 #' @param union_count_column name of the column to store the union size (adjust if conflicts with your data)
 #' @param intersection_count_column name of the column to store the intersection size (adjust if conflicts with your data)
 #' @export

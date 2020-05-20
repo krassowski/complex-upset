@@ -16,6 +16,7 @@ upset_data(
   sort_sets = "descending",
   sort_intersections = "descending",
   sort_intersections_by = "cardinality",
+  min_max_early = TRUE,
   union_count_column = "union_size",
   intersection_count_column = "intersection_size"
 )
@@ -42,6 +43,8 @@ upset_data(
 \item{sort_intersections}{whether to sort the columns in the intersection matrix (descending sort by default); one of: \code{'ascending'}, \code{'descending'}, \code{FALSE}}
 
 \item{sort_intersections_by}{the mode of sorting, the size of the intersection (cardinality) by default; one of: \code{'cardinality'}, \code{'degree'}, \code{'ratio'}}
+
+\item{min_max_early}{whether the min and max limits should be applied early (for faster plotting), or late (for accurate depiction of ratios)}
 
 \item{union_count_column}{name of the column to store the union size (adjust if conflicts with your data)}
 
