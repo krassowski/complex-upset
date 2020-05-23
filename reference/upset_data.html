@@ -75,7 +75,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">ComplexUpset</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.5.7</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.5.9</span>
       </span>
     </div>
 
@@ -147,6 +147,7 @@
   <span class='kw'>sort_sets</span> <span class='kw'>=</span> <span class='st'>"descending"</span>,
   <span class='kw'>sort_intersections</span> <span class='kw'>=</span> <span class='st'>"descending"</span>,
   <span class='kw'>sort_intersections_by</span> <span class='kw'>=</span> <span class='st'>"cardinality"</span>,
+  <span class='kw'>min_max_early</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
   <span class='kw'>union_count_column</span> <span class='kw'>=</span> <span class='st'>"union_size"</span>,
   <span class='kw'>intersection_count_column</span> <span class='kw'>=</span> <span class='st'>"intersection_size"</span>
 )</pre>
@@ -197,6 +198,10 @@
     <tr>
       <th>sort_intersections_by</th>
       <td><p>the mode of sorting, the size of the intersection (cardinality) by default; one of: <code>'cardinality'</code>, <code>'degree'</code>, <code>'ratio'</code></p></td>
+    </tr>
+    <tr>
+      <th>min_max_early</th>
+      <td><p>whether the min and max limits should be applied early (for faster plotting), or late (for accurate depiction of ratios)</p></td>
     </tr>
     <tr>
       <th>union_count_column</th>

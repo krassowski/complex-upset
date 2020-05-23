@@ -34,7 +34,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="index.html">ComplexUpset</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.5.7</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.5.9</span>
       </span>
     </div>
 
@@ -156,16 +156,28 @@
 <a href="https://github.com/hms-dbmi/UpSetR">UpSetR</a> is a powerful tool and the pioneer in the UpSet visualisations; it was not designed to be extended with ggplot components. Unfortunately, the repository is no longer active (for two years now).</li>
 <li>
 <a href="https://github.com/const-ae/ggupset">ggupset</a> uses scales to convert a single plot to upsets plots, e.g. with <code>scale_x_upset</code> - a really nice approach, recommended for simple ggplot.</li>
-<li>a cowplot-based upset was demonstrated in an <a href="https://rpubs.com/alexeilutay/upsetr">online publication</a>, however cowplot (a great tool at the time) got superceed by even greater tool: <a href="https://github.com/thomasp85/patchwork">pathwork</a>, which is what is used by ComplexUpset.</li>
+<li>a cowplot-based upset was demonstrated in an <a href="https://rpubs.com/alexeilutay/upsetr">online publication</a>, however cowplot (a great tool at the time) got superseded by even greater tool: <a href="https://github.com/thomasp85/patchwork">pathwork</a>, which is what is used by ComplexUpset.</li>
 <li>
 <a href="https://github.com/jokergoo/ComplexHeatmap">ComplexHeatmap</a> also offers a way to generate <a href="https://jokergoo.github.io/ComplexHeatmap-reference/book/upset-plot.html">UpSet plots with annotations</a>; while not ggplot2-centered, it provides extensive customization options, with a clear API. It may be the best choice if you already use it for heatmaps.</li>
 </ul>
 <p>Use whichever tool you find the most useful for your particular use. The rational of making this repository public is not only to share the code, but also to demonstrate how simple it is now to create complex visualisations with patchwork (without the need to learn the ggplot internals).</p>
 <p>For the interactive use, check out the <a href="https://github.com/VCG/upset">VCG/upset</a>. Regardless of the tool chosen, you may want to cite <a href="https://dx.doi.org/10.1109/TVCG.2014.2346248">(Lex et al, 2014)</a> when using UpSet plots, especially in fields still dominated by Venn diagrams.</p>
 </div>
-<div id="acknowledgements" class="section level2">
+<div id="testing" class="section level2">
 <h2 class="hasAnchor">
-<a href="#acknowledgements" class="anchor"></a>Acknowledgements</h2>
+<a href="#testing" class="anchor"></a>Testing</h2>
+<p>The unit tests are run with testhat, and the visual “doppelganger” tests use vdiffr.</p>
+<p>The test cases for visual tests are auto-generated from the examples in the documentation; after changing or adding an example, please run:</p>
+<ul>
+<li>
+<code>scripts/prepare_for_tests.sh</code> to generate updated test cases, and</li>
+<li>
+<code>scripts/manage_visual_tests.sh</code> to validate the generated images.</li>
+</ul>
+</div>
+<div id="acknowledgments" class="section level2">
+<h2 class="hasAnchor">
+<a href="#acknowledgments" class="anchor"></a>Acknowledgments</h2>
 <p>Originally developed in course of a DPhil programme in Women’s &amp; Reproductive Health at <a href="https://github.com/OxfordNuffieldWRH">OxfordNuffieldWRH</a>.</p>
 </div>
 </div>

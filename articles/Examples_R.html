@@ -34,7 +34,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">ComplexUpset</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.5.7</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.5.9</span>
       </span>
     </div>
 
@@ -628,8 +628,14 @@ TRUE
     <span class="fu"><a href="../reference/upset.html">upset</a></span>(<span class="no">movies</span>, <span class="no">genres</span>, <span class="kw">name</span><span class="kw">=</span><span class="st">'genre'</span>, <span class="kw">width_ratio</span><span class="kw">=</span><span class="fl">0.1</span>, <span class="kw">min_size</span><span class="kw">=</span><span class="fl">10</span>, <span class="kw">keep_empty_groups</span><span class="kw">=</span><span class="fl">TRUE</span>, <span class="kw">wrap</span><span class="kw">=</span><span class="fl">TRUE</span>, <span class="kw">set_sizes</span><span class="kw">=</span><span class="fl">FALSE</span>)
     + <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">ggtitle</a></span>(<span class="st">'With empty groups'</span>)
 )</pre></body></html></div>
-<pre><code>[1] "Dropping empty groups: Short"</code></pre>
-<p><img src="Examples_R_files/Examples_R_14_1.png"></p>
+<pre><code>[1] "Dropping empty groups: Short"
+
+
+Warning message:
+“Removed 62 rows containing non-finite values (stat_count).”
+Warning message:
+“Removed 62 rows containing non-finite values (stat_count).”</code></pre>
+<p><img src="Examples_R_files/Examples_R_14_2.png"></p>
 <p>When empty columns are detected a warning will be issued. The silence it, pass <code>warn_when_dropping_groups=FALSE</code>.</p>
 </div>
 </div>
@@ -1661,34 +1667,79 @@ NA
 <blockquote>
 <p>Note: this ratio cannot be computed for the null intersection (observations which do not belong to either of the groups), as denominator would be 0.</p>
 </blockquote>
+<blockquote>
+<p>Important note: with early min/max trimming the intersection ratio uses the trimmed denominator. In most cases you probably want to set <code>min_max_early=FALSE</code> when plotting ratios with any kind of filtering imposed.</p>
+</blockquote>
 <div class="sourceCode" id="cb34"><html><body><pre class="r"><span class="fu">set_size</span>(<span class="fl">8</span>, <span class="fl">6</span>)
-<span class="fu"><a href="../reference/upset.html">upset</a></span>(
+<span class="fu"><a href="https://rdrr.io/r/base/warning.html">suppressWarnings</a></span>(<span class="fu"><a href="../reference/upset.html">upset</a></span>(
     <span class="no">movies</span>, <span class="no">genres</span>, <span class="kw">name</span><span class="kw">=</span><span class="st">'genre'</span>, <span class="kw">width_ratio</span><span class="kw">=</span><span class="fl">0.1</span>, <span class="kw">min_size</span><span class="kw">=</span><span class="fl">10</span>,
     <span class="kw">base_annotations</span><span class="kw">=</span><span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span>(
         <span class="st">'Intersection size'</span><span class="kw">=</span><span class="fu"><a href="../reference/intersection_size.html">intersection_size</a></span>(),
         <span class="st">'Intersection ratio'</span><span class="kw">=</span><span class="fu"><a href="../reference/intersection_ratio.html">intersection_ratio</a></span>()
-    )
-)</pre></body></html></div>
-<pre><code>[1] "Dropping empty groups: Short"</code></pre>
-<p><img src="Examples_R_files/Examples_R_52_1.png"></p>
-<p>The plot above tells us that the analysed documentary movies are always documentaries (and nothing more!), while comedies more often include elements of other genres (e.g. drama, romance) rather than being comedies alone (like stand-up shows).</p>
+    ),
+    <span class="kw">min_max_early</span><span class="kw">=</span><span class="fl">FALSE</span>
+))</pre></body></html></div>
+<pre><code>[1] "Dropping empty groups: Short"
+
+
+Warning message:
+“Removed 62 rows containing non-finite values (stat_count).”
+Warning message:
+“Removed 62 rows containing non-finite values (stat_count).”
+Warning message:
+“Removed 62 rows containing missing values (position_stack).”
+Warning message:
+“Removed 62 rows containing missing values (geom_text).”
+Warning message:
+“Removed 4 rows containing non-finite values (stat_count).”
+Warning message:
+“Removed 31 rows containing missing values (geom_segment).”
+Warning message:
+“Removed 31 rows containing missing values (geom_segment).”
+Warning message:
+“Removed 145 rows containing missing values (geom_point).”
+Warning message:
+“Removed 145 rows containing missing values (geom_point).”</code></pre>
+<p><img src="Examples_R_files/Examples_R_52_2.png"></p>
+<p>The plot above tells us that the analysed documentary movies are almost always (in over 60% of cases) documentaries (and nothing more!), while comedies more often include elements of other genres (e.g. drama, romance) rather than being comedies alone (like stand-up shows).</p>
 </div>
 <div id="showing-percentages" class="section level3">
 <h3 class="hasAnchor">
 <a href="#showing-percentages" class="anchor"></a>3.7 Showing percentages</h3>
 <p><code>text_aes</code> can be used to manipulate the aesthetics of the labels. Using the <code>intersection_size</code> and <code>union_size</code> one can calculate percentage of items in the intersection (relative to the potential size of the intersection). A <code><a href="../reference/upset_text_percentage.html">upset_text_percentage(digits=0, sep='')</a></code> shorthand is provided for convenience; please note that it has to be used with <code>aes_</code> rather than <code>aes</code>:</p>
 <div class="sourceCode" id="cb36"><html><body><pre class="r"><span class="fu">set_size</span>(<span class="fl">8</span>, <span class="fl">6</span>)
-<span class="fu"><a href="../reference/upset.html">upset</a></span>(
+<span class="fu"><a href="https://rdrr.io/r/base/warning.html">suppressWarnings</a></span>(<span class="fu"><a href="../reference/upset.html">upset</a></span>(
     <span class="no">movies</span>, <span class="no">genres</span>, <span class="kw">name</span><span class="kw">=</span><span class="st">'genre'</span>, <span class="kw">width_ratio</span><span class="kw">=</span><span class="fl">0.1</span>, <span class="kw">min_size</span><span class="kw">=</span><span class="fl">10</span>,
     <span class="kw">base_annotations</span><span class="kw">=</span><span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span>(
         <span class="co"># with manual aes specification:</span>
         <span class="st">'Intersection size'</span><span class="kw">=</span><span class="fu"><a href="../reference/intersection_size.html">intersection_size</a></span>(<span class="kw">text_aes</span><span class="kw">=</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span>(<span class="kw">label</span><span class="kw">=</span><span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste0</a></span>(<span class="fu"><a href="https://rdrr.io/r/base/Round.html">round</a></span>(<span class="no">intersection_size</span>/<span class="no">union_size</span> * <span class="fl">100</span>), <span class="st">'%'</span>))),
         <span class="co"># using shorthand:</span>
         <span class="st">'Intersection ratio'</span><span class="kw">=</span><span class="fu"><a href="../reference/intersection_ratio.html">intersection_ratio</a></span>(<span class="kw">text_aes</span><span class="kw">=</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes_.html">aes_</a></span>(<span class="kw">label</span><span class="kw">=</span><span class="fu"><a href="../reference/upset_text_percentage.html">upset_text_percentage</a></span>()))
-    )
-)</pre></body></html></div>
-<pre><code>[1] "Dropping empty groups: Short"</code></pre>
-<p><img src="Examples_R_files/Examples_R_56_1.png"></p>
+    ),
+    <span class="kw">min_max_early</span><span class="kw">=</span><span class="fl">FALSE</span>
+))</pre></body></html></div>
+<pre><code>[1] "Dropping empty groups: Short"
+
+
+Warning message:
+“Removed 62 rows containing non-finite values (stat_count).”
+Warning message:
+“Removed 62 rows containing non-finite values (stat_count).”
+Warning message:
+“Removed 62 rows containing missing values (position_stack).”
+Warning message:
+“Removed 62 rows containing missing values (geom_text).”
+Warning message:
+“Removed 4 rows containing non-finite values (stat_count).”
+Warning message:
+“Removed 31 rows containing missing values (geom_segment).”
+Warning message:
+“Removed 31 rows containing missing values (geom_segment).”
+Warning message:
+“Removed 145 rows containing missing values (geom_point).”
+Warning message:
+“Removed 145 rows containing missing values (geom_point).”</code></pre>
+<p><img src="Examples_R_files/Examples_R_56_2.png"></p>
 </div>
 </div>
 <div id="adjusting-set-size" class="section level2">
@@ -1856,7 +1907,7 @@ Warning message:
 <a href="#adjusting-other-aesthetics" class="anchor"></a>5. Adjusting other aesthetics</h2>
 <div id="stripes" class="section level3">
 <h3 class="hasAnchor">
-<a href="#stripes" class="anchor"></a>Stripes</h3>
+<a href="#stripes" class="anchor"></a>5.1 Stripes</h3>
 <div class="sourceCode" id="cb51"><html><body><pre class="r"><span class="fu">set_size</span>(<span class="fl">8</span>, <span class="fl">4</span>)
 <span class="fu"><a href="../reference/upset.html">upset</a></span>(
     <span class="no">movies</span>,
@@ -1879,7 +1930,7 @@ Warning message:
 </div>
 <div id="adding-title" class="section level3">
 <h3 class="hasAnchor">
-<a href="#adding-title" class="anchor"></a>Adding title</h3>
+<a href="#adding-title" class="anchor"></a>5.2 Adding title</h3>
 <p>Adding title with <code>ggtitle</code> with add it to the intersection matrix:</p>
 <div class="sourceCode" id="cb55"><html><body><pre class="r"><span class="fu">set_size</span>(<span class="fl">8</span>, <span class="fl">4</span>)
 <span class="fu"><a href="../reference/upset.html">upset</a></span>(<span class="no">movies</span>, <span class="no">genres</span>, <span class="kw">min_size</span><span class="kw">=</span><span class="fl">10</span>) + <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">ggtitle</a></span>(<span class="st">'Intersection matrix title'</span>)</pre></body></html></div>
