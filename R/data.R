@@ -2,24 +2,28 @@
 NULL
 
 
-names_of_true = function(row) {
-  sanitized_names = c()
-  for (name in names(which(row))) {
-      if (grepl('-', name, fixed=TRUE)) {
-          original_name = name
-          name = gsub('-', '_', name)
-          if (name %in% names(which(row))) {
-              stop(paste(
-                  'The group names contain minus characters (-) which prevent intersections names composition;',
-                  'offending group:', original_name, 'please substitute the these characters using gsub and try again.'
-              ))
-          }
-      }
-      sanitized_names = c(sanitized_names, name)
-  }
-  paste(sanitized_names, collapse='-')
+sanitize_names = function(variables_names) {
+    sanitized_names = c()
+    for (name in variables_names) {
+        if (grepl('-', name, fixed=TRUE)) {
+            original_name = name
+            name = gsub('-', '_', name)
+            if (name %in% variables_names) {
+            stop(paste(
+                'The group names contain minus characters (-) which prevent intersections names composition;',
+                'offending group:', original_name, 'please substitute the these characters using gsub and try again.'
+            ))
+            }
+        }
+        sanitized_names = c(sanitized_names, name)
+        }
+    sanitized_names
 }
 
+
+names_of_members = function(row) {
+  paste(names(which(row)), collapse='-')
+}
 
 
 gather = function(data, idvar, col_name, value_name='value') {
@@ -180,9 +184,15 @@ upset_data = function(
         data[, non_logical] = sapply(data[, non_logical], as.logical)
     }
 
+    intersect_in_order_of_data = colnames(data)[colnames(data) %in% intersect]
+    colnames(data)[colnames(data) %in% intersect] <- sanitize_names(intersect_in_order_of_data)
+    non_sanitized_labels = intersect
+    intersect = sanitize_names(intersect)
+    names(non_sanitized_labels) = intersect
+
     data$intersection = apply(
       data[intersect], 1,
-      names_of_true
+      names_of_members
     )
     data$intersection[data$intersection == ''] = 'NOT_IN_EITHER_GROUP'
 
@@ -300,6 +310,7 @@ upset_data = function(
     ),
     union_sizes=union_sizes,
     plot_intersections_subset=plot_intersections_subset,
-    plot_sets_subset=plot_sets_subset
+    plot_sets_subset=plot_sets_subset,
+    non_sanitized_labels=non_sanitized_labels
   )
 }

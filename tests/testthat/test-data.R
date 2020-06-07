@@ -1,23 +1,77 @@
 test_that("intersections names assembly", {
     expect_equal(
-        apply(data.frame(a=c(TRUE, FALSE), b=c(TRUE, TRUE)), 1, names_of_true),
+        apply(data.frame(a=c(TRUE, FALSE), b=c(TRUE, TRUE)), 1, names_of_members),
         c('a-b', 'b')
     )
 
     expect_equal(
-        names_of_true(c(a=TRUE, b=TRUE)),
+        names_of_members(c(a=TRUE, b=TRUE)),
         'a-b'
     )
 
+    sanitazable = c(`a-b`=TRUE, `x-y`=TRUE)
+    names(sanitazable) = sanitize_names(names(sanitazable))
+
     expect_equal(
-        names_of_true(c(`a-b`=TRUE, `x-y`=TRUE)),
+        names_of_members(sanitazable),
         'a_b-x_y'
     )
 
+    with_conflict = c(`a-b`=TRUE, `a_b`=TRUE)
+
     expect_error(
-        names_of_true(c(`a-b`=TRUE, `a_b`=TRUE)),
+        sanitize_names(names(with_conflict)),
         'The group names contain minus characters \\(-\\) which prevent intersections names composition.*'
     )
+})
+
+
+test_that("hyphenated variables give the same results", {
+
+    df_underscored = data.frame(
+        'a_x'=c(TRUE, FALSE, TRUE, TRUE),
+        b=c(TRUE, TRUE, TRUE, TRUE),
+        c=c(FALSE, TRUE, FALSE, FALSE),
+        d=c(FALSE, FALSE, FALSE, TRUE),
+        check.names=FALSE
+    )
+
+    df_hyphenated = data.frame(
+        'a-x'=c(TRUE, FALSE, TRUE, TRUE),
+        b=c(TRUE, TRUE, TRUE, TRUE),
+        c=c(FALSE, TRUE, FALSE, FALSE),
+        d=c(FALSE, FALSE, FALSE, TRUE),
+        check.names=FALSE
+    )
+
+    data_underscored = upset_data(df_underscored, c('a_x', 'b', 'c', 'd'))
+    data_hyphenated = upset_data(df_hyphenated, c('a-x', 'b', 'c', 'd'))
+
+    expect_equal(
+        data_underscored[names(data_underscored) != 'non_sanitized_labels'],
+        data_hyphenated[names(data_hyphenated) != 'non_sanitized_labels']
+    )
+
+    expect_equal(
+        data_hyphenated$non_sanitized_labels,
+        c(
+            'a_x'='a-x',
+            'b'='b',
+            'c'='c',
+            'd'='d'
+        )
+    )
+
+    expect_equal(
+        data_underscored$non_sanitized_labels,
+        c(
+            'a_x'='a_x',
+            'b'='b',
+            'c'='c',
+            'd'='d'
+        )
+    )
+
 })
 
 

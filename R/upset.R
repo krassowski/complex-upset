@@ -601,7 +601,7 @@ upset = function(
         )
     )
     + xlab(name)
-    + scale_y_discrete(limits=sets_limits, labels=labeller)
+    + scale_y_discrete(limits=sets_limits, labels=function(sets) { labeller(data$non_sanitized_labels[sets]) })
     + scale_intersections
     + themes$intersections_matrix
   )
