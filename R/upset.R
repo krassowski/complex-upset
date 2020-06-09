@@ -373,8 +373,7 @@ extract_geom_params_for = function(queries, geom) {
     user_params = as.data.frame(without_query_columns(queries))
 
     params = user_params[, colnames(user_params) %in% accepted_params, drop=FALSE]
-    if (length(unique(params)) == 1)
-    {
+    if (nrow(unique(params)) == 1) {
         params = unique(params)
     }
 
