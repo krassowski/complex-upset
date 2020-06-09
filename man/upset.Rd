@@ -31,7 +31,8 @@ upset(
 
 \item{name}{the label shown below the intersection matrix}
 
-\item{annotations}{a named list of annotations in form a \verb{list(aes=}mapping\verb{, geom=}geom or list of geoms\verb{)}}
+\item{annotations}{a named list of annotations in form a \verb{list(aes=mapping, geom=geom or list of geoms)};
+optional member \verb{highlight_geom=geom or list of geoms} can be used to specify which geoms can be highlighted with queries}
 
 \item{themes}{a named list of themes for components and annotations, see \code{upset_default_themes()}/\code{upset_modify_themes()}}
 

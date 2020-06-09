@@ -72,3 +72,29 @@ test_that("Multiple queries with different aes highlight intersections", {
         )
     )
 })
+
+
+test_that("Queries can highlight both intersection size and matrix", {
+    library(ggplot2)
+
+    expect_doppelganger(
+        title='Queries can highlight both intersection size and matrix',
+        upset(
+            movies, genres, name='genre', width_ratio=0.1, min_size=100,
+            queries=list(
+                upset_query(
+                    intersect=c('Drama', 'Comedy'),
+                    color='red',
+                    fill='red',
+                    only_components=c('intersections_matrix', 'Intersection size')
+                ),
+                upset_query(
+                  intersect=c('Romance', 'Drama'),
+                  color='orange',
+                  fill='orange',
+                  only_components=c('intersections_matrix', 'Intersection size')
+                )
+            )
+        )
+    )
+})
