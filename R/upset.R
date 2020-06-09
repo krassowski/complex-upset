@@ -500,10 +500,11 @@ add_highlights_to_geoms = function(geoms, highlight_data, annotation_queries) {
                 stat_params = stat_params[names(stat_params) != shared_param]
             }
         }
+        params = extract_geom_params_for(annotation_queries, geom)
 
         highlight_geom$geom_params = modifyList(
             geom$geom_params,
-            extract_geom_params_for(annotation_queries, geom)
+            lapply(params, unlist)
         )
 
         geoms_plus_highlights[[length(geoms_plus_highlights) + 1]] = layer(
