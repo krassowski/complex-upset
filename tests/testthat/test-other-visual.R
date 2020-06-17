@@ -98,3 +98,22 @@ test_that("Queries can highlight both intersection size and matrix", {
         )
     )
 })
+
+
+test_that("The empty intersection can be highlighted", {
+    library(ggplot2)
+
+    expect_doppelganger(
+        title='The empty intersection can be highlighted',
+        upset(
+            movies, genres, name='genre', width_ratio=0.1, min_size=100,
+            queries=list(
+                upset_query(
+                  intersect=NA,
+                  color='green',
+                  fill='green'
+                )
+            )
+        )
+    )
+})

@@ -356,7 +356,11 @@ intersect_queries = function(queries, data) {
     queries$intersect = sapply(
         queries$intersect,
         function(sets) {
-            paste(data$sets_ordering_in_ids[data$sets_ordering_in_ids %in% sets], collapse='-')
+            if (length(sets) == 1 && is.na(sets)) {
+                'NOT_IN_EITHER_GROUP'
+            } else {
+                paste(data$sets_ordering_in_ids[data$sets_ordering_in_ids %in% sets], collapse='-')
+            }
         }
     )
     queries$query = queries$intersect
@@ -425,7 +429,7 @@ highlight_layer = function(geom, data, args=list()) {
 #' Highlight sets or intersections matching specified query.
 #'
 #' @param set name of the set to highlight
-#' @param intersect a vector of names for the intersection to highlight
+#' @param intersect a vector of names for the intersection to highlight; pass 'NA' to select the empty intersection
 #' @param only_components which components to modify; by default all eligible components will be modified; the available components are 'overall_sizes', 'intersections_matrix', 'Intersection size', and any annotations specified
 #' @param ... - passed to geoms in modified components
 #' @export

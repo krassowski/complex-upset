@@ -9,7 +9,7 @@ upset_query(set = NULL, intersect = NULL, only_components = NULL, ...)
 \arguments{
 \item{set}{name of the set to highlight}
 
-\item{intersect}{a vector of names for the intersection to highlight}
+\item{intersect}{a vector of names for the intersection to highlight; pass 'NA' to select the empty intersection}
 
 \item{only_components}{which components to modify; by default all eligible components will be modified; the available components are 'overall_sizes', 'intersections_matrix', 'Intersection size', and any annotations specified}
 
