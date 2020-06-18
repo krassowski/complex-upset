@@ -220,11 +220,9 @@ intersection_size = function(
 
   list(
     aes=modifyList(aes(x=intersection), aest),
-    geom=c(
-      bar_geom,
-      counts_geoms
-    ),
-    highlight_geom=bar_geom
+    geom=bar_geom,
+    highlight_geom=bar_geom,
+    top_geom=counts_geoms
   )
 }
 
@@ -312,11 +310,9 @@ intersection_ratio = function(
 
   list(
     aes=modifyList(aes(x=intersection), aest),
-    geom=c(
-      bar_geom,
-      counts_geoms
-    ),
-    highlight_geom=bar_geom
+    geom=bar_geom,
+    highlight_geom=bar_geom,
+    top_geom=counts_geoms
   )
 }
 
@@ -538,7 +534,8 @@ add_highlights_to_geoms = function(geoms, highlight_geoms, highlight_data, annot
 #' @inheritParams upset_data
 #' @param name the label shown below the intersection matrix
 #' @param annotations a named list of annotations in form a `list(aes=mapping, geom=geom or list of geoms)`;
-#'  optional member `highlight_geom=geom or list of geoms` can be used to specify which geoms can be highlighted with queries
+#'  * (optional) `highlight_geom=list of geoms` geoms which can be highlighted with queries,
+#'  * (optional) `top_geom=list of geoms` which should show up on top of highlighted queries.
 #' @param base_annotations a named list with default annotations (i.e. the intersection size barplot)
 #' @param themes a named list of themes for components and annotations, see `upset_default_themes()`/`upset_modify_themes()`
 #' @param queries a list of queries generated with `upset_query()`
@@ -655,6 +652,10 @@ upset = function(
         geoms_plus_highlights = add_highlights_to_geoms(geoms, highlight_geom, highlight_data, annotation_queries)
     } else {
         geoms_plus_highlights = geoms
+    }
+
+    if (!is.null(annotation$top_geom)) {
+        geoms_plus_highlights = c(geoms_plus_highlights, annotation$top_geom)
     }
 
     if (name %in% names(themes)) {

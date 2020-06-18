@@ -117,3 +117,21 @@ test_that("The empty intersection can be highlighted", {
         )
     )
 })
+
+
+test_that("Counts are visible on top of highlighted bars", {
+    library(ggplot2)
+
+    expect_doppelganger(
+        title='Counts are visible on top of highlighted bars',
+        upset(
+            movies, genres, name='genre', width_ratio=0.1, min_size=100,
+            queries=list(
+                upset_query(
+                  intersect='Drama',
+                  fill='blue'
+                )
+            )
+        )
+    )
+})

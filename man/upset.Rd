@@ -32,7 +32,10 @@ upset(
 \item{name}{the label shown below the intersection matrix}
 
 \item{annotations}{a named list of annotations in form a \verb{list(aes=mapping, geom=geom or list of geoms)};
-optional member \verb{highlight_geom=geom or list of geoms} can be used to specify which geoms can be highlighted with queries}
+\itemize{
+\item (optional) \verb{highlight_geom=list of geoms} geoms which can be highlighted with queries,
+\item (optional) \verb{top_geom=list of geoms} which should show up on top of highlighted queries.
+}}
 
 \item{themes}{a named list of themes for components and annotations, see \code{upset_default_themes()}/\code{upset_modify_themes()}}
 
