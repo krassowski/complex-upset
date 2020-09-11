@@ -39,7 +39,7 @@ upset(
 
 \item{themes}{a named list of themes for components and annotations, see \code{upset_default_themes()}/\code{upset_modify_themes()}}
 
-\item{stripes}{a two-element characters vector, specifying the background colors for odd and even rows}
+\item{stripes}{a characters vector, specifying the background colors for rows (e.g. odd and even if two elements)}
 
 \item{labeller}{function modifying the names of the sets (rows in the matrix)}
 
