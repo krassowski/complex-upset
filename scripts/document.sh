@@ -14,4 +14,5 @@ do
     title=${v/_/ - }
     sed -i "1s/^/---\ntitle: \"${title}\"\nvignette: >\n  %\\\\VignetteEngine{knitr::rmarkdown}\n  %\\\\VignetteIndexEntry{${title}}\n  %\\\\usepackage[utf8]{inputenc}\n---\n/" "vignettes/${v}.Rmd"
 done
+rm -r docs/articles
 Rscript -e 'pkgdown::build_site()'
