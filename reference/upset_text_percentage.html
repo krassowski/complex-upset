@@ -75,7 +75,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">ComplexUpset</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.5.15</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.5.16</span>
       </span>
     </div>
 
@@ -162,13 +162,22 @@
 #&gt; stat_count: width = NULL, na.rm = FALSE, orientation = NA
 #&gt; position_stack 
 #&gt; 
-#&gt; $geom[[2]]
+#&gt; 
+#&gt; $highlight_geom
+#&gt; $highlight_geom[[1]]
+#&gt; geom_bar: width = NULL, na.rm = FALSE, orientation = NA
+#&gt; stat_count: width = NULL, na.rm = FALSE, orientation = NA
+#&gt; position_stack 
+#&gt; 
+#&gt; 
+#&gt; $top_geom
+#&gt; $top_geom[[1]]
 #&gt; mapping: y = ~ifelse(..count.. &lt;= bar_number_threshold * max(..count..), ..count.., bar_number_threshold * ..count..), label = ~paste(round(intersection_size/union_size * 100, 0), "%", sep = ""), colour = ~ifelse(..count.. &lt;= bar_number_threshold * max(..count..), "on_background", "on_bar") 
 #&gt; geom_text: parse = FALSE, check_overlap = FALSE, na.rm = FALSE
 #&gt; stat_count: na.rm = FALSE
 #&gt; position_identity 
 #&gt; 
-#&gt; $geom[[3]]
+#&gt; $top_geom[[2]]
 #&gt; &lt;ggproto object: Class ScaleDiscrete, Scale, gg&gt;
 #&gt;     aesthetics: colour
 #&gt;     axis_order: function
@@ -213,13 +222,6 @@
 #&gt;     transform: function
 #&gt;     transform_df: function
 #&gt;     super:  &lt;ggproto object: Class ScaleDiscrete, Scale, gg&gt;
-#&gt; 
-#&gt; 
-#&gt; $highlight_geom
-#&gt; $highlight_geom[[1]]
-#&gt; geom_bar: width = NULL, na.rm = FALSE, orientation = NA
-#&gt; stat_count: width = NULL, na.rm = FALSE, orientation = NA
-#&gt; position_stack 
 #&gt; 
 #&gt; </div></pre>
   </div>

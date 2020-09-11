@@ -75,7 +75,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">ComplexUpset</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.5.15</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.5.16</span>
       </span>
     </div>
 
@@ -174,7 +174,7 @@
     </tr>
     <tr>
       <th>annotations</th>
-      <td><p>a named list of annotations in form a <code>list(aes=mapping, geom=geom or list of geoms)</code>;</p><ul>
+      <td><p>a named list of annotations, each being a list with: <code>list(aes=mapping, geom=geom or list of geoms)</code>;</p><ul>
 <li><p>(optional) <code>highlight_geom=list of geoms</code> geoms which can be highlighted with queries,</p></li>
 <li><p>(optional) <code>top_geom=list of geoms</code> which should show up on top of highlighted queries.</p></li>
 </ul></td>
@@ -185,7 +185,7 @@
     </tr>
     <tr>
       <th>stripes</th>
-      <td><p>a two-element characters vector, specifying the background colors for odd and even rows</p></td>
+      <td><p>a characters vector, specifying the background colors for rows (e.g. odd and even if two elements)</p></td>
     </tr>
     <tr>
       <th>labeller</th>

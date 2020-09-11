@@ -34,7 +34,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">ComplexUpset</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.5.15</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.5.16</span>
       </span>
     </div>
 
@@ -1616,7 +1616,6 @@ upset(
 upset(
     movies, genres,
     min_size=10,
-    width_ratio=0.2,
     set_sizes=FALSE
 )</pre></body></html></div>
 <p>[1] “Dropping empty groups: Short”</p>
@@ -1629,46 +1628,76 @@ upset(
 <div id="stripes" class="section level3">
 <h3 class="hasAnchor">
 <a href="#stripes" class="anchor"></a>5.1 Stripes</h3>
-<div class="sourceCode" id="cb34"><html><body><pre class="r">%%R -w 800 -h 400
+<p>Change the colors:</p>
+<div class="sourceCode" id="cb34"><html><body><pre class="r">%%R -w 600 -h 400
 upset(
     movies,
     genres,
-    stripes=c('cornsilk1', 'deepskyblue1'),
-    min_size=10
+    min_size=10,
+    width_ratio=0.2,
+    stripes=c('cornsilk1', 'deepskyblue1')
 )</pre></body></html></div>
 <p>[1] “Dropping empty groups: Short”</p>
-<p><img src="Examples_Python_files/Examples_Python_85_1.png"></p>
-<p>To effectively disable the stripes:</p>
-<div class="sourceCode" id="cb35"><html><body><pre class="r">%%R -w 800 -h 400
+<p><img src="Examples_Python_files/Examples_Python_86_1.png"></p>
+<p>You can use multiple colors:</p>
+<div class="sourceCode" id="cb35"><html><body><pre class="r">%%R -w 600 -h 400
 upset(
     movies,
     genres,
-    stripes=c('white', 'white'),
-    min_size=10
+    min_size=10,
+    width_ratio=0.2,
+    stripes=c('cornsilk1', 'deepskyblue1', 'grey90')
 )</pre></body></html></div>
 <p>[1] “Dropping empty groups: Short”</p>
-<p><img src="Examples_Python_files/Examples_Python_87_1.png"></p>
+<p><img src="Examples_Python_files/Examples_Python_88_1.png"></p>
+<p>Or, set the color to white to effectively disable the stripes:</p>
+<div class="sourceCode" id="cb36"><html><body><pre class="r">%%R -w 600 -h 400
+upset(
+    movies,
+    genres,
+    min_size=10,
+    width_ratio=0.2,
+    stripes='white'
+)</pre></body></html></div>
+<p>[1] “Dropping empty groups: Short”</p>
+<p><img src="Examples_Python_files/Examples_Python_90_1.png"></p>
 </div>
 <div id="adding-title" class="section level3">
 <h3 class="hasAnchor">
 <a href="#adding-title" class="anchor"></a>5.2 Adding title</h3>
 <p>Adding title with <code>ggtitle</code> with add it to the intersection matrix:</p>
-<div class="sourceCode" id="cb36"><html><body><pre class="r">%%R -w 800 -h 400
+<div class="sourceCode" id="cb37"><html><body><pre class="r">%%R -w 600 -h 400
 upset(movies, genres, min_size=10) + ggtitle('Intersection matrix title')</pre></body></html></div>
 <p>[1] “Dropping empty groups: Short”</p>
-<p><img src="Examples_Python_files/Examples_Python_90_1.png"></p>
+<p><img src="Examples_Python_files/Examples_Python_93_1.png"></p>
 <p>In order to add a title for the entire plot, you need to wrap the plot:</p>
-<div class="sourceCode" id="cb37"><html><body><pre class="r">%%R -w 800 -h 400
+<div class="sourceCode" id="cb38"><html><body><pre class="r">%%R -w 600 -h 400
 upset(movies, genres, min_size=10, wrap=TRUE) + ggtitle('The overlap between genres')</pre></body></html></div>
 <p>[1] “Dropping empty groups: Short”</p>
-<p><img src="Examples_Python_files/Examples_Python_92_1.png"></p>
+<p><img src="Examples_Python_files/Examples_Python_95_1.png"></p>
+</div>
+<div id="making-the-plot-transparent" class="section level3">
+<h3 class="hasAnchor">
+<a href="#making-the-plot-transparent" class="anchor"></a>5.3 Making the plot transparent</h3>
+<p>You need to set the plot background to transparent and adjust colors of stripes to your liking:</p>
+<div class="sourceCode" id="cb39"><html><body><pre class="r">%%R -w 600 -h 400
+(
+    upset(
+        movies, genres, name='genre', width_ratio=0.1, min_size=10,
+        stripes=c(alpha('grey90', 0.45), alpha('white', 0.3))
+    )
+    &amp; theme(plot.background=element_rect(fill='transparent', color=NA))
+)</pre></body></html></div>
+<p>[1] “Dropping empty groups: Short”</p>
+<p><img src="Examples_Python_files/Examples_Python_98_1.png"></p>
+<p>Use <code>ggsave('upset.png', bg="transparent")</code> when exporting to PNG.</p>
 </div>
 </div>
 <div id="themes" class="section level2">
 <h2 class="hasAnchor">
 <a href="#themes" class="anchor"></a>6. Themes</h2>
 <p>The themes for specific components are defined in <code>upset_themes</code> list, which contains themes for:</p>
-<div class="sourceCode" id="cb38"><html><body><pre class="r">%%R
+<div class="sourceCode" id="cb40"><html><body><pre class="r">%%R
 names(upset_themes)</pre></body></html></div>
 <p>[1] “intersections_matrix” “Intersection size” “overall_sizes”<br>
 [4] “default”</p>
@@ -1676,12 +1705,12 @@ names(upset_themes)</pre></body></html></div>
 <div id="substituting-themes" class="section level3">
 <h3 class="hasAnchor">
 <a href="#substituting-themes" class="anchor"></a>6.1 Substituting themes</h3>
-<div class="sourceCode" id="cb39"><html><body><pre class="r">%%R -w 800 -h 400
+<div class="sourceCode" id="cb41"><html><body><pre class="r">%%R -w 800 -h 400
 upset(movies, genres, min_size=10, themes=list(default=theme()))</pre></body></html></div>
 <p>[1] “Dropping empty groups: Short”</p>
-<p><img src="Examples_Python_files/Examples_Python_98_1.png"></p>
+<p><img src="Examples_Python_files/Examples_Python_105_1.png"></p>
 <p>You can also add themes for your custom panels/annotations:</p>
-<div class="sourceCode" id="cb40"><html><body><pre class="r">%%R -w 800 -h 800
+<div class="sourceCode" id="cb42"><html><body><pre class="r">%%R -w 800 -h 800
 
 upset(
     movies,
@@ -1707,22 +1736,22 @@ upset(
     )
 )</pre></body></html></div>
 <p>[1] “Dropping empty groups: Short”</p>
-<p><img src="Examples_Python_files/Examples_Python_100_1.png"></p>
+<p><img src="Examples_Python_files/Examples_Python_107_1.png"></p>
 </div>
 <div id="adjusting-the-default-themes" class="section level3">
 <h3 class="hasAnchor">
 <a href="#adjusting-the-default-themes" class="anchor"></a>6.2 Adjusting the default themes</h3>
 <p>Modify all the default themes as once with <code><a href="../reference/upset_default_themes.html">upset_default_themes()</a></code>:</p>
-<div class="sourceCode" id="cb41"><html><body><pre class="r">%%R -w 800 -h 400
+<div class="sourceCode" id="cb43"><html><body><pre class="r">%%R -w 800 -h 400
 
 upset(
     movies, genres, min_size=10, width_ratio=0.1,
     themes=upset_default_themes(text=element_text(color='red'))
 )</pre></body></html></div>
 <p>[1] “Dropping empty groups: Short”</p>
-<p><img src="Examples_Python_files/Examples_Python_103_1.png"></p>
+<p><img src="Examples_Python_files/Examples_Python_110_1.png"></p>
 <p>To modify only a subset of default themes use <code><a href="../reference/upset_modify_themes.html">upset_modify_themes()</a></code>:</p>
-<div class="sourceCode" id="cb42"><html><body><pre class="r">%%R -w 800 -h 400
+<div class="sourceCode" id="cb44"><html><body><pre class="r">%%R -w 800 -h 400
 
 upset(
     movies, genres,
@@ -1737,7 +1766,7 @@ upset(
     )
 )</pre></body></html></div>
 <p>[1] “Dropping empty groups: Animation, Documentary, Short”</p>
-<p><img src="Examples_Python_files/Examples_Python_105_1.png"></p>
+<p><img src="Examples_Python_files/Examples_Python_112_1.png"></p>
 </div>
 </div>
 <div id="highlighting-queries" class="section level2">
@@ -1745,7 +1774,7 @@ upset(
 <a href="#highlighting-queries" class="anchor"></a>7. Highlighting (queries)</h2>
 <p>Pass a list of lists generated with <code><a href="../reference/upset_query.html">upset_query()</a></code> utility to the optional <code>queries</code> argument to selectively modify aesthetics of specific intersections or sets.</p>
 <p>Use one of the arguments: <code>set</code> or <code>intersection</code> (not both) to specify what to highlight: - <code>set</code> will highlight the bar of the set size, - <code>intersection</code> will highlight an intersection on all components (by default), or on components chosen with <code>only_components</code> - all other parameters will be used to modify the geoms</p>
-<div class="sourceCode" id="cb43"><html><body><pre class="r">%%R -w 800 -h 600
+<div class="sourceCode" id="cb45"><html><body><pre class="r">%%R -w 800 -h 600
 
 upset(
     movies, genres, name='genre', width_ratio=0.1, min_size=10,
@@ -1774,7 +1803,7 @@ upset(
     )
 )</pre></body></html></div>
 <p>[1] “Dropping empty groups: Short”</p>
-<p><img src="Examples_Python_files/Examples_Python_108_1.png"></p>
+<p><img src="Examples_Python_files/Examples_Python_115_1.png"></p>
 </div>
 <div id="sorting" class="section level2">
 <h2 class="hasAnchor">
@@ -1783,11 +1812,11 @@ upset(
 <h3 class="hasAnchor">
 <a href="#sorting-intersections" class="anchor"></a>8.1 Sorting intersections</h3>
 <p>By degree:</p>
-<div class="sourceCode" id="cb44"><html><body><pre class="r">%%R -w 800 -h 300
+<div class="sourceCode" id="cb46"><html><body><pre class="r">%%R -w 800 -h 300
 upset(movies, genres, width_ratio=0.1, sort_intersections_by='degree')</pre></body></html></div>
-<p><img src="Examples_Python_files/Examples_Python_112_0.png"></p>
+<p><img src="Examples_Python_files/Examples_Python_119_0.png"></p>
 <p>By ratio:</p>
-<div class="sourceCode" id="cb45"><html><body><pre class="r">%%R -w 800 -h 400
+<div class="sourceCode" id="cb47"><html><body><pre class="r">%%R -w 800 -h 400
 upset(
     movies, genres, name='genre', width_ratio=0.1, min_size=10,
     sort_intersections_by='ratio',
@@ -1797,29 +1826,29 @@ upset(
     )
 )</pre></body></html></div>
 <p>[1] “Dropping empty groups: Short”</p>
-<p><img src="Examples_Python_files/Examples_Python_114_1.png"></p>
+<p><img src="Examples_Python_files/Examples_Python_121_1.png"></p>
 <p>The other way around:</p>
-<div class="sourceCode" id="cb46"><html><body><pre class="r">%%R -w 800 -h 300
+<div class="sourceCode" id="cb48"><html><body><pre class="r">%%R -w 800 -h 300
 upset(movies, genres, width_ratio=0.1, sort_intersections='ascending')</pre></body></html></div>
-<p><img src="Examples_Python_files/Examples_Python_116_0.png"></p>
+<p><img src="Examples_Python_files/Examples_Python_123_0.png"></p>
 <p>Without any sorting:</p>
-<div class="sourceCode" id="cb47"><html><body><pre class="r">%%R -w 800 -h 300
+<div class="sourceCode" id="cb49"><html><body><pre class="r">%%R -w 800 -h 300
 upset(movies, genres, width_ratio=0.1, sort_intersections=FALSE)</pre></body></html></div>
-<p><img src="Examples_Python_files/Examples_Python_118_0.png"></p>
+<p><img src="Examples_Python_files/Examples_Python_125_0.png"></p>
 </div>
 <div id="sorting-sets" class="section level3">
 <h3 class="hasAnchor">
 <a href="#sorting-sets" class="anchor"></a>8.2 Sorting sets</h3>
 <p>Ascending:</p>
-<div class="sourceCode" id="cb48"><html><body><pre class="r">%%R -w 800 -h 300
-upset(movies, genres, width_ratio=0.1, sort_sets='ascending')</pre></body></html></div>
-<p><img src="Examples_Python_files/Examples_Python_121_0.png"></p>
-<p>Without sorting - preserving the order as in genres:</p>
-<div class="sourceCode" id="cb49"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb49-1" title="1">genres</a></code></pre></div>
-<p>[‘Action’, ‘Animation’, ‘Comedy’, ‘Drama’, ‘Documentary’, ‘Romance’, ‘Short’]</p>
 <div class="sourceCode" id="cb50"><html><body><pre class="r">%%R -w 800 -h 300
+upset(movies, genres, width_ratio=0.1, sort_sets='ascending')</pre></body></html></div>
+<p><img src="Examples_Python_files/Examples_Python_128_0.png"></p>
+<p>Without sorting - preserving the order as in genres:</p>
+<div class="sourceCode" id="cb51"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb51-1" title="1">genres</a></code></pre></div>
+<p>[‘Action’, ‘Animation’, ‘Comedy’, ‘Drama’, ‘Documentary’, ‘Romance’, ‘Short’]</p>
+<div class="sourceCode" id="cb52"><html><body><pre class="r">%%R -w 800 -h 300
 upset(movies, genres, width_ratio=0.1, sort_sets=FALSE)</pre></body></html></div>
-<p><img src="Examples_Python_files/Examples_Python_124_0.png"></p>
+<p><img src="Examples_Python_files/Examples_Python_131_0.png"></p>
 </div>
 </div>
   </div>
