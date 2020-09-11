@@ -230,6 +230,10 @@ test_that("upset_data() filters by min_size, max_size, min_degree and max_degree
     )
     empty = 'NOT_IN_EITHER_GROUP'
 
+    old_locale = Sys.getlocale("LC_COLLATE")
+    # turn off locale-specific sorting for tests (might not work on some platforms)
+    Sys.setlocale("LC_COLLATE", "C")
+
     result = upset_data(df, c('a', 'b', 'c', 'd'), min_size=2, sort_intersections=FALSE, min_max_early=TRUE)
     expect_equal(result$sorted$intersections, c('a-b'))
     expect_equal(result$plot_intersections_subset, c('a-b'))
@@ -255,6 +259,9 @@ test_that("upset_data() filters by min_size, max_size, min_degree and max_degree
 
     result = upset_data(df, c('a', 'b', 'c', 'd'), min_degree=3, sort_intersections=FALSE)
     expect_equal(result$plot_intersections_subset, c('a-b-d'))
+
+    # restore locale
+    Sys.setlocale("LC_COLLATE", old_locale)
 })
 
 test_that("upset_data() works with a tibble", {
