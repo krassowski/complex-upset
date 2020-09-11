@@ -31,7 +31,7 @@ upset(
 
 \item{name}{the label shown below the intersection matrix}
 
-\item{annotations}{a named list of annotations in form a \verb{list(aes=mapping, geom=geom or list of geoms)};
+\item{annotations}{a named list of annotations, each being a list with: \verb{list(aes=mapping, geom=geom or list of geoms)};
 \itemize{
 \item (optional) \verb{highlight_geom=list of geoms} geoms which can be highlighted with queries,
 \item (optional) \verb{top_geom=list of geoms} which should show up on top of highlighted queries.

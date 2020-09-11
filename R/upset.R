@@ -132,9 +132,10 @@ segment_end = function(matrix_frame, data, intersection, end) {
   }, MARGIN=1)
 }
 
-upset_stripes = c('grey95', 'white')
+upset_stripes = c('white', 'grey95')
 
 matrix_background_stripes = function(data, stripes, orient='horizontal') {
+
   if (!(orient %in% c('horizontal', 'vertical'))) {
     stop('Incorrect orient')
   }
@@ -145,13 +146,9 @@ matrix_background_stripes = function(data, stripes, orient='horizontal') {
   }
   list(
     geom_segment(
-      data=data$matrix_frame,
+      data=data.frame(group=data$sorted$groups),
       aes,
-      color=ifelse(
-        which(data$sorted$groups==data$matrix_frame$group) %% 2 == 0,
-        stripes[[1]],
-        stripes[[2]]
-      ),
+      color=rep_len(stripes, length(data$sorted$groups)),
       size=7
     )
   )
@@ -533,7 +530,7 @@ add_highlights_to_geoms = function(geoms, highlight_geoms, highlight_data, annot
 #' Compose an UpSet plot
 #' @inheritParams upset_data
 #' @param name the label shown below the intersection matrix
-#' @param annotations a named list of annotations in form a `list(aes=mapping, geom=geom or list of geoms)`;
+#' @param annotations a named list of annotations, each being a list with: `list(aes=mapping, geom=geom or list of geoms)`;
 #'  * (optional) `highlight_geom=list of geoms` geoms which can be highlighted with queries,
 #'  * (optional) `top_geom=list of geoms` which should show up on top of highlighted queries.
 #' @param base_annotations a named list with default annotations (i.e. the intersection size barplot)
@@ -542,7 +539,7 @@ add_highlights_to_geoms = function(geoms, highlight_geoms, highlight_data, annot
 #' @param labeller function modifying the names of the sets (rows in the matrix)
 #' @param height_ratio ratio of the intersection matrix to intersection size height
 #' @param width_ratio ratio of the overall set size width to intersection matrix width
-#' @param stripes a two-element characters vector, specifying the background colors for odd and even rows
+#' @param stripes a characters vector, specifying the background colors for rows (e.g. odd and even if two elements)
 #' @param dot_size size of the points on the intersection matrix
 #' @param set_sizes a list of layers defining the overall set sizes, e.g. from `upset_set_size()` (`FALSE` to hide)
 #' @param wrap whether the plot should be wrapped into a group (makes addding a tile/combining with other plots easier)
