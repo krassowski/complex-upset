@@ -114,8 +114,8 @@ get_sort_order = function(data, sort_order) {
 }
 
 
-count_occurrences = function(x, symbol) {
-    lengths(regmatches(x, gregexpr(symbol, x)))
+calculate_degree = function(x) {
+    lengths(strsplit(x, '-', fixed=TRUE))
 }
 
 
@@ -126,7 +126,7 @@ trim_intersections = function(intersections_by_size, min_size=0, max_size=Inf, m
         (intersections_by_size <= max_size)
     ]
     if (min_degree > 0 || max_degree != Inf) {
-        degrees = count_occurrences(names(intersections_by_size), '-')
+        degrees = calculate_degree(names(intersections_by_size))
         intersections_by_size = intersections_by_size[
             (degrees >= min_degree)
             &
@@ -265,7 +265,7 @@ upset_data = function(
             sort_value = intersections_by_size
         } else if (sort_intersections_by == 'degree') {
             original_intersections_names = names(intersections_by_size)
-            sort_value = count_occurrences(original_intersections_names, '-')
+            sort_value = calculate_degree(original_intersections_names)
             names(sort_value) = original_intersections_names
         } else if (sort_intersections_by == 'ratio') {
            unsorted_union_sizes = compute_unions(stacked, names(intersections_by_size))
