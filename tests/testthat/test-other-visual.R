@@ -100,6 +100,44 @@ test_that("Queries can highlight both intersection size and matrix", {
 })
 
 
+test_that("Multiple competing queries work together", {
+    library(ggplot2)
+
+    expect_doppelganger(
+        title='Multiple competing queries work together',
+        upset(
+        movies, genres, name='genre', width_ratio=0.1, min_size=100,
+        queries=list(
+            upset_query(
+                intersect=c('Drama', 'Comedy'),
+                color='red',
+                fill='red',
+                only_components=c('intersections_matrix', 'Intersection size')
+            ),
+            upset_query(
+              intersect=c('Romance', 'Drama'),
+              color='orange',
+              fill='orange',
+              only_components=c('intersections_matrix', 'Intersection size')
+            ),
+            upset_query(
+              intersect=c('Drama'),
+              color='green',
+              fill='green',
+              only_components=c('intersections_matrix', 'Intersection size')
+            ),
+            upset_query(
+              intersect=c('Comedy'),
+              color='blue',
+              fill='blue',
+              only_components=c('intersections_matrix', 'Intersection size')
+            )
+        )
+    )
+    )
+})
+
+
 test_that("The empty intersection can be highlighted", {
     library(ggplot2)
 

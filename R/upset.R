@@ -370,12 +370,13 @@ without_query_columns = function(queries) {
 }
 
 
-extract_geom_params_for = function(queries, geom) {
+extract_geom_params_for = function(queries, geom, preserve_query=FALSE) {
     accepted_params = c(geom$geom$aesthetics(), geom$geom$parameters())
     accepted_params[accepted_params == 'colour'] = 'color'
     user_params = as.data.frame(without_query_columns(queries))
 
     params = user_params[, colnames(user_params) %in% accepted_params, drop=FALSE]
+
     if (nrow(unique(params)) == 1) {
         params = unique(params)
     } else {
@@ -385,6 +386,9 @@ extract_geom_params_for = function(queries, geom) {
             check.names=FALSE,
             check.optionsrows=FALSE
         )
+        if (preserve_query) {
+            params$query = queries$query
+        }
     }
 
     params
@@ -506,7 +510,16 @@ add_highlights_to_geoms = function(geoms, highlight_geoms, highlight_data, annot
                 stat_params = stat_params[names(stat_params) != shared_param]
             }
         }
-        params = extract_geom_params_for(annotation_queries, geom)
+        params = extract_geom_params_for(annotation_queries, geom, preserve_query=TRUE)
+
+        if (!is.null(params$query)) {
+            non_unique = duplicated(params$query)
+            if (sum(non_unique) != 0) {
+                stop(paste('The queries are not unique:', params$query[non_unique]))
+            }
+            # reorder to match the data order:
+            params = params[match(unique(highlight_data$intersection), params$query), colnames(params) != 'query']
+        }
 
         highlight_geom$geom_params = modifyList(
             geom$geom_params,
