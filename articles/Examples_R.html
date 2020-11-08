@@ -34,7 +34,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">ComplexUpset</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.5.17</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.5.19</span>
       </span>
     </div>
 
@@ -2185,6 +2185,35 @@ Warning message:
 <span class="fu"><a href="../reference/upset.html">upset</a></span>(<span class="no">movies</span>, <span class="no">genres</span>, <span class="kw">width_ratio</span><span class="kw">=</span><span class="fl">0.1</span>, <span class="kw">sort_sets</span><span class="kw">=</span><span class="fl">FALSE</span>)</pre></body></html></div>
 <p><img src="Examples_R_files/Examples_R_124_0.png"></p>
 </div>
+</div>
+<div id="grouping-intersections" class="section level2">
+<h2 class="hasAnchor">
+<a href="#grouping-intersections" class="anchor"></a>9. Grouping intersections</h2>
+<p>Use <code>group_by='sets'</code> to group intersections by set. If needed, the intersections will be repeated so that they appear in each set group. Use <code><a href="../reference/upset_query.html">upset_query()</a></code> with <code>group</code> argument to color the intersection matrix accordingly.</p>
+<div class="sourceCode" id="cb82"><html><body><pre class="r"><span class="fu">set_size</span>(<span class="fl">8</span>, <span class="fl">3</span>)
+
+(
+    <span class="fu"><a href="../reference/upset.html">upset</a></span>(
+        <span class="no">movies</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"Action"</span>, <span class="st">"Comedy"</span>, <span class="st">"Drama"</span>),
+        <span class="kw">width_ratio</span><span class="kw">=</span><span class="fl">0.2</span>,
+        <span class="kw">group_by</span><span class="kw">=</span><span class="st">'sets'</span>,
+        <span class="kw">queries</span><span class="kw">=</span><span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span>(
+            <span class="fu"><a href="../reference/upset_query.html">upset_query</a></span>(
+                <span class="kw">intersect</span><span class="kw">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">'Drama'</span>, <span class="st">'Comedy'</span>),
+                <span class="kw">color</span><span class="kw">=</span><span class="st">'red'</span>,
+                <span class="kw">fill</span><span class="kw">=</span><span class="st">'red'</span>,
+                <span class="kw">only_components</span><span class="kw">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">'intersections_matrix'</span>, <span class="st">'Intersection size'</span>)
+            ),
+            <span class="fu"><a href="../reference/upset_query.html">upset_query</a></span>(<span class="kw">group</span><span class="kw">=</span><span class="st">'Drama'</span>, <span class="kw">color</span><span class="kw">=</span><span class="st">'blue'</span>),
+            <span class="fu"><a href="../reference/upset_query.html">upset_query</a></span>(<span class="kw">group</span><span class="kw">=</span><span class="st">'Comedy'</span>, <span class="kw">color</span><span class="kw">=</span><span class="st">'orange'</span>),
+            <span class="fu"><a href="../reference/upset_query.html">upset_query</a></span>(<span class="kw">group</span><span class="kw">=</span><span class="st">'Action'</span>, <span class="kw">color</span><span class="kw">=</span><span class="st">'purple'</span>),
+            <span class="fu"><a href="../reference/upset_query.html">upset_query</a></span>(<span class="kw">set</span><span class="kw">=</span><span class="st">'Drama'</span>, <span class="kw">fill</span><span class="kw">=</span><span class="st">'blue'</span>),
+            <span class="fu"><a href="../reference/upset_query.html">upset_query</a></span>(<span class="kw">set</span><span class="kw">=</span><span class="st">'Comedy'</span>, <span class="kw">fill</span><span class="kw">=</span><span class="st">'orange'</span>),
+            <span class="fu"><a href="../reference/upset_query.html">upset_query</a></span>(<span class="kw">set</span><span class="kw">=</span><span class="st">'Action'</span>, <span class="kw">fill</span><span class="kw">=</span><span class="st">'purple'</span>)
+        )
+    )
+)</pre></body></html></div>
+<p><img src="Examples_R_files/Examples_R_127_0.png"></p>
 </div>
   </div>
 

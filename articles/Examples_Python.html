@@ -34,7 +34,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">ComplexUpset</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.5.17</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.5.19</span>
       </span>
     </div>
 
@@ -1850,6 +1850,35 @@ upset(movies, genres, width_ratio=0.1, sort_sets='ascending')</pre></body></html
 upset(movies, genres, width_ratio=0.1, sort_sets=FALSE)</pre></body></html></div>
 <p><img src="Examples_Python_files/Examples_Python_131_0.png"></p>
 </div>
+</div>
+<div id="grouping-intersections" class="section level2">
+<h2 class="hasAnchor">
+<a href="#grouping-intersections" class="anchor"></a>9. Grouping intersections</h2>
+<p>Use <code>group_by='sets'</code> to group intersections by set. If needed, the intersections will be repeated so that they appear in each set group. Use <code><a href="../reference/upset_query.html">upset_query()</a></code> with <code>group</code> argument to color the intersection matrix accordingly.</p>
+<div class="sourceCode" id="cb53"><html><body><pre class="r">%%R -w 800 -h 300
+
+(
+    upset(
+        movies, c("Action", "Comedy", "Drama"),
+        width_ratio=0.2,
+        group_by='sets',
+        queries=list(
+            upset_query(
+                intersect=c('Drama', 'Comedy'),
+                color='red',
+                fill='red',
+                only_components=c('intersections_matrix', 'Intersection size')
+            ),
+            upset_query(group='Drama', color='blue'),
+            upset_query(group='Comedy', color='orange'),
+            upset_query(group='Action', color='purple'),
+            upset_query(set='Drama', fill='blue'),
+            upset_query(set='Comedy', fill='orange'),
+            upset_query(set='Action', fill='purple')
+        )
+    )
+)</pre></body></html></div>
+<p><img src="Examples_Python_files/Examples_Python_134_0.png"></p>
 </div>
   </div>
 

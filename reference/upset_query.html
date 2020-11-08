@@ -75,7 +75,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">ComplexUpset</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.5.17</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.5.19</span>
       </span>
     </div>
 
@@ -135,7 +135,13 @@
     <p>Highlight sets or intersections matching specified query.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>upset_query</span>(<span class='kw'>set</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>intersect</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>only_components</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='no'>...</span>)</pre>
+    <pre class="usage"><span class='fu'>upset_query</span>(
+  <span class='kw'>set</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>intersect</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>group</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>only_components</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='no'>...</span>
+)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -147,6 +153,10 @@
     <tr>
       <th>intersect</th>
       <td><p>a vector of names for the intersection to highlight; pass 'NA' to select the empty intersection</p></td>
+    </tr>
+    <tr>
+      <th>group</th>
+      <td><p>name of the set to highlight when using group_by='sets'</p></td>
     </tr>
     <tr>
       <th>only_components</th>
@@ -168,6 +178,9 @@
 #&gt; $intersect
 #&gt; [1] "Drama"  "Comedy"
 #&gt; 
+#&gt; $group_by_group
+#&gt; NULL
+#&gt; 
 #&gt; $only_components
 #&gt; NULL
 #&gt; 
@@ -180,6 +193,9 @@
 #&gt; [1] "Drama"
 #&gt; 
 #&gt; $intersect
+#&gt; NULL
+#&gt; 
+#&gt; $group_by_group
 #&gt; NULL
 #&gt; 
 #&gt; $only_components
