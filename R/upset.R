@@ -486,6 +486,29 @@ highlight_layer_map = function(geom, data, args=list()) {
 }
 
 
+#' Generate mapping for labeling percentages
+#' 
+#' @param relative_to defines proportion that should be calculated, relative to `'intersection'`, `'group'`, or `'all'` observed values
+#' @param digits number of digits to show (default=0)
+#' @param sep separator separator between the digit and percent sign (no separator by default)
+#' @export
+aes_percentage = function(relative_to, digits=0, sep='') {
+    check_argument(relative_to, allowed=c('intersection', 'group', 'all'), description='relative_to')
+
+    switch(
+        relative_to,
+        intersection=substitute(
+            paste(round(100 * ..count../tapply(..count.., ..x.., sum)[..x..], digits), '%', sep=sep)
+        ),
+        group=substitute(
+            paste(round(100 * ..prop.., digits), '%', sep=sep)
+        ),
+        all=substitute(
+            paste(round(100 * ..count../sum(..count..), digits), '%', sep=sep)
+        )
+    )
+}
+
 
 #' Highlight chosen sets or intersections
 #'
