@@ -314,6 +314,20 @@ intersection_ratio = function(
 }
 
 
+merge_rows = function(a, b) {
+    extra_b = setdiff(colnames(b), colnames(a))
+    extra_a = setdiff(colnames(a), colnames(b))
+
+    if (!is.null(extra_a) && length(extra_a) != 0) {
+        b[extra_a] = NULL
+    }
+    if (!is.null(extra_b) && length(extra_b) != 0) {
+        a[extra_b] = NULL
+    }
+    rbind(a, b)
+}
+
+
 queries_for = function(queries, component) {
     df = list()
     columns = character()
@@ -322,7 +336,15 @@ queries_for = function(queries, component) {
         if (!is.null(query$only_components) && !(component %in% query$only_components)) {
             next
         }
-        query$method = ifelse(is.null(query$intersect), 'set', 'intersect')
+        query$method = ifelse(
+            is.null(query$intersect),
+            ifelse(
+                is.null(query$set),
+                'group_by_group',
+                'set'
+            ),
+            'intersect'
+        )
         query$query = query[[query$method]]
         df[[length(df) + 1]] = query
         columns = union(columns, names(query))
@@ -330,8 +352,9 @@ queries_for = function(queries, component) {
 
     if (length(df) != 0) {
         for (row_id in 1:length(df)) {
-            row = df[[row_id]]
-            df[[row_id]] = row[columns]
+            row = df[[row_id]][columns]
+            names(row) = columns
+            df[[row_id]] = row
         }
     }
 
@@ -341,6 +364,11 @@ queries_for = function(queries, component) {
 
 set_queries = function(queries) {
     queries[queries$method == 'set', ]
+}
+
+
+group_by_queries = function(queries) {
+    queries[queries$method == 'group_by_group', ]
 }
 
 
@@ -364,7 +392,7 @@ intersect_queries = function(queries, data) {
 without_query_columns = function(queries) {
     queries[
         ,
-        !(colnames(queries) %in% c('only_components', 'set', 'intersect', 'method', 'query', 'intersection', 'value', 'group')),
+        !(colnames(queries) %in% c('only_components', 'set', 'intersect', 'method', 'query', 'intersection', 'value', 'group', 'group_by_group')),
         drop=FALSE
     ]
 }
@@ -386,6 +414,10 @@ extract_geom_params_for = function(queries, geom, preserve_query=FALSE) {
             check.names=FALSE,
             check.optionsrows=FALSE
         )
+
+        # filter-out all-missing columns added when merging queries
+        params = Filter(function(column) { !all(is.na(column)) }, params)
+
         if (preserve_query) {
             params$query = queries$query
         }
@@ -397,7 +429,13 @@ extract_geom_params_for = function(queries, geom, preserve_query=FALSE) {
 
 get_highlights_data = function(data, key, queries) {
     if (nrow(queries) > 0) {
-        merge(data, queries, by.x=key, by.y='query', all.y=TRUE)
+        merge(
+            data,
+            queries[, !(colnames(queries) %in% c('set', 'intersect', 'group_by_group'))],
+            by.x=key,
+            by.y='query',
+            all.y=TRUE
+        )
     } else {
         data.frame()
     }
@@ -408,6 +446,7 @@ highlight_layer = function(geom, data, args=list()) {
     if (nrow(data) == 0) {
         list()
     } else {
+
         list(
             do.call(
                 geom,
@@ -421,26 +460,55 @@ highlight_layer = function(geom, data, args=list()) {
 }
 
 
+#' More reliable way of highlighting that works well for aggregate geoms/stats such as geom_bar
+#' Still experimental.
+highlight_layer_map = function(geom, data, args=list()) {
+    if (nrow(data) == 0) {
+        list()
+    } else {
+        params = extract_geom_params_for(data, geom())
+        mapping = list(colnames(params))
+        names(mapping) = mapping
+
+        list(
+            do.call(
+                geom,
+                c(
+                    list(
+                        data=data,
+                        mapping=do.call(aes_string, mapping)
+                    ),
+                    args
+                )
+            )
+        )
+    }
+}
+
+
+
 #' Highlight chosen sets or intersections
 #'
 #' Highlight sets or intersections matching specified query.
 #'
 #' @param set name of the set to highlight
 #' @param intersect a vector of names for the intersection to highlight; pass 'NA' to select the empty intersection
+#' @param group name of the set to highlight when using group_by='sets'
 #' @param only_components which components to modify; by default all eligible components will be modified; the available components are 'overall_sizes', 'intersections_matrix', 'Intersection size', and any annotations specified
 #' @param ... - passed to geoms in modified components
 #' @export
 #' @examples
 #' upset_query(intersect=c('Drama', 'Comedy'), color='red', fill='red')
 #' upset_query(set='Drama', fill='blue')
-upset_query = function(set=NULL, intersect=NULL, only_components=NULL, ...) {
-    if (!is.null(set) && !is.null(intersect)) {
-        stop('Please pass either "set" or "intersect", not both')
+upset_query = function(set=NULL, intersect=NULL, group=NULL, only_components=NULL, ...) {
+    passed_count = sum(c(!is.null(set), !is.null(intersect), !is.null(group)))
+    if (passed_count > 1) {
+        stop('Please pass only one of: "set", "intersect", or "group"')
     }
-    if (is.null(set) && is.null(intersect)) {
-        stop('Please pass "set" or "intersect"')
+    if (passed_count == 0) {
+        stop('Please pass "set", "intersect", or "group"')
     }
-    list(set=set, intersect=intersect, only_components=only_components, ...)
+    list(set=set, intersect=intersect, group_by_group=group, only_components=only_components, ...)
 }
 
 
@@ -457,7 +525,7 @@ upset_set_size = function(geom=geom_bar, layers=list(), ...) {
             geom(...),
             scale_y_reverse(),
             ylab('Set size'),
-            substitute(highlight_layer(geom, overall_sizes_highlights_data, args=args))
+            substitute(highlight_layer_map(geom, overall_sizes_highlights_data, args=args))
         ),
         layers
     )
@@ -591,8 +659,16 @@ upset = function(
   show_overall_sizes = !(inherits(set_sizes, 'logical') && set_sizes == FALSE)
 
   matrix_intersect_queries = intersect_queries(queries_for(queries, 'intersections_matrix'), data)
+  matrix_group_by_queries = group_by_queries(queries_for(queries, 'intersections_matrix'))
 
-  query_matrix = get_highlights_data(data$matrix_frame, 'intersection', matrix_intersect_queries)
+  intersection_query_matrix = get_highlights_data(data$matrix_frame, 'intersection', matrix_intersect_queries)
+  group_query_matrix = get_highlights_data(data$matrix_frame, 'group_by_group', matrix_group_by_queries)
+
+  query_matrix = merge_rows(
+      intersection_query_matrix,
+      group_query_matrix
+  )
+
   query_matrix = query_matrix[query_matrix$value == TRUE, ]
 
   intersections_matrix = (

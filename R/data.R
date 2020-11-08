@@ -11,7 +11,7 @@ sanitize_names = function(variables_names) {
             if (name %in% variables_names) {
             stop(paste(
                 'The group names contain minus characters (-) which prevent intersections names composition;',
-                'offending group:', original_name, 'please substitute the these characters using gsub and try again.'
+                'offending group:', original_name, 'please substitute these characters using gsub and try again.'
             ))
             }
         }
@@ -74,6 +74,27 @@ compute_unions = function(data, sorted_intersections) {
 }
 
 
+check_argument = function(
+    value,
+    allowed,
+    description
+) {
+    if (!(value %in% allowed)) {
+        stop(
+            paste0(
+                description,
+                ' has to be one of: ',
+                paste(allowed, collapse=' or '),
+                ', not "',
+                value,
+                '"'
+
+            )
+        )
+    }
+}
+
+
 check_sort = function(
     sort_order,
     allowed = c('descending', 'ascending'),
@@ -84,20 +105,11 @@ check_sort = function(
         return(TRUE)
     }
 
-    if (!(sort_order %in% allowed)) {
-        stop(
-            paste0(
-                'Sort ',
-                what,
-                ' has to be one of: ',
-                paste(allowed, collapse=' or '),
-                ', not "',
-                sort_order,
-                '""'
-
-            )
-        )
-    }
+    check_argument(
+        sort_order,
+        allowed,
+        paste('Sort', what)
+    )
 
     TRUE
 }
@@ -149,6 +161,7 @@ trim_intersections = function(intersections_by_size, min_size=0, max_size=Inf, m
 #' @param sort_sets whether to sort the rows in the intersection matrix (descending sort by default); one of: `'ascending'`, `'descending'`, `FALSE`
 #' @param sort_intersections whether to sort the columns in the intersection matrix (descending sort by default); one of: `'ascending'`, `'descending'`, `FALSE`
 #' @param sort_intersections_by the mode of sorting, the size of the intersection (cardinality) by default; one of: `'cardinality'`, `'degree'`, `'ratio'`
+#' @param group_by the mode of grouping intersections; one of: `'degree'`, `'sets'`
 #' @param min_max_early whether the min and max limits should be applied early (for faster plotting), or late (for accurate depiction of ratios)
 #' @param union_count_column name of the column to store the union size (adjust if conflicts with your data)
 #' @param intersection_count_column name of the column to store the intersection size (adjust if conflicts with your data)
@@ -159,6 +172,7 @@ upset_data = function(
     sort_sets='descending',
     sort_intersections='descending',
     sort_intersections_by='cardinality',
+    group_by='degree',
     min_max_early=TRUE,
     union_count_column='union_size', intersection_count_column='intersection_size'
 ) {
@@ -277,7 +291,44 @@ upset_data = function(
             get_sort_order(sort_value, sort_intersections)
         ]
     }
-    sorted_intersections = names(intersections_by_size)
+
+    check_argument(
+        group_by,
+        allowed=c('degree', 'sets'),
+        description='group_by'
+    )
+
+    unique_sorted_intersections = names(intersections_by_size)
+
+    if (group_by == 'degree') {
+        sorted_intersections = unique_sorted_intersections
+    } else if (group_by == 'sets') {
+        new_data = list()
+        new_plot_intersections_subset = c()
+        sorted_intersections = c()
+
+        for (group in sorted_groups) {
+            for (intersection in unique_sorted_intersections) {
+                i_groups = unlist(strsplit(intersection, '-'))
+                if (group %in% i_groups) {
+                    new_intersection_id = paste(c(group, i_groups[i_groups!=group]), collapse='-')
+                    sorted_intersections = c(sorted_intersections, new_intersection_id)
+                    intersections_by_size[new_intersection_id] = intersections_by_size[intersection]
+                    intersection_data = data[data$intersection == intersection, ]
+                    intersection_data$intersection = new_intersection_id
+                    intersection_data$group_by_group = group
+                    new_data = rbind(new_data, intersection_data)
+                    if (intersection %in% plot_intersections_subset) {
+                        new_plot_intersections_subset = c(
+                            new_plot_intersections_subset, new_intersection_id
+                        )
+                    }
+                }
+            }
+        }
+        data = new_data
+        plot_intersections_subset = new_plot_intersections_subset
+    }
 
     matrix_data = compute_matrix(sorted_intersections, sorted_groups)
 
@@ -289,6 +340,12 @@ upset_data = function(
         'intersection',
         'value'
     )
+
+    if (group_by == 'sets') {
+        matrix_frame$group_by_group = sapply(matrix_frame$intersection, function(intersection) {
+            unlist(strsplit(as.character(intersection), '-'))[[1]]
+        })
+    }
 
    union_sizes = compute_unions(stacked, sorted_intersections)
 

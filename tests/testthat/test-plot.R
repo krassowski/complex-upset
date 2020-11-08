@@ -63,10 +63,16 @@ test_that("The example plot works", {
 })
 
 
-test_that("upset_query requires set or intersect, and not both", {
+test_that("upset_query requires set, group, or intersect, and not combinations", {
     # accepts set
     expect_error(
         upset_query(set='Drama'),
+        NA
+    )
+    
+    # accepts group
+    expect_error(
+        upset_query(group='Drama'),
         NA
     )
 
@@ -79,12 +85,12 @@ test_that("upset_query requires set or intersect, and not both", {
     # does not accept set and intersect together
     expect_error(
         upset_query(set='Drama', intersect=c('Romance', 'Drama')),
-        'Please pass either "set" or "intersect", not both'
+        'Please pass only one of: "set", "intersect", or "group"'
     )
 
     # requires are least set or intersect is present
     expect_error(
         upset_query(),
-        'Please pass "set" or "intersect"'
+        'Please pass "set", "intersect", or "group"'
     )
 })
