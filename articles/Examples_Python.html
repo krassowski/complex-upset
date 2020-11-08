@@ -34,7 +34,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">ComplexUpset</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.5.19</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.5.20</span>
       </span>
     </div>
 
@@ -1851,34 +1851,194 @@ upset(movies, genres, width_ratio=0.1, sort_sets=FALSE)</pre></body></html></div
 <p><img src="Examples_Python_files/Examples_Python_131_0.png"></p>
 </div>
 </div>
-<div id="grouping-intersections" class="section level2">
+<div id="grouping" class="section level2">
 <h2 class="hasAnchor">
-<a href="#grouping-intersections" class="anchor"></a>9. Grouping intersections</h2>
+<a href="#grouping" class="anchor"></a>9. Grouping</h2>
+<div id="grouping-intersections" class="section level3">
+<h3 class="hasAnchor">
+<a href="#grouping-intersections" class="anchor"></a>9.1 Grouping intersections</h3>
 <p>Use <code>group_by='sets'</code> to group intersections by set. If needed, the intersections will be repeated so that they appear in each set group. Use <code><a href="../reference/upset_query.html">upset_query()</a></code> with <code>group</code> argument to color the intersection matrix accordingly.</p>
 <div class="sourceCode" id="cb53"><html><body><pre class="r">%%R -w 800 -h 300
 
-(
-    upset(
-        movies, c("Action", "Comedy", "Drama"),
-        width_ratio=0.2,
-        group_by='sets',
-        queries=list(
-            upset_query(
-                intersect=c('Drama', 'Comedy'),
-                color='red',
-                fill='red',
-                only_components=c('intersections_matrix', 'Intersection size')
-            ),
-            upset_query(group='Drama', color='blue'),
-            upset_query(group='Comedy', color='orange'),
-            upset_query(group='Action', color='purple'),
-            upset_query(set='Drama', fill='blue'),
-            upset_query(set='Comedy', fill='orange'),
-            upset_query(set='Action', fill='purple')
+upset(
+    movies, c("Action", "Comedy", "Drama"),
+    width_ratio=0.2,
+    group_by='sets',
+    queries=list(
+        upset_query(
+            intersect=c('Drama', 'Comedy'),
+            color='red',
+            fill='red',
+            only_components=c('intersections_matrix', 'Intersection size')
+        ),
+        upset_query(group='Drama', color='blue'),
+        upset_query(group='Comedy', color='orange'),
+        upset_query(group='Action', color='purple'),
+        upset_query(set='Drama', fill='blue'),
+        upset_query(set='Comedy', fill='orange'),
+        upset_query(set='Action', fill='purple')
+    )
+)</pre></body></html></div>
+<p><img src="Examples_Python_files/Examples_Python_135_0.png"></p>
+</div>
+</div>
+<div id="display-percentages" class="section level2">
+<h2 class="hasAnchor">
+<a href="#display-percentages" class="anchor"></a>10. Display percentages</h2>
+<p>Use <code><a href="../reference/aes_percentage.html">aes_percentage()</a></code> utility preceeded with <code>!!</code> syntax to easily display percentages. In the examples below only percentages for the movies with R raiting are shown to avoid visual clutter.</p>
+<div class="sourceCode" id="cb54"><html><body><pre class="r">%%R
+raiting_scale = scale_fill_manual(values=c(
+    'R'='#E41A1C', 'PG'='#377EB8',
+    'PG-13'='#4DAF4A', 'NC-17'='#FF7F00'
+))
+show_hide_scale = scale_color_manual(values=c('show'='black', 'hide'='transparent'), guide=FALSE)</pre></body></html></div>
+<div id="within-intersection" class="section level3">
+<h3 class="hasAnchor">
+<a href="#within-intersection" class="anchor"></a>10.1 Within intersection</h3>
+<div class="sourceCode" id="cb55"><html><body><pre class="r">%%R -w 800 -h 500
+
+upset(
+    movies, genres, name='genre', width_ratio=0.1, min_size=100,
+    annotations =list(
+        'MPAA Raiting'=list(
+            aes=aes(x=intersection, fill=mpaa),
+            geom=list(
+                geom_bar(stat='count', position='fill'),
+                geom_text(
+                    aes(
+                        label=!!aes_percentage(relative_to='intersection'),
+                        color=ifelse(mpaa == 'R', 'show', 'hide')
+                    ),
+                    stat='count',
+                    position=position_fill(vjust = .5)
+                ),
+                scale_y_continuous(labels=scales::percent_format()),
+                show_hide_scale,
+                raiting_scale
+            )
         )
     )
 )</pre></body></html></div>
-<p><img src="Examples_Python_files/Examples_Python_134_0.png"></p>
+<p>[1] “Dropping empty groups: Animation, Documentary, Short”</p>
+<p><img src="Examples_Python_files/Examples_Python_140_1.png"></p>
+</div>
+<div id="relative-to-the-group" class="section level3">
+<h3 class="hasAnchor">
+<a href="#relative-to-the-group" class="anchor"></a>10.2 Relative to the group</h3>
+<div class="sourceCode" id="cb56"><html><body><pre class="r">%%R -w 800 -h 500
+
+upset(
+    movies, genres, name='genre', width_ratio=0.1, min_size=100,
+    annotations =list(
+        'MPAA Raiting'=list(
+            aes=aes(x=intersection, fill=mpaa),
+            geom=list(
+                geom_bar(stat='count', position='fill'),
+                geom_text(
+                    aes(
+                        label=!!aes_percentage(relative_to='group'),
+                        group=mpaa,
+                        color=ifelse(mpaa == 'R', 'show', 'hide')
+                    ),
+                    stat='count',
+                    position=position_fill(vjust = .5)
+                ),
+                scale_y_continuous(labels=scales::percent_format()),
+                show_hide_scale,
+                raiting_scale
+            )
+        )
+    )
+)</pre></body></html></div>
+<p>[1] “Dropping empty groups: Animation, Documentary, Short”</p>
+<p><img src="Examples_Python_files/Examples_Python_142_1.png"></p>
+</div>
+<div id="relative-to-all-observed-values" class="section level3">
+<h3 class="hasAnchor">
+<a href="#relative-to-all-observed-values" class="anchor"></a>10.3 Relative to all observed values</h3>
+<div class="sourceCode" id="cb57"><html><body><pre class="r">%%R -w 800 -h 500
+
+upset(
+    movies, genres, name='genre', width_ratio=0.1, min_size=100,
+    annotations =list(
+        'MPAA Raiting'=list(
+            aes=aes(x=intersection, fill=mpaa),
+            geom=list(
+                geom_bar(stat='count', position='fill'),
+                geom_text(
+                    aes(
+                        label=!!aes_percentage(relative_to='all'),
+                        color=ifelse(mpaa == 'R', 'show', 'hide')
+                    ),
+                    stat='count',
+                    position=position_fill(vjust = .5)
+                ),
+                scale_y_continuous(labels=scales::percent_format()),
+                show_hide_scale,
+                raiting_scale
+            )
+        )
+    )
+)</pre></body></html></div>
+<p>[1] “Dropping empty groups: Animation, Documentary, Short”</p>
+<p><img src="Examples_Python_files/Examples_Python_144_1.png"></p>
+</div>
+</div>
+<div id="advanced-usage-examples" class="section level2">
+<h2 class="hasAnchor">
+<a href="#advanced-usage-examples" class="anchor"></a>11. Advanced usage examples</h2>
+<div id="display-text-on-some-bars-only" class="section level3">
+<h3 class="hasAnchor">
+<a href="#display-text-on-some-bars-only" class="anchor"></a>11.1 Display text on some bars only</h3>
+<div class="sourceCode" id="cb58"><html><body><pre class="r">%%R -w 800 -h 500
+
+upset(
+    movies, genres, name='genre', width_ratio=0.1, min_size=100,
+    annotations =list(
+        'MPAA Raiting'=list(
+            aes=aes(x=intersection, fill=mpaa),
+            geom=list(
+                geom_bar(stat='count', position='fill'),
+                geom_text(
+                    aes(label=ifelse(mpaa == 'R', 'R', NA)),
+                    stat='count',
+                    position=position_fill(vjust = .5)
+                ),
+                show_hide_scale,
+                raiting_scale
+            )
+        )
+    )
+)</pre></body></html></div>
+<p>[1] “Dropping empty groups: Animation, Documentary, Short”</p>
+<p><img src="Examples_Python_files/Examples_Python_147_1.png"></p>
+</div>
+<div id="combine-multiple-plots-together" class="section level3">
+<h3 class="hasAnchor">
+<a href="#combine-multiple-plots-together" class="anchor"></a>11.2 Combine multiple plots together</h3>
+<div class="sourceCode" id="cb59"><html><body><pre class="r">%%R -w 800 -h 500
+library(patchwork)
+
+annotations = list(
+    'MPAA Raiting'=list(
+        aes=aes(x=intersection, fill=mpaa),
+        geom=list(
+            geom_bar(stat='count', position='fill')
+        )
+    )
+)
+set.seed(0)    # for replicable example only
+
+data_1 = movies[sample(nrow(movies), 100), ]
+data_2 = movies[sample(nrow(movies), 100), ]
+
+u1 = upset(data_1, genres, min_size=5, base_annotations=annotations)
+u2 = upset(data_2, genres, min_size=5, base_annotations=annotations)
+
+(u1 | u2) + plot_layout(guides='collect')</pre></body></html></div>
+<p>[1] “Dropping empty groups: Animation, Documentary, Short” [1] “Dropping empty groups: Animation, Documentary, Short”</p>
+<p><img src="Examples_Python_files/Examples_Python_149_1.png"></p>
+</div>
 </div>
   </div>
 
