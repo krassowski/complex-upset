@@ -4,7 +4,9 @@
 \name{upset_themes}
 \alias{upset_themes}
 \title{List of default themes for upset components}
-\format{An object of class \code{list} of length 4.}
+\format{
+An object of class \code{list} of length 4.
+}
 \usage{
 upset_themes
 }

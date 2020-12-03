@@ -131,7 +131,11 @@ calculate_degree = function(x) {
 }
 
 
-trim_intersections = function(intersections_by_size, min_size=0, max_size=Inf, min_degree=0, max_degree=Inf) {
+trim_intersections = function(
+    intersections_by_size, min_size=0, max_size=Inf,
+    min_degree=0, max_degree=Inf,
+    n_intersections=NULL
+) {
     intersections_by_size = intersections_by_size[
         (intersections_by_size >= min_size)
         &
@@ -145,6 +149,14 @@ trim_intersections = function(intersections_by_size, min_size=0, max_size=Inf, m
             (degrees <= max_degree)
         ]
     }
+
+    if (!is.null(n_intersections)) {
+        intersections_by_size = tail(
+            sort(intersections_by_size),
+            n_intersections
+        )
+    }
+
     intersections_by_size
 }
 
@@ -155,7 +167,8 @@ trim_intersections = function(intersections_by_size, min_size=0, max_size=Inf, m
 #' @param min_size minimal number of observations in an intersection for it to be included
 #' @param max_size maximal number of observations in an intersection for it to be included
 #' @param min_degree minimal degree of an intersection for it to be included
-#' @param max_degree minimal degree of an intersection for it to be included
+#' @param max_degree maximal degree of an intersection for it to be included
+#' @param n_intersections the exact number of the intersections to be displayed; n largest intersections that meet the size and degree criteria will be shown
 #' @param keep_empty_groups whether empty sets should be kept (including sets which are only empty after filtering by size)
 #' @param warn_when_dropping_groups whether a warning should be issued when empty sets are being removed
 #' @param sort_sets whether to sort the rows in the intersection matrix (descending sort by default); one of: `'ascending'`, `'descending'`, `FALSE`
@@ -168,6 +181,7 @@ trim_intersections = function(intersections_by_size, min_size=0, max_size=Inf, m
 #' @export
 upset_data = function(
     data, intersect, min_size=0, max_size=Inf, min_degree=0, max_degree=Inf,
+    n_intersections=NULL,
     keep_empty_groups=FALSE, warn_when_dropping_groups=TRUE,
     sort_sets='descending',
     sort_intersections='descending',
@@ -215,14 +229,15 @@ upset_data = function(
     plot_intersections_subset = names(intersections_by_size)
     plot_sets_subset = intersect
 
-    if (min_size > 0 || max_size != Inf || min_degree > 0 || max_degree != Inf) {
+    if (min_size > 0 || max_size != Inf || min_degree > 0 || max_degree != Inf || !is.null(n_intersections)) {
 
         intersections_by_size_trimmed = trim_intersections(
             intersections_by_size,
             min_size=min_size,
             max_size=max_size,
             min_degree=min_degree,
-            max_degree=max_degree
+            max_degree=max_degree,
+            n_intersections=n_intersections
         )
         data_subset = data[data$intersection %in% names(intersections_by_size_trimmed), ]
 
@@ -282,7 +297,7 @@ upset_data = function(
             sort_value = calculate_degree(original_intersections_names)
             names(sort_value) = original_intersections_names
         } else if (sort_intersections_by == 'ratio') {
-           unsorted_union_sizes = compute_unions(stacked, names(intersections_by_size))
+            unsorted_union_sizes = compute_unions(stacked, names(intersections_by_size))
             sort_value = intersections_by_size
             sort_value = sort_value / unsorted_union_sizes
         }
