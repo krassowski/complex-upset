@@ -1,7 +1,8 @@
 #' @importFrom utils head modifyList tail
 #' @importFrom ggplot2 ggplot aes aes_string coord_flip theme xlab ylab
-#' @importFrom ggplot2 ggplot scale_color_manual scale_x_discrete scale_y_discrete scale_y_reverse
-#' @importFrom ggplot2 ggplot geom_text geom_bar geom_col geom_point geom_segment
+#' @importFrom ggplot2 scale_color_manual scale_x_discrete scale_y_discrete scale_y_reverse
+#' @importFrom ggplot2 geom_text geom_bar geom_col geom_point geom_segment
+#' @importFrom ggplot2 is.ggplot
 #' @importFrom patchwork plot_layout plot_spacer wrap_elements
 NULL
 
@@ -94,6 +95,17 @@ upset_modify_themes = function(to_update)  {
 }
 
 
+
+convert_annotation = function(...) {
+    arguments = list(...)
+    intersection_plot = ggplot(mapping=arguments$aes)
+    intersection_plot$highlight_geom = arguments$highlight_geom
+    intersection_plot$top_geom = arguments$top_geom
+    intersection_plot$geom = arguments$geom
+    intersection_plot
+}
+
+
 #' Annotation panel shorthand
 #'
 #' Simplifies creation of annotation panels, automatically building aesthetics mappings,
@@ -103,14 +115,17 @@ upset_modify_themes = function(to_update)  {
 #' @param geom A geom to be used as an annotation
 #' @export
 upset_annotate = function(y, geom) {
-  list(
+  annotation = convert_annotation(
     aes=aes_string(x='intersection', y=y),
     geom=geom
   )
+  annotation$default_y = y
+  annotation
 }
 
 segment_end = function(matrix_frame, data, intersection, end) {
   corresponding = matrix_frame[matrix_frame$intersection == intersection, ]
+
   ordering_reference = data$sorted$groups
   reference_order = order(data$sorted$groups)
 
@@ -144,11 +159,12 @@ matrix_background_stripes = function(data, stripes, orient='horizontal') {
   } else {
     aes = aes(y=-Inf, yend=Inf, x=group, xend=group)
   }
+  groups = data$sorted$groups[data$sorted$groups %in% data$plot_sets_subset]
   list(
     geom_segment(
-      data=data.frame(group=data$sorted$groups),
+      data=data.frame(group=groups),
       aes,
-      color=rep_len(stripes, length(data$sorted$groups)),
+      color=rep_len(stripes, length(groups)),
       size=7
     )
   )
@@ -156,6 +172,7 @@ matrix_background_stripes = function(data, stripes, orient='horizontal') {
 
 
 intersection_size_text = list(vjust=-0.25)
+
 
 #' Barplot annotation of intersections sizes
 #'
@@ -215,7 +232,7 @@ intersection_size = function(
 
   bar_geom = list(geom_bar())
 
-  list(
+  convert_annotation(
     aes=modifyList(aes(x=intersection), aest),
     geom=bar_geom,
     highlight_geom=bar_geom,
@@ -289,7 +306,8 @@ intersection_ratio = function(
         c(
             list(
                 text_aes,
-                check_overlap=TRUE
+                check_overlap=TRUE,
+                na.rm=TRUE
             ),
             text
         )
@@ -303,9 +321,14 @@ intersection_ratio = function(
     counts_geoms = list()
   }
 
-  bar_geom = list(geom_col(aes(y=ifelse(union_size == 0, 0, 1/union_size))))
+  bar_geom = list(geom_col(
+      aes(y=ifelse(union_size == 0, 0, 1/union_size)),
+      # does not work, see
+      # https://github.com/tidyverse/ggplot2/issues/3532
+      na.rm=TRUE
+  ))
 
-  list(
+  convert_annotation(
     aes=modifyList(aes(x=intersection), aest),
     geom=bar_geom,
     highlight_geom=bar_geom,
@@ -487,7 +510,7 @@ highlight_layer_map = function(geom, data, args=list()) {
 
 
 #' Generate mapping for labeling percentages
-#' 
+#'
 #' @param relative_to defines proportion that should be calculated, relative to `'intersection'`, `'group'`, or `'all'` observed values
 #' @param digits number of digits to show (default=0)
 #' @param sep separator separator between the digit and percent sign (no separator by default)
@@ -694,13 +717,15 @@ upset = function(
 
   query_matrix = query_matrix[query_matrix$value == TRUE, ]
 
+  matrix_frame = data$matrix_frame[data$matrix_frame$group %in% data$plot_sets_subset, ]
+
   intersections_matrix = (
-    ggplot(data$matrix_frame, aes(x=intersection, y=group))
+    ggplot(matrix_frame, aes(x=intersection, y=group))
     + matrix_background_stripes(data, stripes)
     # the dots outline
-    + geom_point(color=ifelse(data$matrix_frame$value, 'black', 'grey70'), size=dot_size * 7/6)
+    + geom_point(color=ifelse(matrix_frame$value, 'black', 'grey70'), size=dot_size * 7/6, na.rm=TRUE)
     # the dot
-    + geom_point(aes(color=value), size=dot_size)
+    + geom_point(aes(color=value), size=dot_size, na.rm=TRUE)
     # the highlighted dot
     + highlight_layer(
         geom_point,
@@ -711,9 +736,9 @@ upset = function(
     + geom_segment(aes(
           x=intersection,
           xend=intersection,
-          y=segment_end(data$matrix_frame, data, intersection, head),
-          yend=segment_end(data$matrix_frame, data, intersection, tail)
-    ), na.rm=T)
+          y=segment_end(matrix_frame, data, intersection, head),
+          yend=segment_end(matrix_frame, data, intersection, tail)
+    ), na.rm=TRUE)
     # highlighted interconnectors
     + highlight_layer(
         geom_segment,
@@ -725,7 +750,7 @@ upset = function(
                 y=segment_end(query_matrix, data, intersection, head),
                 yend=segment_end(query_matrix, data, intersection, tail)
              ),
-             na.rm=T
+             na.rm=TRUE
         )
     )
     + xlab(name)
@@ -768,22 +793,31 @@ upset = function(
     }
 
     if (name %in% names(themes)) {
-      theme = themes[[name]]
+      selected_theme = themes[[name]]
     } else {
-      theme = themes[['default']]
+      selected_theme = themes[['default']]
     }
 
     if (show_overall_sizes) {
         rows[[length(rows) + 1]] = plot_spacer()
     }
 
+    if (is.ggplot(annotation)) {
+        annotation_plot = annotation %+% data$with_sizes
+        user_theme = annotation_plot$theme
+        annotation_plot = annotation_plot + selected_theme + do.call(theme, user_theme)
+
+        if (is.null(annotation_plot$labels$y) || (!is.null(annotation_plot$default_y) && annotation_plot$default_y == annotation_plot$labels$y)) {
+            annotation_plot = annotation_plot + ylab(name)
+        }
+    } else {
+        annotation_plot = ggplot(data$with_sizes, annotation$aes) + selected_theme + xlab(name) + ylab(name)
+    }
+
     rows[[length(rows) + 1]] = (
-      ggplot(data$with_sizes, annotation$aes)
+      annotation_plot
       + geoms_plus_highlights
       + scale_intersections
-      + xlab(name)
-      + ylab(name)
-      + theme
     )
   }
 
@@ -792,7 +826,7 @@ upset = function(
       overall_sizes_highlights_data = get_highlights_data(data$presence, 'group', overall_sizes_queries)
 
       overall_sizes = (
-        ggplot(data$presence, aes(x=group))
+        ggplot(data$presence[data$presence$group %in% data$plot_sets_subset, ], aes(x=group))
         + matrix_background_stripes(data, stripes, 'vertical')
         + coord_flip()
         + eval_if_needed(set_sizes, overall_sizes_highlights_data=overall_sizes_highlights_data)
