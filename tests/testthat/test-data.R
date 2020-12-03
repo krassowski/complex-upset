@@ -260,6 +260,10 @@ test_that("upset_data() filters by min_size, max_size, min_degree and max_degree
     result = upset_data(df, c('a', 'b', 'c', 'd'), min_degree=3, sort_intersections=FALSE)
     expect_equal(result$plot_intersections_subset, c('a-b-d'))
 
+    result = upset_data(df, c('a', 'b', 'c', 'd'), n_intersections=1)
+    # the largest intersection should be selected
+    expect_equal(result$plot_intersections_subset, c('a-b'))
+
     # restore locale
     Sys.setlocale("LC_COLLATE", old_locale)
 })
