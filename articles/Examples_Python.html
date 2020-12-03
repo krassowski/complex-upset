@@ -34,7 +34,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">ComplexUpset</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.5.20</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.6.0</span>
       </span>
     </div>
 
@@ -82,7 +82,8 @@
 
       
 
-      </header><div class="row">
+      </header><script src="Examples_Python_files/header-attrs-2.5/header-attrs.js"></script><script src="Examples_Python_files/accessible-code-block-0.0.1/empty-anchor.js"></script><link href="Examples_Python_files/anchor-sections-1.0/anchor-sections.css" rel="stylesheet">
+<script src="Examples_Python_files/anchor-sections-1.0/anchor-sections.js"></script><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Examples - Python</h1>
@@ -99,28 +100,28 @@
 <h3 class="hasAnchor">
 <a href="#python-integration-for-use-in-jupyter-notebooks" class="anchor"></a>Python integration (for use in Jupyter Notebooks)</h3>
 <p>Please install the requirements using:</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb1-1" title="1"><span class="ex">pip</span> install pandas pydataset rpy2</a></code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true"></a><span class="ex">pip</span> install pandas pydataset rpy2</span></code></pre></div>
 <p>Load <code>rpy2</code> extension:</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb2-1" title="1"><span class="op">%%</span>capture</a>
-<a class="sourceLine" id="cb2-2" title="2"><span class="op">%</span>load_ext rpy2.ipython</a></code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true"></a><span class="op">%%</span>capture</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true"></a><span class="op">%</span>load_ext rpy2.ipython</span></code></pre></div>
 <p>Install the package (if not aleady installed):</p>
-<div class="sourceCode" id="cb3"><html><body><pre class="r">%%R
-if (!require(devtools, quietly=T)) install.packages("devtools")
-if (!require(ComplexUpset, quietly=T)) devtools::install_github("krassowski/complex-upset")</pre></body></html></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true"></a><span class="op">%%</span>R</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true"></a><span class="cf">if</span> (<span class="op">!</span><span class="kw">require</span>(devtools, <span class="dt">quietly=</span>T)) <span class="kw">install.packages</span>(<span class="st">"devtools"</span>)</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true"></a><span class="cf">if</span> (<span class="op">!</span><span class="kw">require</span>(ComplexUpset, <span class="dt">quietly=</span>T)) devtools<span class="op">::</span><span class="kw">install_github</span>(<span class="st">"krassowski/complex-upset"</span>)</span></code></pre></div>
 </div>
 <div id="load-ggplot2-and-complexupset" class="section level2">
 <h2 class="hasAnchor">
 <a href="#load-ggplot2-and-complexupset" class="anchor"></a>Load ggplot2 and ComplexUpset</h2>
-<div class="sourceCode" id="cb4"><html><body><pre class="r">%%R
-library(ggplot2)
-library(ComplexUpset)</pre></body></html></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true"></a><span class="op">%%</span>R</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true"></a><span class="kw">library</span>(ggplot2)</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true"></a><span class="kw">library</span>(ComplexUpset)</span></code></pre></div>
 </div>
 <div id="prepare-the-datasets" class="section level2">
 <h2 class="hasAnchor">
 <a href="#prepare-the-datasets" class="anchor"></a>Prepare the datasets</h2>
-<div class="sourceCode" id="cb5"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb5-1" title="1"><span class="im">from</span> pydataset <span class="im">import</span> data <span class="im">as</span> load_data</a>
-<a class="sourceLine" id="cb5-2" title="2">movies <span class="op">=</span> load_data(<span class="st">'movies'</span>).dropna()</a>
-<a class="sourceLine" id="cb5-3" title="3">movies.head(<span class="dv">3</span>).T</a></code></pre></div>
+<div class="sourceCode" id="cb5"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true"></a><span class="im">from</span> pydataset <span class="im">import</span> data <span class="im">as</span> load_data</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true"></a>movies <span class="op">=</span> load_data(<span class="st">'movies'</span>).dropna()</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true"></a>movies.head(<span class="dv">3</span>).T</span></code></pre></div>
 <div>
 <style scoped>
     .dataframe tbody tr th:only-of-type {
@@ -489,12 +490,12 @@ Short
 </tbody>
 </table>
 </div>
-<div class="sourceCode" id="cb6"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb6-1" title="1">genres <span class="op">=</span> <span class="bu">list</span>(movies.columns[<span class="op">-</span><span class="dv">7</span>:])</a>
-<a class="sourceLine" id="cb6-2" title="2">genres</a></code></pre></div>
-<p>[‘Action’, ‘Animation’, ‘Comedy’, ‘Drama’, ‘Documentary’, ‘Romance’, ‘Short’]</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true"></a>genres <span class="op">=</span> <span class="bu">list</span>(movies.columns[<span class="op">-</span><span class="dv">7</span>:])</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true"></a>genres</span></code></pre></div>
+<pre><code>['Action', 'Animation', 'Comedy', 'Drama', 'Documentary', 'Romance', 'Short']</code></pre>
 <p>Convert the genre indicator columns to use boolean values:</p>
-<div class="sourceCode" id="cb7"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb7-1" title="1">movies[genres] <span class="op">=</span> movies[genres] <span class="op">==</span> <span class="dv">1</span></a>
-<a class="sourceLine" id="cb7-2" title="2">movies[genres].head(<span class="dv">3</span>).T</a></code></pre></div>
+<div class="sourceCode" id="cb8"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true"></a>movies[genres] <span class="op">=</span> movies[genres] <span class="op">==</span> <span class="dv">1</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true"></a>movies[genres].head(<span class="dv">3</span>).T</span></code></pre></div>
 <div>
 <style scoped>
     .dataframe tbody tr th:only-of-type {
@@ -639,7 +640,7 @@ False
 <div id="import-the-python-data-frame-to-r" class="section level3">
 <h3 class="hasAnchor">
 <a href="#import-the-python-data-frame-to-r" class="anchor"></a>Import the Python data frame to R</h3>
-<div class="sourceCode" id="cb8"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb8-1" title="1"><span class="op">%</span>R <span class="op">-</span>i movies <span class="op">-</span>i genres</a></code></pre></div>
+<div class="sourceCode" id="cb9"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true"></a><span class="op">%</span>R <span class="op">-</span>i movies <span class="op">-</span>i genres</span></code></pre></div>
 </div>
 </div>
 <div id="basic-usage" class="section level2">
@@ -651,104 +652,119 @@ False
 <li>the second argument specifies a list with names of column which indicate the group membership.</li>
 </ul>
 <p>Additional arguments can be provided, such as <code>name</code> (specifies xlab for intersection matrix) or <code>width_ratio</code> (specifies how much space should be occupied by the set size panel). Other such arguments are discussed at length later in this document.</p>
-<div class="sourceCode" id="cb9"><html><body><pre class="r">%%R -w 800 -h 300
-upset(movies, genres, name='genre', width_ratio=0.1)</pre></body></html></div>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true"></a><span class="op">%%</span>R <span class="op">-</span>w <span class="dv">800</span> <span class="op">-</span>h <span class="dv">300</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true"></a><span class="kw">upset</span>(movies, genres, <span class="dt">name=</span><span class="st">'genre'</span>, <span class="dt">width_ratio=</span><span class="fl">0.1</span>)</span></code></pre></div>
 <p><img src="Examples_Python_files/Examples_Python_19_0.png"></p>
-<div id="selecting-intersections-by-size" class="section level3">
+<div id="selecting-intersections" class="section level3">
 <h3 class="hasAnchor">
-<a href="#selecting-intersections-by-size" class="anchor"></a>0.1 Selecting intersections by size</h3>
+<a href="#selecting-intersections" class="anchor"></a>0.1 Selecting intersections</h3>
 <p>We will focus on the intersections with at least ten members <code>(min_size=10)</code> and on a few variables which are significantly different between the intersections (see 2. Running statistical tests).</p>
 <p>When using <code>min_size</code>, the empty groups will be skipped by default (e.g. <em>Short</em> movies would have no overlap with size of 10). To keep all groups pass <code>keep_empty_groups=TRUE</code>:</p>
-<div class="sourceCode" id="cb10"><html><body><pre class="r">%%R -w 800 -h 300
-(
-    upset(movies, genres, name='genre', width_ratio=0.1, min_size=10, wrap=TRUE, set_sizes=FALSE)
-    + ggtitle('Without empty groups (Short dropped)')
-    +    # adding plots is possible thanks to patchwork
-    upset(movies, genres, name='genre', width_ratio=0.1, min_size=10, keep_empty_groups=TRUE, wrap=TRUE, set_sizes=FALSE)
-    + ggtitle('With empty groups')
-)</pre></body></html></div>
-<p>[1] “Dropping empty groups: Short”</p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true"></a><span class="op">%%</span>R <span class="op">-</span>w <span class="dv">800</span> <span class="op">-</span>h <span class="dv">300</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true"></a>(</span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true"></a>    <span class="kw">upset</span>(movies, genres, <span class="dt">name=</span><span class="st">'genre'</span>, <span class="dt">width_ratio=</span><span class="fl">0.1</span>, <span class="dt">min_size=</span><span class="dv">10</span>, <span class="dt">wrap=</span><span class="ot">TRUE</span>, <span class="dt">set_sizes=</span><span class="ot">FALSE</span>)</span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true"></a>    <span class="op">+</span><span class="st"> </span><span class="kw">ggtitle</span>(<span class="st">'Without empty groups (Short dropped)'</span>)</span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true"></a>    <span class="op">+</span><span class="st">    </span><span class="co"># adding plots is possible thanks to patchwork</span></span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true"></a><span class="st">    </span><span class="kw">upset</span>(movies, genres, <span class="dt">name=</span><span class="st">'genre'</span>, <span class="dt">width_ratio=</span><span class="fl">0.1</span>, <span class="dt">min_size=</span><span class="dv">10</span>, <span class="dt">keep_empty_groups=</span><span class="ot">TRUE</span>, <span class="dt">wrap=</span><span class="ot">TRUE</span>, <span class="dt">set_sizes=</span><span class="ot">FALSE</span>)</span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true"></a>    <span class="op">+</span><span class="st"> </span><span class="kw">ggtitle</span>(<span class="st">'With empty groups'</span>)</span>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true"></a>)</span></code></pre></div>
+<pre><code>[1] "Dropping empty groups: Short"</code></pre>
 <p><img src="Examples_Python_files/Examples_Python_22_1.png"></p>
-<p>When empty columns are detected a warning will be issued. The silence it, pass <code>warn_when_dropping_groups=FALSE</code>.</p>
+<p>When empty columns are detected a warning will be issued. The silence it, pass <code>warn_when_dropping_groups=FALSE</code>. Complimentary <code>max_size</code> can be used in tandem.</p>
+<p>You can also select intersections by degree (<code>min_degree</code> and <code>max_degree</code>):</p>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true"></a><span class="op">%%</span>R <span class="op">-</span>w <span class="dv">800</span> <span class="op">-</span>h <span class="dv">300</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true"></a><span class="kw">upset</span>(</span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true"></a>    movies, genres, <span class="dt">width_ratio=</span><span class="fl">0.1</span>,</span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true"></a>    <span class="dt">min_degree=</span><span class="dv">3</span>,</span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true"></a>)</span></code></pre></div>
+<p><img src="Examples_Python_files/Examples_Python_25_0.png"></p>
+<p>Or request a constant number of intersections with <code>n_intersections</code>:</p>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true"></a><span class="op">%%</span>R <span class="op">-</span>w <span class="dv">800</span> <span class="op">-</span>h <span class="dv">300</span></span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true"></a><span class="kw">upset</span>(</span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true"></a>    movies, genres, <span class="dt">width_ratio=</span><span class="fl">0.1</span>,</span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true"></a>    <span class="dt">n_intersections=</span><span class="dv">15</span></span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true"></a>)</span></code></pre></div>
+<pre><code>[1] "Dropping empty groups: Short"</code></pre>
+<p><img src="Examples_Python_files/Examples_Python_27_1.png"></p>
 </div>
 </div>
 <div id="adding-components" class="section level2">
 <h2 class="hasAnchor">
 <a href="#adding-components" class="anchor"></a>1. Adding components</h2>
 <p>We can add multiple annotation components (also called panels):</p>
-<div class="sourceCode" id="cb11"><html><body><pre class="r">%%R -w 800 -h 800
-
-set.seed(0)   # keep the same jitter for identical plots
-
-upset(
-    movies,
-    genres,
-    annotations = list(
-        'Length'=list(
-            aes=aes(x=intersection, y=length),
-            geom=geom_boxplot()
-        ),
-        'Rating'=list(
-            aes=aes(x=intersection, y=rating),
-            geom=list(
-                # checkout ggbeeswarm::geom_quasirandom for better results!
-                geom_jitter(aes(color=log10(votes))),
-                geom_violin(width=1.1, alpha=0.5)
-            )
-        ),
-        'Budget'=list(
-            aes=aes(x=intersection, y=budget),
-            geom=geom_boxplot()
-        )
-    ),
-    min_size=10,
-    width_ratio=0.1
-)</pre></body></html></div>
-<p>[1] “Dropping empty groups: Short”</p>
-<p><img src="Examples_Python_files/Examples_Python_26_1.png"></p>
+<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true"></a><span class="op">%%</span>R <span class="op">-</span>w <span class="dv">800</span> <span class="op">-</span>h <span class="dv">800</span></span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true"></a></span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true"></a><span class="kw">set.seed</span>(<span class="dv">0</span>)   <span class="co"># keep the same jitter for identical plots</span></span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true"></a></span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true"></a><span class="kw">upset</span>(</span>
+<span id="cb16-6"><a href="#cb16-6" aria-hidden="true"></a>    movies,</span>
+<span id="cb16-7"><a href="#cb16-7" aria-hidden="true"></a>    genres,</span>
+<span id="cb16-8"><a href="#cb16-8" aria-hidden="true"></a>    <span class="dt">annotations =</span> <span class="kw">list</span>(</span>
+<span id="cb16-9"><a href="#cb16-9" aria-hidden="true"></a>        <span class="st">'Length'</span>=<span class="kw">list</span>(</span>
+<span id="cb16-10"><a href="#cb16-10" aria-hidden="true"></a>            <span class="dt">aes=</span><span class="kw">aes</span>(<span class="dt">x=</span>intersection, <span class="dt">y=</span>length),</span>
+<span id="cb16-11"><a href="#cb16-11" aria-hidden="true"></a>            <span class="dt">geom=</span><span class="kw">geom_boxplot</span>()</span>
+<span id="cb16-12"><a href="#cb16-12" aria-hidden="true"></a>        ),</span>
+<span id="cb16-13"><a href="#cb16-13" aria-hidden="true"></a>        <span class="st">'Rating'</span>=<span class="kw">list</span>(</span>
+<span id="cb16-14"><a href="#cb16-14" aria-hidden="true"></a>            <span class="dt">aes=</span><span class="kw">aes</span>(<span class="dt">x=</span>intersection, <span class="dt">y=</span>rating),</span>
+<span id="cb16-15"><a href="#cb16-15" aria-hidden="true"></a>            <span class="dt">geom=</span><span class="kw">list</span>(</span>
+<span id="cb16-16"><a href="#cb16-16" aria-hidden="true"></a>                <span class="co"># checkout ggbeeswarm::geom_quasirandom for better results!</span></span>
+<span id="cb16-17"><a href="#cb16-17" aria-hidden="true"></a>                <span class="kw">geom_jitter</span>(<span class="kw">aes</span>(<span class="dt">color=</span><span class="kw">log10</span>(votes))),</span>
+<span id="cb16-18"><a href="#cb16-18" aria-hidden="true"></a>                <span class="kw">geom_violin</span>(<span class="dt">width=</span><span class="fl">1.1</span>, <span class="dt">alpha=</span><span class="fl">0.5</span>)</span>
+<span id="cb16-19"><a href="#cb16-19" aria-hidden="true"></a>            )</span>
+<span id="cb16-20"><a href="#cb16-20" aria-hidden="true"></a>        ),</span>
+<span id="cb16-21"><a href="#cb16-21" aria-hidden="true"></a>        <span class="st">'Budget'</span>=<span class="kw">list</span>(</span>
+<span id="cb16-22"><a href="#cb16-22" aria-hidden="true"></a>            <span class="dt">aes=</span><span class="kw">aes</span>(<span class="dt">x=</span>intersection, <span class="dt">y=</span>budget),</span>
+<span id="cb16-23"><a href="#cb16-23" aria-hidden="true"></a>            <span class="dt">geom=</span><span class="kw">geom_boxplot</span>()</span>
+<span id="cb16-24"><a href="#cb16-24" aria-hidden="true"></a>        )</span>
+<span id="cb16-25"><a href="#cb16-25" aria-hidden="true"></a>    ),</span>
+<span id="cb16-26"><a href="#cb16-26" aria-hidden="true"></a>    <span class="dt">min_size=</span><span class="dv">10</span>,</span>
+<span id="cb16-27"><a href="#cb16-27" aria-hidden="true"></a>    <span class="dt">width_ratio=</span><span class="fl">0.1</span></span>
+<span id="cb16-28"><a href="#cb16-28" aria-hidden="true"></a>)</span></code></pre></div>
+<pre><code>[1] "Dropping empty groups: Short"</code></pre>
+<p><img src="Examples_Python_files/Examples_Python_30_1.png"></p>
 <p>For simple annotations, such as the length above, you can use a shorthand notation of <code>upset_annotate</code>:</p>
-<div class="sourceCode" id="cb12"><html><body><pre class="r">%%R -w 800 -h 600
-
-upset(
-    movies,
-    genres,
-    annotations = list(
-        'Length'=upset_annotate('length', geom_boxplot()),
-        'Budget'=upset_annotate('budget', geom_boxplot())
-    ),
-    min_size=10,
-    width_ratio=0.1
-)</pre></body></html></div>
-<p>[1] “Dropping empty groups: Short”</p>
-<p><img src="Examples_Python_files/Examples_Python_28_1.png"></p>
+<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true"></a><span class="op">%%</span>R <span class="op">-</span>w <span class="dv">800</span> <span class="op">-</span>h <span class="dv">600</span></span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true"></a></span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true"></a><span class="kw">upset</span>(</span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true"></a>    movies,</span>
+<span id="cb18-5"><a href="#cb18-5" aria-hidden="true"></a>    genres,</span>
+<span id="cb18-6"><a href="#cb18-6" aria-hidden="true"></a>    <span class="dt">annotations =</span> <span class="kw">list</span>(</span>
+<span id="cb18-7"><a href="#cb18-7" aria-hidden="true"></a>        <span class="st">'Length'</span>=<span class="kw">upset_annotate</span>(<span class="st">'length'</span>, <span class="kw">geom_boxplot</span>()),</span>
+<span id="cb18-8"><a href="#cb18-8" aria-hidden="true"></a>        <span class="st">'Budget'</span>=<span class="kw">upset_annotate</span>(<span class="st">'budget'</span>, <span class="kw">geom_boxplot</span>())</span>
+<span id="cb18-9"><a href="#cb18-9" aria-hidden="true"></a>    ),</span>
+<span id="cb18-10"><a href="#cb18-10" aria-hidden="true"></a>    <span class="dt">min_size=</span><span class="dv">10</span>,</span>
+<span id="cb18-11"><a href="#cb18-11" aria-hidden="true"></a>    <span class="dt">width_ratio=</span><span class="fl">0.1</span></span>
+<span id="cb18-12"><a href="#cb18-12" aria-hidden="true"></a>)</span></code></pre></div>
+<pre><code>[1] "Dropping empty groups: Short"</code></pre>
+<p><img src="Examples_Python_files/Examples_Python_32_1.png"></p>
 <p>You can also use barplots to demonstrate differences in proportions of categorical variables:</p>
-<div class="sourceCode" id="cb13"><html><body><pre class="r">%%R -w 800 -h 500
-
-upset(
-    movies,
-    genres,
-    annotations = list(
-        'MPAA Raiting'=list(
-            aes=aes(x=intersection, fill=mpaa),
-            geom=list(
-                geom_bar(stat='count', position='fill'),
-                scale_y_continuous(labels=scales::percent_format()),
-                scale_fill_manual(values=c(
-                    'R'='#E41A1C', 'PG'='#377EB8',
-                    'PG-13'='#4DAF4A', 'NC-17'='#FF7F00'
-                ))
-            )
-        )
-    ),
-    width_ratio=0.1
-)</pre></body></html></div>
-<p><img src="Examples_Python_files/Examples_Python_30_0.png"></p>
+<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true"></a><span class="op">%%</span>R <span class="op">-</span>w <span class="dv">800</span> <span class="op">-</span>h <span class="dv">500</span></span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true"></a></span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true"></a><span class="kw">upset</span>(</span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true"></a>    movies,</span>
+<span id="cb20-5"><a href="#cb20-5" aria-hidden="true"></a>    genres,</span>
+<span id="cb20-6"><a href="#cb20-6" aria-hidden="true"></a>    <span class="dt">annotations =</span> <span class="kw">list</span>(</span>
+<span id="cb20-7"><a href="#cb20-7" aria-hidden="true"></a>        <span class="st">'MPAA Raiting'</span>=<span class="kw">list</span>(</span>
+<span id="cb20-8"><a href="#cb20-8" aria-hidden="true"></a>            <span class="dt">aes=</span><span class="kw">aes</span>(<span class="dt">x=</span>intersection, <span class="dt">fill=</span>mpaa),</span>
+<span id="cb20-9"><a href="#cb20-9" aria-hidden="true"></a>            <span class="dt">geom=</span><span class="kw">list</span>(</span>
+<span id="cb20-10"><a href="#cb20-10" aria-hidden="true"></a>                <span class="kw">geom_bar</span>(<span class="dt">stat=</span><span class="st">'count'</span>, <span class="dt">position=</span><span class="st">'fill'</span>),</span>
+<span id="cb20-11"><a href="#cb20-11" aria-hidden="true"></a>                <span class="kw">scale_y_continuous</span>(<span class="dt">labels=</span>scales<span class="op">::</span><span class="kw">percent_format</span>()),</span>
+<span id="cb20-12"><a href="#cb20-12" aria-hidden="true"></a>                <span class="kw">scale_fill_manual</span>(<span class="dt">values=</span><span class="kw">c</span>(</span>
+<span id="cb20-13"><a href="#cb20-13" aria-hidden="true"></a>                    <span class="st">'R'</span>=<span class="st">'#E41A1C'</span>, <span class="st">'PG'</span>=<span class="st">'#377EB8'</span>,</span>
+<span id="cb20-14"><a href="#cb20-14" aria-hidden="true"></a>                    <span class="st">'PG-13'</span>=<span class="st">'#4DAF4A'</span>, <span class="st">'NC-17'</span>=<span class="st">'#FF7F00'</span></span>
+<span id="cb20-15"><a href="#cb20-15" aria-hidden="true"></a>                ))</span>
+<span id="cb20-16"><a href="#cb20-16" aria-hidden="true"></a>            )</span>
+<span id="cb20-17"><a href="#cb20-17" aria-hidden="true"></a>        )</span>
+<span id="cb20-18"><a href="#cb20-18" aria-hidden="true"></a>    ),</span>
+<span id="cb20-19"><a href="#cb20-19" aria-hidden="true"></a>    <span class="dt">width_ratio=</span><span class="fl">0.1</span></span>
+<span id="cb20-20"><a href="#cb20-20" aria-hidden="true"></a>)</span></code></pre></div>
+<p><img src="Examples_Python_files/Examples_Python_34_0.png"></p>
 </div>
 <div id="running-statistical-tests" class="section level2">
 <h2 class="hasAnchor">
 <a href="#running-statistical-tests" class="anchor"></a>2. Running statistical tests</h2>
-<div class="sourceCode" id="cb14"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb14-1" title="1"><span class="op">%</span>R upset_test(movies, genres)</a></code></pre></div>
-<p>[1] “year, length, budget, rating, votes, r1, r2, r3, r4, r5, r6, r7, r8, r9, r10, mpaa differ significantly between intersections”</p>
+<div class="sourceCode" id="cb21"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true"></a><span class="op">%</span>R upset_test(movies, genres)</span></code></pre></div>
+<pre><code>[1] "year, length, budget, rating, votes, r1, r2, r3, r4, r5, r6, r7, r8, r9, r10, mpaa differ significantly between intersections"</code></pre>
 <div>
 <style scoped>
     .dataframe tbody tr th:only-of-type {
@@ -1140,28 +1156,28 @@ Kruskal-Wallis rank sum test
 <li><code>method</code></li>
 </ul>
 <p>It is easy to adapt tests which do not obey this signature/output convention; for example the Chi-squared test and anova can be wrapped with two-line functions as follows:</p>
-<div class="sourceCode" id="cb15"><html><body><pre class="r">%%R
-chisq_from_formula = function(formula, data) {
-    chisq.test(
-        ftable(formula, data)
-    )
-}
-
-anova_single = function(formula, data) {
-    result = summary(aov(formula, data))
-    list(
-        p.value=result[[1]][['Pr(&gt;F)']][[1]],
-        method='Analysis of variance Pr(&gt;F)',
-        statistic=result[[1]][['F value']][[1]]
-    )
-}
-
-custom_tests = list(
-    mpaa=chisq_from_formula,
-    budget=anova_single
-)</pre></body></html></div>
-<div class="sourceCode" id="cb16"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb16-1" title="1"><span class="op">%</span>R head(upset_test(movies, genres, tests<span class="op">=</span>custom_tests))</a></code></pre></div>
-<p>[1] “year, length, budget, rating, votes, r1, r2, r3, r4, r5, r6, r7, r8, r9, r10, mpaa differ significantly between intersections”</p>
+<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true"></a><span class="op">%%</span>R</span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true"></a>chisq_from_formula =<span class="st"> </span><span class="cf">function</span>(formula, data) {</span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true"></a>    <span class="kw">chisq.test</span>(</span>
+<span id="cb23-4"><a href="#cb23-4" aria-hidden="true"></a>        <span class="kw">ftable</span>(formula, data)</span>
+<span id="cb23-5"><a href="#cb23-5" aria-hidden="true"></a>    )</span>
+<span id="cb23-6"><a href="#cb23-6" aria-hidden="true"></a>}</span>
+<span id="cb23-7"><a href="#cb23-7" aria-hidden="true"></a></span>
+<span id="cb23-8"><a href="#cb23-8" aria-hidden="true"></a>anova_single =<span class="st"> </span><span class="cf">function</span>(formula, data) {</span>
+<span id="cb23-9"><a href="#cb23-9" aria-hidden="true"></a>    result =<span class="st"> </span><span class="kw">summary</span>(<span class="kw">aov</span>(formula, data))</span>
+<span id="cb23-10"><a href="#cb23-10" aria-hidden="true"></a>    <span class="kw">list</span>(</span>
+<span id="cb23-11"><a href="#cb23-11" aria-hidden="true"></a>        <span class="dt">p.value=</span>result[[<span class="dv">1</span>]][[<span class="st">'Pr(&gt;F)'</span>]][[<span class="dv">1</span>]],</span>
+<span id="cb23-12"><a href="#cb23-12" aria-hidden="true"></a>        <span class="dt">method=</span><span class="st">'Analysis of variance Pr(&gt;F)'</span>,</span>
+<span id="cb23-13"><a href="#cb23-13" aria-hidden="true"></a>        <span class="dt">statistic=</span>result[[<span class="dv">1</span>]][[<span class="st">'F value'</span>]][[<span class="dv">1</span>]]</span>
+<span id="cb23-14"><a href="#cb23-14" aria-hidden="true"></a>    )</span>
+<span id="cb23-15"><a href="#cb23-15" aria-hidden="true"></a>}</span>
+<span id="cb23-16"><a href="#cb23-16" aria-hidden="true"></a></span>
+<span id="cb23-17"><a href="#cb23-17" aria-hidden="true"></a>custom_tests =<span class="st"> </span><span class="kw">list</span>(</span>
+<span id="cb23-18"><a href="#cb23-18" aria-hidden="true"></a>    <span class="dt">mpaa=</span>chisq_from_formula,</span>
+<span id="cb23-19"><a href="#cb23-19" aria-hidden="true"></a>    <span class="dt">budget=</span>anova_single</span>
+<span id="cb23-20"><a href="#cb23-20" aria-hidden="true"></a>)</span></code></pre></div>
+<div class="sourceCode" id="cb24"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true"></a><span class="op">%</span>R head(upset_test(movies, genres, tests<span class="op">=</span>custom_tests))</span></code></pre></div>
+<pre><code>[1] "year, length, budget, rating, votes, r1, r2, r3, r4, r5, r6, r7, r8, r9, r10, mpaa differ significantly between intersections"</code></pre>
 <div>
 <style scoped>
     .dataframe tbody tr th:only-of-type {
@@ -1321,12 +1337,26 @@ Kruskal-Wallis rank sum test
 </table>
 </div>
 <p>Many tests will require at least two observations in each group. You can skip intersections with less than two members with <code>min_size=2</code>.</p>
-<div class="sourceCode" id="cb17"><html><body><pre class="r">%%R
-bartlett_results = suppressWarnings(
-    upset_test(movies, genres, test=bartlett.test, min_size=2)
-)
-tail(bartlett_results)</pre></body></html></div>
-<p>[1] “NA, year, length, budget, rating, votes, r1, r2, r3, r4, r5, r6, r7, r8, r9, r10, NA differ significantly between intersections” variable p.value statistic year year 1.041955e-67 386.53699 length length 3.982729e-67 383.70148 budget budget 7.637563e-50 298.89911 rating rating 3.980194e-06 66.63277 title title NA NA mpaa mpaa NA NA test fdr year Bartlett test of homogeneity of variances 1.302444e-67 length Bartlett test of homogeneity of variances 4.595457e-67 budget Bartlett test of homogeneity of variances 8.183103e-50 rating Bartlett test of homogeneity of variances 3.980194e-06 title Bartlett test of homogeneity of variances NA mpaa Bartlett test of homogeneity of variances NA</p>
+<div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true"></a><span class="op">%%</span>R</span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true"></a>bartlett_results =<span class="st"> </span><span class="kw">suppressWarnings</span>(</span>
+<span id="cb26-3"><a href="#cb26-3" aria-hidden="true"></a>    <span class="kw">upset_test</span>(movies, genres, <span class="dt">test=</span>bartlett.test, <span class="dt">min_size=</span><span class="dv">2</span>)</span>
+<span id="cb26-4"><a href="#cb26-4" aria-hidden="true"></a>)</span>
+<span id="cb26-5"><a href="#cb26-5" aria-hidden="true"></a><span class="kw">tail</span>(bartlett_results)</span></code></pre></div>
+<pre><code>[1] "NA, year, length, budget, rating, votes, r1, r2, r3, r4, r5, r6, r7, r8, r9, r10, NA differ significantly between intersections"
+       variable      p.value statistic
+year       year 1.041955e-67 386.53699
+length   length 3.982729e-67 383.70148
+budget   budget 7.637563e-50 298.89911
+rating   rating 3.980194e-06  66.63277
+title     title           NA        NA
+mpaa       mpaa           NA        NA
+                                            test          fdr
+year   Bartlett test of homogeneity of variances 1.302444e-67
+length Bartlett test of homogeneity of variances 4.595457e-67
+budget Bartlett test of homogeneity of variances 8.183103e-50
+rating Bartlett test of homogeneity of variances 3.980194e-06
+title  Bartlett test of homogeneity of variances           NA
+mpaa   Bartlett test of homogeneity of variances           NA</code></pre>
 <div id="ignore-specific-variables" class="section level3">
 <h3 class="hasAnchor">
 <a href="#ignore-specific-variables" class="anchor"></a>2.1 Ignore specific variables</h3>
@@ -1336,11 +1366,12 @@ tail(bartlett_results)</pre></body></html></div>
 <li>simply irrelevant</li>
 </ul>
 <p>In the movies example, the title variable is not a reasonable thing to compare. We can ignore it using:</p>
-<div class="sourceCode" id="cb18"><html><body><pre class="r">%%R
-# note: title no longer present
-rownames(upset_test(movies, genres, ignore=c('title')))</pre></body></html></div>
-<p>[1] “year, length, budget, rating, votes, r1, r2, r3, r4, r5, r6, r7, r8, r9, r10, mpaa differ significantly between intersections” [1] “length” “rating” “budget” “r8” “mpaa” “r9” “r1” “r4”<br>
-[9] “r3” “r5” “r7” “r2” “r10” “votes” “r6” “year”</p>
+<div class="sourceCode" id="cb28"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true"></a><span class="op">%%</span>R</span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true"></a><span class="co"># note: title no longer present</span></span>
+<span id="cb28-3"><a href="#cb28-3" aria-hidden="true"></a><span class="kw">rownames</span>(<span class="kw">upset_test</span>(movies, genres, <span class="dt">ignore=</span><span class="kw">c</span>(<span class="st">'title'</span>)))</span></code></pre></div>
+<pre><code>[1] "year, length, budget, rating, votes, r1, r2, r3, r4, r5, r6, r7, r8, r9, r10, mpaa differ significantly between intersections"
+ [1] "length" "rating" "budget" "r8"     "mpaa"   "r9"     "r1"     "r4"    
+ [9] "r3"     "r5"     "r7"     "r2"     "r10"    "votes"  "r6"     "year"  </code></pre>
 </div>
 </div>
 <div id="adjusting-intersection-size" class="section level2">
@@ -1350,104 +1381,134 @@ rownames(upset_test(movies, genres, ignore=c('title')))</pre></body></html></div
 <h3 class="hasAnchor">
 <a href="#counts" class="anchor"></a>3.1 Counts</h3>
 <p>The counts over the bars can be disabled:</p>
-<div class="sourceCode" id="cb19"><html><body><pre class="r">%%R -w 800 -h 300
-
-upset(
-    movies,
-    genres,
-    base_annotations=list(
-        'Intersection size'=intersection_size(counts=FALSE)
-    ),
-    min_size=10,
-    width_ratio=0.1
-)</pre></body></html></div>
-<p>[1] “Dropping empty groups: Short”</p>
-<p><img src="Examples_Python_files/Examples_Python_45_1.png"></p>
-<p>The colors can be changed:</p>
-<div class="sourceCode" id="cb20"><html><body><pre class="r">%%R -w 800 -h 300
-
-upset(
-    movies,
-    genres,
-    base_annotations=list(
-        'Intersection size'=intersection_size(
-            text_colors=c(
-                on_background='brown', on_bar='yellow'
-            )
-        )
-    ),
-    min_size=10,
-    width_ratio=0.1
-)</pre></body></html></div>
-<p>[1] “Dropping empty groups: Short”</p>
-<p><img src="Examples_Python_files/Examples_Python_47_1.png"></p>
-<p>Any parameter supported by <code>geom_text</code> can be passed in <code>text</code> list:</p>
-<div class="sourceCode" id="cb21"><html><body><pre class="r">%%R -w 800 -h 300
-
-upset(
-    movies,
-    genres,
-    base_annotations=list(
-        'Intersection size'=intersection_size(
-            text=list(
-                vjust=-0.1,
-                hjust=-0.1,
-                angle=45
-            )
-        )
-    ),
-    min_size=10,
-    width_ratio=0.1
-)</pre></body></html></div>
-<p>[1] “Dropping empty groups: Short”</p>
+<div class="sourceCode" id="cb30"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true"></a><span class="op">%%</span>R <span class="op">-</span>w <span class="dv">800</span> <span class="op">-</span>h <span class="dv">300</span></span>
+<span id="cb30-2"><a href="#cb30-2" aria-hidden="true"></a></span>
+<span id="cb30-3"><a href="#cb30-3" aria-hidden="true"></a><span class="kw">upset</span>(</span>
+<span id="cb30-4"><a href="#cb30-4" aria-hidden="true"></a>    movies,</span>
+<span id="cb30-5"><a href="#cb30-5" aria-hidden="true"></a>    genres,</span>
+<span id="cb30-6"><a href="#cb30-6" aria-hidden="true"></a>    <span class="dt">base_annotations=</span><span class="kw">list</span>(</span>
+<span id="cb30-7"><a href="#cb30-7" aria-hidden="true"></a>        <span class="st">'Intersection size'</span>=<span class="kw">intersection_size</span>(<span class="dt">counts=</span><span class="ot">FALSE</span>)</span>
+<span id="cb30-8"><a href="#cb30-8" aria-hidden="true"></a>    ),</span>
+<span id="cb30-9"><a href="#cb30-9" aria-hidden="true"></a>    <span class="dt">min_size=</span><span class="dv">10</span>,</span>
+<span id="cb30-10"><a href="#cb30-10" aria-hidden="true"></a>    <span class="dt">width_ratio=</span><span class="fl">0.1</span></span>
+<span id="cb30-11"><a href="#cb30-11" aria-hidden="true"></a>)</span></code></pre></div>
+<pre><code>[1] "Dropping empty groups: Short"</code></pre>
 <p><img src="Examples_Python_files/Examples_Python_49_1.png"></p>
+<p>The colors can be changed:</p>
+<div class="sourceCode" id="cb32"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true"></a><span class="op">%%</span>R <span class="op">-</span>w <span class="dv">800</span> <span class="op">-</span>h <span class="dv">300</span></span>
+<span id="cb32-2"><a href="#cb32-2" aria-hidden="true"></a></span>
+<span id="cb32-3"><a href="#cb32-3" aria-hidden="true"></a><span class="kw">upset</span>(</span>
+<span id="cb32-4"><a href="#cb32-4" aria-hidden="true"></a>    movies,</span>
+<span id="cb32-5"><a href="#cb32-5" aria-hidden="true"></a>    genres,</span>
+<span id="cb32-6"><a href="#cb32-6" aria-hidden="true"></a>    <span class="dt">base_annotations=</span><span class="kw">list</span>(</span>
+<span id="cb32-7"><a href="#cb32-7" aria-hidden="true"></a>        <span class="st">'Intersection size'</span>=<span class="kw">intersection_size</span>(</span>
+<span id="cb32-8"><a href="#cb32-8" aria-hidden="true"></a>            <span class="dt">text_colors=</span><span class="kw">c</span>(</span>
+<span id="cb32-9"><a href="#cb32-9" aria-hidden="true"></a>                <span class="dt">on_background=</span><span class="st">'brown'</span>, <span class="dt">on_bar=</span><span class="st">'yellow'</span></span>
+<span id="cb32-10"><a href="#cb32-10" aria-hidden="true"></a>            )</span>
+<span id="cb32-11"><a href="#cb32-11" aria-hidden="true"></a>        )</span>
+<span id="cb32-12"><a href="#cb32-12" aria-hidden="true"></a>    ),</span>
+<span id="cb32-13"><a href="#cb32-13" aria-hidden="true"></a>    <span class="dt">min_size=</span><span class="dv">10</span>,</span>
+<span id="cb32-14"><a href="#cb32-14" aria-hidden="true"></a>    <span class="dt">width_ratio=</span><span class="fl">0.1</span></span>
+<span id="cb32-15"><a href="#cb32-15" aria-hidden="true"></a>)</span></code></pre></div>
+<pre><code>[1] "Dropping empty groups: Short"</code></pre>
+<p><img src="Examples_Python_files/Examples_Python_51_1.png"></p>
+<p>Any parameter supported by <code>geom_text</code> can be passed in <code>text</code> list:</p>
+<div class="sourceCode" id="cb34"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true"></a><span class="op">%%</span>R <span class="op">-</span>w <span class="dv">800</span> <span class="op">-</span>h <span class="dv">300</span></span>
+<span id="cb34-2"><a href="#cb34-2" aria-hidden="true"></a></span>
+<span id="cb34-3"><a href="#cb34-3" aria-hidden="true"></a><span class="kw">upset</span>(</span>
+<span id="cb34-4"><a href="#cb34-4" aria-hidden="true"></a>    movies,</span>
+<span id="cb34-5"><a href="#cb34-5" aria-hidden="true"></a>    genres,</span>
+<span id="cb34-6"><a href="#cb34-6" aria-hidden="true"></a>    <span class="dt">base_annotations=</span><span class="kw">list</span>(</span>
+<span id="cb34-7"><a href="#cb34-7" aria-hidden="true"></a>        <span class="st">'Intersection size'</span>=<span class="kw">intersection_size</span>(</span>
+<span id="cb34-8"><a href="#cb34-8" aria-hidden="true"></a>            <span class="dt">text=</span><span class="kw">list</span>(</span>
+<span id="cb34-9"><a href="#cb34-9" aria-hidden="true"></a>                <span class="dt">vjust=</span><span class="op">-</span><span class="fl">0.1</span>,</span>
+<span id="cb34-10"><a href="#cb34-10" aria-hidden="true"></a>                <span class="dt">hjust=</span><span class="op">-</span><span class="fl">0.1</span>,</span>
+<span id="cb34-11"><a href="#cb34-11" aria-hidden="true"></a>                <span class="dt">angle=</span><span class="dv">45</span></span>
+<span id="cb34-12"><a href="#cb34-12" aria-hidden="true"></a>            )</span>
+<span id="cb34-13"><a href="#cb34-13" aria-hidden="true"></a>        )</span>
+<span id="cb34-14"><a href="#cb34-14" aria-hidden="true"></a>    ),</span>
+<span id="cb34-15"><a href="#cb34-15" aria-hidden="true"></a>    <span class="dt">min_size=</span><span class="dv">10</span>,</span>
+<span id="cb34-16"><a href="#cb34-16" aria-hidden="true"></a>    <span class="dt">width_ratio=</span><span class="fl">0.1</span></span>
+<span id="cb34-17"><a href="#cb34-17" aria-hidden="true"></a>)</span></code></pre></div>
+<pre><code>[1] "Dropping empty groups: Short"</code></pre>
+<p><img src="Examples_Python_files/Examples_Python_53_1.png"></p>
 </div>
 <div id="fill-the-bars" class="section level3">
 <h3 class="hasAnchor">
 <a href="#fill-the-bars" class="anchor"></a>3.2 Fill the bars</h3>
-<div class="sourceCode" id="cb22"><html><body><pre class="r">%%R -w 800 -h 300
-
-upset(
-    movies,
-    genres,
-    base_annotations=list(
-        'Intersection size'=intersection_size(
-            counts=FALSE,
-            aes=aes(fill=mpaa)
-        )
-    ),
-    width_ratio=0.1
-)</pre></body></html></div>
-<p><img src="Examples_Python_files/Examples_Python_51_0.png"></p>
+<div class="sourceCode" id="cb36"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true"></a><span class="op">%%</span>R <span class="op">-</span>w <span class="dv">800</span> <span class="op">-</span>h <span class="dv">300</span></span>
+<span id="cb36-2"><a href="#cb36-2" aria-hidden="true"></a></span>
+<span id="cb36-3"><a href="#cb36-3" aria-hidden="true"></a><span class="kw">upset</span>(</span>
+<span id="cb36-4"><a href="#cb36-4" aria-hidden="true"></a>    movies,</span>
+<span id="cb36-5"><a href="#cb36-5" aria-hidden="true"></a>    genres,</span>
+<span id="cb36-6"><a href="#cb36-6" aria-hidden="true"></a>    <span class="dt">base_annotations=</span><span class="kw">list</span>(</span>
+<span id="cb36-7"><a href="#cb36-7" aria-hidden="true"></a>        <span class="st">'Intersection size'</span>=<span class="kw">intersection_size</span>(</span>
+<span id="cb36-8"><a href="#cb36-8" aria-hidden="true"></a>            <span class="dt">counts=</span><span class="ot">FALSE</span>,</span>
+<span id="cb36-9"><a href="#cb36-9" aria-hidden="true"></a>            <span class="dt">aes=</span><span class="kw">aes</span>(<span class="dt">fill=</span>mpaa)</span>
+<span id="cb36-10"><a href="#cb36-10" aria-hidden="true"></a>        )</span>
+<span id="cb36-11"><a href="#cb36-11" aria-hidden="true"></a>    ),</span>
+<span id="cb36-12"><a href="#cb36-12" aria-hidden="true"></a>    <span class="dt">width_ratio=</span><span class="fl">0.1</span></span>
+<span id="cb36-13"><a href="#cb36-13" aria-hidden="true"></a>)</span></code></pre></div>
+<p><img src="Examples_Python_files/Examples_Python_55_0.png"></p>
+<div class="sourceCode" id="cb37"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true"></a><span class="op">%%</span>R <span class="op">-</span>w <span class="dv">800</span> <span class="op">-</span>h <span class="dv">300</span></span>
+<span id="cb37-2"><a href="#cb37-2" aria-hidden="true"></a><span class="kw">upset</span>(</span>
+<span id="cb37-3"><a href="#cb37-3" aria-hidden="true"></a>    movies,</span>
+<span id="cb37-4"><a href="#cb37-4" aria-hidden="true"></a>    genres,</span>
+<span id="cb37-5"><a href="#cb37-5" aria-hidden="true"></a>    <span class="dt">base_annotations=</span><span class="kw">list</span>(</span>
+<span id="cb37-6"><a href="#cb37-6" aria-hidden="true"></a>        <span class="st">'Intersection size'</span>=<span class="kw">intersection_size</span>(</span>
+<span id="cb37-7"><a href="#cb37-7" aria-hidden="true"></a>            <span class="dt">counts=</span><span class="ot">FALSE</span>,</span>
+<span id="cb37-8"><a href="#cb37-8" aria-hidden="true"></a>            <span class="dt">aes=</span><span class="kw">aes</span>(<span class="dt">fill=</span>mpaa)</span>
+<span id="cb37-9"><a href="#cb37-9" aria-hidden="true"></a>        ) <span class="op">+</span><span class="st"> </span><span class="kw">scale_fill_manual</span>(<span class="dt">values=</span><span class="kw">c</span>(</span>
+<span id="cb37-10"><a href="#cb37-10" aria-hidden="true"></a>            <span class="st">'R'</span>=<span class="st">'#E41A1C'</span>, <span class="st">'PG'</span>=<span class="st">'#377EB8'</span>,</span>
+<span id="cb37-11"><a href="#cb37-11" aria-hidden="true"></a>            <span class="st">'PG-13'</span>=<span class="st">'#4DAF4A'</span>, <span class="st">'NC-17'</span>=<span class="st">'#FF7F00'</span></span>
+<span id="cb37-12"><a href="#cb37-12" aria-hidden="true"></a>        ))</span>
+<span id="cb37-13"><a href="#cb37-13" aria-hidden="true"></a>    ),</span>
+<span id="cb37-14"><a href="#cb37-14" aria-hidden="true"></a>    <span class="dt">width_ratio=</span><span class="fl">0.1</span></span>
+<span id="cb37-15"><a href="#cb37-15" aria-hidden="true"></a>)</span></code></pre></div>
+<p><img src="Examples_Python_files/Examples_Python_56_0.png"></p>
+<div class="sourceCode" id="cb38"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true"></a><span class="op">%%</span>R <span class="op">-</span>w <span class="dv">800</span> <span class="op">-</span>h <span class="dv">300</span></span>
+<span id="cb38-2"><a href="#cb38-2" aria-hidden="true"></a></span>
+<span id="cb38-3"><a href="#cb38-3" aria-hidden="true"></a><span class="kw">upset</span>(</span>
+<span id="cb38-4"><a href="#cb38-4" aria-hidden="true"></a>    movies,</span>
+<span id="cb38-5"><a href="#cb38-5" aria-hidden="true"></a>    genres,</span>
+<span id="cb38-6"><a href="#cb38-6" aria-hidden="true"></a>    <span class="dt">base_annotations=</span><span class="kw">list</span>(</span>
+<span id="cb38-7"><a href="#cb38-7" aria-hidden="true"></a>        <span class="st">'Intersection size'</span>=<span class="kw">intersection_size</span>(</span>
+<span id="cb38-8"><a href="#cb38-8" aria-hidden="true"></a>            <span class="dt">counts=</span><span class="ot">FALSE</span>,</span>
+<span id="cb38-9"><a href="#cb38-9" aria-hidden="true"></a>            <span class="dt">aes=</span><span class="kw">aes</span>(<span class="dt">fill=</span><span class="st">'bars_color'</span>)</span>
+<span id="cb38-10"><a href="#cb38-10" aria-hidden="true"></a>        ) <span class="op">+</span><span class="st"> </span><span class="kw">scale_fill_manual</span>(<span class="dt">values=</span><span class="kw">c</span>(<span class="st">'bars_color'</span>=<span class="st">'blue'</span>), <span class="dt">guide=</span><span class="st">'none'</span>)</span>
+<span id="cb38-11"><a href="#cb38-11" aria-hidden="true"></a>    ),</span>
+<span id="cb38-12"><a href="#cb38-12" aria-hidden="true"></a>    <span class="dt">width_ratio=</span><span class="fl">0.1</span></span>
+<span id="cb38-13"><a href="#cb38-13" aria-hidden="true"></a>)</span></code></pre></div>
+<p><img src="Examples_Python_files/Examples_Python_57_0.png"></p>
 </div>
 <div id="adjusting-the-height-of-the-matrixintersection-size" class="section level3">
 <h3 class="hasAnchor">
 <a href="#adjusting-the-height-of-the-matrixintersection-size" class="anchor"></a>3.3 Adjusting the height of the matrix/intersection size</h3>
 <p>Setting <code>height_ratio=1</code> will cause the intersection matrix and the intersection size to have an equal height:</p>
-<div class="sourceCode" id="cb23"><html><body><pre class="r">%%R -w 800 -h 300
-
-upset(
-    movies,
-    genres,
-    height_ratio=1,
-    width_ratio=0.1
-)</pre></body></html></div>
-<p><img src="Examples_Python_files/Examples_Python_54_0.png"></p>
+<div class="sourceCode" id="cb39"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true"></a><span class="op">%%</span>R <span class="op">-</span>w <span class="dv">800</span> <span class="op">-</span>h <span class="dv">300</span></span>
+<span id="cb39-2"><a href="#cb39-2" aria-hidden="true"></a></span>
+<span id="cb39-3"><a href="#cb39-3" aria-hidden="true"></a><span class="kw">upset</span>(</span>
+<span id="cb39-4"><a href="#cb39-4" aria-hidden="true"></a>    movies,</span>
+<span id="cb39-5"><a href="#cb39-5" aria-hidden="true"></a>    genres,</span>
+<span id="cb39-6"><a href="#cb39-6" aria-hidden="true"></a>    <span class="dt">height_ratio=</span><span class="dv">1</span>,</span>
+<span id="cb39-7"><a href="#cb39-7" aria-hidden="true"></a>    <span class="dt">width_ratio=</span><span class="fl">0.1</span></span>
+<span id="cb39-8"><a href="#cb39-8" aria-hidden="true"></a>)</span></code></pre></div>
+<p><img src="Examples_Python_files/Examples_Python_60_0.png"></p>
 </div>
 <div id="hiding-intersection-size" class="section level3">
 <h3 class="hasAnchor">
 <a href="#hiding-intersection-size" class="anchor"></a>3.5 Hiding intersection size</h3>
 <p>You can always disable the intersection size altogether:</p>
-<div class="sourceCode" id="cb24"><html><body><pre class="r">%%R -w 800 -h 160
-upset(
-    movies,
-    genres,
-    base_annotations=list(),
-    min_size=10,
-    width_ratio=0.1
-)</pre></body></html></div>
-<p>[1] “Dropping empty groups: Short”</p>
-<p><img src="Examples_Python_files/Examples_Python_57_1.png"></p>
+<div class="sourceCode" id="cb40"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true"></a><span class="op">%%</span>R <span class="op">-</span>w <span class="dv">800</span> <span class="op">-</span>h <span class="dv">160</span></span>
+<span id="cb40-2"><a href="#cb40-2" aria-hidden="true"></a><span class="kw">upset</span>(</span>
+<span id="cb40-3"><a href="#cb40-3" aria-hidden="true"></a>    movies,</span>
+<span id="cb40-4"><a href="#cb40-4" aria-hidden="true"></a>    genres,</span>
+<span id="cb40-5"><a href="#cb40-5" aria-hidden="true"></a>    <span class="dt">base_annotations=</span><span class="kw">list</span>(),</span>
+<span id="cb40-6"><a href="#cb40-6" aria-hidden="true"></a>    <span class="dt">min_size=</span><span class="dv">10</span>,</span>
+<span id="cb40-7"><a href="#cb40-7" aria-hidden="true"></a>    <span class="dt">width_ratio=</span><span class="fl">0.1</span></span>
+<span id="cb40-8"><a href="#cb40-8" aria-hidden="true"></a>)</span></code></pre></div>
+<pre><code>[1] "Dropping empty groups: Short"</code></pre>
+<p><img src="Examples_Python_files/Examples_Python_63_1.png"></p>
 </div>
 <div id="showing-intersection-sizeunion-size-ratio" class="section level3">
 <h3 class="hasAnchor">
@@ -1459,36 +1520,56 @@ upset(
 <blockquote>
 <p>Important note: with early min/max trimming the intersection ratio uses the trimmed denominator. In most cases you probably want to set <code>min_max_early=FALSE</code> when plotting ratios with any kind of filtering imposed.</p>
 </blockquote>
-<div class="sourceCode" id="cb25"><html><body><pre class="r">%%R -w 800 -h 600
-suppressWarnings(upset(
-    movies, genres, name='genre', width_ratio=0.1, min_size=10,
-    base_annotations=list(
-        'Intersection size'=intersection_size(),
-        'Intersection ratio'=intersection_ratio()
-    ),
-    min_max_early=FALSE
-))</pre></body></html></div>
-<p>[1] “Dropping empty groups: Short”</p>
-<p><img src="Examples_Python_files/Examples_Python_60_1.png"></p>
+<div class="sourceCode" id="cb42"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true"></a><span class="op">%%</span>R <span class="op">-</span>w <span class="dv">800</span> <span class="op">-</span>h <span class="dv">600</span></span>
+<span id="cb42-2"><a href="#cb42-2" aria-hidden="true"></a><span class="kw">suppressWarnings</span>(<span class="kw">upset</span>(</span>
+<span id="cb42-3"><a href="#cb42-3" aria-hidden="true"></a>    movies, genres, <span class="dt">name=</span><span class="st">'genre'</span>, <span class="dt">width_ratio=</span><span class="fl">0.1</span>, <span class="dt">min_size=</span><span class="dv">10</span>,</span>
+<span id="cb42-4"><a href="#cb42-4" aria-hidden="true"></a>    <span class="dt">base_annotations=</span><span class="kw">list</span>(</span>
+<span id="cb42-5"><a href="#cb42-5" aria-hidden="true"></a>        <span class="st">'Intersection size'</span>=<span class="kw">intersection_size</span>(),</span>
+<span id="cb42-6"><a href="#cb42-6" aria-hidden="true"></a>        <span class="st">'Intersection ratio'</span>=<span class="kw">intersection_ratio</span>()</span>
+<span id="cb42-7"><a href="#cb42-7" aria-hidden="true"></a>    ),</span>
+<span id="cb42-8"><a href="#cb42-8" aria-hidden="true"></a>    <span class="dt">min_max_early=</span><span class="ot">FALSE</span></span>
+<span id="cb42-9"><a href="#cb42-9" aria-hidden="true"></a>))</span></code></pre></div>
+<pre><code>[1] "Dropping empty groups: Short"</code></pre>
+<p><img src="Examples_Python_files/Examples_Python_66_1.png"></p>
 <p>The plot above tells us that the analysed documentary movies are almost always (in over 60% of cases) documentaries (and nothing more!), while comedies more often include elements of other genres (e.g. drama, romance) rather than being comedies alone (like stand-up shows).</p>
 </div>
 <div id="showing-percentages" class="section level3">
 <h3 class="hasAnchor">
 <a href="#showing-percentages" class="anchor"></a>3.7 Showing percentages</h3>
 <p><code>text_aes</code> can be used to manipulate the aesthetics of the labels. Using the <code>intersection_size</code> and <code>union_size</code> one can calculate percentage of items in the intersection (relative to the potential size of the intersection). A <code><a href="../reference/upset_text_percentage.html">upset_text_percentage(digits=0, sep='')</a></code> shorthand is provided for convenience; please note that it has to be used with <code>aes_</code> rather than <code>aes</code>:</p>
-<div class="sourceCode" id="cb26"><html><body><pre class="r">%%R -w 800 -h 600
-suppressWarnings(upset(
-    movies, genres, name='genre', width_ratio=0.1, min_size=10,
-    base_annotations=list(
-        # with manual aes specification:
-        'Intersection size'=intersection_size(text_aes=aes(label=paste0(round(intersection_size/union_size * 100), '%'))),
-        # using shorthand:
-        'Intersection ratio'=intersection_ratio(text_aes=aes_(label=upset_text_percentage()))
-    ),
-    min_max_early=FALSE
-))</pre></body></html></div>
-<p>[1] “Dropping empty groups: Short”</p>
-<p><img src="Examples_Python_files/Examples_Python_64_1.png"></p>
+<div class="sourceCode" id="cb44"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true"></a><span class="op">%%</span>R <span class="op">-</span>w <span class="dv">800</span> <span class="op">-</span>h <span class="dv">600</span></span>
+<span id="cb44-2"><a href="#cb44-2" aria-hidden="true"></a><span class="kw">suppressWarnings</span>(<span class="kw">upset</span>(</span>
+<span id="cb44-3"><a href="#cb44-3" aria-hidden="true"></a>    movies, genres, <span class="dt">name=</span><span class="st">'genre'</span>, <span class="dt">width_ratio=</span><span class="fl">0.1</span>, <span class="dt">min_size=</span><span class="dv">10</span>,</span>
+<span id="cb44-4"><a href="#cb44-4" aria-hidden="true"></a>    <span class="dt">base_annotations=</span><span class="kw">list</span>(</span>
+<span id="cb44-5"><a href="#cb44-5" aria-hidden="true"></a>        <span class="co"># with manual aes specification:</span></span>
+<span id="cb44-6"><a href="#cb44-6" aria-hidden="true"></a>        <span class="st">'Intersection size'</span>=<span class="kw">intersection_size</span>(<span class="dt">text_aes=</span><span class="kw">aes</span>(<span class="dt">label=</span><span class="kw">paste0</span>(<span class="kw">round</span>(intersection_size<span class="op">/</span>union_size <span class="op">*</span><span class="st"> </span><span class="dv">100</span>), <span class="st">'%'</span>))),</span>
+<span id="cb44-7"><a href="#cb44-7" aria-hidden="true"></a>        <span class="co"># using shorthand:</span></span>
+<span id="cb44-8"><a href="#cb44-8" aria-hidden="true"></a>        <span class="st">'Intersection ratio'</span>=<span class="kw">intersection_ratio</span>(<span class="dt">text_aes=</span><span class="kw">aes_</span>(<span class="dt">label=</span><span class="kw">upset_text_percentage</span>()))</span>
+<span id="cb44-9"><a href="#cb44-9" aria-hidden="true"></a>    ),</span>
+<span id="cb44-10"><a href="#cb44-10" aria-hidden="true"></a>    <span class="dt">min_max_early=</span><span class="ot">FALSE</span></span>
+<span id="cb44-11"><a href="#cb44-11" aria-hidden="true"></a>))</span></code></pre></div>
+<pre><code>[1] "Dropping empty groups: Short"</code></pre>
+<p><img src="Examples_Python_files/Examples_Python_70_1.png"></p>
+<p>Also see <a href="#10-display-percentages">10. Display percentages</a>.</p>
+</div>
+<div id="further-adjustments-using-ggplot2-functions" class="section level3">
+<h3 class="hasAnchor">
+<a href="#further-adjustments-using-ggplot2-functions" class="anchor"></a>3.8 Further adjustments using ggplot2 functions</h3>
+<div class="sourceCode" id="cb46"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true"></a><span class="op">%%</span>R  <span class="op">-</span>w <span class="dv">800</span> <span class="op">-</span>h <span class="dv">300</span></span>
+<span id="cb46-2"><a href="#cb46-2" aria-hidden="true"></a><span class="kw">upset</span>(</span>
+<span id="cb46-3"><a href="#cb46-3" aria-hidden="true"></a>    movies, genres, <span class="dt">width_ratio=</span><span class="fl">0.1</span>,</span>
+<span id="cb46-4"><a href="#cb46-4" aria-hidden="true"></a>    <span class="dt">base_annotations =</span> <span class="kw">list</span>(</span>
+<span id="cb46-5"><a href="#cb46-5" aria-hidden="true"></a>        <span class="st">'Intersection size'</span>=(</span>
+<span id="cb46-6"><a href="#cb46-6" aria-hidden="true"></a>            <span class="kw">intersection_size</span>()</span>
+<span id="cb46-7"><a href="#cb46-7" aria-hidden="true"></a>            <span class="op">+</span><span class="st"> </span><span class="kw">ylim</span>(<span class="kw">c</span>(<span class="dv">0</span>, <span class="dv">700</span>))</span>
+<span id="cb46-8"><a href="#cb46-8" aria-hidden="true"></a>            <span class="op">+</span><span class="st"> </span><span class="kw">theme</span>(<span class="dt">plot.background=</span><span class="kw">element_rect</span>(<span class="dt">fill=</span><span class="st">'#E5D3B3'</span>))</span>
+<span id="cb46-9"><a href="#cb46-9" aria-hidden="true"></a>            <span class="op">+</span><span class="st"> </span><span class="kw">ylab</span>(<span class="st">'# observations in intersection'</span>)</span>
+<span id="cb46-10"><a href="#cb46-10" aria-hidden="true"></a>        )</span>
+<span id="cb46-11"><a href="#cb46-11" aria-hidden="true"></a>    ),</span>
+<span id="cb46-12"><a href="#cb46-12" aria-hidden="true"></a>    <span class="dt">min_size=</span><span class="dv">10</span></span>
+<span id="cb46-13"><a href="#cb46-13" aria-hidden="true"></a>)</span></code></pre></div>
+<pre><code>[1] "Dropping empty groups: Short"</code></pre>
+<p><img src="Examples_Python_files/Examples_Python_73_1.png"></p>
 </div>
 </div>
 <div id="adjusting-set-size" class="section level2">
@@ -1498,128 +1579,147 @@ suppressWarnings(upset(
 <h3 class="hasAnchor">
 <a href="#rotate-labels" class="anchor"></a>4.1 Rotate labels</h3>
 <p>To rotate the labels modify corresponding theme:</p>
-<div class="sourceCode" id="cb27"><html><body><pre class="r">%%R -w 400 -h 300
-upset(
-    movies, genres,
-    min_size=100,
-    width_ratio=0.15,
-    themes=upset_modify_themes(
-        list(
-            'overall_sizes'=theme(axis.text.x=element_text(angle=90))
-        )
-    )
-)</pre></body></html></div>
-<p>[1] “Dropping empty groups: Animation, Documentary, Short”</p>
-<p><img src="Examples_Python_files/Examples_Python_68_1.png"></p>
+<div class="sourceCode" id="cb48"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true"></a><span class="op">%%</span>R <span class="op">-</span>w <span class="dv">400</span> <span class="op">-</span>h <span class="dv">300</span></span>
+<span id="cb48-2"><a href="#cb48-2" aria-hidden="true"></a><span class="kw">upset</span>(</span>
+<span id="cb48-3"><a href="#cb48-3" aria-hidden="true"></a>    movies, genres,</span>
+<span id="cb48-4"><a href="#cb48-4" aria-hidden="true"></a>    <span class="dt">min_size=</span><span class="dv">100</span>,</span>
+<span id="cb48-5"><a href="#cb48-5" aria-hidden="true"></a>    <span class="dt">width_ratio=</span><span class="fl">0.15</span>,</span>
+<span id="cb48-6"><a href="#cb48-6" aria-hidden="true"></a>    <span class="dt">themes=</span><span class="kw">upset_modify_themes</span>(</span>
+<span id="cb48-7"><a href="#cb48-7" aria-hidden="true"></a>        <span class="kw">list</span>(</span>
+<span id="cb48-8"><a href="#cb48-8" aria-hidden="true"></a>            <span class="st">'overall_sizes'</span>=<span class="kw">theme</span>(<span class="dt">axis.text.x=</span><span class="kw">element_text</span>(<span class="dt">angle=</span><span class="dv">90</span>))</span>
+<span id="cb48-9"><a href="#cb48-9" aria-hidden="true"></a>        )</span>
+<span id="cb48-10"><a href="#cb48-10" aria-hidden="true"></a>    )</span>
+<span id="cb48-11"><a href="#cb48-11" aria-hidden="true"></a>)</span></code></pre></div>
+<pre><code>[1] "Dropping empty groups: Animation, Documentary, Short"</code></pre>
+<p><img src="Examples_Python_files/Examples_Python_77_1.png"></p>
 <p>To display the ticks:</p>
-<div class="sourceCode" id="cb28"><html><body><pre class="r">%%R -w 400 -h 300
-upset(
-    movies, genres, width_ratio=0.3, min_size=100, wrap=TRUE,
-    themes=upset_modify_themes(
-        list(
-            'overall_sizes'=theme(axis.ticks.x=element_line())
-        )
-    )
-)</pre></body></html></div>
-<p>[1] “Dropping empty groups: Animation, Documentary, Short”</p>
-<p><img src="Examples_Python_files/Examples_Python_70_1.png"></p>
+<div class="sourceCode" id="cb50"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb50-1"><a href="#cb50-1" aria-hidden="true"></a><span class="op">%%</span>R <span class="op">-</span>w <span class="dv">400</span> <span class="op">-</span>h <span class="dv">300</span></span>
+<span id="cb50-2"><a href="#cb50-2" aria-hidden="true"></a><span class="kw">upset</span>(</span>
+<span id="cb50-3"><a href="#cb50-3" aria-hidden="true"></a>    movies, genres, <span class="dt">width_ratio=</span><span class="fl">0.3</span>, <span class="dt">min_size=</span><span class="dv">100</span>, <span class="dt">wrap=</span><span class="ot">TRUE</span>,</span>
+<span id="cb50-4"><a href="#cb50-4" aria-hidden="true"></a>    <span class="dt">themes=</span><span class="kw">upset_modify_themes</span>(</span>
+<span id="cb50-5"><a href="#cb50-5" aria-hidden="true"></a>        <span class="kw">list</span>(</span>
+<span id="cb50-6"><a href="#cb50-6" aria-hidden="true"></a>            <span class="st">'overall_sizes'</span>=<span class="kw">theme</span>(<span class="dt">axis.ticks.x=</span><span class="kw">element_line</span>())</span>
+<span id="cb50-7"><a href="#cb50-7" aria-hidden="true"></a>        )</span>
+<span id="cb50-8"><a href="#cb50-8" aria-hidden="true"></a>    )</span>
+<span id="cb50-9"><a href="#cb50-9" aria-hidden="true"></a>)</span></code></pre></div>
+<pre><code>[1] "Dropping empty groups: Animation, Documentary, Short"</code></pre>
+<p><img src="Examples_Python_files/Examples_Python_79_1.png"></p>
 </div>
 <div id="modify-geoms-and-other-layers" class="section level3">
 <h3 class="hasAnchor">
 <a href="#modify-geoms-and-other-layers" class="anchor"></a>4.2 Modify geoms and other layers</h3>
 <p>Arguments of the <code>geom_bar</code> can be passed to <code>upset_set_size</code>; it can even use a different geom, or be replaced with a custom list of layers altogether:</p>
-<div class="sourceCode" id="cb29"><html><body><pre class="r">%%R -w 800 -h 300
-
-(
-    upset(
-        movies, genres, width_ratio=0.5, max_size=100, min_size=15, wrap=TRUE,
-        set_sizes=upset_set_size(
-            width=0.4
-        )
-    )
-    +
-    upset(
-        movies, genres, width_ratio=0.5, max_size=100, min_size=15, wrap=TRUE,
-        set_sizes=upset_set_size(
-            geom=geom_point,
-            stat='count',
-            color='blue'
-        )
-    )
-    +
-    upset(
-        movies, genres, width_ratio=0.5, max_size=100, min_size=15, wrap=TRUE,
-        set_sizes=list(
-            geom_point(aes(y=..count../max(..count..)), stat='count'),
-            ylab('Size relative to the largest'),
-            scale_y_reverse()
-        )
-    )
-)</pre></body></html></div>
-<p>[1] “Dropping empty groups: Documentary, Short” [1] “Dropping empty groups: Documentary, Short” [1] “Dropping empty groups: Documentary, Short”</p>
-<p><img src="Examples_Python_files/Examples_Python_73_1.png"></p>
+<div class="sourceCode" id="cb52"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb52-1"><a href="#cb52-1" aria-hidden="true"></a><span class="op">%%</span>R <span class="op">-</span>w <span class="dv">800</span> <span class="op">-</span>h <span class="dv">300</span></span>
+<span id="cb52-2"><a href="#cb52-2" aria-hidden="true"></a></span>
+<span id="cb52-3"><a href="#cb52-3" aria-hidden="true"></a>(</span>
+<span id="cb52-4"><a href="#cb52-4" aria-hidden="true"></a>    <span class="kw">upset</span>(</span>
+<span id="cb52-5"><a href="#cb52-5" aria-hidden="true"></a>        movies, genres, <span class="dt">width_ratio=</span><span class="fl">0.5</span>, <span class="dt">max_size=</span><span class="dv">100</span>, <span class="dt">min_size=</span><span class="dv">15</span>, <span class="dt">wrap=</span><span class="ot">TRUE</span>,</span>
+<span id="cb52-6"><a href="#cb52-6" aria-hidden="true"></a>        <span class="dt">set_sizes=</span><span class="kw">upset_set_size</span>(</span>
+<span id="cb52-7"><a href="#cb52-7" aria-hidden="true"></a>            <span class="dt">width=</span><span class="fl">0.4</span></span>
+<span id="cb52-8"><a href="#cb52-8" aria-hidden="true"></a>        )</span>
+<span id="cb52-9"><a href="#cb52-9" aria-hidden="true"></a>    )</span>
+<span id="cb52-10"><a href="#cb52-10" aria-hidden="true"></a>    <span class="op">+</span></span>
+<span id="cb52-11"><a href="#cb52-11" aria-hidden="true"></a><span class="st">    </span><span class="kw">upset</span>(</span>
+<span id="cb52-12"><a href="#cb52-12" aria-hidden="true"></a>        movies, genres, <span class="dt">width_ratio=</span><span class="fl">0.5</span>, <span class="dt">max_size=</span><span class="dv">100</span>, <span class="dt">min_size=</span><span class="dv">15</span>, <span class="dt">wrap=</span><span class="ot">TRUE</span>,</span>
+<span id="cb52-13"><a href="#cb52-13" aria-hidden="true"></a>        <span class="dt">set_sizes=</span><span class="kw">upset_set_size</span>(</span>
+<span id="cb52-14"><a href="#cb52-14" aria-hidden="true"></a>            <span class="dt">geom=</span>geom_point,</span>
+<span id="cb52-15"><a href="#cb52-15" aria-hidden="true"></a>            <span class="dt">stat=</span><span class="st">'count'</span>,</span>
+<span id="cb52-16"><a href="#cb52-16" aria-hidden="true"></a>            <span class="dt">color=</span><span class="st">'blue'</span></span>
+<span id="cb52-17"><a href="#cb52-17" aria-hidden="true"></a>        )</span>
+<span id="cb52-18"><a href="#cb52-18" aria-hidden="true"></a>    )</span>
+<span id="cb52-19"><a href="#cb52-19" aria-hidden="true"></a>    <span class="op">+</span></span>
+<span id="cb52-20"><a href="#cb52-20" aria-hidden="true"></a><span class="st">    </span><span class="kw">upset</span>(</span>
+<span id="cb52-21"><a href="#cb52-21" aria-hidden="true"></a>        movies, genres, <span class="dt">width_ratio=</span><span class="fl">0.5</span>, <span class="dt">max_size=</span><span class="dv">100</span>, <span class="dt">min_size=</span><span class="dv">15</span>, <span class="dt">wrap=</span><span class="ot">TRUE</span>,</span>
+<span id="cb52-22"><a href="#cb52-22" aria-hidden="true"></a>        <span class="dt">set_sizes=</span><span class="kw">list</span>(</span>
+<span id="cb52-23"><a href="#cb52-23" aria-hidden="true"></a>            <span class="kw">geom_point</span>(<span class="kw">aes</span>(<span class="dt">y=</span>..count..<span class="op">/</span><span class="kw">max</span>(..count..)), <span class="dt">stat=</span><span class="st">'count'</span>),</span>
+<span id="cb52-24"><a href="#cb52-24" aria-hidden="true"></a>            <span class="kw">ylab</span>(<span class="st">'Size relative to the largest'</span>),</span>
+<span id="cb52-25"><a href="#cb52-25" aria-hidden="true"></a>            <span class="kw">scale_y_reverse</span>()</span>
+<span id="cb52-26"><a href="#cb52-26" aria-hidden="true"></a>        )</span>
+<span id="cb52-27"><a href="#cb52-27" aria-hidden="true"></a>    )</span>
+<span id="cb52-28"><a href="#cb52-28" aria-hidden="true"></a>)</span></code></pre></div>
+<pre><code>[1] "Dropping empty groups: Documentary, Short"
+[1] "Dropping empty groups: Documentary, Short"
+[1] "Dropping empty groups: Documentary, Short"</code></pre>
+<p><img src="Examples_Python_files/Examples_Python_82_1.png"></p>
 </div>
 <div id="logarithmic-scale" class="section level3">
 <h3 class="hasAnchor">
 <a href="#logarithmic-scale" class="anchor"></a>4.3 Logarithmic scale</h3>
 <p>In order to use a log scale we need pass additional scale to in <code>layers</code> argument. However, as the bars are on flipped coordinates, we need a reversed log transformation:</p>
-<div class="sourceCode" id="cb30"><html><body><pre class="r">%%R
-reverse_log_trans </pre></body></html></div>
+<div class="sourceCode" id="cb54"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb54-1"><a href="#cb54-1" aria-hidden="true"></a><span class="op">%%</span>R</span>
+<span id="cb54-2"><a href="#cb54-2" aria-hidden="true"></a>reverse_log_trans &lt;-<span class="st"> </span><span class="cf">function</span>(<span class="dt">base=</span><span class="dv">10</span>) {</span>
+<span id="cb54-3"><a href="#cb54-3" aria-hidden="true"></a>    <span class="co"># CC-BY-SA 4.0 Brian Diggs, modified</span></span>
+<span id="cb54-4"><a href="#cb54-4" aria-hidden="true"></a>    <span class="co"># https://stackoverflow.com/a/11054781</span></span>
+<span id="cb54-5"><a href="#cb54-5" aria-hidden="true"></a>    scales<span class="op">::</span><span class="kw">trans_new</span>(</span>
+<span id="cb54-6"><a href="#cb54-6" aria-hidden="true"></a>        <span class="kw">paste0</span>(</span>
+<span id="cb54-7"><a href="#cb54-7" aria-hidden="true"></a>            <span class="st">'reverselog-'</span>, <span class="kw">format</span>(base)),</span>
+<span id="cb54-8"><a href="#cb54-8" aria-hidden="true"></a>            <span class="cf">function</span>(x) <span class="op">-</span><span class="kw">log</span>(x, base),</span>
+<span id="cb54-9"><a href="#cb54-9" aria-hidden="true"></a>            <span class="cf">function</span>(x) base<span class="op">^-</span>x,</span>
+<span id="cb54-10"><a href="#cb54-10" aria-hidden="true"></a>            scales<span class="op">::</span><span class="kw">log_breaks</span>(<span class="dt">base=</span>base),</span>
+<span id="cb54-11"><a href="#cb54-11" aria-hidden="true"></a>            <span class="dt">domain =</span> <span class="kw">c</span>(<span class="fl">1e-100</span>, <span class="ot">Inf</span>)</span>
+<span id="cb54-12"><a href="#cb54-12" aria-hidden="true"></a>    )</span>
+<span id="cb54-13"><a href="#cb54-13" aria-hidden="true"></a>}</span></code></pre></div>
 <p>Which is then easy to apply:</p>
-<div class="sourceCode" id="cb31"><html><body><pre class="r">%%R -w 500 -h 300
+<div class="sourceCode" id="cb55"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb55-1"><a href="#cb55-1" aria-hidden="true"></a><span class="op">%%</span>R <span class="op">-</span>w <span class="dv">500</span> <span class="op">-</span>h <span class="dv">300</span></span>
+<span id="cb55-2"><a href="#cb55-2" aria-hidden="true"></a></span>
+<span id="cb55-3"><a href="#cb55-3" aria-hidden="true"></a><span class="kw">upset</span>(</span>
+<span id="cb55-4"><a href="#cb55-4" aria-hidden="true"></a>    movies, genres,</span>
+<span id="cb55-5"><a href="#cb55-5" aria-hidden="true"></a>    <span class="dt">width_ratio=</span><span class="fl">0.1</span>,</span>
+<span id="cb55-6"><a href="#cb55-6" aria-hidden="true"></a>    <span class="dt">min_size=</span><span class="dv">10</span>,</span>
+<span id="cb55-7"><a href="#cb55-7" aria-hidden="true"></a>    <span class="dt">set_sizes=</span><span class="kw">upset_set_size</span>(</span>
+<span id="cb55-8"><a href="#cb55-8" aria-hidden="true"></a>        <span class="dt">width=</span><span class="fl">0.4</span>,</span>
+<span id="cb55-9"><a href="#cb55-9" aria-hidden="true"></a>        <span class="dt">layers=</span><span class="kw">list</span>(</span>
+<span id="cb55-10"><a href="#cb55-10" aria-hidden="true"></a>            <span class="kw">scale_y_continuous</span>(<span class="dt">trans=</span><span class="kw">reverse_log_trans</span>())</span>
+<span id="cb55-11"><a href="#cb55-11" aria-hidden="true"></a>        )</span>
+<span id="cb55-12"><a href="#cb55-12" aria-hidden="true"></a>    ),</span>
+<span id="cb55-13"><a href="#cb55-13" aria-hidden="true"></a>    <span class="dt">themes=</span><span class="kw">upset_modify_themes</span>(</span>
+<span id="cb55-14"><a href="#cb55-14" aria-hidden="true"></a>        <span class="kw">list</span>(<span class="st">'overall_sizes'</span>=<span class="kw">theme</span>(<span class="dt">axis.text.x=</span><span class="kw">element_text</span>(<span class="dt">angle=</span><span class="dv">90</span>)))</span>
+<span id="cb55-15"><a href="#cb55-15" aria-hidden="true"></a>    ),</span>
+<span id="cb55-16"><a href="#cb55-16" aria-hidden="true"></a>    <span class="dt">queries=</span><span class="kw">list</span>(<span class="kw">upset_query</span>(<span class="dt">set=</span><span class="st">'Drama'</span>, <span class="dt">fill=</span><span class="st">'blue'</span>))</span>
+<span id="cb55-17"><a href="#cb55-17" aria-hidden="true"></a>)</span></code></pre></div>
+<pre><code>[1] "Dropping empty groups: Short"
 
-upset(
-    movies, genres,
-    width_ratio=0.1,
-    min_size=10,
-    set_sizes=upset_set_size(
-        width=0.4,
-        layers=list(
-            scale_y_continuous(trans=reverse_log_trans())
-        )
-    ),
-    themes=upset_modify_themes(
-        list('overall_sizes'=theme(axis.text.x=element_text(angle=90)))
-    ),
-    queries=list(upset_query(set='Drama', fill='blue'))
-)</pre></body></html></div>
-<p>[1] “Dropping empty groups: Short”</p>
-<p>R[write to console]: Scale for ‘y’ is already present. Adding another scale for ‘y’, which will replace the existing scale.</p>
-<p><img src="Examples_Python_files/Examples_Python_78_2.png"></p>
+
+R[write to console]: Scale for 'y' is already present. Adding another scale for 'y', which will
+replace the existing scale.</code></pre>
+<p><img src="Examples_Python_files/Examples_Python_87_2.png"></p>
 <p>We can also modify the labels to display the logged values:</p>
-<div class="sourceCode" id="cb32"><html><body><pre class="r">%%R -w 500 -h 300
+<div class="sourceCode" id="cb57"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb57-1"><a href="#cb57-1" aria-hidden="true"></a><span class="op">%%</span>R <span class="op">-</span>w <span class="dv">500</span> <span class="op">-</span>h <span class="dv">300</span></span>
+<span id="cb57-2"><a href="#cb57-2" aria-hidden="true"></a></span>
+<span id="cb57-3"><a href="#cb57-3" aria-hidden="true"></a><span class="kw">upset</span>(</span>
+<span id="cb57-4"><a href="#cb57-4" aria-hidden="true"></a>    movies, genres,</span>
+<span id="cb57-5"><a href="#cb57-5" aria-hidden="true"></a>    <span class="dt">min_size=</span><span class="dv">10</span>,</span>
+<span id="cb57-6"><a href="#cb57-6" aria-hidden="true"></a>    <span class="dt">width_ratio=</span><span class="fl">0.2</span>,</span>
+<span id="cb57-7"><a href="#cb57-7" aria-hidden="true"></a>    <span class="dt">set_sizes=</span><span class="kw">upset_set_size</span>(</span>
+<span id="cb57-8"><a href="#cb57-8" aria-hidden="true"></a>        <span class="dt">width=</span><span class="fl">0.4</span>,</span>
+<span id="cb57-9"><a href="#cb57-9" aria-hidden="true"></a>        <span class="dt">layers=</span><span class="kw">list</span>(</span>
+<span id="cb57-10"><a href="#cb57-10" aria-hidden="true"></a>            <span class="kw">scale_y_continuous</span>(</span>
+<span id="cb57-11"><a href="#cb57-11" aria-hidden="true"></a>                <span class="dt">trans=</span><span class="kw">reverse_log_trans</span>(),</span>
+<span id="cb57-12"><a href="#cb57-12" aria-hidden="true"></a>                <span class="dt">labels=</span>log10</span>
+<span id="cb57-13"><a href="#cb57-13" aria-hidden="true"></a>            ),</span>
+<span id="cb57-14"><a href="#cb57-14" aria-hidden="true"></a>            <span class="kw">ylab</span>(<span class="st">'log10(set size)'</span>)</span>
+<span id="cb57-15"><a href="#cb57-15" aria-hidden="true"></a>        )</span>
+<span id="cb57-16"><a href="#cb57-16" aria-hidden="true"></a>    )</span>
+<span id="cb57-17"><a href="#cb57-17" aria-hidden="true"></a>)</span></code></pre></div>
+<pre><code>[1] "Dropping empty groups: Short"
 
-upset(
-    movies, genres,
-    min_size=10,
-    width_ratio=0.2,
-    set_sizes=upset_set_size(
-        width=0.4,
-        layers=list(
-            scale_y_continuous(
-                trans=reverse_log_trans(),
-                labels=log10
-            ),
-            ylab('log10(set size)')
-        )
-    )
-)</pre></body></html></div>
-<p>[1] “Dropping empty groups: Short”</p>
-<p>R[write to console]: Scale for ‘y’ is already present. Adding another scale for ‘y’, which will replace the existing scale.</p>
-<p><img src="Examples_Python_files/Examples_Python_80_2.png"></p>
+
+R[write to console]: Scale for 'y' is already present. Adding another scale for 'y', which will
+replace the existing scale.</code></pre>
+<p><img src="Examples_Python_files/Examples_Python_89_2.png"></p>
 </div>
 <div id="hide-the-set-sizes-altogether" class="section level3">
 <h3 class="hasAnchor">
 <a href="#hide-the-set-sizes-altogether" class="anchor"></a>4.4 Hide the set sizes altogether</h3>
-<div class="sourceCode" id="cb33"><html><body><pre class="r">%%R -w 500 -h 300
-
-upset(
-    movies, genres,
-    min_size=10,
-    set_sizes=FALSE
-)</pre></body></html></div>
-<p>[1] “Dropping empty groups: Short”</p>
-<p><img src="Examples_Python_files/Examples_Python_82_1.png"></p>
+<div class="sourceCode" id="cb59"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb59-1"><a href="#cb59-1" aria-hidden="true"></a><span class="op">%%</span>R <span class="op">-</span>w <span class="dv">500</span> <span class="op">-</span>h <span class="dv">300</span></span>
+<span id="cb59-2"><a href="#cb59-2" aria-hidden="true"></a></span>
+<span id="cb59-3"><a href="#cb59-3" aria-hidden="true"></a><span class="kw">upset</span>(</span>
+<span id="cb59-4"><a href="#cb59-4" aria-hidden="true"></a>    movies, genres,</span>
+<span id="cb59-5"><a href="#cb59-5" aria-hidden="true"></a>    <span class="dt">min_size=</span><span class="dv">10</span>,</span>
+<span id="cb59-6"><a href="#cb59-6" aria-hidden="true"></a>    <span class="dt">set_sizes=</span><span class="ot">FALSE</span></span>
+<span id="cb59-7"><a href="#cb59-7" aria-hidden="true"></a>)</span></code></pre></div>
+<pre><code>[1] "Dropping empty groups: Short"</code></pre>
+<p><img src="Examples_Python_files/Examples_Python_91_1.png"></p>
 </div>
 </div>
 <div id="adjusting-other-aesthetics" class="section level2">
@@ -1629,144 +1729,144 @@ upset(
 <h3 class="hasAnchor">
 <a href="#stripes" class="anchor"></a>5.1 Stripes</h3>
 <p>Change the colors:</p>
-<div class="sourceCode" id="cb34"><html><body><pre class="r">%%R -w 600 -h 400
-upset(
-    movies,
-    genres,
-    min_size=10,
-    width_ratio=0.2,
-    stripes=c('cornsilk1', 'deepskyblue1')
-)</pre></body></html></div>
-<p>[1] “Dropping empty groups: Short”</p>
-<p><img src="Examples_Python_files/Examples_Python_86_1.png"></p>
+<div class="sourceCode" id="cb61"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb61-1"><a href="#cb61-1" aria-hidden="true"></a><span class="op">%%</span>R <span class="op">-</span>w <span class="dv">600</span> <span class="op">-</span>h <span class="dv">400</span></span>
+<span id="cb61-2"><a href="#cb61-2" aria-hidden="true"></a><span class="kw">upset</span>(</span>
+<span id="cb61-3"><a href="#cb61-3" aria-hidden="true"></a>    movies,</span>
+<span id="cb61-4"><a href="#cb61-4" aria-hidden="true"></a>    genres,</span>
+<span id="cb61-5"><a href="#cb61-5" aria-hidden="true"></a>    <span class="dt">min_size=</span><span class="dv">10</span>,</span>
+<span id="cb61-6"><a href="#cb61-6" aria-hidden="true"></a>    <span class="dt">width_ratio=</span><span class="fl">0.2</span>,</span>
+<span id="cb61-7"><a href="#cb61-7" aria-hidden="true"></a>    <span class="dt">stripes=</span><span class="kw">c</span>(<span class="st">'cornsilk1'</span>, <span class="st">'deepskyblue1'</span>)</span>
+<span id="cb61-8"><a href="#cb61-8" aria-hidden="true"></a>)</span></code></pre></div>
+<pre><code>[1] "Dropping empty groups: Short"</code></pre>
+<p><img src="Examples_Python_files/Examples_Python_95_1.png"></p>
 <p>You can use multiple colors:</p>
-<div class="sourceCode" id="cb35"><html><body><pre class="r">%%R -w 600 -h 400
-upset(
-    movies,
-    genres,
-    min_size=10,
-    width_ratio=0.2,
-    stripes=c('cornsilk1', 'deepskyblue1', 'grey90')
-)</pre></body></html></div>
-<p>[1] “Dropping empty groups: Short”</p>
-<p><img src="Examples_Python_files/Examples_Python_88_1.png"></p>
+<div class="sourceCode" id="cb63"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb63-1"><a href="#cb63-1" aria-hidden="true"></a><span class="op">%%</span>R <span class="op">-</span>w <span class="dv">600</span> <span class="op">-</span>h <span class="dv">400</span></span>
+<span id="cb63-2"><a href="#cb63-2" aria-hidden="true"></a><span class="kw">upset</span>(</span>
+<span id="cb63-3"><a href="#cb63-3" aria-hidden="true"></a>    movies,</span>
+<span id="cb63-4"><a href="#cb63-4" aria-hidden="true"></a>    genres,</span>
+<span id="cb63-5"><a href="#cb63-5" aria-hidden="true"></a>    <span class="dt">min_size=</span><span class="dv">10</span>,</span>
+<span id="cb63-6"><a href="#cb63-6" aria-hidden="true"></a>    <span class="dt">width_ratio=</span><span class="fl">0.2</span>,</span>
+<span id="cb63-7"><a href="#cb63-7" aria-hidden="true"></a>    <span class="dt">stripes=</span><span class="kw">c</span>(<span class="st">'cornsilk1'</span>, <span class="st">'deepskyblue1'</span>, <span class="st">'grey90'</span>)</span>
+<span id="cb63-8"><a href="#cb63-8" aria-hidden="true"></a>)</span></code></pre></div>
+<pre><code>[1] "Dropping empty groups: Short"</code></pre>
+<p><img src="Examples_Python_files/Examples_Python_97_1.png"></p>
 <p>Or, set the color to white to effectively disable the stripes:</p>
-<div class="sourceCode" id="cb36"><html><body><pre class="r">%%R -w 600 -h 400
-upset(
-    movies,
-    genres,
-    min_size=10,
-    width_ratio=0.2,
-    stripes='white'
-)</pre></body></html></div>
-<p>[1] “Dropping empty groups: Short”</p>
-<p><img src="Examples_Python_files/Examples_Python_90_1.png"></p>
+<div class="sourceCode" id="cb65"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb65-1"><a href="#cb65-1" aria-hidden="true"></a><span class="op">%%</span>R <span class="op">-</span>w <span class="dv">600</span> <span class="op">-</span>h <span class="dv">400</span></span>
+<span id="cb65-2"><a href="#cb65-2" aria-hidden="true"></a><span class="kw">upset</span>(</span>
+<span id="cb65-3"><a href="#cb65-3" aria-hidden="true"></a>    movies,</span>
+<span id="cb65-4"><a href="#cb65-4" aria-hidden="true"></a>    genres,</span>
+<span id="cb65-5"><a href="#cb65-5" aria-hidden="true"></a>    <span class="dt">min_size=</span><span class="dv">10</span>,</span>
+<span id="cb65-6"><a href="#cb65-6" aria-hidden="true"></a>    <span class="dt">width_ratio=</span><span class="fl">0.2</span>,</span>
+<span id="cb65-7"><a href="#cb65-7" aria-hidden="true"></a>    <span class="dt">stripes=</span><span class="st">'white'</span></span>
+<span id="cb65-8"><a href="#cb65-8" aria-hidden="true"></a>)</span></code></pre></div>
+<pre><code>[1] "Dropping empty groups: Short"</code></pre>
+<p><img src="Examples_Python_files/Examples_Python_99_1.png"></p>
 </div>
 <div id="adding-title" class="section level3">
 <h3 class="hasAnchor">
 <a href="#adding-title" class="anchor"></a>5.2 Adding title</h3>
 <p>Adding title with <code>ggtitle</code> with add it to the intersection matrix:</p>
-<div class="sourceCode" id="cb37"><html><body><pre class="r">%%R -w 600 -h 400
-upset(movies, genres, min_size=10) + ggtitle('Intersection matrix title')</pre></body></html></div>
-<p>[1] “Dropping empty groups: Short”</p>
-<p><img src="Examples_Python_files/Examples_Python_93_1.png"></p>
+<div class="sourceCode" id="cb67"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb67-1"><a href="#cb67-1" aria-hidden="true"></a><span class="op">%%</span>R <span class="op">-</span>w <span class="dv">600</span> <span class="op">-</span>h <span class="dv">400</span></span>
+<span id="cb67-2"><a href="#cb67-2" aria-hidden="true"></a><span class="kw">upset</span>(movies, genres, <span class="dt">min_size=</span><span class="dv">10</span>) <span class="op">+</span><span class="st"> </span><span class="kw">ggtitle</span>(<span class="st">'Intersection matrix title'</span>)</span></code></pre></div>
+<pre><code>[1] "Dropping empty groups: Short"</code></pre>
+<p><img src="Examples_Python_files/Examples_Python_102_1.png"></p>
 <p>In order to add a title for the entire plot, you need to wrap the plot:</p>
-<div class="sourceCode" id="cb38"><html><body><pre class="r">%%R -w 600 -h 400
-upset(movies, genres, min_size=10, wrap=TRUE) + ggtitle('The overlap between genres')</pre></body></html></div>
-<p>[1] “Dropping empty groups: Short”</p>
-<p><img src="Examples_Python_files/Examples_Python_95_1.png"></p>
+<div class="sourceCode" id="cb69"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb69-1"><a href="#cb69-1" aria-hidden="true"></a><span class="op">%%</span>R <span class="op">-</span>w <span class="dv">600</span> <span class="op">-</span>h <span class="dv">400</span></span>
+<span id="cb69-2"><a href="#cb69-2" aria-hidden="true"></a><span class="kw">upset</span>(movies, genres, <span class="dt">min_size=</span><span class="dv">10</span>, <span class="dt">wrap=</span><span class="ot">TRUE</span>) <span class="op">+</span><span class="st"> </span><span class="kw">ggtitle</span>(<span class="st">'The overlap between genres'</span>)</span></code></pre></div>
+<pre><code>[1] "Dropping empty groups: Short"</code></pre>
+<p><img src="Examples_Python_files/Examples_Python_104_1.png"></p>
 </div>
 <div id="making-the-plot-transparent" class="section level3">
 <h3 class="hasAnchor">
 <a href="#making-the-plot-transparent" class="anchor"></a>5.3 Making the plot transparent</h3>
 <p>You need to set the plot background to transparent and adjust colors of stripes to your liking:</p>
-<div class="sourceCode" id="cb39"><html><body><pre class="r">%%R -w 600 -h 400
-(
-    upset(
-        movies, genres, name='genre', width_ratio=0.1, min_size=10,
-        stripes=c(alpha('grey90', 0.45), alpha('white', 0.3))
-    )
-    &amp; theme(plot.background=element_rect(fill='transparent', color=NA))
-)</pre></body></html></div>
-<p>[1] “Dropping empty groups: Short”</p>
-<p><img src="Examples_Python_files/Examples_Python_98_1.png"></p>
-<p>Use <code>ggsave('upset.png', bg="transparent")</code> when exporting to PNG.</p>
+<div class="sourceCode" id="cb71"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb71-1"><a href="#cb71-1" aria-hidden="true"></a><span class="op">%%</span>R <span class="op">-</span>w <span class="dv">600</span> <span class="op">-</span>h <span class="dv">400</span></span>
+<span id="cb71-2"><a href="#cb71-2" aria-hidden="true"></a>(</span>
+<span id="cb71-3"><a href="#cb71-3" aria-hidden="true"></a>    <span class="kw">upset</span>(</span>
+<span id="cb71-4"><a href="#cb71-4" aria-hidden="true"></a>        movies, genres, <span class="dt">name=</span><span class="st">'genre'</span>, <span class="dt">width_ratio=</span><span class="fl">0.1</span>, <span class="dt">min_size=</span><span class="dv">10</span>,</span>
+<span id="cb71-5"><a href="#cb71-5" aria-hidden="true"></a>        <span class="dt">stripes=</span><span class="kw">c</span>(<span class="kw">alpha</span>(<span class="st">'grey90'</span>, <span class="fl">0.45</span>), <span class="kw">alpha</span>(<span class="st">'white'</span>, <span class="fl">0.3</span>))</span>
+<span id="cb71-6"><a href="#cb71-6" aria-hidden="true"></a>    )</span>
+<span id="cb71-7"><a href="#cb71-7" aria-hidden="true"></a>    <span class="op">&amp;</span><span class="st"> </span><span class="kw">theme</span>(<span class="dt">plot.background=</span><span class="kw">element_rect</span>(<span class="dt">fill=</span><span class="st">'transparent'</span>, <span class="dt">color=</span><span class="ot">NA</span>))</span>
+<span id="cb71-8"><a href="#cb71-8" aria-hidden="true"></a>)</span></code></pre></div>
+<pre><code>[1] "Dropping empty groups: Short"</code></pre>
+<p><img src="Examples_Python_files/Examples_Python_107_1.png"></p>
+<p>Use <code><a href="https://ggplot2.tidyverse.org/reference/ggsave.html">ggsave('upset.png', bg="transparent")</a></code> when exporting to PNG.</p>
 </div>
 </div>
 <div id="themes" class="section level2">
 <h2 class="hasAnchor">
 <a href="#themes" class="anchor"></a>6. Themes</h2>
 <p>The themes for specific components are defined in <code>upset_themes</code> list, which contains themes for:</p>
-<div class="sourceCode" id="cb40"><html><body><pre class="r">%%R
-names(upset_themes)</pre></body></html></div>
-<p>[1] “intersections_matrix” “Intersection size” “overall_sizes”<br>
-[4] “default”</p>
+<div class="sourceCode" id="cb73"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb73-1"><a href="#cb73-1" aria-hidden="true"></a><span class="op">%%</span>R</span>
+<span id="cb73-2"><a href="#cb73-2" aria-hidden="true"></a><span class="kw">names</span>(upset_themes)</span></code></pre></div>
+<pre><code>[1] "intersections_matrix" "Intersection size"    "overall_sizes"       
+[4] "default"             </code></pre>
 <p>You can substitute this list for your own using <code>themes</code> argument. While you can specify a theme for every component, if you omit one or more components those will be taken from the element named <code>default</code>.</p>
 <div id="substituting-themes" class="section level3">
 <h3 class="hasAnchor">
 <a href="#substituting-themes" class="anchor"></a>6.1 Substituting themes</h3>
-<div class="sourceCode" id="cb41"><html><body><pre class="r">%%R -w 800 -h 400
-upset(movies, genres, min_size=10, themes=list(default=theme()))</pre></body></html></div>
-<p>[1] “Dropping empty groups: Short”</p>
-<p><img src="Examples_Python_files/Examples_Python_105_1.png"></p>
+<div class="sourceCode" id="cb75"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb75-1"><a href="#cb75-1" aria-hidden="true"></a><span class="op">%%</span>R <span class="op">-</span>w <span class="dv">800</span> <span class="op">-</span>h <span class="dv">400</span></span>
+<span id="cb75-2"><a href="#cb75-2" aria-hidden="true"></a><span class="kw">upset</span>(movies, genres, <span class="dt">min_size=</span><span class="dv">10</span>, <span class="dt">themes=</span><span class="kw">list</span>(<span class="dt">default=</span><span class="kw">theme</span>()))</span></code></pre></div>
+<pre><code>[1] "Dropping empty groups: Short"</code></pre>
+<p><img src="Examples_Python_files/Examples_Python_114_1.png"></p>
 <p>You can also add themes for your custom panels/annotations:</p>
-<div class="sourceCode" id="cb42"><html><body><pre class="r">%%R -w 800 -h 800
-
-upset(
-    movies,
-    genres,
-    annotations = list(
-        'Length'=list(
-            aes=aes(x=intersection, y=length),
-            geom=geom_boxplot()
-        ),
-        'Rating'=list(
-            aes=aes(x=intersection, y=rating),
-            geom=list(
-                geom_jitter(aes(color=log10(votes))),
-                geom_violin(width=1.1, alpha=0.5)
-            )
-        )
-    ),
-    min_size=10,
-    width_ratio=0.1,
-    themes=modifyList(
-        upset_themes,
-        list(Rating=theme_void(), Length=theme())
-    )
-)</pre></body></html></div>
-<p>[1] “Dropping empty groups: Short”</p>
-<p><img src="Examples_Python_files/Examples_Python_107_1.png"></p>
+<div class="sourceCode" id="cb77"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb77-1"><a href="#cb77-1" aria-hidden="true"></a><span class="op">%%</span>R <span class="op">-</span>w <span class="dv">800</span> <span class="op">-</span>h <span class="dv">800</span></span>
+<span id="cb77-2"><a href="#cb77-2" aria-hidden="true"></a></span>
+<span id="cb77-3"><a href="#cb77-3" aria-hidden="true"></a><span class="kw">upset</span>(</span>
+<span id="cb77-4"><a href="#cb77-4" aria-hidden="true"></a>    movies,</span>
+<span id="cb77-5"><a href="#cb77-5" aria-hidden="true"></a>    genres,</span>
+<span id="cb77-6"><a href="#cb77-6" aria-hidden="true"></a>    <span class="dt">annotations =</span> <span class="kw">list</span>(</span>
+<span id="cb77-7"><a href="#cb77-7" aria-hidden="true"></a>        <span class="st">'Length'</span>=<span class="kw">list</span>(</span>
+<span id="cb77-8"><a href="#cb77-8" aria-hidden="true"></a>            <span class="dt">aes=</span><span class="kw">aes</span>(<span class="dt">x=</span>intersection, <span class="dt">y=</span>length),</span>
+<span id="cb77-9"><a href="#cb77-9" aria-hidden="true"></a>            <span class="dt">geom=</span><span class="kw">geom_boxplot</span>()</span>
+<span id="cb77-10"><a href="#cb77-10" aria-hidden="true"></a>        ),</span>
+<span id="cb77-11"><a href="#cb77-11" aria-hidden="true"></a>        <span class="st">'Rating'</span>=<span class="kw">list</span>(</span>
+<span id="cb77-12"><a href="#cb77-12" aria-hidden="true"></a>            <span class="dt">aes=</span><span class="kw">aes</span>(<span class="dt">x=</span>intersection, <span class="dt">y=</span>rating),</span>
+<span id="cb77-13"><a href="#cb77-13" aria-hidden="true"></a>            <span class="dt">geom=</span><span class="kw">list</span>(</span>
+<span id="cb77-14"><a href="#cb77-14" aria-hidden="true"></a>                <span class="kw">geom_jitter</span>(<span class="kw">aes</span>(<span class="dt">color=</span><span class="kw">log10</span>(votes))),</span>
+<span id="cb77-15"><a href="#cb77-15" aria-hidden="true"></a>                <span class="kw">geom_violin</span>(<span class="dt">width=</span><span class="fl">1.1</span>, <span class="dt">alpha=</span><span class="fl">0.5</span>)</span>
+<span id="cb77-16"><a href="#cb77-16" aria-hidden="true"></a>            )</span>
+<span id="cb77-17"><a href="#cb77-17" aria-hidden="true"></a>        )</span>
+<span id="cb77-18"><a href="#cb77-18" aria-hidden="true"></a>    ),</span>
+<span id="cb77-19"><a href="#cb77-19" aria-hidden="true"></a>    <span class="dt">min_size=</span><span class="dv">10</span>,</span>
+<span id="cb77-20"><a href="#cb77-20" aria-hidden="true"></a>    <span class="dt">width_ratio=</span><span class="fl">0.1</span>,</span>
+<span id="cb77-21"><a href="#cb77-21" aria-hidden="true"></a>    <span class="dt">themes=</span><span class="kw">modifyList</span>(</span>
+<span id="cb77-22"><a href="#cb77-22" aria-hidden="true"></a>        upset_themes,</span>
+<span id="cb77-23"><a href="#cb77-23" aria-hidden="true"></a>        <span class="kw">list</span>(<span class="dt">Rating=</span><span class="kw">theme_void</span>(), <span class="dt">Length=</span><span class="kw">theme</span>())</span>
+<span id="cb77-24"><a href="#cb77-24" aria-hidden="true"></a>    )</span>
+<span id="cb77-25"><a href="#cb77-25" aria-hidden="true"></a>)</span></code></pre></div>
+<pre><code>[1] "Dropping empty groups: Short"</code></pre>
+<p><img src="Examples_Python_files/Examples_Python_116_1.png"></p>
 </div>
 <div id="adjusting-the-default-themes" class="section level3">
 <h3 class="hasAnchor">
 <a href="#adjusting-the-default-themes" class="anchor"></a>6.2 Adjusting the default themes</h3>
 <p>Modify all the default themes as once with <code><a href="../reference/upset_default_themes.html">upset_default_themes()</a></code>:</p>
-<div class="sourceCode" id="cb43"><html><body><pre class="r">%%R -w 800 -h 400
-
-upset(
-    movies, genres, min_size=10, width_ratio=0.1,
-    themes=upset_default_themes(text=element_text(color='red'))
-)</pre></body></html></div>
-<p>[1] “Dropping empty groups: Short”</p>
-<p><img src="Examples_Python_files/Examples_Python_110_1.png"></p>
+<div class="sourceCode" id="cb79"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb79-1"><a href="#cb79-1" aria-hidden="true"></a><span class="op">%%</span>R <span class="op">-</span>w <span class="dv">800</span> <span class="op">-</span>h <span class="dv">400</span></span>
+<span id="cb79-2"><a href="#cb79-2" aria-hidden="true"></a></span>
+<span id="cb79-3"><a href="#cb79-3" aria-hidden="true"></a><span class="kw">upset</span>(</span>
+<span id="cb79-4"><a href="#cb79-4" aria-hidden="true"></a>    movies, genres, <span class="dt">min_size=</span><span class="dv">10</span>, <span class="dt">width_ratio=</span><span class="fl">0.1</span>,</span>
+<span id="cb79-5"><a href="#cb79-5" aria-hidden="true"></a>    <span class="dt">themes=</span><span class="kw">upset_default_themes</span>(<span class="dt">text=</span><span class="kw">element_text</span>(<span class="dt">color=</span><span class="st">'red'</span>))</span>
+<span id="cb79-6"><a href="#cb79-6" aria-hidden="true"></a>)</span></code></pre></div>
+<pre><code>[1] "Dropping empty groups: Short"</code></pre>
+<p><img src="Examples_Python_files/Examples_Python_119_1.png"></p>
 <p>To modify only a subset of default themes use <code><a href="../reference/upset_modify_themes.html">upset_modify_themes()</a></code>:</p>
-<div class="sourceCode" id="cb44"><html><body><pre class="r">%%R -w 800 -h 400
-
-upset(
-    movies, genres,
-    base_annotations=list('Intersection size'=intersection_size(counts=FALSE)),
-    min_size=100,
-    width_ratio=0.1,
-    themes=upset_modify_themes(
-        list(
-            'intersections_matrix'=theme(text=element_text(size=20)),
-            'overall_sizes'=theme(axis.text.x=element_text(angle=90))
-        )
-    )
-)</pre></body></html></div>
-<p>[1] “Dropping empty groups: Animation, Documentary, Short”</p>
-<p><img src="Examples_Python_files/Examples_Python_112_1.png"></p>
+<div class="sourceCode" id="cb81"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb81-1"><a href="#cb81-1" aria-hidden="true"></a><span class="op">%%</span>R <span class="op">-</span>w <span class="dv">800</span> <span class="op">-</span>h <span class="dv">400</span></span>
+<span id="cb81-2"><a href="#cb81-2" aria-hidden="true"></a></span>
+<span id="cb81-3"><a href="#cb81-3" aria-hidden="true"></a><span class="kw">upset</span>(</span>
+<span id="cb81-4"><a href="#cb81-4" aria-hidden="true"></a>    movies, genres,</span>
+<span id="cb81-5"><a href="#cb81-5" aria-hidden="true"></a>    <span class="dt">base_annotations=</span><span class="kw">list</span>(<span class="st">'Intersection size'</span>=<span class="kw">intersection_size</span>(<span class="dt">counts=</span><span class="ot">FALSE</span>)),</span>
+<span id="cb81-6"><a href="#cb81-6" aria-hidden="true"></a>    <span class="dt">min_size=</span><span class="dv">100</span>,</span>
+<span id="cb81-7"><a href="#cb81-7" aria-hidden="true"></a>    <span class="dt">width_ratio=</span><span class="fl">0.1</span>,</span>
+<span id="cb81-8"><a href="#cb81-8" aria-hidden="true"></a>    <span class="dt">themes=</span><span class="kw">upset_modify_themes</span>(</span>
+<span id="cb81-9"><a href="#cb81-9" aria-hidden="true"></a>        <span class="kw">list</span>(</span>
+<span id="cb81-10"><a href="#cb81-10" aria-hidden="true"></a>            <span class="st">'intersections_matrix'</span>=<span class="kw">theme</span>(<span class="dt">text=</span><span class="kw">element_text</span>(<span class="dt">size=</span><span class="dv">20</span>)),</span>
+<span id="cb81-11"><a href="#cb81-11" aria-hidden="true"></a>            <span class="st">'overall_sizes'</span>=<span class="kw">theme</span>(<span class="dt">axis.text.x=</span><span class="kw">element_text</span>(<span class="dt">angle=</span><span class="dv">90</span>))</span>
+<span id="cb81-12"><a href="#cb81-12" aria-hidden="true"></a>        )</span>
+<span id="cb81-13"><a href="#cb81-13" aria-hidden="true"></a>    )</span>
+<span id="cb81-14"><a href="#cb81-14" aria-hidden="true"></a>)</span></code></pre></div>
+<pre><code>[1] "Dropping empty groups: Animation, Documentary, Short"</code></pre>
+<p><img src="Examples_Python_files/Examples_Python_121_1.png"></p>
 </div>
 </div>
 <div id="highlighting-queries" class="section level2">
@@ -1774,36 +1874,36 @@ upset(
 <a href="#highlighting-queries" class="anchor"></a>7. Highlighting (queries)</h2>
 <p>Pass a list of lists generated with <code><a href="../reference/upset_query.html">upset_query()</a></code> utility to the optional <code>queries</code> argument to selectively modify aesthetics of specific intersections or sets.</p>
 <p>Use one of the arguments: <code>set</code> or <code>intersection</code> (not both) to specify what to highlight: - <code>set</code> will highlight the bar of the set size, - <code>intersection</code> will highlight an intersection on all components (by default), or on components chosen with <code>only_components</code> - all other parameters will be used to modify the geoms</p>
-<div class="sourceCode" id="cb45"><html><body><pre class="r">%%R -w 800 -h 600
-
-upset(
-    movies, genres, name='genre', width_ratio=0.1, min_size=10,
-    annotations = list(
-        'Length'=list(
-            aes=aes(x=intersection, y=length),
-            geom=geom_boxplot()
-        )
-    ),
-    queries=list(
-        upset_query(
-            intersect=c('Drama', 'Comedy'),
-            color='red',
-            fill='red',
-            only_components=c('intersections_matrix', 'Intersection size')
-        ),
-        upset_query(
-            set='Drama',
-            fill='blue'
-        ),
-        upset_query(
-            intersect=c('Romance', 'Comedy'),
-            fill='yellow',
-            only_components=c('Length')
-        )
-    )
-)</pre></body></html></div>
-<p>[1] “Dropping empty groups: Short”</p>
-<p><img src="Examples_Python_files/Examples_Python_115_1.png"></p>
+<div class="sourceCode" id="cb83"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb83-1"><a href="#cb83-1" aria-hidden="true"></a><span class="op">%%</span>R <span class="op">-</span>w <span class="dv">800</span> <span class="op">-</span>h <span class="dv">600</span></span>
+<span id="cb83-2"><a href="#cb83-2" aria-hidden="true"></a></span>
+<span id="cb83-3"><a href="#cb83-3" aria-hidden="true"></a><span class="kw">upset</span>(</span>
+<span id="cb83-4"><a href="#cb83-4" aria-hidden="true"></a>    movies, genres, <span class="dt">name=</span><span class="st">'genre'</span>, <span class="dt">width_ratio=</span><span class="fl">0.1</span>, <span class="dt">min_size=</span><span class="dv">10</span>,</span>
+<span id="cb83-5"><a href="#cb83-5" aria-hidden="true"></a>    <span class="dt">annotations =</span> <span class="kw">list</span>(</span>
+<span id="cb83-6"><a href="#cb83-6" aria-hidden="true"></a>        <span class="st">'Length'</span>=<span class="kw">list</span>(</span>
+<span id="cb83-7"><a href="#cb83-7" aria-hidden="true"></a>            <span class="dt">aes=</span><span class="kw">aes</span>(<span class="dt">x=</span>intersection, <span class="dt">y=</span>length),</span>
+<span id="cb83-8"><a href="#cb83-8" aria-hidden="true"></a>            <span class="dt">geom=</span><span class="kw">geom_boxplot</span>()</span>
+<span id="cb83-9"><a href="#cb83-9" aria-hidden="true"></a>        )</span>
+<span id="cb83-10"><a href="#cb83-10" aria-hidden="true"></a>    ),</span>
+<span id="cb83-11"><a href="#cb83-11" aria-hidden="true"></a>    <span class="dt">queries=</span><span class="kw">list</span>(</span>
+<span id="cb83-12"><a href="#cb83-12" aria-hidden="true"></a>        <span class="kw">upset_query</span>(</span>
+<span id="cb83-13"><a href="#cb83-13" aria-hidden="true"></a>            <span class="dt">intersect=</span><span class="kw">c</span>(<span class="st">'Drama'</span>, <span class="st">'Comedy'</span>),</span>
+<span id="cb83-14"><a href="#cb83-14" aria-hidden="true"></a>            <span class="dt">color=</span><span class="st">'red'</span>,</span>
+<span id="cb83-15"><a href="#cb83-15" aria-hidden="true"></a>            <span class="dt">fill=</span><span class="st">'red'</span>,</span>
+<span id="cb83-16"><a href="#cb83-16" aria-hidden="true"></a>            <span class="dt">only_components=</span><span class="kw">c</span>(<span class="st">'intersections_matrix'</span>, <span class="st">'Intersection size'</span>)</span>
+<span id="cb83-17"><a href="#cb83-17" aria-hidden="true"></a>        ),</span>
+<span id="cb83-18"><a href="#cb83-18" aria-hidden="true"></a>        <span class="kw">upset_query</span>(</span>
+<span id="cb83-19"><a href="#cb83-19" aria-hidden="true"></a>            <span class="dt">set=</span><span class="st">'Drama'</span>,</span>
+<span id="cb83-20"><a href="#cb83-20" aria-hidden="true"></a>            <span class="dt">fill=</span><span class="st">'blue'</span></span>
+<span id="cb83-21"><a href="#cb83-21" aria-hidden="true"></a>        ),</span>
+<span id="cb83-22"><a href="#cb83-22" aria-hidden="true"></a>        <span class="kw">upset_query</span>(</span>
+<span id="cb83-23"><a href="#cb83-23" aria-hidden="true"></a>            <span class="dt">intersect=</span><span class="kw">c</span>(<span class="st">'Romance'</span>, <span class="st">'Comedy'</span>),</span>
+<span id="cb83-24"><a href="#cb83-24" aria-hidden="true"></a>            <span class="dt">fill=</span><span class="st">'yellow'</span>,</span>
+<span id="cb83-25"><a href="#cb83-25" aria-hidden="true"></a>            <span class="dt">only_components=</span><span class="kw">c</span>(<span class="st">'Length'</span>)</span>
+<span id="cb83-26"><a href="#cb83-26" aria-hidden="true"></a>        )</span>
+<span id="cb83-27"><a href="#cb83-27" aria-hidden="true"></a>    )</span>
+<span id="cb83-28"><a href="#cb83-28" aria-hidden="true"></a>)</span></code></pre></div>
+<pre><code>[1] "Dropping empty groups: Short"</code></pre>
+<p><img src="Examples_Python_files/Examples_Python_124_1.png"></p>
 </div>
 <div id="sorting" class="section level2">
 <h2 class="hasAnchor">
@@ -1812,43 +1912,43 @@ upset(
 <h3 class="hasAnchor">
 <a href="#sorting-intersections" class="anchor"></a>8.1 Sorting intersections</h3>
 <p>By degree:</p>
-<div class="sourceCode" id="cb46"><html><body><pre class="r">%%R -w 800 -h 300
-upset(movies, genres, width_ratio=0.1, sort_intersections_by='degree')</pre></body></html></div>
-<p><img src="Examples_Python_files/Examples_Python_119_0.png"></p>
+<div class="sourceCode" id="cb85"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb85-1"><a href="#cb85-1" aria-hidden="true"></a><span class="op">%%</span>R <span class="op">-</span>w <span class="dv">800</span> <span class="op">-</span>h <span class="dv">300</span></span>
+<span id="cb85-2"><a href="#cb85-2" aria-hidden="true"></a><span class="kw">upset</span>(movies, genres, <span class="dt">width_ratio=</span><span class="fl">0.1</span>, <span class="dt">sort_intersections_by=</span><span class="st">'degree'</span>)</span></code></pre></div>
+<p><img src="Examples_Python_files/Examples_Python_128_0.png"></p>
 <p>By ratio:</p>
-<div class="sourceCode" id="cb47"><html><body><pre class="r">%%R -w 800 -h 400
-upset(
-    movies, genres, name='genre', width_ratio=0.1, min_size=10,
-    sort_intersections_by='ratio',
-    base_annotations=list(
-        'Intersection size'=intersection_size(text_aes=aes_(label=upset_text_percentage())),
-        'Intersection ratio'=intersection_ratio(text_aes=aes_(label=upset_text_percentage()))
-    )
-)</pre></body></html></div>
-<p>[1] “Dropping empty groups: Short”</p>
-<p><img src="Examples_Python_files/Examples_Python_121_1.png"></p>
+<div class="sourceCode" id="cb86"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb86-1"><a href="#cb86-1" aria-hidden="true"></a><span class="op">%%</span>R <span class="op">-</span>w <span class="dv">800</span> <span class="op">-</span>h <span class="dv">400</span></span>
+<span id="cb86-2"><a href="#cb86-2" aria-hidden="true"></a><span class="kw">upset</span>(</span>
+<span id="cb86-3"><a href="#cb86-3" aria-hidden="true"></a>    movies, genres, <span class="dt">name=</span><span class="st">'genre'</span>, <span class="dt">width_ratio=</span><span class="fl">0.1</span>, <span class="dt">min_size=</span><span class="dv">10</span>,</span>
+<span id="cb86-4"><a href="#cb86-4" aria-hidden="true"></a>    <span class="dt">sort_intersections_by=</span><span class="st">'ratio'</span>,</span>
+<span id="cb86-5"><a href="#cb86-5" aria-hidden="true"></a>    <span class="dt">base_annotations=</span><span class="kw">list</span>(</span>
+<span id="cb86-6"><a href="#cb86-6" aria-hidden="true"></a>        <span class="st">'Intersection size'</span>=<span class="kw">intersection_size</span>(<span class="dt">text_aes=</span><span class="kw">aes_</span>(<span class="dt">label=</span><span class="kw">upset_text_percentage</span>())),</span>
+<span id="cb86-7"><a href="#cb86-7" aria-hidden="true"></a>        <span class="st">'Intersection ratio'</span>=<span class="kw">intersection_ratio</span>(<span class="dt">text_aes=</span><span class="kw">aes_</span>(<span class="dt">label=</span><span class="kw">upset_text_percentage</span>()))</span>
+<span id="cb86-8"><a href="#cb86-8" aria-hidden="true"></a>    )</span>
+<span id="cb86-9"><a href="#cb86-9" aria-hidden="true"></a>)</span></code></pre></div>
+<pre><code>[1] "Dropping empty groups: Short"</code></pre>
+<p><img src="Examples_Python_files/Examples_Python_130_1.png"></p>
 <p>The other way around:</p>
-<div class="sourceCode" id="cb48"><html><body><pre class="r">%%R -w 800 -h 300
-upset(movies, genres, width_ratio=0.1, sort_intersections='ascending')</pre></body></html></div>
-<p><img src="Examples_Python_files/Examples_Python_123_0.png"></p>
+<div class="sourceCode" id="cb88"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb88-1"><a href="#cb88-1" aria-hidden="true"></a><span class="op">%%</span>R <span class="op">-</span>w <span class="dv">800</span> <span class="op">-</span>h <span class="dv">300</span></span>
+<span id="cb88-2"><a href="#cb88-2" aria-hidden="true"></a><span class="kw">upset</span>(movies, genres, <span class="dt">width_ratio=</span><span class="fl">0.1</span>, <span class="dt">sort_intersections=</span><span class="st">'ascending'</span>)</span></code></pre></div>
+<p><img src="Examples_Python_files/Examples_Python_132_0.png"></p>
 <p>Without any sorting:</p>
-<div class="sourceCode" id="cb49"><html><body><pre class="r">%%R -w 800 -h 300
-upset(movies, genres, width_ratio=0.1, sort_intersections=FALSE)</pre></body></html></div>
-<p><img src="Examples_Python_files/Examples_Python_125_0.png"></p>
+<div class="sourceCode" id="cb89"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb89-1"><a href="#cb89-1" aria-hidden="true"></a><span class="op">%%</span>R <span class="op">-</span>w <span class="dv">800</span> <span class="op">-</span>h <span class="dv">300</span></span>
+<span id="cb89-2"><a href="#cb89-2" aria-hidden="true"></a><span class="kw">upset</span>(movies, genres, <span class="dt">width_ratio=</span><span class="fl">0.1</span>, <span class="dt">sort_intersections=</span><span class="ot">FALSE</span>)</span></code></pre></div>
+<p><img src="Examples_Python_files/Examples_Python_134_0.png"></p>
 </div>
 <div id="sorting-sets" class="section level3">
 <h3 class="hasAnchor">
 <a href="#sorting-sets" class="anchor"></a>8.2 Sorting sets</h3>
 <p>Ascending:</p>
-<div class="sourceCode" id="cb50"><html><body><pre class="r">%%R -w 800 -h 300
-upset(movies, genres, width_ratio=0.1, sort_sets='ascending')</pre></body></html></div>
-<p><img src="Examples_Python_files/Examples_Python_128_0.png"></p>
+<div class="sourceCode" id="cb90"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb90-1"><a href="#cb90-1" aria-hidden="true"></a><span class="op">%%</span>R <span class="op">-</span>w <span class="dv">800</span> <span class="op">-</span>h <span class="dv">300</span></span>
+<span id="cb90-2"><a href="#cb90-2" aria-hidden="true"></a><span class="kw">upset</span>(movies, genres, <span class="dt">width_ratio=</span><span class="fl">0.1</span>, <span class="dt">sort_sets=</span><span class="st">'ascending'</span>)</span></code></pre></div>
+<p><img src="Examples_Python_files/Examples_Python_137_0.png"></p>
 <p>Without sorting - preserving the order as in genres:</p>
-<div class="sourceCode" id="cb51"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb51-1" title="1">genres</a></code></pre></div>
-<p>[‘Action’, ‘Animation’, ‘Comedy’, ‘Drama’, ‘Documentary’, ‘Romance’, ‘Short’]</p>
-<div class="sourceCode" id="cb52"><html><body><pre class="r">%%R -w 800 -h 300
-upset(movies, genres, width_ratio=0.1, sort_sets=FALSE)</pre></body></html></div>
-<p><img src="Examples_Python_files/Examples_Python_131_0.png"></p>
+<div class="sourceCode" id="cb91"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb91-1"><a href="#cb91-1" aria-hidden="true"></a>genres</span></code></pre></div>
+<pre><code>['Action', 'Animation', 'Comedy', 'Drama', 'Documentary', 'Romance', 'Short']</code></pre>
+<div class="sourceCode" id="cb93"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb93-1"><a href="#cb93-1" aria-hidden="true"></a><span class="op">%%</span>R <span class="op">-</span>w <span class="dv">800</span> <span class="op">-</span>h <span class="dv">300</span></span>
+<span id="cb93-2"><a href="#cb93-2" aria-hidden="true"></a><span class="kw">upset</span>(movies, genres, <span class="dt">width_ratio=</span><span class="fl">0.1</span>, <span class="dt">sort_sets=</span><span class="ot">FALSE</span>)</span></code></pre></div>
+<p><img src="Examples_Python_files/Examples_Python_140_0.png"></p>
 </div>
 </div>
 <div id="grouping" class="section level2">
@@ -1858,130 +1958,130 @@ upset(movies, genres, width_ratio=0.1, sort_sets=FALSE)</pre></body></html></div
 <h3 class="hasAnchor">
 <a href="#grouping-intersections" class="anchor"></a>9.1 Grouping intersections</h3>
 <p>Use <code>group_by='sets'</code> to group intersections by set. If needed, the intersections will be repeated so that they appear in each set group. Use <code><a href="../reference/upset_query.html">upset_query()</a></code> with <code>group</code> argument to color the intersection matrix accordingly.</p>
-<div class="sourceCode" id="cb53"><html><body><pre class="r">%%R -w 800 -h 300
-
-upset(
-    movies, c("Action", "Comedy", "Drama"),
-    width_ratio=0.2,
-    group_by='sets',
-    queries=list(
-        upset_query(
-            intersect=c('Drama', 'Comedy'),
-            color='red',
-            fill='red',
-            only_components=c('intersections_matrix', 'Intersection size')
-        ),
-        upset_query(group='Drama', color='blue'),
-        upset_query(group='Comedy', color='orange'),
-        upset_query(group='Action', color='purple'),
-        upset_query(set='Drama', fill='blue'),
-        upset_query(set='Comedy', fill='orange'),
-        upset_query(set='Action', fill='purple')
-    )
-)</pre></body></html></div>
-<p><img src="Examples_Python_files/Examples_Python_135_0.png"></p>
+<div class="sourceCode" id="cb94"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb94-1"><a href="#cb94-1" aria-hidden="true"></a><span class="op">%%</span>R <span class="op">-</span>w <span class="dv">800</span> <span class="op">-</span>h <span class="dv">300</span></span>
+<span id="cb94-2"><a href="#cb94-2" aria-hidden="true"></a></span>
+<span id="cb94-3"><a href="#cb94-3" aria-hidden="true"></a><span class="kw">upset</span>(</span>
+<span id="cb94-4"><a href="#cb94-4" aria-hidden="true"></a>    movies, <span class="kw">c</span>(<span class="st">"Action"</span>, <span class="st">"Comedy"</span>, <span class="st">"Drama"</span>),</span>
+<span id="cb94-5"><a href="#cb94-5" aria-hidden="true"></a>    <span class="dt">width_ratio=</span><span class="fl">0.2</span>,</span>
+<span id="cb94-6"><a href="#cb94-6" aria-hidden="true"></a>    <span class="dt">group_by=</span><span class="st">'sets'</span>,</span>
+<span id="cb94-7"><a href="#cb94-7" aria-hidden="true"></a>    <span class="dt">queries=</span><span class="kw">list</span>(</span>
+<span id="cb94-8"><a href="#cb94-8" aria-hidden="true"></a>        <span class="kw">upset_query</span>(</span>
+<span id="cb94-9"><a href="#cb94-9" aria-hidden="true"></a>            <span class="dt">intersect=</span><span class="kw">c</span>(<span class="st">'Drama'</span>, <span class="st">'Comedy'</span>),</span>
+<span id="cb94-10"><a href="#cb94-10" aria-hidden="true"></a>            <span class="dt">color=</span><span class="st">'red'</span>,</span>
+<span id="cb94-11"><a href="#cb94-11" aria-hidden="true"></a>            <span class="dt">fill=</span><span class="st">'red'</span>,</span>
+<span id="cb94-12"><a href="#cb94-12" aria-hidden="true"></a>            <span class="dt">only_components=</span><span class="kw">c</span>(<span class="st">'intersections_matrix'</span>, <span class="st">'Intersection size'</span>)</span>
+<span id="cb94-13"><a href="#cb94-13" aria-hidden="true"></a>        ),</span>
+<span id="cb94-14"><a href="#cb94-14" aria-hidden="true"></a>        <span class="kw">upset_query</span>(<span class="dt">group=</span><span class="st">'Drama'</span>, <span class="dt">color=</span><span class="st">'blue'</span>),</span>
+<span id="cb94-15"><a href="#cb94-15" aria-hidden="true"></a>        <span class="kw">upset_query</span>(<span class="dt">group=</span><span class="st">'Comedy'</span>, <span class="dt">color=</span><span class="st">'orange'</span>),</span>
+<span id="cb94-16"><a href="#cb94-16" aria-hidden="true"></a>        <span class="kw">upset_query</span>(<span class="dt">group=</span><span class="st">'Action'</span>, <span class="dt">color=</span><span class="st">'purple'</span>),</span>
+<span id="cb94-17"><a href="#cb94-17" aria-hidden="true"></a>        <span class="kw">upset_query</span>(<span class="dt">set=</span><span class="st">'Drama'</span>, <span class="dt">fill=</span><span class="st">'blue'</span>),</span>
+<span id="cb94-18"><a href="#cb94-18" aria-hidden="true"></a>        <span class="kw">upset_query</span>(<span class="dt">set=</span><span class="st">'Comedy'</span>, <span class="dt">fill=</span><span class="st">'orange'</span>),</span>
+<span id="cb94-19"><a href="#cb94-19" aria-hidden="true"></a>        <span class="kw">upset_query</span>(<span class="dt">set=</span><span class="st">'Action'</span>, <span class="dt">fill=</span><span class="st">'purple'</span>)</span>
+<span id="cb94-20"><a href="#cb94-20" aria-hidden="true"></a>    )</span>
+<span id="cb94-21"><a href="#cb94-21" aria-hidden="true"></a>)</span></code></pre></div>
+<p><img src="Examples_Python_files/Examples_Python_144_0.png"></p>
 </div>
 </div>
 <div id="display-percentages" class="section level2">
 <h2 class="hasAnchor">
 <a href="#display-percentages" class="anchor"></a>10. Display percentages</h2>
 <p>Use <code><a href="../reference/aes_percentage.html">aes_percentage()</a></code> utility preceeded with <code>!!</code> syntax to easily display percentages. In the examples below only percentages for the movies with R raiting are shown to avoid visual clutter.</p>
-<div class="sourceCode" id="cb54"><html><body><pre class="r">%%R
-raiting_scale = scale_fill_manual(values=c(
-    'R'='#E41A1C', 'PG'='#377EB8',
-    'PG-13'='#4DAF4A', 'NC-17'='#FF7F00'
-))
-show_hide_scale = scale_color_manual(values=c('show'='black', 'hide'='transparent'), guide=FALSE)</pre></body></html></div>
+<div class="sourceCode" id="cb95"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb95-1"><a href="#cb95-1" aria-hidden="true"></a><span class="op">%%</span>R</span>
+<span id="cb95-2"><a href="#cb95-2" aria-hidden="true"></a>raiting_scale =<span class="st"> </span><span class="kw">scale_fill_manual</span>(<span class="dt">values=</span><span class="kw">c</span>(</span>
+<span id="cb95-3"><a href="#cb95-3" aria-hidden="true"></a>    <span class="st">'R'</span>=<span class="st">'#E41A1C'</span>, <span class="st">'PG'</span>=<span class="st">'#377EB8'</span>,</span>
+<span id="cb95-4"><a href="#cb95-4" aria-hidden="true"></a>    <span class="st">'PG-13'</span>=<span class="st">'#4DAF4A'</span>, <span class="st">'NC-17'</span>=<span class="st">'#FF7F00'</span></span>
+<span id="cb95-5"><a href="#cb95-5" aria-hidden="true"></a>))</span>
+<span id="cb95-6"><a href="#cb95-6" aria-hidden="true"></a>show_hide_scale =<span class="st"> </span><span class="kw">scale_color_manual</span>(<span class="dt">values=</span><span class="kw">c</span>(<span class="st">'show'</span>=<span class="st">'black'</span>, <span class="st">'hide'</span>=<span class="st">'transparent'</span>), <span class="dt">guide=</span><span class="ot">FALSE</span>)</span></code></pre></div>
 <div id="within-intersection" class="section level3">
 <h3 class="hasAnchor">
 <a href="#within-intersection" class="anchor"></a>10.1 Within intersection</h3>
-<div class="sourceCode" id="cb55"><html><body><pre class="r">%%R -w 800 -h 500
-
-upset(
-    movies, genres, name='genre', width_ratio=0.1, min_size=100,
-    annotations =list(
-        'MPAA Raiting'=list(
-            aes=aes(x=intersection, fill=mpaa),
-            geom=list(
-                geom_bar(stat='count', position='fill'),
-                geom_text(
-                    aes(
-                        label=!!aes_percentage(relative_to='intersection'),
-                        color=ifelse(mpaa == 'R', 'show', 'hide')
-                    ),
-                    stat='count',
-                    position=position_fill(vjust = .5)
-                ),
-                scale_y_continuous(labels=scales::percent_format()),
-                show_hide_scale,
-                raiting_scale
-            )
-        )
-    )
-)</pre></body></html></div>
-<p>[1] “Dropping empty groups: Animation, Documentary, Short”</p>
-<p><img src="Examples_Python_files/Examples_Python_140_1.png"></p>
+<div class="sourceCode" id="cb96"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb96-1"><a href="#cb96-1" aria-hidden="true"></a><span class="op">%%</span>R <span class="op">-</span>w <span class="dv">800</span> <span class="op">-</span>h <span class="dv">500</span></span>
+<span id="cb96-2"><a href="#cb96-2" aria-hidden="true"></a></span>
+<span id="cb96-3"><a href="#cb96-3" aria-hidden="true"></a><span class="kw">upset</span>(</span>
+<span id="cb96-4"><a href="#cb96-4" aria-hidden="true"></a>    movies, genres, <span class="dt">name=</span><span class="st">'genre'</span>, <span class="dt">width_ratio=</span><span class="fl">0.1</span>, <span class="dt">min_size=</span><span class="dv">100</span>,</span>
+<span id="cb96-5"><a href="#cb96-5" aria-hidden="true"></a>    <span class="dt">annotations =</span><span class="kw">list</span>(</span>
+<span id="cb96-6"><a href="#cb96-6" aria-hidden="true"></a>        <span class="st">'MPAA Raiting'</span>=<span class="kw">list</span>(</span>
+<span id="cb96-7"><a href="#cb96-7" aria-hidden="true"></a>            <span class="dt">aes=</span><span class="kw">aes</span>(<span class="dt">x=</span>intersection, <span class="dt">fill=</span>mpaa),</span>
+<span id="cb96-8"><a href="#cb96-8" aria-hidden="true"></a>            <span class="dt">geom=</span><span class="kw">list</span>(</span>
+<span id="cb96-9"><a href="#cb96-9" aria-hidden="true"></a>                <span class="kw">geom_bar</span>(<span class="dt">stat=</span><span class="st">'count'</span>, <span class="dt">position=</span><span class="st">'fill'</span>),</span>
+<span id="cb96-10"><a href="#cb96-10" aria-hidden="true"></a>                <span class="kw">geom_text</span>(</span>
+<span id="cb96-11"><a href="#cb96-11" aria-hidden="true"></a>                    <span class="kw">aes</span>(</span>
+<span id="cb96-12"><a href="#cb96-12" aria-hidden="true"></a>                        <span class="dt">label=</span><span class="op">!!</span><span class="kw">aes_percentage</span>(<span class="dt">relative_to=</span><span class="st">'intersection'</span>),</span>
+<span id="cb96-13"><a href="#cb96-13" aria-hidden="true"></a>                        <span class="dt">color=</span><span class="kw">ifelse</span>(mpaa <span class="op">==</span><span class="st"> 'R'</span>, <span class="st">'show'</span>, <span class="st">'hide'</span>)</span>
+<span id="cb96-14"><a href="#cb96-14" aria-hidden="true"></a>                    ),</span>
+<span id="cb96-15"><a href="#cb96-15" aria-hidden="true"></a>                    <span class="dt">stat=</span><span class="st">'count'</span>,</span>
+<span id="cb96-16"><a href="#cb96-16" aria-hidden="true"></a>                    <span class="dt">position=</span><span class="kw">position_fill</span>(<span class="dt">vjust =</span> <span class="fl">.5</span>)</span>
+<span id="cb96-17"><a href="#cb96-17" aria-hidden="true"></a>                ),</span>
+<span id="cb96-18"><a href="#cb96-18" aria-hidden="true"></a>                <span class="kw">scale_y_continuous</span>(<span class="dt">labels=</span>scales<span class="op">::</span><span class="kw">percent_format</span>()),</span>
+<span id="cb96-19"><a href="#cb96-19" aria-hidden="true"></a>                show_hide_scale,</span>
+<span id="cb96-20"><a href="#cb96-20" aria-hidden="true"></a>                raiting_scale</span>
+<span id="cb96-21"><a href="#cb96-21" aria-hidden="true"></a>            )</span>
+<span id="cb96-22"><a href="#cb96-22" aria-hidden="true"></a>        )</span>
+<span id="cb96-23"><a href="#cb96-23" aria-hidden="true"></a>    )</span>
+<span id="cb96-24"><a href="#cb96-24" aria-hidden="true"></a>)</span></code></pre></div>
+<pre><code>[1] "Dropping empty groups: Animation, Documentary, Short"</code></pre>
+<p><img src="Examples_Python_files/Examples_Python_149_1.png"></p>
 </div>
 <div id="relative-to-the-group" class="section level3">
 <h3 class="hasAnchor">
 <a href="#relative-to-the-group" class="anchor"></a>10.2 Relative to the group</h3>
-<div class="sourceCode" id="cb56"><html><body><pre class="r">%%R -w 800 -h 500
-
-upset(
-    movies, genres, name='genre', width_ratio=0.1, min_size=100,
-    annotations =list(
-        'MPAA Raiting'=list(
-            aes=aes(x=intersection, fill=mpaa),
-            geom=list(
-                geom_bar(stat='count', position='fill'),
-                geom_text(
-                    aes(
-                        label=!!aes_percentage(relative_to='group'),
-                        group=mpaa,
-                        color=ifelse(mpaa == 'R', 'show', 'hide')
-                    ),
-                    stat='count',
-                    position=position_fill(vjust = .5)
-                ),
-                scale_y_continuous(labels=scales::percent_format()),
-                show_hide_scale,
-                raiting_scale
-            )
-        )
-    )
-)</pre></body></html></div>
-<p>[1] “Dropping empty groups: Animation, Documentary, Short”</p>
-<p><img src="Examples_Python_files/Examples_Python_142_1.png"></p>
+<div class="sourceCode" id="cb98"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb98-1"><a href="#cb98-1" aria-hidden="true"></a><span class="op">%%</span>R <span class="op">-</span>w <span class="dv">800</span> <span class="op">-</span>h <span class="dv">500</span></span>
+<span id="cb98-2"><a href="#cb98-2" aria-hidden="true"></a></span>
+<span id="cb98-3"><a href="#cb98-3" aria-hidden="true"></a><span class="kw">upset</span>(</span>
+<span id="cb98-4"><a href="#cb98-4" aria-hidden="true"></a>    movies, genres, <span class="dt">name=</span><span class="st">'genre'</span>, <span class="dt">width_ratio=</span><span class="fl">0.1</span>, <span class="dt">min_size=</span><span class="dv">100</span>,</span>
+<span id="cb98-5"><a href="#cb98-5" aria-hidden="true"></a>    <span class="dt">annotations =</span><span class="kw">list</span>(</span>
+<span id="cb98-6"><a href="#cb98-6" aria-hidden="true"></a>        <span class="st">'MPAA Raiting'</span>=<span class="kw">list</span>(</span>
+<span id="cb98-7"><a href="#cb98-7" aria-hidden="true"></a>            <span class="dt">aes=</span><span class="kw">aes</span>(<span class="dt">x=</span>intersection, <span class="dt">fill=</span>mpaa),</span>
+<span id="cb98-8"><a href="#cb98-8" aria-hidden="true"></a>            <span class="dt">geom=</span><span class="kw">list</span>(</span>
+<span id="cb98-9"><a href="#cb98-9" aria-hidden="true"></a>                <span class="kw">geom_bar</span>(<span class="dt">stat=</span><span class="st">'count'</span>, <span class="dt">position=</span><span class="st">'fill'</span>),</span>
+<span id="cb98-10"><a href="#cb98-10" aria-hidden="true"></a>                <span class="kw">geom_text</span>(</span>
+<span id="cb98-11"><a href="#cb98-11" aria-hidden="true"></a>                    <span class="kw">aes</span>(</span>
+<span id="cb98-12"><a href="#cb98-12" aria-hidden="true"></a>                        <span class="dt">label=</span><span class="op">!!</span><span class="kw">aes_percentage</span>(<span class="dt">relative_to=</span><span class="st">'group'</span>),</span>
+<span id="cb98-13"><a href="#cb98-13" aria-hidden="true"></a>                        <span class="dt">group=</span>mpaa,</span>
+<span id="cb98-14"><a href="#cb98-14" aria-hidden="true"></a>                        <span class="dt">color=</span><span class="kw">ifelse</span>(mpaa <span class="op">==</span><span class="st"> 'R'</span>, <span class="st">'show'</span>, <span class="st">'hide'</span>)</span>
+<span id="cb98-15"><a href="#cb98-15" aria-hidden="true"></a>                    ),</span>
+<span id="cb98-16"><a href="#cb98-16" aria-hidden="true"></a>                    <span class="dt">stat=</span><span class="st">'count'</span>,</span>
+<span id="cb98-17"><a href="#cb98-17" aria-hidden="true"></a>                    <span class="dt">position=</span><span class="kw">position_fill</span>(<span class="dt">vjust =</span> <span class="fl">.5</span>)</span>
+<span id="cb98-18"><a href="#cb98-18" aria-hidden="true"></a>                ),</span>
+<span id="cb98-19"><a href="#cb98-19" aria-hidden="true"></a>                <span class="kw">scale_y_continuous</span>(<span class="dt">labels=</span>scales<span class="op">::</span><span class="kw">percent_format</span>()),</span>
+<span id="cb98-20"><a href="#cb98-20" aria-hidden="true"></a>                show_hide_scale,</span>
+<span id="cb98-21"><a href="#cb98-21" aria-hidden="true"></a>                raiting_scale</span>
+<span id="cb98-22"><a href="#cb98-22" aria-hidden="true"></a>            )</span>
+<span id="cb98-23"><a href="#cb98-23" aria-hidden="true"></a>        )</span>
+<span id="cb98-24"><a href="#cb98-24" aria-hidden="true"></a>    )</span>
+<span id="cb98-25"><a href="#cb98-25" aria-hidden="true"></a>)</span></code></pre></div>
+<pre><code>[1] "Dropping empty groups: Animation, Documentary, Short"</code></pre>
+<p><img src="Examples_Python_files/Examples_Python_151_1.png"></p>
 </div>
 <div id="relative-to-all-observed-values" class="section level3">
 <h3 class="hasAnchor">
 <a href="#relative-to-all-observed-values" class="anchor"></a>10.3 Relative to all observed values</h3>
-<div class="sourceCode" id="cb57"><html><body><pre class="r">%%R -w 800 -h 500
-
-upset(
-    movies, genres, name='genre', width_ratio=0.1, min_size=100,
-    annotations =list(
-        'MPAA Raiting'=list(
-            aes=aes(x=intersection, fill=mpaa),
-            geom=list(
-                geom_bar(stat='count', position='fill'),
-                geom_text(
-                    aes(
-                        label=!!aes_percentage(relative_to='all'),
-                        color=ifelse(mpaa == 'R', 'show', 'hide')
-                    ),
-                    stat='count',
-                    position=position_fill(vjust = .5)
-                ),
-                scale_y_continuous(labels=scales::percent_format()),
-                show_hide_scale,
-                raiting_scale
-            )
-        )
-    )
-)</pre></body></html></div>
-<p>[1] “Dropping empty groups: Animation, Documentary, Short”</p>
-<p><img src="Examples_Python_files/Examples_Python_144_1.png"></p>
+<div class="sourceCode" id="cb100"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb100-1"><a href="#cb100-1" aria-hidden="true"></a><span class="op">%%</span>R <span class="op">-</span>w <span class="dv">800</span> <span class="op">-</span>h <span class="dv">500</span></span>
+<span id="cb100-2"><a href="#cb100-2" aria-hidden="true"></a></span>
+<span id="cb100-3"><a href="#cb100-3" aria-hidden="true"></a><span class="kw">upset</span>(</span>
+<span id="cb100-4"><a href="#cb100-4" aria-hidden="true"></a>    movies, genres, <span class="dt">name=</span><span class="st">'genre'</span>, <span class="dt">width_ratio=</span><span class="fl">0.1</span>, <span class="dt">min_size=</span><span class="dv">100</span>,</span>
+<span id="cb100-5"><a href="#cb100-5" aria-hidden="true"></a>    <span class="dt">annotations =</span><span class="kw">list</span>(</span>
+<span id="cb100-6"><a href="#cb100-6" aria-hidden="true"></a>        <span class="st">'MPAA Raiting'</span>=<span class="kw">list</span>(</span>
+<span id="cb100-7"><a href="#cb100-7" aria-hidden="true"></a>            <span class="dt">aes=</span><span class="kw">aes</span>(<span class="dt">x=</span>intersection, <span class="dt">fill=</span>mpaa),</span>
+<span id="cb100-8"><a href="#cb100-8" aria-hidden="true"></a>            <span class="dt">geom=</span><span class="kw">list</span>(</span>
+<span id="cb100-9"><a href="#cb100-9" aria-hidden="true"></a>                <span class="kw">geom_bar</span>(<span class="dt">stat=</span><span class="st">'count'</span>, <span class="dt">position=</span><span class="st">'fill'</span>),</span>
+<span id="cb100-10"><a href="#cb100-10" aria-hidden="true"></a>                <span class="kw">geom_text</span>(</span>
+<span id="cb100-11"><a href="#cb100-11" aria-hidden="true"></a>                    <span class="kw">aes</span>(</span>
+<span id="cb100-12"><a href="#cb100-12" aria-hidden="true"></a>                        <span class="dt">label=</span><span class="op">!!</span><span class="kw">aes_percentage</span>(<span class="dt">relative_to=</span><span class="st">'all'</span>),</span>
+<span id="cb100-13"><a href="#cb100-13" aria-hidden="true"></a>                        <span class="dt">color=</span><span class="kw">ifelse</span>(mpaa <span class="op">==</span><span class="st"> 'R'</span>, <span class="st">'show'</span>, <span class="st">'hide'</span>)</span>
+<span id="cb100-14"><a href="#cb100-14" aria-hidden="true"></a>                    ),</span>
+<span id="cb100-15"><a href="#cb100-15" aria-hidden="true"></a>                    <span class="dt">stat=</span><span class="st">'count'</span>,</span>
+<span id="cb100-16"><a href="#cb100-16" aria-hidden="true"></a>                    <span class="dt">position=</span><span class="kw">position_fill</span>(<span class="dt">vjust =</span> <span class="fl">.5</span>)</span>
+<span id="cb100-17"><a href="#cb100-17" aria-hidden="true"></a>                ),</span>
+<span id="cb100-18"><a href="#cb100-18" aria-hidden="true"></a>                <span class="kw">scale_y_continuous</span>(<span class="dt">labels=</span>scales<span class="op">::</span><span class="kw">percent_format</span>()),</span>
+<span id="cb100-19"><a href="#cb100-19" aria-hidden="true"></a>                show_hide_scale,</span>
+<span id="cb100-20"><a href="#cb100-20" aria-hidden="true"></a>                raiting_scale</span>
+<span id="cb100-21"><a href="#cb100-21" aria-hidden="true"></a>            )</span>
+<span id="cb100-22"><a href="#cb100-22" aria-hidden="true"></a>        )</span>
+<span id="cb100-23"><a href="#cb100-23" aria-hidden="true"></a>    )</span>
+<span id="cb100-24"><a href="#cb100-24" aria-hidden="true"></a>)</span></code></pre></div>
+<pre><code>[1] "Dropping empty groups: Animation, Documentary, Short"</code></pre>
+<p><img src="Examples_Python_files/Examples_Python_153_1.png"></p>
 </div>
 </div>
 <div id="advanced-usage-examples" class="section level2">
@@ -1990,54 +2090,56 @@ upset(
 <div id="display-text-on-some-bars-only" class="section level3">
 <h3 class="hasAnchor">
 <a href="#display-text-on-some-bars-only" class="anchor"></a>11.1 Display text on some bars only</h3>
-<div class="sourceCode" id="cb58"><html><body><pre class="r">%%R -w 800 -h 500
-
-upset(
-    movies, genres, name='genre', width_ratio=0.1, min_size=100,
-    annotations =list(
-        'MPAA Raiting'=list(
-            aes=aes(x=intersection, fill=mpaa),
-            geom=list(
-                geom_bar(stat='count', position='fill'),
-                geom_text(
-                    aes(label=ifelse(mpaa == 'R', 'R', NA)),
-                    stat='count',
-                    position=position_fill(vjust = .5)
-                ),
-                show_hide_scale,
-                raiting_scale
-            )
-        )
-    )
-)</pre></body></html></div>
-<p>[1] “Dropping empty groups: Animation, Documentary, Short”</p>
-<p><img src="Examples_Python_files/Examples_Python_147_1.png"></p>
+<div class="sourceCode" id="cb102"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb102-1"><a href="#cb102-1" aria-hidden="true"></a><span class="op">%%</span>R <span class="op">-</span>w <span class="dv">800</span> <span class="op">-</span>h <span class="dv">500</span></span>
+<span id="cb102-2"><a href="#cb102-2" aria-hidden="true"></a></span>
+<span id="cb102-3"><a href="#cb102-3" aria-hidden="true"></a><span class="kw">upset</span>(</span>
+<span id="cb102-4"><a href="#cb102-4" aria-hidden="true"></a>    movies, genres, <span class="dt">name=</span><span class="st">'genre'</span>, <span class="dt">width_ratio=</span><span class="fl">0.1</span>, <span class="dt">min_size=</span><span class="dv">100</span>,</span>
+<span id="cb102-5"><a href="#cb102-5" aria-hidden="true"></a>    <span class="dt">annotations =</span><span class="kw">list</span>(</span>
+<span id="cb102-6"><a href="#cb102-6" aria-hidden="true"></a>        <span class="st">'MPAA Raiting'</span>=<span class="kw">list</span>(</span>
+<span id="cb102-7"><a href="#cb102-7" aria-hidden="true"></a>            <span class="dt">aes=</span><span class="kw">aes</span>(<span class="dt">x=</span>intersection, <span class="dt">fill=</span>mpaa),</span>
+<span id="cb102-8"><a href="#cb102-8" aria-hidden="true"></a>            <span class="dt">geom=</span><span class="kw">list</span>(</span>
+<span id="cb102-9"><a href="#cb102-9" aria-hidden="true"></a>                <span class="kw">geom_bar</span>(<span class="dt">stat=</span><span class="st">'count'</span>, <span class="dt">position=</span><span class="st">'fill'</span>),</span>
+<span id="cb102-10"><a href="#cb102-10" aria-hidden="true"></a>                <span class="kw">geom_text</span>(</span>
+<span id="cb102-11"><a href="#cb102-11" aria-hidden="true"></a>                    <span class="kw">aes</span>(<span class="dt">label=</span><span class="kw">ifelse</span>(mpaa <span class="op">==</span><span class="st"> 'R'</span>, <span class="st">'R'</span>, <span class="ot">NA</span>)),</span>
+<span id="cb102-12"><a href="#cb102-12" aria-hidden="true"></a>                    <span class="dt">stat=</span><span class="st">'count'</span>,</span>
+<span id="cb102-13"><a href="#cb102-13" aria-hidden="true"></a>                    <span class="dt">position=</span><span class="kw">position_fill</span>(<span class="dt">vjust =</span> <span class="fl">.5</span>),</span>
+<span id="cb102-14"><a href="#cb102-14" aria-hidden="true"></a>                    <span class="dt">na.rm=</span><span class="ot">TRUE</span></span>
+<span id="cb102-15"><a href="#cb102-15" aria-hidden="true"></a>                ),</span>
+<span id="cb102-16"><a href="#cb102-16" aria-hidden="true"></a>                show_hide_scale,</span>
+<span id="cb102-17"><a href="#cb102-17" aria-hidden="true"></a>                raiting_scale</span>
+<span id="cb102-18"><a href="#cb102-18" aria-hidden="true"></a>            )</span>
+<span id="cb102-19"><a href="#cb102-19" aria-hidden="true"></a>        )</span>
+<span id="cb102-20"><a href="#cb102-20" aria-hidden="true"></a>    )</span>
+<span id="cb102-21"><a href="#cb102-21" aria-hidden="true"></a>)</span></code></pre></div>
+<pre><code>[1] "Dropping empty groups: Animation, Documentary, Short"</code></pre>
+<p><img src="Examples_Python_files/Examples_Python_156_1.png"></p>
 </div>
 <div id="combine-multiple-plots-together" class="section level3">
 <h3 class="hasAnchor">
 <a href="#combine-multiple-plots-together" class="anchor"></a>11.2 Combine multiple plots together</h3>
-<div class="sourceCode" id="cb59"><html><body><pre class="r">%%R -w 800 -h 500
-library(patchwork)
-
-annotations = list(
-    'MPAA Raiting'=list(
-        aes=aes(x=intersection, fill=mpaa),
-        geom=list(
-            geom_bar(stat='count', position='fill')
-        )
-    )
-)
-set.seed(0)    # for replicable example only
-
-data_1 = movies[sample(nrow(movies), 100), ]
-data_2 = movies[sample(nrow(movies), 100), ]
-
-u1 = upset(data_1, genres, min_size=5, base_annotations=annotations)
-u2 = upset(data_2, genres, min_size=5, base_annotations=annotations)
-
-(u1 | u2) + plot_layout(guides='collect')</pre></body></html></div>
-<p>[1] “Dropping empty groups: Animation, Documentary, Short” [1] “Dropping empty groups: Animation, Documentary, Short”</p>
-<p><img src="Examples_Python_files/Examples_Python_149_1.png"></p>
+<div class="sourceCode" id="cb104"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb104-1"><a href="#cb104-1" aria-hidden="true"></a><span class="op">%%</span>R <span class="op">-</span>w <span class="dv">800</span> <span class="op">-</span>h <span class="dv">500</span></span>
+<span id="cb104-2"><a href="#cb104-2" aria-hidden="true"></a><span class="kw">library</span>(patchwork)</span>
+<span id="cb104-3"><a href="#cb104-3" aria-hidden="true"></a></span>
+<span id="cb104-4"><a href="#cb104-4" aria-hidden="true"></a>annotations =<span class="st"> </span><span class="kw">list</span>(</span>
+<span id="cb104-5"><a href="#cb104-5" aria-hidden="true"></a>    <span class="st">'MPAA Raiting'</span>=<span class="kw">list</span>(</span>
+<span id="cb104-6"><a href="#cb104-6" aria-hidden="true"></a>        <span class="dt">aes=</span><span class="kw">aes</span>(<span class="dt">x=</span>intersection, <span class="dt">fill=</span>mpaa),</span>
+<span id="cb104-7"><a href="#cb104-7" aria-hidden="true"></a>        <span class="dt">geom=</span><span class="kw">list</span>(</span>
+<span id="cb104-8"><a href="#cb104-8" aria-hidden="true"></a>            <span class="kw">geom_bar</span>(<span class="dt">stat=</span><span class="st">'count'</span>, <span class="dt">position=</span><span class="st">'fill'</span>)</span>
+<span id="cb104-9"><a href="#cb104-9" aria-hidden="true"></a>        )</span>
+<span id="cb104-10"><a href="#cb104-10" aria-hidden="true"></a>    )</span>
+<span id="cb104-11"><a href="#cb104-11" aria-hidden="true"></a>)</span>
+<span id="cb104-12"><a href="#cb104-12" aria-hidden="true"></a><span class="kw">set.seed</span>(<span class="dv">0</span>)    <span class="co"># for replicable example only</span></span>
+<span id="cb104-13"><a href="#cb104-13" aria-hidden="true"></a></span>
+<span id="cb104-14"><a href="#cb104-14" aria-hidden="true"></a>data_<span class="dv">1</span> =<span class="st"> </span>movies[<span class="kw">sample</span>(<span class="kw">nrow</span>(movies), <span class="dv">100</span>), ]</span>
+<span id="cb104-15"><a href="#cb104-15" aria-hidden="true"></a>data_<span class="dv">2</span> =<span class="st"> </span>movies[<span class="kw">sample</span>(<span class="kw">nrow</span>(movies), <span class="dv">100</span>), ]</span>
+<span id="cb104-16"><a href="#cb104-16" aria-hidden="true"></a></span>
+<span id="cb104-17"><a href="#cb104-17" aria-hidden="true"></a>u1 =<span class="st"> </span><span class="kw">upset</span>(data_<span class="dv">1</span>, genres, <span class="dt">min_size=</span><span class="dv">5</span>, <span class="dt">base_annotations=</span>annotations)</span>
+<span id="cb104-18"><a href="#cb104-18" aria-hidden="true"></a>u2 =<span class="st"> </span><span class="kw">upset</span>(data_<span class="dv">2</span>, genres, <span class="dt">min_size=</span><span class="dv">5</span>, <span class="dt">base_annotations=</span>annotations)</span>
+<span id="cb104-19"><a href="#cb104-19" aria-hidden="true"></a></span>
+<span id="cb104-20"><a href="#cb104-20" aria-hidden="true"></a>(u1 <span class="op">|</span><span class="st"> </span>u2) <span class="op">+</span><span class="st"> </span><span class="kw">plot_layout</span>(<span class="dt">guides=</span><span class="st">'collect'</span>)</span></code></pre></div>
+<pre><code>[1] "Dropping empty groups: Animation, Documentary, Short"
+[1] "Dropping empty groups: Animation, Documentary, Short"</code></pre>
+<p><img src="Examples_Python_files/Examples_Python_158_1.png"></p>
 </div>
 </div>
   </div>
@@ -2057,7 +2159,7 @@ u2 = upset(data_2, genres, min_size=5, base_annotations=annotations)
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>

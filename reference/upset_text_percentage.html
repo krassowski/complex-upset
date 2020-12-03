@@ -75,7 +75,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">ComplexUpset</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.5.20</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.6.0</span>
       </span>
     </div>
 
@@ -135,7 +135,7 @@
     <p>For use together with <code>intersection_size</code> or <code>intersection_ratio</code></p>
     </div>
 
-    <pre class="usage"><span class='fu'>upset_text_percentage</span>(<span class='kw'>digits</span> <span class='kw'>=</span> <span class='fl'>0</span>, <span class='kw'>sep</span> <span class='kw'>=</span> <span class='st'>""</span>)</pre>
+    <pre class="usage"><span class='fu'>upset_text_percentage</span><span class='op'>(</span>digits <span class='op'>=</span> <span class='fl'>0</span>, sep <span class='op'>=</span> <span class='st'>""</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -152,78 +152,8 @@
 
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'><a href='intersection_size.html'>intersection_size</a></span>(<span class='kw'>text_aes</span><span class='kw'>=</span><span class='kw pkg'>ggplot2</span><span class='kw ns'>::</span><span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes_.html'>aes_</a></span>(<span class='kw'>label</span><span class='kw'>=</span><span class='fu'>upset_text_percentage</span>()))</div><div class='output co'>#&gt; $aes
-#&gt; Aesthetic mapping: 
-#&gt; * `x` -&gt; `intersection`
-#&gt; 
-#&gt; $geom
-#&gt; $geom[[1]]
-#&gt; geom_bar: width = NULL, na.rm = FALSE, orientation = NA
-#&gt; stat_count: width = NULL, na.rm = FALSE, orientation = NA
-#&gt; position_stack 
-#&gt; 
-#&gt; 
-#&gt; $highlight_geom
-#&gt; $highlight_geom[[1]]
-#&gt; geom_bar: width = NULL, na.rm = FALSE, orientation = NA
-#&gt; stat_count: width = NULL, na.rm = FALSE, orientation = NA
-#&gt; position_stack 
-#&gt; 
-#&gt; 
-#&gt; $top_geom
-#&gt; $top_geom[[1]]
-#&gt; mapping: y = ~ifelse(..count.. &lt;= bar_number_threshold * max(..count..), ..count.., bar_number_threshold * ..count..), label = ~paste(round(intersection_size/union_size * 100, 0), "%", sep = ""), colour = ~ifelse(..count.. &lt;= bar_number_threshold * max(..count..), "on_background", "on_bar") 
-#&gt; geom_text: parse = FALSE, check_overlap = FALSE, na.rm = FALSE
-#&gt; stat_count: na.rm = FALSE
-#&gt; position_identity 
-#&gt; 
-#&gt; $top_geom[[2]]
-#&gt; &lt;ggproto object: Class ScaleDiscrete, Scale, gg&gt;
-#&gt;     aesthetics: colour
-#&gt;     axis_order: function
-#&gt;     break_info: function
-#&gt;     break_positions: function
-#&gt;     breaks: waiver
-#&gt;     call: call
-#&gt;     clone: function
-#&gt;     dimension: function
-#&gt;     drop: TRUE
-#&gt;     expand: waiver
-#&gt;     get_breaks: function
-#&gt;     get_breaks_minor: function
-#&gt;     get_labels: function
-#&gt;     get_limits: function
-#&gt;     guide: FALSE
-#&gt;     is_discrete: function
-#&gt;     is_empty: function
-#&gt;     labels: waiver
-#&gt;     limits: NULL
-#&gt;     make_sec_title: function
-#&gt;     make_title: function
-#&gt;     map: function
-#&gt;     map_df: function
-#&gt;     n.breaks.cache: NULL
-#&gt;     na.translate: TRUE
-#&gt;     na.value: NA
-#&gt;     name: waiver
-#&gt;     palette: function
-#&gt;     palette.cache: NULL
-#&gt;     position: left
-#&gt;     range: &lt;ggproto object: Class RangeDiscrete, Range, gg&gt;
-#&gt;         range: NULL
-#&gt;         reset: function
-#&gt;         train: function
-#&gt;         super:  &lt;ggproto object: Class RangeDiscrete, Range, gg&gt;
-#&gt;     rescale: function
-#&gt;     reset: function
-#&gt;     scale_name: manual
-#&gt;     train: function
-#&gt;     train_df: function
-#&gt;     transform: function
-#&gt;     transform_df: function
-#&gt;     super:  &lt;ggproto object: Class ScaleDiscrete, Scale, gg&gt;
-#&gt; 
-#&gt; </div></pre>
+    <pre class="examples"><div class='input'><span class='fu'><a href='intersection_size.html'>intersection_size</a></span><span class='op'>(</span>text_aes<span class='op'>=</span><span class='fu'>ggplot2</span><span class='fu'>::</span><span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes_.html'>aes_</a></span><span class='op'>(</span>label<span class='op'>=</span><span class='fu'>upset_text_percentage</span><span class='op'>(</span><span class='op'>)</span><span class='op'>)</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; <span class='error'>Error in FUN(X[[i]], ...): object 'intersection' not found</span></div><div class='img'><img src='upset_text_percentage-1.png' alt='' width='700' height='433' /></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
@@ -239,7 +169,7 @@
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>
