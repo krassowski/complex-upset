@@ -567,13 +567,23 @@ upset_query = function(set=NULL, intersect=NULL, group=NULL, only_components=NUL
 #' @export
 upset_set_size = function(geom=geom_bar, layers=list(), ...) {
     args = eval(list(...))
+
+    default_layers = list(
+        geom(...),
+        ylab('Set size'),
+        substitute(highlight_layer_map(geom, overall_sizes_highlights_data, args=args))
+    )
+
+    user_y_scales = lapply(layers, function(scale_candidate) {
+        ('Scale' %in% class(scale_y_continuous())) && ('y' %in% scale_candidate$aesthetics)
+    })
+
+    if (length(user_y_scales) == 0) {
+        default_layers = c(default_layers, list(scale_y_reverse()))
+    }
+
     c(
-        list(
-            geom(...),
-            scale_y_reverse(),
-            ylab('Set size'),
-            substitute(highlight_layer_map(geom, overall_sizes_highlights_data, args=args))
-        ),
+        default_layers,
         layers
     )
 }
