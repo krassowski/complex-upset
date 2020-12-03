@@ -171,6 +171,7 @@ trim_intersections = function(
 #' @param n_intersections the exact number of the intersections to be displayed; n largest intersections that meet the size and degree criteria will be shown
 #' @param keep_empty_groups whether empty sets should be kept (including sets which are only empty after filtering by size)
 #' @param warn_when_dropping_groups whether a warning should be issued when empty sets are being removed
+#' @param warn_when_converting whether a warning should  be issued when input is not boolean
 #' @param sort_sets whether to sort the rows in the intersection matrix (descending sort by default); one of: `'ascending'`, `'descending'`, `FALSE`
 #' @param sort_intersections whether to sort the columns in the intersection matrix (descending sort by default); one of: `'ascending'`, `'descending'`, `FALSE`
 #' @param sort_intersections_by the mode of sorting, the size of the intersection (cardinality) by default; one of: `'cardinality'`, `'degree'`, `'ratio'`
@@ -182,13 +183,16 @@ trim_intersections = function(
 upset_data = function(
     data, intersect, min_size=0, max_size=Inf, min_degree=0, max_degree=Inf,
     n_intersections=NULL,
-    keep_empty_groups=FALSE, warn_when_dropping_groups=TRUE,
+    keep_empty_groups=FALSE,
+    warn_when_dropping_groups=FALSE,
+    warn_when_converting='auto',
     sort_sets='descending',
     sort_intersections='descending',
     sort_intersections_by='cardinality',
     group_by='degree',
     min_max_early=TRUE,
-    union_count_column='union_size', intersection_count_column='intersection_size'
+    union_count_column='union_size',
+    intersection_count_column='intersection_size'
 ) {
     if ('tbl' %in% class(data)) {
         data = as.data.frame(data)
@@ -208,7 +212,25 @@ upset_data = function(
     is_column_logical = sapply(data[, intersect], is.logical)
     if (any(!is_column_logical)) {
         non_logical = names(is_column_logical[is_column_logical == FALSE])
-        print(paste('Converting non-logical columns to binary:', paste(non_logical, collapse=', ')))
+
+        if (warn_when_converting == 'auto') {
+            unique_values = unique(
+                as.vector(
+                    as.matrix(
+                        data[, non_logical]
+                    )
+                )
+            )
+            if (setequal(unique_values, c(0, 1))) {
+                warn_when_converting = FALSE
+            } else {
+                warn_when_converting = TRUE
+            }
+        }
+        if (warn_when_converting) {
+            warning(paste('Converting non-logical columns to binary:', paste(non_logical, collapse=', ')))
+        }
+
         data[, non_logical] = sapply(data[, non_logical], as.logical)
     }
 
@@ -253,7 +275,7 @@ upset_data = function(
                     paste('Dropping empty groups:', paste(empty_groups, collapse=', ')),
                     paste('Dropping', length(empty_groups), 'empty groups')
                 )
-                print(to_display)
+                warning(to_display)
             }
             intersect_subset = intersect[!(intersect %in% empty_groups)]
         } else {

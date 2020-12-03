@@ -216,7 +216,8 @@ intersection_size = function(
         c(
             list(
                 stat='count',
-                text_aes
+                text_aes,
+                na.rm=TRUE
             ),
             text
         )
@@ -230,7 +231,7 @@ intersection_size = function(
     counts_geoms = list()
   }
 
-  bar_geom = list(geom_bar())
+  bar_geom = list(geom_bar(na.rm=TRUE))
 
   convert_annotation(
     aes=modifyList(aes(x=intersection), aest),

@@ -195,10 +195,24 @@ test_that("upset_data() accepts non logical columns (and warns about conversion)
         x=c(2, 5)
     )
 
-    # TODO: should it use a warning instead (expect_warning)?
-    expect_output(
-        upset_data(df, c('a', 'b', 'c', 'd')),
+    expect_warning(
+        upset_data(df, c('a', 'b', 'c', 'd', 'x'), warn_when_converting='auto'),
         regexp='Converting non-logical columns to binary: .*'
+    )
+
+    expect_warning(
+        upset_data(df, c('a', 'b', 'c', 'd'), warn_when_converting='auto'),
+        regexp=NA
+    )
+
+    expect_warning(
+        upset_data(df, c('a', 'b', 'c', 'd'), warn_when_converting=TRUE),
+        regexp='Converting non-logical columns to binary: .*'
+    )
+
+    expect_warning(
+        upset_data(df, c('a', 'b', 'c', 'd'), warn_when_converting=FALSE),
+        regexp=NA
     )
 
     result = upset_data(df, c('a', 'b', 'c', 'd'))

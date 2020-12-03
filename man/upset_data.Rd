@@ -13,7 +13,8 @@ upset_data(
   max_degree = Inf,
   n_intersections = NULL,
   keep_empty_groups = FALSE,
-  warn_when_dropping_groups = TRUE,
+  warn_when_dropping_groups = FALSE,
+  warn_when_converting = "auto",
   sort_sets = "descending",
   sort_intersections = "descending",
   sort_intersections_by = "cardinality",
@@ -41,6 +42,8 @@ upset_data(
 \item{keep_empty_groups}{whether empty sets should be kept (including sets which are only empty after filtering by size)}
 
 \item{warn_when_dropping_groups}{whether a warning should be issued when empty sets are being removed}
+
+\item{warn_when_converting}{whether a warning should  be issued when input is not boolean}
 
 \item{sort_sets}{whether to sort the rows in the intersection matrix (descending sort by default); one of: \code{'ascending'}, \code{'descending'}, \code{FALSE}}
 

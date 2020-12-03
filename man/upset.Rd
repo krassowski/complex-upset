@@ -65,6 +65,7 @@ upset(
     \item{\code{n_intersections}}{the exact number of the intersections to be displayed; n largest intersections that meet the size and degree criteria will be shown}
     \item{\code{keep_empty_groups}}{whether empty sets should be kept (including sets which are only empty after filtering by size)}
     \item{\code{warn_when_dropping_groups}}{whether a warning should be issued when empty sets are being removed}
+    \item{\code{warn_when_converting}}{whether a warning should  be issued when input is not boolean}
     \item{\code{sort_sets}}{whether to sort the rows in the intersection matrix (descending sort by default); one of: \code{'ascending'}, \code{'descending'}, \code{FALSE}}
     \item{\code{sort_intersections}}{whether to sort the columns in the intersection matrix (descending sort by default); one of: \code{'ascending'}, \code{'descending'}, \code{FALSE}}
     \item{\code{sort_intersections_by}}{the mode of sorting, the size of the intersection (cardinality) by default; one of: \code{'cardinality'}, \code{'degree'}, \code{'ratio'}}
