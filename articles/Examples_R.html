@@ -34,7 +34,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">ComplexUpset</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.6.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.6.2</span>
       </span>
     </div>
 
@@ -646,17 +646,10 @@ TRUE
     <span class="fu"><a href="../reference/upset.html">upset</a></span><span class="op">(</span><span class="va">movies</span>, <span class="va">genres</span>, name<span class="op">=</span><span class="st">'genre'</span>, width_ratio<span class="op">=</span><span class="fl">0.1</span>, min_size<span class="op">=</span><span class="fl">10</span>, keep_empty_groups<span class="op">=</span><span class="cn">TRUE</span>, wrap<span class="op">=</span><span class="cn">TRUE</span>, set_sizes<span class="op">=</span><span class="cn">FALSE</span><span class="op">)</span>
     <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">ggtitle</a></span><span class="op">(</span><span class="st">'With empty groups'</span><span class="op">)</span>
 <span class="op">)</span></code></pre></div>
-<pre><code>[1] "Dropping empty groups: Short"
-
-
-Warning message:
-“Removed 62 rows containing non-finite values (stat_count).”
-Warning message:
-“Removed 62 rows containing non-finite values (stat_count).”</code></pre>
-<p><img src="Examples_R_files/Examples_R_15_2.png"></p>
+<p><img src="Examples_R_files/Examples_R_15_0.png"></p>
 <p>When empty columns are detected a warning will be issued. The silence it, pass <code>warn_when_dropping_groups=FALSE</code>. Complimentary <code>max_size</code> can be used in tandem.</p>
 <p>You can also select intersections by degree (<code>min_degree</code> and <code>max_degree</code>):</p>
-<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">set_size</span><span class="op">(</span><span class="fl">8</span>, <span class="fl">3</span><span class="op">)</span>
 <span class="fu"><a href="../reference/upset.html">upset</a></span><span class="op">(</span>
     <span class="va">movies</span>, <span class="va">genres</span>, width_ratio<span class="op">=</span><span class="fl">0.1</span>,
@@ -664,21 +657,20 @@ Warning message:
 <span class="op">)</span></code></pre></div>
 <p><img src="Examples_R_files/Examples_R_18_0.png"></p>
 <p>Or request a constant number of intersections with <code>n_intersections</code>:</p>
-<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">set_size</span><span class="op">(</span><span class="fl">8</span>, <span class="fl">3</span><span class="op">)</span>
 <span class="fu"><a href="../reference/upset.html">upset</a></span><span class="op">(</span>
     <span class="va">movies</span>, <span class="va">genres</span>, width_ratio<span class="op">=</span><span class="fl">0.1</span>,
     n_intersections<span class="op">=</span><span class="fl">15</span>
 <span class="op">)</span></code></pre></div>
-<pre><code>[1] "Dropping empty groups: Short"</code></pre>
-<p><img src="Examples_R_files/Examples_R_20_1.png"></p>
+<p><img src="Examples_R_files/Examples_R_20_0.png"></p>
 </div>
 </div>
 <div id="adding-components" class="section level2">
 <h2 class="hasAnchor">
 <a href="#adding-components" class="anchor"></a>1. Adding components</h2>
 <p>We can add multiple annotation components (also called panels):</p>
-<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">set_size</span><span class="op">(</span><span class="fl">8</span>, <span class="fl">8</span><span class="op">)</span>
 
 <span class="fu"><a href="https://rdrr.io/r/base/Random.html">set.seed</a></span><span class="op">(</span><span class="fl">0</span><span class="op">)</span>   <span class="co"># keep the same jitter for identical plots</span>
@@ -696,7 +688,7 @@ Warning message:
             geom<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>
                 <span class="co"># checkout ggbeeswarm::geom_quasirandom for better results!</span>
                 <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_jitter.html">geom_jitter</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>color<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/Log.html">log10</a></span><span class="op">(</span><span class="va">votes</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>,
-                <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_violin.html">geom_violin</a></span><span class="op">(</span>width<span class="op">=</span><span class="fl">1.1</span>, alpha<span class="op">=</span><span class="fl">0.5</span><span class="op">)</span>
+                <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_violin.html">geom_violin</a></span><span class="op">(</span>alpha<span class="op">=</span><span class="fl">0.5</span><span class="op">)</span>
             <span class="op">)</span>
         <span class="op">)</span>,
         <span class="st">'Budget'</span><span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>
@@ -707,14 +699,9 @@ Warning message:
     min_size<span class="op">=</span><span class="fl">10</span>,
     width_ratio<span class="op">=</span><span class="fl">0.1</span>
 <span class="op">)</span></code></pre></div>
-<pre><code>[1] "Dropping empty groups: Short"
-
-
-Warning message:
-“position_dodge requires non-overlapping x intervals”</code></pre>
-<p><img src="Examples_R_files/Examples_R_23_2.png"></p>
+<p><img src="Examples_R_files/Examples_R_23_0.png"></p>
 <p>For simple annotations, such as the length above, you can use a shorthand notation of <code>upset_annotate</code>:</p>
-<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">set_size</span><span class="op">(</span><span class="fl">8</span>, <span class="fl">6</span><span class="op">)</span>
 
 <span class="fu"><a href="../reference/upset.html">upset</a></span><span class="op">(</span>
@@ -727,10 +714,9 @@ Warning message:
     min_size<span class="op">=</span><span class="fl">10</span>,
     width_ratio<span class="op">=</span><span class="fl">0.1</span>
 <span class="op">)</span></code></pre></div>
-<pre><code>[1] "Dropping empty groups: Short"</code></pre>
-<p><img src="Examples_R_files/Examples_R_25_1.png"></p>
+<p><img src="Examples_R_files/Examples_R_25_0.png"></p>
 <p>You can also use barplots to demonstrate differences in proportions of categorical variables:</p>
-<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">set_size</span><span class="op">(</span><span class="fl">8</span>, <span class="fl">5</span><span class="op">)</span>
 
 <span class="fu"><a href="../reference/upset.html">upset</a></span><span class="op">(</span>
@@ -756,7 +742,7 @@ Warning message:
 <div id="running-statistical-tests" class="section level2">
 <h2 class="hasAnchor">
 <a href="#running-statistical-tests" class="anchor"></a>2. Running statistical tests</h2>
-<div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../reference/upset_test.html">upset_test</a></span><span class="op">(</span><span class="va">movies</span>, <span class="va">genres</span><span class="op">)</span></code></pre></div>
 <pre><code>[1] "year, length, budget, rating, votes, r1, r2, r3, r4, r5, r6, r7, r8, r9, r10, mpaa differ significantly between intersections"</code></pre>
 <table class="table">
@@ -1159,7 +1145,7 @@ Kruskal-Wallis rank sum test
 <li><code>method</code></li>
 </ul>
 <p>It is easy to adapt tests which do not obey this signature/output convention; for example the Chi-squared test and anova can be wrapped with two-line functions as follows:</p>
-<div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">chisq_from_formula</span> <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">formula</span>, <span class="va">data</span><span class="op">)</span> <span class="op">{</span>
     <span class="fu"><a href="https://rdrr.io/r/stats/chisq.test.html">chisq.test</a></span><span class="op">(</span>
         <span class="fu"><a href="https://rdrr.io/r/stats/ftable.html">ftable</a></span><span class="op">(</span><span class="va">formula</span>, <span class="va">data</span><span class="op">)</span>
@@ -1179,7 +1165,7 @@ Kruskal-Wallis rank sum test
     mpaa<span class="op">=</span><span class="va">chisq_from_formula</span>,
     budget<span class="op">=</span><span class="va">anova_single</span>
 <span class="op">)</span></code></pre></div>
-<div class="sourceCode" id="cb21"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="fu"><a href="../reference/upset_test.html">upset_test</a></span><span class="op">(</span><span class="va">movies</span>, <span class="va">genres</span>, tests<span class="op">=</span><span class="va">custom_tests</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 <pre><code>Warning message in chisq.test(ftable(formula, data)):
 “Chi-squared approximation may be incorrect”
@@ -1354,10 +1340,8 @@ Kruskal-Wallis rank sum test
 </tbody>
 </table>
 <p>Many tests will require at least two observations in each group. You can skip intersections with less than two members with <code>min_size=2</code>.</p>
-<div class="sourceCode" id="cb23"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">bartlett_results</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/warning.html">suppressWarnings</a></span><span class="op">(</span>
-    <span class="fu"><a href="../reference/upset_test.html">upset_test</a></span><span class="op">(</span><span class="va">movies</span>, <span class="va">genres</span>, test<span class="op">=</span><span class="va">bartlett.test</span>, min_size<span class="op">=</span><span class="fl">2</span><span class="op">)</span>
-<span class="op">)</span>
+<div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">bartlett_results</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/warning.html">suppressWarnings</a></span><span class="op">(</span><span class="fu"><a href="../reference/upset_test.html">upset_test</a></span><span class="op">(</span><span class="va">movies</span>, <span class="va">genres</span>, test<span class="op">=</span><span class="va">bartlett.test</span>, min_size<span class="op">=</span><span class="fl">2</span><span class="op">)</span><span class="op">)</span>
 <span class="fu"><a href="https://rdrr.io/r/utils/head.html">tail</a></span><span class="op">(</span><span class="va">bartlett_results</span><span class="op">)</span></code></pre></div>
 <pre><code>[1] "NA, year, length, budget, rating, votes, r1, r2, r3, r4, r5, r6, r7, r8, r9, r10, NA differ significantly between intersections"</code></pre>
 <table class="table">
@@ -1536,7 +1520,7 @@ NA
 <li>simply irrelevant</li>
 </ul>
 <p>In the movies example, the title variable is not a reasonable thing to compare. We can ignore it using:</p>
-<div class="sourceCode" id="cb25"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb21"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># note: title no longer present</span>
 <span class="fu"><a href="https://rdrr.io/r/base/colnames.html">rownames</a></span><span class="op">(</span><span class="fu"><a href="../reference/upset_test.html">upset_test</a></span><span class="op">(</span><span class="va">movies</span>, <span class="va">genres</span>, ignore<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">'title'</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 <pre><code>[1] "year, length, budget, rating, votes, r1, r2, r3, r4, r5, r6, r7, r8, r9, r10, mpaa differ significantly between intersections"</code></pre>
@@ -1604,7 +1588,7 @@ NA
 <h3 class="hasAnchor">
 <a href="#counts" class="anchor"></a>3.1 Counts</h3>
 <p>The counts over the bars can be disabled:</p>
-<div class="sourceCode" id="cb27"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb23"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">set_size</span><span class="op">(</span><span class="fl">8</span>, <span class="fl">3</span><span class="op">)</span>
 
 <span class="fu"><a href="../reference/upset.html">upset</a></span><span class="op">(</span>
@@ -1616,10 +1600,9 @@ NA
     min_size<span class="op">=</span><span class="fl">10</span>,
     width_ratio<span class="op">=</span><span class="fl">0.1</span>
 <span class="op">)</span></code></pre></div>
-<pre><code>[1] "Dropping empty groups: Short"</code></pre>
-<p><img src="Examples_R_files/Examples_R_42_1.png"></p>
+<p><img src="Examples_R_files/Examples_R_42_0.png"></p>
 <p>The colors can be changed:</p>
-<div class="sourceCode" id="cb29"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb24"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">set_size</span><span class="op">(</span><span class="fl">8</span>, <span class="fl">3</span><span class="op">)</span>
 
 <span class="fu"><a href="../reference/upset.html">upset</a></span><span class="op">(</span>
@@ -1635,10 +1618,9 @@ NA
     min_size<span class="op">=</span><span class="fl">10</span>,
     width_ratio<span class="op">=</span><span class="fl">0.1</span>
 <span class="op">)</span></code></pre></div>
-<pre><code>[1] "Dropping empty groups: Short"</code></pre>
-<p><img src="Examples_R_files/Examples_R_44_1.png"></p>
+<p><img src="Examples_R_files/Examples_R_44_0.png"></p>
 <p>Any parameter supported by <code>geom_text</code> can be passed in <code>text</code> list:</p>
-<div class="sourceCode" id="cb31"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb25"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">set_size</span><span class="op">(</span><span class="fl">8</span>, <span class="fl">3</span><span class="op">)</span>
 
 <span class="fu"><a href="../reference/upset.html">upset</a></span><span class="op">(</span>
@@ -1656,13 +1638,12 @@ NA
     min_size<span class="op">=</span><span class="fl">10</span>,
     width_ratio<span class="op">=</span><span class="fl">0.1</span>
 <span class="op">)</span></code></pre></div>
-<pre><code>[1] "Dropping empty groups: Short"</code></pre>
-<p><img src="Examples_R_files/Examples_R_46_1.png"></p>
+<p><img src="Examples_R_files/Examples_R_46_0.png"></p>
 </div>
 <div id="fill-the-bars" class="section level3">
 <h3 class="hasAnchor">
 <a href="#fill-the-bars" class="anchor"></a>3.2 Fill the bars</h3>
-<div class="sourceCode" id="cb33"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb26"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">set_size</span><span class="op">(</span><span class="fl">8</span>, <span class="fl">3</span><span class="op">)</span>
 
 <span class="fu"><a href="../reference/upset.html">upset</a></span><span class="op">(</span>
@@ -1677,7 +1658,7 @@ NA
     width_ratio<span class="op">=</span><span class="fl">0.1</span>
 <span class="op">)</span></code></pre></div>
 <p><img src="Examples_R_files/Examples_R_48_0.png"></p>
-<div class="sourceCode" id="cb34"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb27"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">set_size</span><span class="op">(</span><span class="fl">8</span>, <span class="fl">3</span><span class="op">)</span>
 <span class="fu"><a href="../reference/upset.html">upset</a></span><span class="op">(</span>
     <span class="va">movies</span>,
@@ -1694,7 +1675,7 @@ NA
     width_ratio<span class="op">=</span><span class="fl">0.1</span>
 <span class="op">)</span></code></pre></div>
 <p><img src="Examples_R_files/Examples_R_49_0.png"></p>
-<div class="sourceCode" id="cb35"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb28"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">set_size</span><span class="op">(</span><span class="fl">8</span>, <span class="fl">3</span><span class="op">)</span>
 
 <span class="fu"><a href="../reference/upset.html">upset</a></span><span class="op">(</span>
@@ -1714,7 +1695,7 @@ NA
 <h3 class="hasAnchor">
 <a href="#adjusting-the-height-of-the-matrixintersection-size" class="anchor"></a>3.3 Adjusting the height of the matrix/intersection size</h3>
 <p>Setting <code>height_ratio=1</code> will cause the intersection matrix and the intersection size to have an equal height:</p>
-<div class="sourceCode" id="cb36"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb29"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">set_size</span><span class="op">(</span><span class="fl">8</span>, <span class="fl">3</span><span class="op">)</span>
 
 <span class="fu"><a href="../reference/upset.html">upset</a></span><span class="op">(</span>
@@ -1729,7 +1710,7 @@ NA
 <h3 class="hasAnchor">
 <a href="#hiding-intersection-size" class="anchor"></a>3.5 Hiding intersection size</h3>
 <p>You can always disable the intersection size altogether:</p>
-<div class="sourceCode" id="cb37"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb30"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">set_size</span><span class="op">(</span><span class="fl">8</span>, <span class="fl">1.6</span><span class="op">)</span>
 <span class="fu"><a href="../reference/upset.html">upset</a></span><span class="op">(</span>
     <span class="va">movies</span>,
@@ -1738,8 +1719,7 @@ NA
     min_size<span class="op">=</span><span class="fl">10</span>,
     width_ratio<span class="op">=</span><span class="fl">0.1</span>
 <span class="op">)</span></code></pre></div>
-<pre><code>[1] "Dropping empty groups: Short"</code></pre>
-<p><img src="Examples_R_files/Examples_R_56_1.png"></p>
+<p><img src="Examples_R_files/Examples_R_56_0.png"></p>
 </div>
 <div id="showing-intersection-sizeunion-size-ratio" class="section level3">
 <h3 class="hasAnchor">
@@ -1751,35 +1731,28 @@ NA
 <blockquote>
 <p>Important note: with early min/max trimming the intersection ratio uses the trimmed denominator. In most cases you probably want to set <code>min_max_early=FALSE</code> when plotting ratios with any kind of filtering imposed.</p>
 </blockquote>
-<div class="sourceCode" id="cb39"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb31"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">set_size</span><span class="op">(</span><span class="fl">8</span>, <span class="fl">6</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/base/warning.html">suppressWarnings</a></span><span class="op">(</span><span class="fu"><a href="../reference/upset.html">upset</a></span><span class="op">(</span>
+<span class="fu"><a href="../reference/upset.html">upset</a></span><span class="op">(</span>
     <span class="va">movies</span>, <span class="va">genres</span>, name<span class="op">=</span><span class="st">'genre'</span>, width_ratio<span class="op">=</span><span class="fl">0.1</span>, min_size<span class="op">=</span><span class="fl">10</span>,
     base_annotations<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>
         <span class="st">'Intersection size'</span><span class="op">=</span><span class="fu"><a href="../reference/intersection_size.html">intersection_size</a></span><span class="op">(</span><span class="op">)</span>,
         <span class="st">'Intersection ratio'</span><span class="op">=</span><span class="fu"><a href="../reference/intersection_ratio.html">intersection_ratio</a></span><span class="op">(</span><span class="op">)</span>
     <span class="op">)</span>,
     min_max_early<span class="op">=</span><span class="cn">FALSE</span>
-<span class="op">)</span><span class="op">)</span></code></pre></div>
-<pre><code>[1] "Dropping empty groups: Short"
-
-
-Warning message:
-“Removed 62 rows containing non-finite values (stat_count).”
-Warning message:
-“Removed 62 rows containing non-finite values (stat_count).”
-Warning message:
+<span class="op">)</span></code></pre></div>
+<pre><code>Warning message:
 “Removed 62 rows containing missing values (position_stack).”</code></pre>
-<p><img src="Examples_R_files/Examples_R_59_2.png"></p>
+<p><img src="Examples_R_files/Examples_R_59_1.png"></p>
 <p>The plot above tells us that the analysed documentary movies are almost always (in over 60% of cases) documentaries (and nothing more!), while comedies more often include elements of other genres (e.g. drama, romance) rather than being comedies alone (like stand-up shows).</p>
 </div>
 <div id="showing-percentages" class="section level3">
 <h3 class="hasAnchor">
 <a href="#showing-percentages" class="anchor"></a>3.7 Showing percentages</h3>
 <p><code>text_aes</code> can be used to manipulate the aesthetics of the labels. Using the <code>intersection_size</code> and <code>union_size</code> one can calculate percentage of items in the intersection (relative to the potential size of the intersection). A <code><a href="../reference/upset_text_percentage.html">upset_text_percentage(digits=0, sep='')</a></code> shorthand is provided for convenience; please note that it has to be used with <code>aes_</code> rather than <code>aes</code>:</p>
-<div class="sourceCode" id="cb41"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb33"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">set_size</span><span class="op">(</span><span class="fl">8</span>, <span class="fl">6</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/base/warning.html">suppressWarnings</a></span><span class="op">(</span><span class="fu"><a href="../reference/upset.html">upset</a></span><span class="op">(</span>
+<span class="fu"><a href="../reference/upset.html">upset</a></span><span class="op">(</span>
     <span class="va">movies</span>, <span class="va">genres</span>, name<span class="op">=</span><span class="st">'genre'</span>, width_ratio<span class="op">=</span><span class="fl">0.1</span>, min_size<span class="op">=</span><span class="fl">10</span>,
     base_annotations<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>
         <span class="co"># with manual aes specification:</span>
@@ -1788,23 +1761,16 @@ Warning message:
         <span class="st">'Intersection ratio'</span><span class="op">=</span><span class="fu"><a href="../reference/intersection_ratio.html">intersection_ratio</a></span><span class="op">(</span>text_aes<span class="op">=</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes_.html">aes_</a></span><span class="op">(</span>label<span class="op">=</span><span class="fu"><a href="../reference/upset_text_percentage.html">upset_text_percentage</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>
     <span class="op">)</span>,
     min_max_early<span class="op">=</span><span class="cn">FALSE</span>
-<span class="op">)</span><span class="op">)</span></code></pre></div>
-<pre><code>[1] "Dropping empty groups: Short"
-
-
-Warning message:
-“Removed 62 rows containing non-finite values (stat_count).”
-Warning message:
-“Removed 62 rows containing non-finite values (stat_count).”
-Warning message:
+<span class="op">)</span></code></pre></div>
+<pre><code>Warning message:
 “Removed 62 rows containing missing values (position_stack).”</code></pre>
-<p><img src="Examples_R_files/Examples_R_63_2.png"></p>
+<p><img src="Examples_R_files/Examples_R_63_1.png"></p>
 <p>Also see <a href="#10-display-percentages">10. Display percentages</a>.</p>
 </div>
 <div id="further-adjustments-using-ggplot2-functions" class="section level3">
 <h3 class="hasAnchor">
 <a href="#further-adjustments-using-ggplot2-functions" class="anchor"></a>3.8 Further adjustments using ggplot2 functions</h3>
-<div class="sourceCode" id="cb43"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb35"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">set_size</span><span class="op">(</span><span class="fl">8</span>, <span class="fl">3</span><span class="op">)</span>
 <span class="fu"><a href="../reference/upset.html">upset</a></span><span class="op">(</span>
     <span class="va">movies</span>, <span class="va">genres</span>, width_ratio<span class="op">=</span><span class="fl">0.1</span>,
@@ -1818,8 +1784,7 @@ Warning message:
     <span class="op">)</span>,
     min_size<span class="op">=</span><span class="fl">10</span>
 <span class="op">)</span></code></pre></div>
-<pre><code>[1] "Dropping empty groups: Short"</code></pre>
-<p><img src="Examples_R_files/Examples_R_66_1.png"></p>
+<p><img src="Examples_R_files/Examples_R_66_0.png"></p>
 </div>
 </div>
 <div id="adjusting-set-size" class="section level2">
@@ -1829,7 +1794,7 @@ Warning message:
 <h3 class="hasAnchor">
 <a href="#rotate-labels" class="anchor"></a>4.1 Rotate labels</h3>
 <p>To rotate the labels modify corresponding theme:</p>
-<div class="sourceCode" id="cb45"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb36"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">set_size</span><span class="op">(</span><span class="fl">4</span>, <span class="fl">3</span><span class="op">)</span>
 <span class="fu"><a href="../reference/upset.html">upset</a></span><span class="op">(</span>
     <span class="va">movies</span>, <span class="va">genres</span>,
@@ -1841,10 +1806,9 @@ Warning message:
         <span class="op">)</span>
     <span class="op">)</span>
 <span class="op">)</span></code></pre></div>
-<pre><code>[1] "Dropping empty groups: Animation, Documentary, Short"</code></pre>
-<p><img src="Examples_R_files/Examples_R_70_1.png"></p>
+<p><img src="Examples_R_files/Examples_R_70_0.png"></p>
 <p>To display the ticks:</p>
-<div class="sourceCode" id="cb47"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb37"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">set_size</span><span class="op">(</span><span class="fl">4</span>, <span class="fl">3</span><span class="op">)</span>
 <span class="fu"><a href="../reference/upset.html">upset</a></span><span class="op">(</span>
     <span class="va">movies</span>, <span class="va">genres</span>, width_ratio<span class="op">=</span><span class="fl">0.3</span>, min_size<span class="op">=</span><span class="fl">100</span>, wrap<span class="op">=</span><span class="cn">TRUE</span>,
@@ -1854,14 +1818,13 @@ Warning message:
         <span class="op">)</span>
     <span class="op">)</span>
 <span class="op">)</span></code></pre></div>
-<pre><code>[1] "Dropping empty groups: Animation, Documentary, Short"</code></pre>
-<p><img src="Examples_R_files/Examples_R_72_1.png"></p>
+<p><img src="Examples_R_files/Examples_R_72_0.png"></p>
 </div>
 <div id="modify-geoms-and-other-layers" class="section level3">
 <h3 class="hasAnchor">
 <a href="#modify-geoms-and-other-layers" class="anchor"></a>4.2 Modify geoms and other layers</h3>
 <p>Arguments of the <code>geom_bar</code> can be passed to <code>upset_set_size</code>; it can even use a different geom, or be replaced with a custom list of layers altogether:</p>
-<div class="sourceCode" id="cb49"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb38"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">set_size</span><span class="op">(</span><span class="fl">8</span>, <span class="fl">3</span><span class="op">)</span>
 
 <span class="op">(</span>
@@ -1890,30 +1853,38 @@ Warning message:
         <span class="op">)</span>
     <span class="op">)</span>
 <span class="op">)</span></code></pre></div>
-<pre><code>[1] "Dropping empty groups: Documentary, Short"
-[1] "Dropping empty groups: Documentary, Short"
-[1] "Dropping empty groups: Documentary, Short"</code></pre>
-<p><img src="Examples_R_files/Examples_R_75_1.png"></p>
+<p><img src="Examples_R_files/Examples_R_75_0.png"></p>
 </div>
 <div id="logarithmic-scale" class="section level3">
 <h3 class="hasAnchor">
 <a href="#logarithmic-scale" class="anchor"></a>4.3 Logarithmic scale</h3>
 <p>In order to use a log scale we need pass additional scale to in <code>layers</code> argument. However, as the bars are on flipped coordinates, we need a reversed log transformation:</p>
-<div class="sourceCode" id="cb51"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">reverse_log_trans</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">base</span><span class="op">=</span><span class="fl">10</span><span class="op">)</span> <span class="op">{</span>
+<div class="sourceCode" id="cb39"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">preserve_infinite</span> <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">f</span><span class="op">)</span> <span class="op">{</span>
+    <span class="co"># this allows the stripes (which span from -Inf to +Inf) to be displayed</span>
+    <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="op">{</span>
+        <span class="kw">if</span> <span class="op">(</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/any.html">any</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html">is.na</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">)</span> <span class="op">&amp;&amp;</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/all.html">all</a></span><span class="op">(</span><span class="va">x</span> <span class="op">==</span> <span class="cn">Inf</span><span class="op">)</span> <span class="op">||</span> <span class="fu"><a href="https://rdrr.io/r/base/all.html">all</a></span><span class="op">(</span><span class="va">x</span> <span class="op">==</span> <span class="op">-</span><span class="cn">Inf</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span>
+            <span class="va">x</span>
+        <span class="op">}</span> <span class="kw">else</span> <span class="op">{</span>
+            <span class="fu">f</span><span class="op">(</span><span class="va">x</span><span class="op">)</span>
+        <span class="op">}</span>
+    <span class="op">}</span>
+<span class="op">}</span>
+
+<span class="va">reverse_log_trans</span> <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">base</span><span class="op">=</span><span class="fl">10</span><span class="op">)</span> <span class="op">{</span>
     <span class="co"># CC-BY-SA 4.0 Brian Diggs, modified</span>
     <span class="co"># https://stackoverflow.com/a/11054781</span>
     <span class="fu">scales</span><span class="fu">::</span><span class="fu"><a href="https://scales.r-lib.org//reference/trans_new.html">trans_new</a></span><span class="op">(</span>
         <span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste0</a></span><span class="op">(</span>
             <span class="st">'reverselog-'</span>, <span class="fu"><a href="https://rdrr.io/r/base/format.html">format</a></span><span class="op">(</span><span class="va">base</span><span class="op">)</span><span class="op">)</span>,
-            <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="op">-</span><span class="fu"><a href="https://rdrr.io/r/base/Log.html">log</a></span><span class="op">(</span><span class="va">x</span>, <span class="va">base</span><span class="op">)</span>,
-            <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="va">base</span><span class="op">^</span><span class="op">-</span><span class="va">x</span>,
+            <span class="fu">preserve_infinite</span><span class="op">(</span><span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="op">-</span><span class="fu"><a href="https://rdrr.io/r/base/Log.html">log</a></span><span class="op">(</span><span class="va">x</span>, <span class="va">base</span><span class="op">)</span><span class="op">)</span>,
+            <span class="fu">preserve_infinite</span><span class="op">(</span><span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="va">base</span><span class="op">^</span><span class="op">-</span><span class="va">x</span><span class="op">)</span>,
             <span class="fu">scales</span><span class="fu">::</span><span class="fu"><a href="https://scales.r-lib.org//reference/breaks_log.html">log_breaks</a></span><span class="op">(</span>base<span class="op">=</span><span class="va">base</span><span class="op">)</span>,
             domain <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1e-100</span>, <span class="cn">Inf</span><span class="op">)</span>
     <span class="op">)</span>
 <span class="op">}</span></code></pre></div>
 <p>Which is then easy to apply:</p>
-<div class="sourceCode" id="cb52"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb40"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">set_size</span><span class="op">(</span><span class="fl">5</span>, <span class="fl">3</span><span class="op">)</span>
 
 <span class="fu"><a href="../reference/upset.html">upset</a></span><span class="op">(</span>
@@ -1931,19 +1902,9 @@ Warning message:
     <span class="op">)</span>,
     queries<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span><span class="fu"><a href="../reference/upset_query.html">upset_query</a></span><span class="op">(</span>set<span class="op">=</span><span class="st">'Drama'</span>, fill<span class="op">=</span><span class="st">'blue'</span><span class="op">)</span><span class="op">)</span>
 <span class="op">)</span></code></pre></div>
-<pre><code>[1] "Dropping empty groups: Short"
-
-
-Scale for 'y' is already present. Adding another scale for 'y', which will
-replace the existing scale.
-
-Warning message in self$trans$transform(x):
-“NaNs produced”
-Warning message:
-“Removed 6 rows containing missing values (geom_segment).”</code></pre>
-<p><img src="Examples_R_files/Examples_R_80_2.png"></p>
+<p><img src="Examples_R_files/Examples_R_80_0.png"></p>
 <p>We can also modify the labels to display the logged values:</p>
-<div class="sourceCode" id="cb54"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb41"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">set_size</span><span class="op">(</span><span class="fl">5</span>, <span class="fl">3</span><span class="op">)</span>
 
 <span class="fu"><a href="../reference/upset.html">upset</a></span><span class="op">(</span>
@@ -1961,22 +1922,12 @@ Warning message:
         <span class="op">)</span>
     <span class="op">)</span>
 <span class="op">)</span></code></pre></div>
-<pre><code>[1] "Dropping empty groups: Short"
-
-
-Scale for 'y' is already present. Adding another scale for 'y', which will
-replace the existing scale.
-
-Warning message in self$trans$transform(x):
-“NaNs produced”
-Warning message:
-“Removed 6 rows containing missing values (geom_segment).”</code></pre>
-<p><img src="Examples_R_files/Examples_R_82_2.png"></p>
+<p><img src="Examples_R_files/Examples_R_82_0.png"></p>
 </div>
 <div id="hide-the-set-sizes-altogether" class="section level3">
 <h3 class="hasAnchor">
 <a href="#hide-the-set-sizes-altogether" class="anchor"></a>4.4 Hide the set sizes altogether</h3>
-<div class="sourceCode" id="cb56"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb42"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">set_size</span><span class="op">(</span><span class="fl">5</span>, <span class="fl">3</span><span class="op">)</span>
 
 <span class="fu"><a href="../reference/upset.html">upset</a></span><span class="op">(</span>
@@ -1984,8 +1935,7 @@ Warning message:
     min_size<span class="op">=</span><span class="fl">10</span>,
     set_sizes<span class="op">=</span><span class="cn">FALSE</span>
 <span class="op">)</span></code></pre></div>
-<pre><code>[1] "Dropping empty groups: Short"</code></pre>
-<p><img src="Examples_R_files/Examples_R_84_1.png"></p>
+<p><img src="Examples_R_files/Examples_R_84_0.png"></p>
 </div>
 </div>
 <div id="adjusting-other-aesthetics" class="section level2">
@@ -1995,7 +1945,7 @@ Warning message:
 <h3 class="hasAnchor">
 <a href="#stripes" class="anchor"></a>5.1 Stripes</h3>
 <p>Change the colors:</p>
-<div class="sourceCode" id="cb58"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb43"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">set_size</span><span class="op">(</span><span class="fl">6</span>, <span class="fl">4</span><span class="op">)</span>
 <span class="fu"><a href="../reference/upset.html">upset</a></span><span class="op">(</span>
     <span class="va">movies</span>,
@@ -2004,10 +1954,9 @@ Warning message:
     width_ratio<span class="op">=</span><span class="fl">0.2</span>,
     stripes<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">'cornsilk1'</span>, <span class="st">'deepskyblue1'</span><span class="op">)</span>
 <span class="op">)</span></code></pre></div>
-<pre><code>[1] "Dropping empty groups: Short"</code></pre>
-<p><img src="Examples_R_files/Examples_R_88_1.png"></p>
+<p><img src="Examples_R_files/Examples_R_88_0.png"></p>
 <p>You can use multiple colors:</p>
-<div class="sourceCode" id="cb60"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb44"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">set_size</span><span class="op">(</span><span class="fl">6</span>, <span class="fl">4</span><span class="op">)</span>
 <span class="fu"><a href="../reference/upset.html">upset</a></span><span class="op">(</span>
     <span class="va">movies</span>,
@@ -2016,10 +1965,9 @@ Warning message:
     width_ratio<span class="op">=</span><span class="fl">0.2</span>,
     stripes<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">'cornsilk1'</span>, <span class="st">'deepskyblue1'</span>, <span class="st">'grey90'</span><span class="op">)</span>
 <span class="op">)</span></code></pre></div>
-<pre><code>[1] "Dropping empty groups: Short"</code></pre>
-<p><img src="Examples_R_files/Examples_R_90_1.png"></p>
+<p><img src="Examples_R_files/Examples_R_90_0.png"></p>
 <p>Or, set the color to white to effectively disable the stripes:</p>
-<div class="sourceCode" id="cb62"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb45"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">set_size</span><span class="op">(</span><span class="fl">6</span>, <span class="fl">4</span><span class="op">)</span>
 <span class="fu"><a href="../reference/upset.html">upset</a></span><span class="op">(</span>
     <span class="va">movies</span>,
@@ -2028,30 +1976,27 @@ Warning message:
     width_ratio<span class="op">=</span><span class="fl">0.2</span>,
     stripes<span class="op">=</span><span class="st">'white'</span>
 <span class="op">)</span></code></pre></div>
-<pre><code>[1] "Dropping empty groups: Short"</code></pre>
-<p><img src="Examples_R_files/Examples_R_92_1.png"></p>
+<p><img src="Examples_R_files/Examples_R_92_0.png"></p>
 </div>
 <div id="adding-title" class="section level3">
 <h3 class="hasAnchor">
 <a href="#adding-title" class="anchor"></a>5.2 Adding title</h3>
 <p>Adding title with <code>ggtitle</code> with add it to the intersection matrix:</p>
-<div class="sourceCode" id="cb64"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb46"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">set_size</span><span class="op">(</span><span class="fl">6</span>, <span class="fl">4</span><span class="op">)</span>
 <span class="fu"><a href="../reference/upset.html">upset</a></span><span class="op">(</span><span class="va">movies</span>, <span class="va">genres</span>, min_size<span class="op">=</span><span class="fl">10</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">ggtitle</a></span><span class="op">(</span><span class="st">'Intersection matrix title'</span><span class="op">)</span></code></pre></div>
-<pre><code>[1] "Dropping empty groups: Short"</code></pre>
-<p><img src="Examples_R_files/Examples_R_95_1.png"></p>
+<p><img src="Examples_R_files/Examples_R_95_0.png"></p>
 <p>In order to add a title for the entire plot, you need to wrap the plot:</p>
-<div class="sourceCode" id="cb66"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb47"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">set_size</span><span class="op">(</span><span class="fl">6</span>, <span class="fl">4</span><span class="op">)</span>
 <span class="fu"><a href="../reference/upset.html">upset</a></span><span class="op">(</span><span class="va">movies</span>, <span class="va">genres</span>, min_size<span class="op">=</span><span class="fl">10</span>, wrap<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">ggtitle</a></span><span class="op">(</span><span class="st">'The overlap between genres'</span><span class="op">)</span></code></pre></div>
-<pre><code>[1] "Dropping empty groups: Short"</code></pre>
-<p><img src="Examples_R_files/Examples_R_97_1.png"></p>
+<p><img src="Examples_R_files/Examples_R_97_0.png"></p>
 </div>
 <div id="making-the-plot-transparent" class="section level3">
 <h3 class="hasAnchor">
 <a href="#making-the-plot-transparent" class="anchor"></a>5.3 Making the plot transparent</h3>
 <p>You need to set the plot background to transparent and adjust colors of stripes to your liking:</p>
-<div class="sourceCode" id="cb68"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb48"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">set_size</span><span class="op">(</span><span class="fl">6</span>, <span class="fl">4</span><span class="op">)</span>
 <span class="op">(</span>
     <span class="fu"><a href="../reference/upset.html">upset</a></span><span class="op">(</span>
@@ -2060,8 +2005,7 @@ Warning message:
     <span class="op">)</span>
     <span class="op">&amp;</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html">theme</a></span><span class="op">(</span>plot.background<span class="op">=</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_rect</a></span><span class="op">(</span>fill<span class="op">=</span><span class="st">'transparent'</span>, color<span class="op">=</span><span class="cn">NA</span><span class="op">)</span><span class="op">)</span>
 <span class="op">)</span></code></pre></div>
-<pre><code>[1] "Dropping empty groups: Short"</code></pre>
-<p><img src="Examples_R_files/Examples_R_100_1.png"></p>
+<p><img src="Examples_R_files/Examples_R_100_0.png"></p>
 <p>Use <code><a href="https://ggplot2.tidyverse.org/reference/ggsave.html">ggsave('upset.png', bg="transparent")</a></code> when exporting to PNG.</p>
 </div>
 </div>
@@ -2069,7 +2013,7 @@ Warning message:
 <h2 class="hasAnchor">
 <a href="#themes" class="anchor"></a>6. Themes</h2>
 <p>The themes for specific components are defined in <code>upset_themes</code> list, which contains themes for:</p>
-<div class="sourceCode" id="cb70"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb49"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/names.html">names</a></span><span class="op">(</span><span class="va">upset_themes</span><span class="op">)</span></code></pre></div>
 <style>
 .list-inline {list-style: none; margin:0; padding: 0}
@@ -2094,13 +2038,12 @@ Warning message:
 <div id="substituting-themes" class="section level3">
 <h3 class="hasAnchor">
 <a href="#substituting-themes" class="anchor"></a>6.1 Substituting themes</h3>
-<div class="sourceCode" id="cb71"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb50"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">set_size</span><span class="op">(</span><span class="fl">8</span>, <span class="fl">4</span><span class="op">)</span>
 <span class="fu"><a href="../reference/upset.html">upset</a></span><span class="op">(</span><span class="va">movies</span>, <span class="va">genres</span>, min_size<span class="op">=</span><span class="fl">10</span>, themes<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>default<span class="op">=</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html">theme</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></code></pre></div>
-<pre><code>[1] "Dropping empty groups: Short"</code></pre>
-<p><img src="Examples_R_files/Examples_R_107_1.png"></p>
+<p><img src="Examples_R_files/Examples_R_107_0.png"></p>
 <p>You can also add themes for your custom panels/annotations:</p>
-<div class="sourceCode" id="cb73"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb51"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">set_size</span><span class="op">(</span><span class="fl">8</span>, <span class="fl">8</span><span class="op">)</span>
 
 <span class="fu"><a href="../reference/upset.html">upset</a></span><span class="op">(</span>
@@ -2115,7 +2058,7 @@ Warning message:
             aes<span class="op">=</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x<span class="op">=</span><span class="va">intersection</span>, y<span class="op">=</span><span class="va">rating</span><span class="op">)</span>,
             geom<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>
                 <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_jitter.html">geom_jitter</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>color<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/Log.html">log10</a></span><span class="op">(</span><span class="va">votes</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>,
-                <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_violin.html">geom_violin</a></span><span class="op">(</span>width<span class="op">=</span><span class="fl">1.1</span>, alpha<span class="op">=</span><span class="fl">0.5</span><span class="op">)</span>
+                <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_violin.html">geom_violin</a></span><span class="op">(</span>alpha<span class="op">=</span><span class="fl">0.5</span><span class="op">)</span>
             <span class="op">)</span>
         <span class="op">)</span>
     <span class="op">)</span>,
@@ -2126,28 +2069,22 @@ Warning message:
         <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>Rating<span class="op">=</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html">theme_void</a></span><span class="op">(</span><span class="op">)</span>, Length<span class="op">=</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html">theme</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span>
     <span class="op">)</span>
 <span class="op">)</span></code></pre></div>
-<pre><code>[1] "Dropping empty groups: Short"
-
-
-Warning message:
-“position_dodge requires non-overlapping x intervals”</code></pre>
-<p><img src="Examples_R_files/Examples_R_109_2.png"></p>
+<p><img src="Examples_R_files/Examples_R_109_0.png"></p>
 </div>
 <div id="adjusting-the-default-themes" class="section level3">
 <h3 class="hasAnchor">
 <a href="#adjusting-the-default-themes" class="anchor"></a>6.2 Adjusting the default themes</h3>
 <p>Modify all the default themes as once with <code><a href="../reference/upset_default_themes.html">upset_default_themes()</a></code>:</p>
-<div class="sourceCode" id="cb75"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb52"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">set_size</span><span class="op">(</span><span class="fl">8</span>, <span class="fl">4</span><span class="op">)</span>
 
 <span class="fu"><a href="../reference/upset.html">upset</a></span><span class="op">(</span>
     <span class="va">movies</span>, <span class="va">genres</span>, min_size<span class="op">=</span><span class="fl">10</span>, width_ratio<span class="op">=</span><span class="fl">0.1</span>,
     themes<span class="op">=</span><span class="fu"><a href="../reference/upset_default_themes.html">upset_default_themes</a></span><span class="op">(</span>text<span class="op">=</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_text</a></span><span class="op">(</span>color<span class="op">=</span><span class="st">'red'</span><span class="op">)</span><span class="op">)</span>
 <span class="op">)</span></code></pre></div>
-<pre><code>[1] "Dropping empty groups: Short"</code></pre>
-<p><img src="Examples_R_files/Examples_R_112_1.png"></p>
+<p><img src="Examples_R_files/Examples_R_112_0.png"></p>
 <p>To modify only a subset of default themes use <code><a href="../reference/upset_modify_themes.html">upset_modify_themes()</a></code>:</p>
-<div class="sourceCode" id="cb77"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb53"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">set_size</span><span class="op">(</span><span class="fl">8</span>, <span class="fl">4</span><span class="op">)</span>
 
 <span class="fu"><a href="../reference/upset.html">upset</a></span><span class="op">(</span>
@@ -2162,8 +2099,7 @@ Warning message:
         <span class="op">)</span>
     <span class="op">)</span>
 <span class="op">)</span></code></pre></div>
-<pre><code>[1] "Dropping empty groups: Animation, Documentary, Short"</code></pre>
-<p><img src="Examples_R_files/Examples_R_114_1.png"></p>
+<p><img src="Examples_R_files/Examples_R_114_0.png"></p>
 </div>
 </div>
 <div id="highlighting-queries" class="section level2">
@@ -2171,7 +2107,7 @@ Warning message:
 <a href="#highlighting-queries" class="anchor"></a>7. Highlighting (queries)</h2>
 <p>Pass a list of lists generated with <code><a href="../reference/upset_query.html">upset_query()</a></code> utility to the optional <code>queries</code> argument to selectively modify aesthetics of specific intersections or sets.</p>
 <p>Use one of the arguments: <code>set</code> or <code>intersection</code> (not both) to specify what to highlight: - <code>set</code> will highlight the bar of the set size, - <code>intersection</code> will highlight an intersection on all components (by default), or on components chosen with <code>only_components</code> - all other parameters will be used to modify the geoms</p>
-<div class="sourceCode" id="cb79"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb54"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">set_size</span><span class="op">(</span><span class="fl">8</span>, <span class="fl">6</span><span class="op">)</span>
 
 <span class="fu"><a href="../reference/upset.html">upset</a></span><span class="op">(</span>
@@ -2200,8 +2136,7 @@ Warning message:
         <span class="op">)</span>
     <span class="op">)</span>
 <span class="op">)</span></code></pre></div>
-<pre><code>[1] "Dropping empty groups: Short"</code></pre>
-<p><img src="Examples_R_files/Examples_R_117_1.png"></p>
+<p><img src="Examples_R_files/Examples_R_117_0.png"></p>
 </div>
 <div id="sorting" class="section level2">
 <h2 class="hasAnchor">
@@ -2210,12 +2145,12 @@ Warning message:
 <h3 class="hasAnchor">
 <a href="#sorting-intersections" class="anchor"></a>8.1 Sorting intersections</h3>
 <p>By degree:</p>
-<div class="sourceCode" id="cb81"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb55"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">set_size</span><span class="op">(</span><span class="fl">8</span>, <span class="fl">3</span><span class="op">)</span>
 <span class="fu"><a href="../reference/upset.html">upset</a></span><span class="op">(</span><span class="va">movies</span>, <span class="va">genres</span>, width_ratio<span class="op">=</span><span class="fl">0.1</span>, sort_intersections_by<span class="op">=</span><span class="st">'degree'</span><span class="op">)</span></code></pre></div>
 <p><img src="Examples_R_files/Examples_R_121_0.png"></p>
 <p>By ratio:</p>
-<div class="sourceCode" id="cb82"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb56"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">set_size</span><span class="op">(</span><span class="fl">8</span>, <span class="fl">4</span><span class="op">)</span>
 <span class="fu"><a href="../reference/upset.html">upset</a></span><span class="op">(</span>
     <span class="va">movies</span>, <span class="va">genres</span>, name<span class="op">=</span><span class="st">'genre'</span>, width_ratio<span class="op">=</span><span class="fl">0.1</span>, min_size<span class="op">=</span><span class="fl">10</span>,
@@ -2225,15 +2160,14 @@ Warning message:
         <span class="st">'Intersection ratio'</span><span class="op">=</span><span class="fu"><a href="../reference/intersection_ratio.html">intersection_ratio</a></span><span class="op">(</span>text_aes<span class="op">=</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes_.html">aes_</a></span><span class="op">(</span>label<span class="op">=</span><span class="fu"><a href="../reference/upset_text_percentage.html">upset_text_percentage</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>
     <span class="op">)</span>
 <span class="op">)</span></code></pre></div>
-<pre><code>[1] "Dropping empty groups: Short"</code></pre>
-<p><img src="Examples_R_files/Examples_R_123_1.png"></p>
+<p><img src="Examples_R_files/Examples_R_123_0.png"></p>
 <p>The other way around:</p>
-<div class="sourceCode" id="cb84"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb57"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">set_size</span><span class="op">(</span><span class="fl">8</span>, <span class="fl">3</span><span class="op">)</span>
 <span class="fu"><a href="../reference/upset.html">upset</a></span><span class="op">(</span><span class="va">movies</span>, <span class="va">genres</span>, width_ratio<span class="op">=</span><span class="fl">0.1</span>, sort_intersections<span class="op">=</span><span class="st">'ascending'</span><span class="op">)</span></code></pre></div>
 <p><img src="Examples_R_files/Examples_R_125_0.png"></p>
 <p>Without any sorting:</p>
-<div class="sourceCode" id="cb85"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb58"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">set_size</span><span class="op">(</span><span class="fl">8</span>, <span class="fl">3</span><span class="op">)</span>
 <span class="fu"><a href="../reference/upset.html">upset</a></span><span class="op">(</span><span class="va">movies</span>, <span class="va">genres</span>, width_ratio<span class="op">=</span><span class="fl">0.1</span>, sort_intersections<span class="op">=</span><span class="cn">FALSE</span><span class="op">)</span></code></pre></div>
 <p><img src="Examples_R_files/Examples_R_127_0.png"></p>
@@ -2242,12 +2176,12 @@ Warning message:
 <h3 class="hasAnchor">
 <a href="#sorting-sets" class="anchor"></a>8.2 Sorting sets</h3>
 <p>Ascending:</p>
-<div class="sourceCode" id="cb86"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb59"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">set_size</span><span class="op">(</span><span class="fl">8</span>, <span class="fl">3</span><span class="op">)</span>
 <span class="fu"><a href="../reference/upset.html">upset</a></span><span class="op">(</span><span class="va">movies</span>, <span class="va">genres</span>, width_ratio<span class="op">=</span><span class="fl">0.1</span>, sort_sets<span class="op">=</span><span class="st">'ascending'</span><span class="op">)</span></code></pre></div>
 <p><img src="Examples_R_files/Examples_R_130_0.png"></p>
 <p>Without sorting - preserving the order as in genres:</p>
-<div class="sourceCode" id="cb87"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb60"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">genres</span></code></pre></div>
 <style>
 .list-inline {list-style: none; margin:0; padding: 0}
@@ -2277,7 +2211,7 @@ Warning message:
 ‘Short’
 </li>
 </ol>
-<div class="sourceCode" id="cb88"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb61"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">set_size</span><span class="op">(</span><span class="fl">8</span>, <span class="fl">3</span><span class="op">)</span>
 <span class="fu"><a href="../reference/upset.html">upset</a></span><span class="op">(</span><span class="va">movies</span>, <span class="va">genres</span>, width_ratio<span class="op">=</span><span class="fl">0.1</span>, sort_sets<span class="op">=</span><span class="cn">FALSE</span><span class="op">)</span></code></pre></div>
 <p><img src="Examples_R_files/Examples_R_133_0.png"></p>
@@ -2290,7 +2224,7 @@ Warning message:
 <h3 class="hasAnchor">
 <a href="#grouping-intersections" class="anchor"></a>9.1 Grouping intersections</h3>
 <p>Use <code>group_by='sets'</code> to group intersections by set. If needed, the intersections will be repeated so that they appear in each set group. Use <code><a href="../reference/upset_query.html">upset_query()</a></code> with <code>group</code> argument to color the intersection matrix accordingly.</p>
-<div class="sourceCode" id="cb89"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb62"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">set_size</span><span class="op">(</span><span class="fl">8</span>, <span class="fl">3</span><span class="op">)</span>
 
 <span class="fu"><a href="../reference/upset.html">upset</a></span><span class="op">(</span>
@@ -2319,7 +2253,7 @@ Warning message:
 <h2 class="hasAnchor">
 <a href="#display-percentages" class="anchor"></a>10. Display percentages</h2>
 <p>Use <code><a href="../reference/aes_percentage.html">aes_percentage()</a></code> utility preceeded with <code>!!</code> syntax to easily display percentages. In the examples below only percentages for the movies with R raiting are shown to avoid visual clutter.</p>
-<div class="sourceCode" id="cb90"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb63"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">raiting_scale</span> <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_manual.html">scale_fill_manual</a></span><span class="op">(</span>values<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span>
     <span class="st">'R'</span><span class="op">=</span><span class="st">'#E41A1C'</span>, <span class="st">'PG'</span><span class="op">=</span><span class="st">'#377EB8'</span>,
     <span class="st">'PG-13'</span><span class="op">=</span><span class="st">'#4DAF4A'</span>, <span class="st">'NC-17'</span><span class="op">=</span><span class="st">'#FF7F00'</span>
@@ -2328,7 +2262,7 @@ Warning message:
 <div id="within-intersection" class="section level3">
 <h3 class="hasAnchor">
 <a href="#within-intersection" class="anchor"></a>10.1 Within intersection</h3>
-<div class="sourceCode" id="cb91"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb64"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">set_size</span><span class="op">(</span><span class="fl">8</span>, <span class="fl">5</span><span class="op">)</span>
 
 <span class="fu"><a href="../reference/upset.html">upset</a></span><span class="op">(</span>
@@ -2353,13 +2287,12 @@ Warning message:
         <span class="op">)</span>
     <span class="op">)</span>
 <span class="op">)</span></code></pre></div>
-<pre><code>[1] "Dropping empty groups: Animation, Documentary, Short"</code></pre>
-<p><img src="Examples_R_files/Examples_R_142_1.png"></p>
+<p><img src="Examples_R_files/Examples_R_142_0.png"></p>
 </div>
 <div id="relative-to-the-group" class="section level3">
 <h3 class="hasAnchor">
 <a href="#relative-to-the-group" class="anchor"></a>10.2 Relative to the group</h3>
-<div class="sourceCode" id="cb93"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb65"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">set_size</span><span class="op">(</span><span class="fl">8</span>, <span class="fl">5</span><span class="op">)</span>
 
 <span class="fu"><a href="../reference/upset.html">upset</a></span><span class="op">(</span>
@@ -2385,13 +2318,12 @@ Warning message:
         <span class="op">)</span>
     <span class="op">)</span>
 <span class="op">)</span></code></pre></div>
-<pre><code>[1] "Dropping empty groups: Animation, Documentary, Short"</code></pre>
-<p><img src="Examples_R_files/Examples_R_144_1.png"></p>
+<p><img src="Examples_R_files/Examples_R_144_0.png"></p>
 </div>
 <div id="relative-to-all-observed-values" class="section level3">
 <h3 class="hasAnchor">
 <a href="#relative-to-all-observed-values" class="anchor"></a>10.3 Relative to all observed values</h3>
-<div class="sourceCode" id="cb95"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb66"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">set_size</span><span class="op">(</span><span class="fl">8</span>, <span class="fl">5</span><span class="op">)</span>
 
 <span class="fu"><a href="../reference/upset.html">upset</a></span><span class="op">(</span>
@@ -2416,8 +2348,7 @@ Warning message:
         <span class="op">)</span>
     <span class="op">)</span>
 <span class="op">)</span></code></pre></div>
-<pre><code>[1] "Dropping empty groups: Animation, Documentary, Short"</code></pre>
-<p><img src="Examples_R_files/Examples_R_146_1.png"></p>
+<p><img src="Examples_R_files/Examples_R_146_0.png"></p>
 </div>
 </div>
 <div id="advanced-usage-examples" class="section level2">
@@ -2426,7 +2357,7 @@ Warning message:
 <div id="display-text-on-some-bars-only" class="section level3">
 <h3 class="hasAnchor">
 <a href="#display-text-on-some-bars-only" class="anchor"></a>11.1 Display text on some bars only</h3>
-<div class="sourceCode" id="cb97"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb67"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">set_size</span><span class="op">(</span><span class="fl">8</span>, <span class="fl">5</span><span class="op">)</span>
 
 <span class="fu"><a href="../reference/upset.html">upset</a></span><span class="op">(</span>
@@ -2448,13 +2379,12 @@ Warning message:
         <span class="op">)</span>
     <span class="op">)</span>
 <span class="op">)</span></code></pre></div>
-<pre><code>[1] "Dropping empty groups: Animation, Documentary, Short"</code></pre>
-<p><img src="Examples_R_files/Examples_R_149_1.png"></p>
+<p><img src="Examples_R_files/Examples_R_149_0.png"></p>
 </div>
 <div id="combine-multiple-plots-together" class="section level3">
 <h3 class="hasAnchor">
 <a href="#combine-multiple-plots-together" class="anchor"></a>11.2 Combine multiple plots together</h3>
-<div class="sourceCode" id="cb99"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb68"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">set_size</span><span class="op">(</span><span class="fl">8</span>, <span class="fl">5</span><span class="op">)</span>
 <span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://patchwork.data-imaginist.com">patchwork</a></span><span class="op">)</span>
 
@@ -2475,9 +2405,7 @@ Warning message:
 <span class="va">u2</span> <span class="op">=</span> <span class="fu"><a href="../reference/upset.html">upset</a></span><span class="op">(</span><span class="va">data_2</span>, <span class="va">genres</span>, min_size<span class="op">=</span><span class="fl">5</span>, base_annotations<span class="op">=</span><span class="va">annotations</span><span class="op">)</span>
 
 <span class="op">(</span><span class="va">u1</span> <span class="op">|</span> <span class="va">u2</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://patchwork.data-imaginist.com/reference/plot_layout.html">plot_layout</a></span><span class="op">(</span>guides<span class="op">=</span><span class="st">'collect'</span><span class="op">)</span></code></pre></div>
-<pre><code>[1] "Dropping empty groups: Animation, Documentary, Short"
-[1] "Dropping empty groups: Animation, Documentary, Short"</code></pre>
-<p><img src="Examples_R_files/Examples_R_151_1.png"></p>
+<p><img src="Examples_R_files/Examples_R_151_0.png"></p>
 </div>
 </div>
   </div>

@@ -75,7 +75,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">ComplexUpset</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.6.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.6.2</span>
       </span>
     </div>
 
@@ -144,7 +144,8 @@
   max_degree <span class='op'>=</span> <span class='cn'>Inf</span>,
   n_intersections <span class='op'>=</span> <span class='cn'>NULL</span>,
   keep_empty_groups <span class='op'>=</span> <span class='cn'>FALSE</span>,
-  warn_when_dropping_groups <span class='op'>=</span> <span class='cn'>TRUE</span>,
+  warn_when_dropping_groups <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  warn_when_converting <span class='op'>=</span> <span class='st'>"auto"</span>,
   sort_sets <span class='op'>=</span> <span class='st'>"descending"</span>,
   sort_intersections <span class='op'>=</span> <span class='st'>"descending"</span>,
   sort_intersections_by <span class='op'>=</span> <span class='st'>"cardinality"</span>,
@@ -192,6 +193,10 @@
     <tr>
       <th>warn_when_dropping_groups</th>
       <td><p>whether a warning should be issued when empty sets are being removed</p></td>
+    </tr>
+    <tr>
+      <th>warn_when_converting</th>
+      <td><p>whether a warning should  be issued when input is not boolean</p></td>
     </tr>
     <tr>
       <th>sort_sets</th>
