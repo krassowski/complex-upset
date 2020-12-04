@@ -22,8 +22,8 @@ jobs:
         uses: r-lib/actions/setup-r@v1
         with:
           r-version: ${{ matrix.r }}
-      - name Install system dependencies
-        if: runner.ox == 'Linux'
+      - name: Install system dependencies
+        if: runner.os == 'Linux'
         run: sudo apt install libcurl4-openssl-dev
       - name: Install dependencies
         run: |
