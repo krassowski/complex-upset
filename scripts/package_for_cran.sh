@@ -17,3 +17,4 @@ echo "Compressing images"
 trimage -q -d Examples_R_files
 cd ..
 R CMD build .
+R CMD check --as-cran ComplexUpset_*.tar.gz
