@@ -1387,7 +1387,7 @@ mpaa   Bartlett test of homogeneity of variances           NA</code></pre>
 <span id="cb26-10"><a href="#cb26-10" aria-hidden="true"></a>    <span class="dt">width_ratio=</span><span class="fl">0.1</span></span>
 <span id="cb26-11"><a href="#cb26-11" aria-hidden="true"></a>)</span></code></pre></div>
 <p><img src="Examples_Python_files/Examples_Python_49_0.png"></p>
-<p>The colors can be changed:</p>
+<p>The colors can be changed, and additional annotations added:</p>
 <div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true"></a><span class="op">%%</span>R <span class="op">-</span>w <span class="dv">800</span> <span class="op">-</span>h <span class="dv">300</span></span>
 <span id="cb27-2"><a href="#cb27-2" aria-hidden="true"></a></span>
 <span id="cb27-3"><a href="#cb27-3" aria-hidden="true"></a><span class="kw">upset</span>(</span>
@@ -1399,10 +1399,16 @@ mpaa   Bartlett test of homogeneity of variances           NA</code></pre>
 <span id="cb27-9"><a href="#cb27-9" aria-hidden="true"></a>                <span class="dt">on_background=</span><span class="st">'brown'</span>, <span class="dt">on_bar=</span><span class="st">'yellow'</span></span>
 <span id="cb27-10"><a href="#cb27-10" aria-hidden="true"></a>            )</span>
 <span id="cb27-11"><a href="#cb27-11" aria-hidden="true"></a>        )</span>
-<span id="cb27-12"><a href="#cb27-12" aria-hidden="true"></a>    ),</span>
-<span id="cb27-13"><a href="#cb27-13" aria-hidden="true"></a>    <span class="dt">min_size=</span><span class="dv">10</span>,</span>
-<span id="cb27-14"><a href="#cb27-14" aria-hidden="true"></a>    <span class="dt">width_ratio=</span><span class="fl">0.1</span></span>
-<span id="cb27-15"><a href="#cb27-15" aria-hidden="true"></a>)</span></code></pre></div>
+<span id="cb27-12"><a href="#cb27-12" aria-hidden="true"></a>        <span class="op">+</span><span class="st"> </span><span class="kw">annotate</span>(</span>
+<span id="cb27-13"><a href="#cb27-13" aria-hidden="true"></a>            <span class="dt">geom=</span><span class="st">'text'</span>, <span class="dt">x=</span><span class="ot">Inf</span>, <span class="dt">y=</span><span class="ot">Inf</span>,</span>
+<span id="cb27-14"><a href="#cb27-14" aria-hidden="true"></a>            <span class="dt">label=</span><span class="kw">paste</span>(<span class="st">'Total:'</span>, <span class="kw">nrow</span>(movies)),</span>
+<span id="cb27-15"><a href="#cb27-15" aria-hidden="true"></a>            <span class="dt">vjust=</span><span class="dv">1</span>, <span class="dt">hjust=</span><span class="dv">1</span></span>
+<span id="cb27-16"><a href="#cb27-16" aria-hidden="true"></a>        )</span>
+<span id="cb27-17"><a href="#cb27-17" aria-hidden="true"></a>        <span class="op">+</span><span class="st"> </span><span class="kw">ylab</span>(<span class="st">'Intersection size'</span>)</span>
+<span id="cb27-18"><a href="#cb27-18" aria-hidden="true"></a>    ),</span>
+<span id="cb27-19"><a href="#cb27-19" aria-hidden="true"></a>    <span class="dt">min_size=</span><span class="dv">10</span>,</span>
+<span id="cb27-20"><a href="#cb27-20" aria-hidden="true"></a>    <span class="dt">width_ratio=</span><span class="fl">0.1</span></span>
+<span id="cb27-21"><a href="#cb27-21" aria-hidden="true"></a>)</span></code></pre></div>
 <p><img src="Examples_Python_files/Examples_Python_51_0.png"></p>
 <p>Any parameter supported by <code>geom_text</code> can be passed in <code>text</code> list:</p>
 <div class="sourceCode" id="cb28"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true"></a><span class="op">%%</span>R <span class="op">-</span>w <span class="dv">800</span> <span class="op">-</span>h <span class="dv">300</span></span>
@@ -2095,6 +2101,24 @@ mpaa   Bartlett test of homogeneity of variances           NA</code></pre>
 <span id="cb71-19"><a href="#cb71-19" aria-hidden="true"></a></span>
 <span id="cb71-20"><a href="#cb71-20" aria-hidden="true"></a>(u1 <span class="op">|</span><span class="st"> </span>u2) <span class="op">+</span><span class="st"> </span><span class="kw">plot_layout</span>(<span class="dt">guides=</span><span class="st">'collect'</span>)</span></code></pre></div>
 <p><img src="Examples_Python_files/Examples_Python_158_0.png"></p>
+</div>
+<div id="change-height-of-the-annotations" class="section level3">
+<h3 class="hasAnchor">
+<a href="#change-height-of-the-annotations" class="anchor"></a>11.3 Change height of the annotations</h3>
+<div class="sourceCode" id="cb72"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb72-1"><a href="#cb72-1" aria-hidden="true"></a><span class="op">%%</span>R <span class="op">-</span>w <span class="dv">800</span> <span class="op">-</span>h <span class="dv">350</span></span>
+<span id="cb72-2"><a href="#cb72-2" aria-hidden="true"></a><span class="kw">upset</span>(</span>
+<span id="cb72-3"><a href="#cb72-3" aria-hidden="true"></a>    movies, genres, <span class="dt">name=</span><span class="st">'genre'</span>, <span class="dt">width_ratio=</span><span class="fl">0.1</span>, <span class="dt">min_size=</span><span class="dv">100</span>,</span>
+<span id="cb72-4"><a href="#cb72-4" aria-hidden="true"></a>    <span class="dt">annotations =</span><span class="kw">list</span>(</span>
+<span id="cb72-5"><a href="#cb72-5" aria-hidden="true"></a>        <span class="st">'MPAA Raiting'</span>=<span class="kw">list</span>(</span>
+<span id="cb72-6"><a href="#cb72-6" aria-hidden="true"></a>            <span class="dt">aes=</span><span class="kw">aes</span>(<span class="dt">x=</span>intersection, <span class="dt">fill=</span>mpaa),</span>
+<span id="cb72-7"><a href="#cb72-7" aria-hidden="true"></a>            <span class="dt">geom=</span><span class="kw">list</span>(</span>
+<span id="cb72-8"><a href="#cb72-8" aria-hidden="true"></a>                <span class="kw">geom_bar</span>(<span class="dt">stat=</span><span class="st">'count'</span>, <span class="dt">position=</span><span class="st">'fill'</span>),</span>
+<span id="cb72-9"><a href="#cb72-9" aria-hidden="true"></a>                <span class="kw">scale_y_continuous</span>(<span class="dt">labels=</span>scales<span class="op">::</span><span class="kw">percent_format</span>())</span>
+<span id="cb72-10"><a href="#cb72-10" aria-hidden="true"></a>            )</span>
+<span id="cb72-11"><a href="#cb72-11" aria-hidden="true"></a>        )</span>
+<span id="cb72-12"><a href="#cb72-12" aria-hidden="true"></a>    )</span>
+<span id="cb72-13"><a href="#cb72-13" aria-hidden="true"></a>) <span class="op">+</span><span class="st"> </span>patchwork<span class="op">::</span><span class="kw">plot_layout</span>(<span class="dt">heights=</span><span class="kw">c</span>(<span class="fl">0.5</span>, <span class="dv">1</span>, <span class="fl">0.5</span>))</span></code></pre></div>
+<p><img src="Examples_Python_files/Examples_Python_160_0.png"></p>
 </div>
 </div>
   </div>
