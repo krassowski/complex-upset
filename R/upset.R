@@ -575,7 +575,7 @@ upset_set_size = function(geom=geom_bar, layers=list(), ...) {
     )
 
     user_y_scales = lapply(layers, function(scale_candidate) {
-        ('Scale' %in% class(scale_y_continuous())) && ('y' %in% scale_candidate$aesthetics)
+        ('Scale' %in% class(scale_candidate)) && ('y' %in% scale_candidate$aesthetics)
     })
 
     if (length(user_y_scales) == 0) {

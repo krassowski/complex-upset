@@ -1,0 +1,42 @@
+name: test
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+jobs:
+  build:
+    runs-on: ${{ matrix.os }}-latest
+    name: R ${{ matrix.r }} on ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu, macos]
+        r: [3.6, 4.0]
+
+    steps:
+      - uses: actions/checkout@v2
+      - name: Set up R ${{ matrix.r }}
+        uses: r-lib/actions/setup-r@v1
+        with:
+          r-version: ${{ matrix.r }}
+      - name: Install Linux dependencies
+        if: runner.os == 'Linux'
+        run: sudo apt install libcurl4-openssl-dev
+      - name: Install MacOs dependencies
+        if: runner.os == 'macOS'
+        run: brew cask install xquartz
+      - name: Install dependencies
+        run: |
+          install.packages(c("remotes", "rcmdcheck"))
+          remotes::install_deps(dependencies = TRUE)
+        shell: Rscript {0}
+      - name: Prepare tests
+        run: ./scripts/prepare_for_tests.sh
+      - name: Check
+        run: rcmdcheck::rcmdcheck(args = "--no-manual", error_on = "error")
+        shell: Rscript {0}
+      - name: Report coverage
+        run: Rscript -e 'covr::codecov()'

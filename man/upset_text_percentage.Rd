@@ -15,5 +15,5 @@ upset_text_percentage(digits = 0, sep = "")
 For use together with \code{intersection_size} or \code{intersection_ratio}
 }
 \examples{
-intersection_size(text_aes=ggplot2::aes_(label=upset_text_percentage()))
+ggplot2::aes_(label=upset_text_percentage())
 }
