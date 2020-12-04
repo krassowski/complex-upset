@@ -22,9 +22,12 @@ jobs:
         uses: r-lib/actions/setup-r@v1
         with:
           r-version: ${{ matrix.r }}
-      - name: Install system dependencies
+      - name: Install Linux dependencies
         if: runner.os == 'Linux'
         run: sudo apt install libcurl4-openssl-dev
+      - name: Install MacOs dependencies
+        if: runner.os == 'macOS'
+        run: brew cask install xquartz
       - name: Install dependencies
         run: |
           install.packages(c("remotes", "rcmdcheck"))
