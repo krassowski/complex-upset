@@ -34,7 +34,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="index.html">ComplexUpset</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.7.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.7.2</span>
       </span>
     </div>
 
@@ -150,15 +150,15 @@
 <code class="sourceCode R"><span class="kw">if</span><span class="op">(</span><span class="op">!</span><span class="kw"><a href="https://rdrr.io/r/base/library.html">require</a></span><span class="op">(</span><span class="va"><a href="https://devtools.r-lib.org/">devtools</a></span><span class="op">)</span><span class="op">)</span> <span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span><span class="op">(</span><span class="st">"devtools"</span><span class="op">)</span>
 <span class="fu">devtools</span><span class="fu">::</span><span class="fu"><a href="https://devtools.r-lib.org//reference/remote-reexports.html">install_github</a></span><span class="op">(</span><span class="st">"krassowski/complex-upset"</span><span class="op">)</span></code></pre></div>
 </div>
-<div id="how-it-compares-to-other-packags" class="section level2">
+<div id="how-it-compares-to-other-packages" class="section level2">
 <h2 class="hasAnchor">
-<a href="#how-it-compares-to-other-packags" class="anchor"></a>How it compares to other packags?</h2>
+<a href="#how-it-compares-to-other-packages" class="anchor"></a>How it compares to other packages?</h2>
 <ul>
 <li>
 <a href="https://github.com/hms-dbmi/UpSetR">UpSetR</a> is a powerful tool and the pioneer in the UpSet visualisations; it was not designed to be extended with ggplot components. Unfortunately, the repository is no longer active (for two years now).</li>
 <li>
 <a href="https://github.com/const-ae/ggupset">ggupset</a> uses scales to convert a single plot to upsets plots, e.g. with <code>scale_x_upset</code> - a really nice approach, recommended for simple ggplot.</li>
-<li>a cowplot-based upset was demonstrated in an <a href="https://rpubs.com/alexeilutay/upsetr">online publication</a>, however cowplot (a great tool at the time) got superseded by even greater tool: <a href="https://github.com/thomasp85/patchwork">pathwork</a>, which is what is used by ComplexUpset.</li>
+<li>a cowplot-based upset was demonstrated in an <a href="https://rpubs.com/alexeilutay/upsetr">online publication</a>, however cowplot (a great tool at the time) got superseded by even greater tool: <a href="https://github.com/thomasp85/patchwork">patchwork</a>, which is what is used by ComplexUpset.</li>
 <li>
 <a href="https://github.com/jokergoo/ComplexHeatmap">ComplexHeatmap</a> also offers a way to generate <a href="https://jokergoo.github.io/ComplexHeatmap-reference/book/upset-plot.html">UpSet plots with annotations</a>; while not ggplot2-centered, it provides extensive customization options, with a clear API. It may be the best choice if you already use it for heatmaps.</li>
 </ul>

@@ -34,7 +34,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">ComplexUpset</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.7.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.7.2</span>
       </span>
     </div>
 
@@ -104,7 +104,7 @@
 <p>Load <code>rpy2</code> extension:</p>
 <div class="sourceCode" id="cb2"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true"></a><span class="op">%%</span>capture</span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true"></a><span class="op">%</span>load_ext rpy2.ipython</span></code></pre></div>
-<p>Install the package (if not aleady installed):</p>
+<p>Install the package (if not already installed):</p>
 <div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true"></a><span class="op">%%</span>R</span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true"></a><span class="cf">if</span> (<span class="op">!</span><span class="kw">require</span>(devtools, <span class="dt">quietly=</span>T)) <span class="kw">install.packages</span>(<span class="st">"devtools"</span>)</span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true"></a><span class="cf">if</span> (<span class="op">!</span><span class="kw">require</span>(ComplexUpset, <span class="dt">quietly=</span>T)) devtools<span class="op">::</span><span class="kw">install_github</span>(<span class="st">"krassowski/complex-upset"</span>)</span></code></pre></div>
@@ -740,7 +740,7 @@ False
 <span id="cb16-4"><a href="#cb16-4" aria-hidden="true"></a>    movies,</span>
 <span id="cb16-5"><a href="#cb16-5" aria-hidden="true"></a>    genres,</span>
 <span id="cb16-6"><a href="#cb16-6" aria-hidden="true"></a>    <span class="dt">annotations =</span> <span class="kw">list</span>(</span>
-<span id="cb16-7"><a href="#cb16-7" aria-hidden="true"></a>        <span class="st">'MPAA Raiting'</span>=<span class="kw">list</span>(</span>
+<span id="cb16-7"><a href="#cb16-7" aria-hidden="true"></a>        <span class="st">'MPAA Rating'</span>=<span class="kw">list</span>(</span>
 <span id="cb16-8"><a href="#cb16-8" aria-hidden="true"></a>            <span class="dt">aes=</span><span class="kw">aes</span>(<span class="dt">x=</span>intersection, <span class="dt">fill=</span>mpaa),</span>
 <span id="cb16-9"><a href="#cb16-9" aria-hidden="true"></a>            <span class="dt">geom=</span><span class="kw">list</span>(</span>
 <span id="cb16-10"><a href="#cb16-10" aria-hidden="true"></a>                <span class="kw">geom_bar</span>(<span class="dt">stat=</span><span class="st">'count'</span>, <span class="dt">position=</span><span class="st">'fill'</span>),</span>
@@ -1478,9 +1478,9 @@ mpaa   Bartlett test of homogeneity of variances           NA</code></pre>
 <span id="cb31-13"><a href="#cb31-13" aria-hidden="true"></a>)</span></code></pre></div>
 <p><img src="Examples_Python_files/Examples_Python_57_0.png"></p>
 </div>
-<div id="adjusting-the-height-of-the-matrixintersection-size" class="section level3">
+<div id="adjusting-the-height-ratio" class="section level3">
 <h3 class="hasAnchor">
-<a href="#adjusting-the-height-of-the-matrixintersection-size" class="anchor"></a>3.3 Adjusting the height of the matrix/intersection size</h3>
+<a href="#adjusting-the-height-ratio" class="anchor"></a>3.3 Adjusting the height ratio</h3>
 <p>Setting <code>height_ratio=1</code> will cause the intersection matrix and the intersection size to have an equal height:</p>
 <div class="sourceCode" id="cb32"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true"></a><span class="op">%%</span>R <span class="op">-</span>w <span class="dv">800</span> <span class="op">-</span>h <span class="dv">300</span></span>
 <span id="cb32-2"><a href="#cb32-2" aria-hidden="true"></a></span>
@@ -1952,9 +1952,9 @@ mpaa   Bartlett test of homogeneity of variances           NA</code></pre>
 <div id="display-percentages" class="section level2">
 <h2 class="hasAnchor">
 <a href="#display-percentages" class="anchor"></a>10. Display percentages</h2>
-<p>Use <code><a href="../reference/aes_percentage.html">aes_percentage()</a></code> utility preceeded with <code>!!</code> syntax to easily display percentages. In the examples below only percentages for the movies with R raiting are shown to avoid visual clutter.</p>
+<p>Use <code><a href="../reference/aes_percentage.html">aes_percentage()</a></code> utility preceded with <code>!!</code> syntax to easily display percentages. In the examples below only percentages for the movies with R rating are shown to avoid visual clutter.</p>
 <div class="sourceCode" id="cb66"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb66-1"><a href="#cb66-1" aria-hidden="true"></a><span class="op">%%</span>R</span>
-<span id="cb66-2"><a href="#cb66-2" aria-hidden="true"></a>raiting_scale =<span class="st"> </span><span class="kw">scale_fill_manual</span>(<span class="dt">values=</span><span class="kw">c</span>(</span>
+<span id="cb66-2"><a href="#cb66-2" aria-hidden="true"></a>rating_scale =<span class="st"> </span><span class="kw">scale_fill_manual</span>(<span class="dt">values=</span><span class="kw">c</span>(</span>
 <span id="cb66-3"><a href="#cb66-3" aria-hidden="true"></a>    <span class="st">'R'</span>=<span class="st">'#E41A1C'</span>, <span class="st">'PG'</span>=<span class="st">'#377EB8'</span>,</span>
 <span id="cb66-4"><a href="#cb66-4" aria-hidden="true"></a>    <span class="st">'PG-13'</span>=<span class="st">'#4DAF4A'</span>, <span class="st">'NC-17'</span>=<span class="st">'#FF7F00'</span></span>
 <span id="cb66-5"><a href="#cb66-5" aria-hidden="true"></a>))</span>
@@ -1967,7 +1967,7 @@ mpaa   Bartlett test of homogeneity of variances           NA</code></pre>
 <span id="cb67-3"><a href="#cb67-3" aria-hidden="true"></a><span class="kw">upset</span>(</span>
 <span id="cb67-4"><a href="#cb67-4" aria-hidden="true"></a>    movies, genres, <span class="dt">name=</span><span class="st">'genre'</span>, <span class="dt">width_ratio=</span><span class="fl">0.1</span>, <span class="dt">min_size=</span><span class="dv">100</span>,</span>
 <span id="cb67-5"><a href="#cb67-5" aria-hidden="true"></a>    <span class="dt">annotations =</span><span class="kw">list</span>(</span>
-<span id="cb67-6"><a href="#cb67-6" aria-hidden="true"></a>        <span class="st">'MPAA Raiting'</span>=<span class="kw">list</span>(</span>
+<span id="cb67-6"><a href="#cb67-6" aria-hidden="true"></a>        <span class="st">'MPAA Rating'</span>=<span class="kw">list</span>(</span>
 <span id="cb67-7"><a href="#cb67-7" aria-hidden="true"></a>            <span class="dt">aes=</span><span class="kw">aes</span>(<span class="dt">x=</span>intersection, <span class="dt">fill=</span>mpaa),</span>
 <span id="cb67-8"><a href="#cb67-8" aria-hidden="true"></a>            <span class="dt">geom=</span><span class="kw">list</span>(</span>
 <span id="cb67-9"><a href="#cb67-9" aria-hidden="true"></a>                <span class="kw">geom_bar</span>(<span class="dt">stat=</span><span class="st">'count'</span>, <span class="dt">position=</span><span class="st">'fill'</span>),</span>
@@ -1981,7 +1981,7 @@ mpaa   Bartlett test of homogeneity of variances           NA</code></pre>
 <span id="cb67-17"><a href="#cb67-17" aria-hidden="true"></a>                ),</span>
 <span id="cb67-18"><a href="#cb67-18" aria-hidden="true"></a>                <span class="kw">scale_y_continuous</span>(<span class="dt">labels=</span>scales<span class="op">::</span><span class="kw">percent_format</span>()),</span>
 <span id="cb67-19"><a href="#cb67-19" aria-hidden="true"></a>                show_hide_scale,</span>
-<span id="cb67-20"><a href="#cb67-20" aria-hidden="true"></a>                raiting_scale</span>
+<span id="cb67-20"><a href="#cb67-20" aria-hidden="true"></a>                rating_scale</span>
 <span id="cb67-21"><a href="#cb67-21" aria-hidden="true"></a>            )</span>
 <span id="cb67-22"><a href="#cb67-22" aria-hidden="true"></a>        )</span>
 <span id="cb67-23"><a href="#cb67-23" aria-hidden="true"></a>    )</span>
@@ -1996,7 +1996,7 @@ mpaa   Bartlett test of homogeneity of variances           NA</code></pre>
 <span id="cb68-3"><a href="#cb68-3" aria-hidden="true"></a><span class="kw">upset</span>(</span>
 <span id="cb68-4"><a href="#cb68-4" aria-hidden="true"></a>    movies, genres, <span class="dt">name=</span><span class="st">'genre'</span>, <span class="dt">width_ratio=</span><span class="fl">0.1</span>, <span class="dt">min_size=</span><span class="dv">100</span>,</span>
 <span id="cb68-5"><a href="#cb68-5" aria-hidden="true"></a>    <span class="dt">annotations =</span><span class="kw">list</span>(</span>
-<span id="cb68-6"><a href="#cb68-6" aria-hidden="true"></a>        <span class="st">'MPAA Raiting'</span>=<span class="kw">list</span>(</span>
+<span id="cb68-6"><a href="#cb68-6" aria-hidden="true"></a>        <span class="st">'MPAA Rating'</span>=<span class="kw">list</span>(</span>
 <span id="cb68-7"><a href="#cb68-7" aria-hidden="true"></a>            <span class="dt">aes=</span><span class="kw">aes</span>(<span class="dt">x=</span>intersection, <span class="dt">fill=</span>mpaa),</span>
 <span id="cb68-8"><a href="#cb68-8" aria-hidden="true"></a>            <span class="dt">geom=</span><span class="kw">list</span>(</span>
 <span id="cb68-9"><a href="#cb68-9" aria-hidden="true"></a>                <span class="kw">geom_bar</span>(<span class="dt">stat=</span><span class="st">'count'</span>, <span class="dt">position=</span><span class="st">'fill'</span>),</span>
@@ -2011,7 +2011,7 @@ mpaa   Bartlett test of homogeneity of variances           NA</code></pre>
 <span id="cb68-18"><a href="#cb68-18" aria-hidden="true"></a>                ),</span>
 <span id="cb68-19"><a href="#cb68-19" aria-hidden="true"></a>                <span class="kw">scale_y_continuous</span>(<span class="dt">labels=</span>scales<span class="op">::</span><span class="kw">percent_format</span>()),</span>
 <span id="cb68-20"><a href="#cb68-20" aria-hidden="true"></a>                show_hide_scale,</span>
-<span id="cb68-21"><a href="#cb68-21" aria-hidden="true"></a>                raiting_scale</span>
+<span id="cb68-21"><a href="#cb68-21" aria-hidden="true"></a>                rating_scale</span>
 <span id="cb68-22"><a href="#cb68-22" aria-hidden="true"></a>            )</span>
 <span id="cb68-23"><a href="#cb68-23" aria-hidden="true"></a>        )</span>
 <span id="cb68-24"><a href="#cb68-24" aria-hidden="true"></a>    )</span>
@@ -2026,7 +2026,7 @@ mpaa   Bartlett test of homogeneity of variances           NA</code></pre>
 <span id="cb69-3"><a href="#cb69-3" aria-hidden="true"></a><span class="kw">upset</span>(</span>
 <span id="cb69-4"><a href="#cb69-4" aria-hidden="true"></a>    movies, genres, <span class="dt">name=</span><span class="st">'genre'</span>, <span class="dt">width_ratio=</span><span class="fl">0.1</span>, <span class="dt">min_size=</span><span class="dv">100</span>,</span>
 <span id="cb69-5"><a href="#cb69-5" aria-hidden="true"></a>    <span class="dt">annotations =</span><span class="kw">list</span>(</span>
-<span id="cb69-6"><a href="#cb69-6" aria-hidden="true"></a>        <span class="st">'MPAA Raiting'</span>=<span class="kw">list</span>(</span>
+<span id="cb69-6"><a href="#cb69-6" aria-hidden="true"></a>        <span class="st">'MPAA Rating'</span>=<span class="kw">list</span>(</span>
 <span id="cb69-7"><a href="#cb69-7" aria-hidden="true"></a>            <span class="dt">aes=</span><span class="kw">aes</span>(<span class="dt">x=</span>intersection, <span class="dt">fill=</span>mpaa),</span>
 <span id="cb69-8"><a href="#cb69-8" aria-hidden="true"></a>            <span class="dt">geom=</span><span class="kw">list</span>(</span>
 <span id="cb69-9"><a href="#cb69-9" aria-hidden="true"></a>                <span class="kw">geom_bar</span>(<span class="dt">stat=</span><span class="st">'count'</span>, <span class="dt">position=</span><span class="st">'fill'</span>),</span>
@@ -2040,7 +2040,7 @@ mpaa   Bartlett test of homogeneity of variances           NA</code></pre>
 <span id="cb69-17"><a href="#cb69-17" aria-hidden="true"></a>                ),</span>
 <span id="cb69-18"><a href="#cb69-18" aria-hidden="true"></a>                <span class="kw">scale_y_continuous</span>(<span class="dt">labels=</span>scales<span class="op">::</span><span class="kw">percent_format</span>()),</span>
 <span id="cb69-19"><a href="#cb69-19" aria-hidden="true"></a>                show_hide_scale,</span>
-<span id="cb69-20"><a href="#cb69-20" aria-hidden="true"></a>                raiting_scale</span>
+<span id="cb69-20"><a href="#cb69-20" aria-hidden="true"></a>                rating_scale</span>
 <span id="cb69-21"><a href="#cb69-21" aria-hidden="true"></a>            )</span>
 <span id="cb69-22"><a href="#cb69-22" aria-hidden="true"></a>        )</span>
 <span id="cb69-23"><a href="#cb69-23" aria-hidden="true"></a>    )</span>
@@ -2059,7 +2059,7 @@ mpaa   Bartlett test of homogeneity of variances           NA</code></pre>
 <span id="cb70-3"><a href="#cb70-3" aria-hidden="true"></a><span class="kw">upset</span>(</span>
 <span id="cb70-4"><a href="#cb70-4" aria-hidden="true"></a>    movies, genres, <span class="dt">name=</span><span class="st">'genre'</span>, <span class="dt">width_ratio=</span><span class="fl">0.1</span>, <span class="dt">min_size=</span><span class="dv">100</span>,</span>
 <span id="cb70-5"><a href="#cb70-5" aria-hidden="true"></a>    <span class="dt">annotations =</span><span class="kw">list</span>(</span>
-<span id="cb70-6"><a href="#cb70-6" aria-hidden="true"></a>        <span class="st">'MPAA Raiting'</span>=<span class="kw">list</span>(</span>
+<span id="cb70-6"><a href="#cb70-6" aria-hidden="true"></a>        <span class="st">'MPAA Rating'</span>=<span class="kw">list</span>(</span>
 <span id="cb70-7"><a href="#cb70-7" aria-hidden="true"></a>            <span class="dt">aes=</span><span class="kw">aes</span>(<span class="dt">x=</span>intersection, <span class="dt">fill=</span>mpaa),</span>
 <span id="cb70-8"><a href="#cb70-8" aria-hidden="true"></a>            <span class="dt">geom=</span><span class="kw">list</span>(</span>
 <span id="cb70-9"><a href="#cb70-9" aria-hidden="true"></a>                <span class="kw">geom_bar</span>(<span class="dt">stat=</span><span class="st">'count'</span>, <span class="dt">position=</span><span class="st">'fill'</span>),</span>
@@ -2070,7 +2070,7 @@ mpaa   Bartlett test of homogeneity of variances           NA</code></pre>
 <span id="cb70-14"><a href="#cb70-14" aria-hidden="true"></a>                    <span class="dt">na.rm=</span><span class="ot">TRUE</span></span>
 <span id="cb70-15"><a href="#cb70-15" aria-hidden="true"></a>                ),</span>
 <span id="cb70-16"><a href="#cb70-16" aria-hidden="true"></a>                show_hide_scale,</span>
-<span id="cb70-17"><a href="#cb70-17" aria-hidden="true"></a>                raiting_scale</span>
+<span id="cb70-17"><a href="#cb70-17" aria-hidden="true"></a>                rating_scale</span>
 <span id="cb70-18"><a href="#cb70-18" aria-hidden="true"></a>            )</span>
 <span id="cb70-19"><a href="#cb70-19" aria-hidden="true"></a>        )</span>
 <span id="cb70-20"><a href="#cb70-20" aria-hidden="true"></a>    )</span>
@@ -2084,7 +2084,7 @@ mpaa   Bartlett test of homogeneity of variances           NA</code></pre>
 <span id="cb71-2"><a href="#cb71-2" aria-hidden="true"></a><span class="kw">library</span>(patchwork)</span>
 <span id="cb71-3"><a href="#cb71-3" aria-hidden="true"></a></span>
 <span id="cb71-4"><a href="#cb71-4" aria-hidden="true"></a>annotations =<span class="st"> </span><span class="kw">list</span>(</span>
-<span id="cb71-5"><a href="#cb71-5" aria-hidden="true"></a>    <span class="st">'MPAA Raiting'</span>=<span class="kw">list</span>(</span>
+<span id="cb71-5"><a href="#cb71-5" aria-hidden="true"></a>    <span class="st">'MPAA Rating'</span>=<span class="kw">list</span>(</span>
 <span id="cb71-6"><a href="#cb71-6" aria-hidden="true"></a>        <span class="dt">aes=</span><span class="kw">aes</span>(<span class="dt">x=</span>intersection, <span class="dt">fill=</span>mpaa),</span>
 <span id="cb71-7"><a href="#cb71-7" aria-hidden="true"></a>        <span class="dt">geom=</span><span class="kw">list</span>(</span>
 <span id="cb71-8"><a href="#cb71-8" aria-hidden="true"></a>            <span class="kw">geom_bar</span>(<span class="dt">stat=</span><span class="st">'count'</span>, <span class="dt">position=</span><span class="st">'fill'</span>)</span>
@@ -2109,7 +2109,7 @@ mpaa   Bartlett test of homogeneity of variances           NA</code></pre>
 <span id="cb72-2"><a href="#cb72-2" aria-hidden="true"></a><span class="kw">upset</span>(</span>
 <span id="cb72-3"><a href="#cb72-3" aria-hidden="true"></a>    movies, genres, <span class="dt">name=</span><span class="st">'genre'</span>, <span class="dt">width_ratio=</span><span class="fl">0.1</span>, <span class="dt">min_size=</span><span class="dv">100</span>,</span>
 <span id="cb72-4"><a href="#cb72-4" aria-hidden="true"></a>    <span class="dt">annotations =</span><span class="kw">list</span>(</span>
-<span id="cb72-5"><a href="#cb72-5" aria-hidden="true"></a>        <span class="st">'MPAA Raiting'</span>=<span class="kw">list</span>(</span>
+<span id="cb72-5"><a href="#cb72-5" aria-hidden="true"></a>        <span class="st">'MPAA Rating'</span>=<span class="kw">list</span>(</span>
 <span id="cb72-6"><a href="#cb72-6" aria-hidden="true"></a>            <span class="dt">aes=</span><span class="kw">aes</span>(<span class="dt">x=</span>intersection, <span class="dt">fill=</span>mpaa),</span>
 <span id="cb72-7"><a href="#cb72-7" aria-hidden="true"></a>            <span class="dt">geom=</span><span class="kw">list</span>(</span>
 <span id="cb72-8"><a href="#cb72-8" aria-hidden="true"></a>                <span class="kw">geom_bar</span>(<span class="dt">stat=</span><span class="st">'count'</span>, <span class="dt">position=</span><span class="st">'fill'</span>),</span>
