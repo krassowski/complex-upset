@@ -1,12 +1,4 @@
-# This workflow uses actions that are not certified by GitHub.
-# They are provided by a third-party and are governed by
-# separate terms of service, privacy policy, and support
-# documentation.
-#
-# See https://github.com/r-lib/actions/tree/master/examples#readme for
-# additional example workflows available for the R community.
-
-name: R
+name: test
 
 on:
   push:
@@ -26,7 +18,7 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - name: Set up R ${{ matrix.r }}
-        uses: r-lib/actions/setup-r@ffe45a39586f073cc2e9af79c4ba563b657dc6e3
+        uses: r-lib/actions/setup-r@v1
         with:
           r-version: ${{ matrix.r }}
       - name: Install dependencies
