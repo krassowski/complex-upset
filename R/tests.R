@@ -1,7 +1,7 @@
 #' @importFrom stats as.formula kruskal.test p.adjust
 NULL
 
-#' Compare covariates between intesections
+#' Compare covariates between intersections
 #'
 #' @inheritParams upset_data
 #' @param test the default test function; it is expected to accept `formula` and `data` parameters, and a list with `p.value`, `statistic`, and `method`

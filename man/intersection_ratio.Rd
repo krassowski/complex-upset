@@ -22,7 +22,7 @@ intersection_ratio(
 
 \item{text}{additional parameters passed to \code{geom_text}}
 
-\item{text_aes}{additional aethetics for \code{geom_text}}
+\item{text_aes}{additional aesthetics for \code{geom_text}}
 
 \item{aest}{additional aesthetics for \code{geom_bar}}
 }

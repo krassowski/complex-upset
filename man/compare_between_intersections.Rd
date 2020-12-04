@@ -2,7 +2,7 @@
 % Please edit documentation in R/tests.R
 \name{compare_between_intersections}
 \alias{compare_between_intersections}
-\title{Compare covariates between intesections}
+\title{Compare covariates between intersections}
 \usage{
 compare_between_intersections(
   data,
@@ -27,5 +27,5 @@ compare_between_intersections(
 \item{...}{passed to \code{upset_data()}}
 }
 \description{
-Compare covariates between intesections
+Compare covariates between intersections
 }

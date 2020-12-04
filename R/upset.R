@@ -185,7 +185,7 @@ intersection_size_text = list(vjust=-0.25)
 #' @param bar_number_threshold if less than one, labels for bars height greater than this threshold will be placed on (not above) the bars
 #' @param text_colors a name vector of characters specifying the color when `on_background` and `on_bar` (see `bar_number_threshold`)
 #' @param text additional parameters passed to `geom_text`
-#' @param text_aes additional aethetics for `geom_text`
+#' @param text_aes additional aesthetics for `geom_text`
 #' @param aest additional aesthetics for `geom_bar`
 #' @export
 intersection_size = function(
@@ -247,7 +247,7 @@ intersection_size = function(
 }
 
 
-#' Generate percentage label of the interestion/union sizes ratio
+#' Generate percentage label of the intersection/union sizes ratio
 #'
 #' For use together with `intersection_size` or `intersection_ratio`
 #'
@@ -570,7 +570,7 @@ reverse_log_trans = function(base=10) {
 #' Prepare layers for sets sizes plot
 #'
 #' @param geom the geom to use
-#' @param layers a list of additonal layers (scales, geoms) to be included on the plot
+#' @param layers a list of additional layers (scales, geoms) to be included on the plot
 #' @param mapping additional aesthetics
 #' @param ... passed to the geom
 #' @export
@@ -680,7 +680,7 @@ scale_if_missing = function(annotation, axis, scale) {
 #' @param stripes a characters vector, specifying the background colors for rows (e.g. odd and even if two elements)
 #' @param dot_size size of the points on the intersection matrix
 #' @param set_sizes a list of layers defining the overall set sizes, e.g. from `upset_set_size()` (`FALSE` to hide)
-#' @param wrap whether the plot should be wrapped into a group (makes addding a tile/combining with other plots easier)
+#' @param wrap whether the plot should be wrapped into a group (makes adding a tile/combining with other plots easier)
 #' @inheritDotParams upset_data
 #' @export
 upset = function(

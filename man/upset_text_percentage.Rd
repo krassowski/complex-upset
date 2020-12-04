@@ -2,7 +2,7 @@
 % Please edit documentation in R/upset.R
 \name{upset_text_percentage}
 \alias{upset_text_percentage}
-\title{Generate percentage label of the interestion/union sizes ratio}
+\title{Generate percentage label of the intersection/union sizes ratio}
 \usage{
 upset_text_percentage(digits = 0, sep = "")
 }

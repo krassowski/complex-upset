@@ -47,7 +47,7 @@ upset(
 
 \item{width_ratio}{ratio of the overall set size width to intersection matrix width}
 
-\item{wrap}{whether the plot should be wrapped into a group (makes addding a tile/combining with other plots easier)}
+\item{wrap}{whether the plot should be wrapped into a group (makes adding a tile/combining with other plots easier)}
 
 \item{set_sizes}{a list of layers defining the overall set sizes, e.g. from \code{upset_set_size()} (\code{FALSE} to hide)}
 
