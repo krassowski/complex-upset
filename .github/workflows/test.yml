@@ -9,10 +9,11 @@ on:
 jobs:
   build:
     runs-on: ${{ matrix.os }}-latest
-    name: ${{ matrix.os }} ${{ matrix.r }}
+    name: R ${{ matrix.r }} on ${{ matrix.os }}
     strategy:
+      fail-fast: false
       matrix:
-        os: [ubuntu, macos, windows]
+        os: [ubuntu, macos]
         r: [3.6, 4.0]
 
     steps:
@@ -21,6 +22,9 @@ jobs:
         uses: r-lib/actions/setup-r@v1
         with:
           r-version: ${{ matrix.r }}
+      - name Install system dependencies
+        if: runner.ox == 'Linux'
+        run: sudo apt install libcurl4-openssl-dev
       - name: Install dependencies
         run: |
           install.packages(c("remotes", "rcmdcheck"))
