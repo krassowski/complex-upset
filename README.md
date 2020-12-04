@@ -1,6 +1,6 @@
 # ComplexUpset
 
-![test](https://github.com/krassowski/complex-upset/workflows/test/badge.svg)
+[![test](https://github.com/krassowski/complex-upset/workflows/test/badge.svg)](https://github.com/krassowski/complex-upset/actions?query=workflow%3Atest)
 [![codecov](https://codecov.io/gh/krassowski/complex-upset/branch/master/graph/badge.svg)](https://codecov.io/gh/krassowski/complex-upset)
 [![DOI](https://zenodo.org/badge/236336935.svg)](https://zenodo.org/badge/latestdoi/236336935)
 

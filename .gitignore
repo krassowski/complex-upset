@@ -1,3 +1,9 @@
+.idea/
+.ipynb_checkpoints/
+archive/
+docs/
+.virtual_documents/
+
 # History files
 .Rhistory
 .Rapp.history
@@ -23,6 +29,7 @@
 # produced vignettes
 vignettes/*.html
 vignettes/*.pdf
+vignettes/*/*.png
 
 # OAuth2 token, see https://github.com/hadley/httr/releases/tag/v0.3
 .httr-oauth
