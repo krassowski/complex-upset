@@ -4,7 +4,7 @@
 \alias{upset_set_size}
 \title{Prepare layers for sets sizes plot}
 \usage{
-upset_set_size(geom = geom_bar, layers = list(), ...)
+upset_set_size(geom = geom_bar, layers = list(), mapping = aes(), ...)
 }
 \arguments{
 \item{geom}{the geom to use}

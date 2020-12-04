@@ -98,7 +98,11 @@ upset_modify_themes = function(to_update)  {
 
 convert_annotation = function(...) {
     arguments = list(...)
-    intersection_plot = ggplot(mapping=arguments$aes)
+    if (is.null(arguments$aes)) {
+        intersection_plot = ggplot()
+    } else {
+        intersection_plot = ggplot(mapping=arguments$aes)
+    }
     intersection_plot$highlight_geom = arguments$highlight_geom
     intersection_plot$top_geom = arguments$top_geom
     intersection_plot$geom = arguments$geom
@@ -484,32 +488,6 @@ highlight_layer = function(geom, data, args=list()) {
 }
 
 
-#' More reliable way of highlighting that works well for aggregate geoms/stats such as geom_bar
-#' Still experimental.
-highlight_layer_map = function(geom, data, args=list()) {
-    if (nrow(data) == 0) {
-        list()
-    } else {
-        params = extract_geom_params_for(data, geom())
-        mapping = list(colnames(params))
-        names(mapping) = mapping
-
-        list(
-            do.call(
-                geom,
-                c(
-                    list(
-                        data=data,
-                        mapping=do.call(aes_string, mapping)
-                    ),
-                    args
-                )
-            )
-        )
-    }
-}
-
-
 #' Generate mapping for labeling percentages
 #'
 #' @param relative_to defines proportion that should be calculated, relative to `'intersection'`, `'group'`, or `'all'` observed values
@@ -559,52 +537,57 @@ upset_query = function(set=NULL, intersect=NULL, group=NULL, only_components=NUL
 }
 
 
+
+preserve_infinite = function(f) {
+    # this allows the stripes (which span from -Inf to +Inf) to be displayed
+    function(x) {
+        if (!any(is.na(x)) && (all(x == Inf) || all(x == -Inf))) {
+            x
+        } else {
+            f(x)
+        }
+    }
+}
+
+#' Logarithmic scale for use with `upset_set_size()`
+#'
+#' Inspired by [Brian Diggs' answer](https://stackoverflow.com/a/11054781) which is CC-BY-SA 4.0.
+#'
+#' @param base logarithm base (default 10)
+#' @export
+reverse_log_trans = function(base=10) {
+    scales::trans_new(
+        paste0('reverselog-', base),
+        preserve_infinite(function(x) -log(x, base)),
+        preserve_infinite(function(x) base^-x),
+        scales::log_breaks(base=base),
+        domain=c(1e-100, Inf)
+    )
+}
+
+
 #' Prepare layers for sets sizes plot
 #'
 #' @param geom the geom to use
 #' @param layers a list of additonal layers (scales, geoms) to be included on the plot
 #' @param ... passed to the geom
 #' @export
-upset_set_size = function(geom=geom_bar, layers=list(), ...) {
+upset_set_size = function(geom=geom_bar, layers=list(), mapping=aes(), ...) {
     args = eval(list(...))
 
-    default_layers = list(
-        geom(...),
-        ylab('Set size'),
-        substitute(highlight_layer_map(geom, overall_sizes_highlights_data, args=args))
-    )
-
-    user_y_scales = lapply(layers, function(scale_candidate) {
-        ('Scale' %in% class(scale_candidate)) && ('y' %in% scale_candidate$aesthetics)
-    })
-
-    if (length(user_y_scales) == 0) {
-        default_layers = c(default_layers, list(scale_y_reverse()))
-    }
-
-    c(
-        default_layers,
-        layers
-    )
+    convert_annotation(
+        geom=list(
+            geom(...)
+        ),
+        aes=mapping,
+        highlight_geom=list(
+            geom(...)
+        )
+    ) + ylab('Set size')
 }
 
 
-eval_if_needed = function(layers, ...) {
-    lapply(
-        layers,
-        function(layer) {
-            if (inherits(layer, 'call')) {
-                layer_evaluated = eval.parent(layer, n=3)
-                layer_evaluated
-            } else {
-                layer
-            }
-        }
-    )
-}
-
-
-add_highlights_to_geoms = function(geoms, highlight_geoms, highlight_data, annotation_queries) {
+add_highlights_to_geoms = function(geoms, highlight_geoms, highlight_data, annotation_queries, kind='intersection') {
     geoms_plus_highlights = list()
 
     for (geom in geoms) {
@@ -643,7 +626,11 @@ add_highlights_to_geoms = function(geoms, highlight_geoms, highlight_data, annot
                 stop(paste('The queries are not unique:', params$query[non_unique]))
             }
             # reorder to match the data order:
-            params = params[match(unique(highlight_data$intersection), params$query), colnames(params) != 'query']
+            params = params[
+                match(unique(highlight_data[, kind]), params$query),
+                colnames(params) != 'query',
+                drop=FALSE
+            ]
         }
 
         highlight_geom$geom_params = modifyList(
@@ -664,6 +651,17 @@ add_highlights_to_geoms = function(geoms, highlight_geoms, highlight_data, annot
     geoms_plus_highlights
 }
 
+                          
+scale_if_missing = function(annotation, axis, scale) {
+    user_y_scales = lapply(annotation$scales$scales, function(scale_candidate) {
+        axis %in% scale_candidate$aesthetics
+    })
+
+    if (length(user_y_scales) == 0) {
+        list(scale)
+    }
+}
+                          
 
 #' Compose an UpSet plot
 #' @inheritParams upset_data
@@ -836,13 +834,32 @@ upset = function(
       overall_sizes_queries = set_queries(queries_for(queries, 'overall_sizes'))
       overall_sizes_highlights_data = get_highlights_data(data$presence, 'group', overall_sizes_queries)
 
+      if (nrow(overall_sizes_queries) != 0) {
+        highlight_geom = set_sizes$highlight_geom
+        if (!inherits(highlight_geom, 'list')) {
+            highlight_geom = list(highlight_geom)
+        }
+        geom = add_highlights_to_geoms(
+            set_sizes$geom,
+            highlight_geom,
+            overall_sizes_highlights_data,
+            overall_sizes_queries,
+            kind='group'
+        )
+      } else {
+          geom = set_sizes$geom
+      }
+
       overall_sizes = (
-        ggplot(data$presence[data$presence$group %in% data$plot_sets_subset, ], aes(x=group))
+        set_sizes %+% data$presence[data$presence$group %in% data$plot_sets_subset, ]
+        + aes(x=group)
+        + themes$overall_sizes
+        + do.call(theme, set_sizes$theme)
         + matrix_background_stripes(data, stripes, 'vertical')
         + coord_flip()
-        + eval_if_needed(set_sizes, overall_sizes_highlights_data=overall_sizes_highlights_data)
+        + geom
         + scale_x_discrete(limits=sets_limits)
-        + themes$overall_sizes
+        + scale_if_missing(set_sizes, axis='y', scale=scale_y_reverse())
       )
 
       matrix_row = list(overall_sizes, intersections_matrix)
