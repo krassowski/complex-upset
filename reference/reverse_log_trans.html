@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Default themes modified by specified arguments — upset_default_themes • ComplexUpset</title>
+<title>Logarithmic scale for use with upset_set_size() — reverse_log_trans • ComplexUpset</title>
 
 
 <!-- jquery -->
@@ -39,8 +39,8 @@
 
 
 
-<meta property="og:title" content="Default themes modified by specified arguments — upset_default_themes" />
-<meta property="og:description" content="Return the default UpSet themes with all themes modified with provided arguments" />
+<meta property="og:title" content="Logarithmic scale for use with upset_set_size() — reverse_log_trans" />
+<meta property="og:description" content="Inspired by Brian Diggs' answer which is CC-BY-SA 4.0." />
 <meta name="twitter:card" content="summary_large_image" />
 <meta name="twitter:creator" content="@krassowski" />
 <meta name="twitter:site" content="@krassowski" />
@@ -126,23 +126,23 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Default themes modified by specified arguments</h1>
+    <h1>Logarithmic scale for use with <code>upset_set_size()</code></h1>
     <small class="dont-index">Source: <a href='https://github.com/krassowski/complex-upset/blob/master/R/upset.R'><code>R/upset.R</code></a></small>
-    <div class="hidden name"><code>upset_default_themes.Rd</code></div>
+    <div class="hidden name"><code>reverse_log_trans.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Return the default UpSet themes with all themes modified with provided arguments</p>
+    <p>Inspired by <a href='https://stackoverflow.com/a/11054781'>Brian Diggs' answer</a> which is CC-BY-SA 4.0.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>upset_default_themes</span><span class='op'>(</span><span class='va'>...</span><span class='op'>)</span></pre>
+    <pre class="usage"><span class='fu'>reverse_log_trans</span><span class='op'>(</span>base <span class='op'>=</span> <span class='fl'>10</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>...</th>
-      <td><p>arguments passed to <code><a href='https://ggplot2.tidyverse.org/reference/theme.html'>theme()</a></code></p></td>
+      <th>base</th>
+      <td><p>logarithm base (default 10)</p></td>
     </tr>
     </table>
 

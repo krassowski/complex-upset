@@ -34,7 +34,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">ComplexUpset</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.6.3</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.7.1</span>
       </span>
     </div>
 
@@ -1571,23 +1571,21 @@ mpaa   Bartlett test of homogeneity of variances           NA</code></pre>
 <span id="cb37-3"><a href="#cb37-3" aria-hidden="true"></a>    movies, genres,</span>
 <span id="cb37-4"><a href="#cb37-4" aria-hidden="true"></a>    <span class="dt">min_size=</span><span class="dv">100</span>,</span>
 <span id="cb37-5"><a href="#cb37-5" aria-hidden="true"></a>    <span class="dt">width_ratio=</span><span class="fl">0.15</span>,</span>
-<span id="cb37-6"><a href="#cb37-6" aria-hidden="true"></a>    <span class="dt">themes=</span><span class="kw">upset_modify_themes</span>(</span>
-<span id="cb37-7"><a href="#cb37-7" aria-hidden="true"></a>        <span class="kw">list</span>(</span>
-<span id="cb37-8"><a href="#cb37-8" aria-hidden="true"></a>            <span class="st">'overall_sizes'</span>=<span class="kw">theme</span>(<span class="dt">axis.text.x=</span><span class="kw">element_text</span>(<span class="dt">angle=</span><span class="dv">90</span>))</span>
-<span id="cb37-9"><a href="#cb37-9" aria-hidden="true"></a>        )</span>
-<span id="cb37-10"><a href="#cb37-10" aria-hidden="true"></a>    )</span>
-<span id="cb37-11"><a href="#cb37-11" aria-hidden="true"></a>)</span></code></pre></div>
+<span id="cb37-6"><a href="#cb37-6" aria-hidden="true"></a>    <span class="dt">set_sizes=</span>(</span>
+<span id="cb37-7"><a href="#cb37-7" aria-hidden="true"></a>        <span class="kw">upset_set_size</span>(<span class="dt">width=</span><span class="fl">0.6</span>)</span>
+<span id="cb37-8"><a href="#cb37-8" aria-hidden="true"></a>        <span class="op">+</span><span class="st"> </span><span class="kw">theme</span>(<span class="dt">axis.text.x=</span><span class="kw">element_text</span>(<span class="dt">angle=</span><span class="dv">90</span>))</span>
+<span id="cb37-9"><a href="#cb37-9" aria-hidden="true"></a>    )</span>
+<span id="cb37-10"><a href="#cb37-10" aria-hidden="true"></a>)</span></code></pre></div>
 <p><img src="Examples_Python_files/Examples_Python_77_0.png"></p>
 <p>To display the ticks:</p>
 <div class="sourceCode" id="cb38"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true"></a><span class="op">%%</span>R <span class="op">-</span>w <span class="dv">400</span> <span class="op">-</span>h <span class="dv">300</span></span>
 <span id="cb38-2"><a href="#cb38-2" aria-hidden="true"></a><span class="kw">upset</span>(</span>
 <span id="cb38-3"><a href="#cb38-3" aria-hidden="true"></a>    movies, genres, <span class="dt">width_ratio=</span><span class="fl">0.3</span>, <span class="dt">min_size=</span><span class="dv">100</span>, <span class="dt">wrap=</span><span class="ot">TRUE</span>,</span>
-<span id="cb38-4"><a href="#cb38-4" aria-hidden="true"></a>    <span class="dt">themes=</span><span class="kw">upset_modify_themes</span>(</span>
-<span id="cb38-5"><a href="#cb38-5" aria-hidden="true"></a>        <span class="kw">list</span>(</span>
-<span id="cb38-6"><a href="#cb38-6" aria-hidden="true"></a>            <span class="st">'overall_sizes'</span>=<span class="kw">theme</span>(<span class="dt">axis.ticks.x=</span><span class="kw">element_line</span>())</span>
-<span id="cb38-7"><a href="#cb38-7" aria-hidden="true"></a>        )</span>
-<span id="cb38-8"><a href="#cb38-8" aria-hidden="true"></a>    )</span>
-<span id="cb38-9"><a href="#cb38-9" aria-hidden="true"></a>)</span></code></pre></div>
+<span id="cb38-4"><a href="#cb38-4" aria-hidden="true"></a>    <span class="dt">set_sizes=</span>(</span>
+<span id="cb38-5"><a href="#cb38-5" aria-hidden="true"></a>        <span class="kw">upset_set_size</span>(<span class="dt">width=</span><span class="fl">0.6</span>)</span>
+<span id="cb38-6"><a href="#cb38-6" aria-hidden="true"></a>        <span class="op">+</span><span class="st"> </span><span class="kw">theme</span>(<span class="dt">axis.ticks.x=</span><span class="kw">element_line</span>())</span>
+<span id="cb38-7"><a href="#cb38-7" aria-hidden="true"></a>    )</span>
+<span id="cb38-8"><a href="#cb38-8" aria-hidden="true"></a>)</span></code></pre></div>
 <p><img src="Examples_Python_files/Examples_Python_79_0.png"></p>
 </div>
 <div id="modify-geoms-and-other-layers" class="section level3">
@@ -1615,80 +1613,73 @@ mpaa   Bartlett test of homogeneity of variances           NA</code></pre>
 <span id="cb39-19"><a href="#cb39-19" aria-hidden="true"></a>    <span class="op">+</span></span>
 <span id="cb39-20"><a href="#cb39-20" aria-hidden="true"></a><span class="st">    </span><span class="kw">upset</span>(</span>
 <span id="cb39-21"><a href="#cb39-21" aria-hidden="true"></a>        movies, genres, <span class="dt">width_ratio=</span><span class="fl">0.5</span>, <span class="dt">max_size=</span><span class="dv">100</span>, <span class="dt">min_size=</span><span class="dv">15</span>, <span class="dt">wrap=</span><span class="ot">TRUE</span>,</span>
-<span id="cb39-22"><a href="#cb39-22" aria-hidden="true"></a>        <span class="dt">set_sizes=</span><span class="kw">list</span>(</span>
-<span id="cb39-23"><a href="#cb39-23" aria-hidden="true"></a>            <span class="kw">geom_point</span>(<span class="kw">aes</span>(<span class="dt">y=</span>..count..<span class="op">/</span><span class="kw">max</span>(..count..)), <span class="dt">stat=</span><span class="st">'count'</span>),</span>
-<span id="cb39-24"><a href="#cb39-24" aria-hidden="true"></a>            <span class="kw">ylab</span>(<span class="st">'Size relative to the largest'</span>),</span>
-<span id="cb39-25"><a href="#cb39-25" aria-hidden="true"></a>            <span class="kw">scale_y_reverse</span>()</span>
-<span id="cb39-26"><a href="#cb39-26" aria-hidden="true"></a>        )</span>
-<span id="cb39-27"><a href="#cb39-27" aria-hidden="true"></a>    )</span>
-<span id="cb39-28"><a href="#cb39-28" aria-hidden="true"></a>)</span></code></pre></div>
+<span id="cb39-22"><a href="#cb39-22" aria-hidden="true"></a>        <span class="dt">set_sizes=</span>(</span>
+<span id="cb39-23"><a href="#cb39-23" aria-hidden="true"></a>            <span class="kw">upset_set_size</span>(</span>
+<span id="cb39-24"><a href="#cb39-24" aria-hidden="true"></a>                <span class="dt">geom=</span>geom_point,</span>
+<span id="cb39-25"><a href="#cb39-25" aria-hidden="true"></a>                <span class="dt">mapping=</span><span class="kw">aes</span>(<span class="dt">y=</span>..count..<span class="op">/</span><span class="kw">max</span>(..count..)),</span>
+<span id="cb39-26"><a href="#cb39-26" aria-hidden="true"></a>                <span class="dt">stat=</span><span class="st">'count'</span></span>
+<span id="cb39-27"><a href="#cb39-27" aria-hidden="true"></a>            )</span>
+<span id="cb39-28"><a href="#cb39-28" aria-hidden="true"></a>            <span class="op">+</span><span class="st"> </span><span class="kw">ylab</span>(<span class="st">'Size relative to the largest'</span>)</span>
+<span id="cb39-29"><a href="#cb39-29" aria-hidden="true"></a>        )</span>
+<span id="cb39-30"><a href="#cb39-30" aria-hidden="true"></a>    )</span>
+<span id="cb39-31"><a href="#cb39-31" aria-hidden="true"></a>)</span></code></pre></div>
 <p><img src="Examples_Python_files/Examples_Python_82_0.png"></p>
 </div>
 <div id="logarithmic-scale" class="section level3">
 <h3 class="hasAnchor">
 <a href="#logarithmic-scale" class="anchor"></a>4.3 Logarithmic scale</h3>
-<p>In order to use a log scale we need pass additional scale to in <code>layers</code> argument. However, as the bars are on flipped coordinates, we need a reversed log transformation:</p>
-<div class="sourceCode" id="cb40"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true"></a><span class="op">%%</span>R</span>
-<span id="cb40-2"><a href="#cb40-2" aria-hidden="true"></a>preserve_infinite =<span class="st"> </span><span class="cf">function</span>(f) {</span>
-<span id="cb40-3"><a href="#cb40-3" aria-hidden="true"></a>    <span class="co"># this allows the stripes (which span from -Inf to +Inf) to be displayed</span></span>
-<span id="cb40-4"><a href="#cb40-4" aria-hidden="true"></a>    <span class="cf">function</span>(x) {</span>
-<span id="cb40-5"><a href="#cb40-5" aria-hidden="true"></a>        <span class="cf">if</span> (<span class="op">!</span><span class="kw">any</span>(<span class="kw">is.na</span>(x)) <span class="op">&amp;&amp;</span><span class="st"> </span>(<span class="kw">all</span>(x <span class="op">==</span><span class="st"> </span><span class="ot">Inf</span>) <span class="op">||</span><span class="st"> </span><span class="kw">all</span>(x <span class="op">==</span><span class="st"> </span><span class="op">-</span><span class="ot">Inf</span>))) {</span>
-<span id="cb40-6"><a href="#cb40-6" aria-hidden="true"></a>            x</span>
-<span id="cb40-7"><a href="#cb40-7" aria-hidden="true"></a>        } <span class="cf">else</span> {</span>
-<span id="cb40-8"><a href="#cb40-8" aria-hidden="true"></a>            <span class="kw">f</span>(x)</span>
-<span id="cb40-9"><a href="#cb40-9" aria-hidden="true"></a>        }</span>
-<span id="cb40-10"><a href="#cb40-10" aria-hidden="true"></a>    }</span>
-<span id="cb40-11"><a href="#cb40-11" aria-hidden="true"></a>}</span>
-<span id="cb40-12"><a href="#cb40-12" aria-hidden="true"></a></span>
-<span id="cb40-13"><a href="#cb40-13" aria-hidden="true"></a>reverse_log_trans =<span class="st"> </span><span class="cf">function</span>(<span class="dt">base=</span><span class="dv">10</span>) {</span>
-<span id="cb40-14"><a href="#cb40-14" aria-hidden="true"></a>    <span class="co"># CC-BY-SA 4.0 Brian Diggs, modified</span></span>
-<span id="cb40-15"><a href="#cb40-15" aria-hidden="true"></a>    <span class="co"># https://stackoverflow.com/a/11054781</span></span>
-<span id="cb40-16"><a href="#cb40-16" aria-hidden="true"></a>    scales<span class="op">::</span><span class="kw">trans_new</span>(</span>
-<span id="cb40-17"><a href="#cb40-17" aria-hidden="true"></a>        <span class="kw">paste0</span>(</span>
-<span id="cb40-18"><a href="#cb40-18" aria-hidden="true"></a>            <span class="st">'reverselog-'</span>, <span class="kw">format</span>(base)),</span>
-<span id="cb40-19"><a href="#cb40-19" aria-hidden="true"></a>            <span class="kw">preserve_infinite</span>(<span class="cf">function</span>(x) <span class="op">-</span><span class="kw">log</span>(x, base)),</span>
-<span id="cb40-20"><a href="#cb40-20" aria-hidden="true"></a>            <span class="kw">preserve_infinite</span>(<span class="cf">function</span>(x) base<span class="op">^-</span>x),</span>
-<span id="cb40-21"><a href="#cb40-21" aria-hidden="true"></a>            scales<span class="op">::</span><span class="kw">log_breaks</span>(<span class="dt">base=</span>base),</span>
-<span id="cb40-22"><a href="#cb40-22" aria-hidden="true"></a>            <span class="dt">domain =</span> <span class="kw">c</span>(<span class="fl">1e-100</span>, <span class="ot">Inf</span>)</span>
-<span id="cb40-23"><a href="#cb40-23" aria-hidden="true"></a>    )</span>
-<span id="cb40-24"><a href="#cb40-24" aria-hidden="true"></a>}</span></code></pre></div>
-<p>Which is then easy to apply:</p>
+<p>In order to use a log scale we need pass additional scale to in <code>layers</code> argument. However, as the bars are on flipped coordinates, we need a reversed log transformation. Appropriate function, <code><a href="../reference/reverse_log_trans.html">reverse_log_trans()</a></code> is provided:</p>
+<div class="sourceCode" id="cb40"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true"></a><span class="op">%%</span>R <span class="op">-</span>w <span class="dv">500</span> <span class="op">-</span>h <span class="dv">300</span></span>
+<span id="cb40-2"><a href="#cb40-2" aria-hidden="true"></a></span>
+<span id="cb40-3"><a href="#cb40-3" aria-hidden="true"></a><span class="kw">upset</span>(</span>
+<span id="cb40-4"><a href="#cb40-4" aria-hidden="true"></a>    movies, genres,</span>
+<span id="cb40-5"><a href="#cb40-5" aria-hidden="true"></a>    <span class="dt">width_ratio=</span><span class="fl">0.1</span>,</span>
+<span id="cb40-6"><a href="#cb40-6" aria-hidden="true"></a>    <span class="dt">min_size=</span><span class="dv">10</span>,</span>
+<span id="cb40-7"><a href="#cb40-7" aria-hidden="true"></a>    <span class="dt">set_sizes=</span>(</span>
+<span id="cb40-8"><a href="#cb40-8" aria-hidden="true"></a>        <span class="kw">upset_set_size</span>(<span class="dt">width=</span><span class="fl">0.4</span>)</span>
+<span id="cb40-9"><a href="#cb40-9" aria-hidden="true"></a>        <span class="op">+</span><span class="st"> </span><span class="kw">theme</span>(<span class="dt">axis.text.x=</span><span class="kw">element_text</span>(<span class="dt">angle=</span><span class="dv">90</span>))</span>
+<span id="cb40-10"><a href="#cb40-10" aria-hidden="true"></a>        <span class="op">+</span><span class="st"> </span><span class="kw">scale_y_continuous</span>(<span class="dt">trans=</span><span class="kw">reverse_log_trans</span>())</span>
+<span id="cb40-11"><a href="#cb40-11" aria-hidden="true"></a>    ),</span>
+<span id="cb40-12"><a href="#cb40-12" aria-hidden="true"></a>    <span class="dt">queries=</span><span class="kw">list</span>(<span class="kw">upset_query</span>(<span class="dt">set=</span><span class="st">'Drama'</span>, <span class="dt">fill=</span><span class="st">'blue'</span>))</span>
+<span id="cb40-13"><a href="#cb40-13" aria-hidden="true"></a>)</span></code></pre></div>
+<p><img src="Examples_Python_files/Examples_Python_85_0.png"></p>
+<p>We can also modify the labels to display the logged values:</p>
 <div class="sourceCode" id="cb41"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true"></a><span class="op">%%</span>R <span class="op">-</span>w <span class="dv">500</span> <span class="op">-</span>h <span class="dv">300</span></span>
 <span id="cb41-2"><a href="#cb41-2" aria-hidden="true"></a></span>
 <span id="cb41-3"><a href="#cb41-3" aria-hidden="true"></a><span class="kw">upset</span>(</span>
 <span id="cb41-4"><a href="#cb41-4" aria-hidden="true"></a>    movies, genres,</span>
-<span id="cb41-5"><a href="#cb41-5" aria-hidden="true"></a>    <span class="dt">width_ratio=</span><span class="fl">0.1</span>,</span>
-<span id="cb41-6"><a href="#cb41-6" aria-hidden="true"></a>    <span class="dt">min_size=</span><span class="dv">10</span>,</span>
-<span id="cb41-7"><a href="#cb41-7" aria-hidden="true"></a>    <span class="dt">set_sizes=</span><span class="kw">upset_set_size</span>(</span>
-<span id="cb41-8"><a href="#cb41-8" aria-hidden="true"></a>        <span class="dt">width=</span><span class="fl">0.4</span>,</span>
-<span id="cb41-9"><a href="#cb41-9" aria-hidden="true"></a>        <span class="dt">layers=</span><span class="kw">list</span>(</span>
-<span id="cb41-10"><a href="#cb41-10" aria-hidden="true"></a>            <span class="kw">scale_y_continuous</span>(<span class="dt">trans=</span><span class="kw">reverse_log_trans</span>())</span>
+<span id="cb41-5"><a href="#cb41-5" aria-hidden="true"></a>    <span class="dt">min_size=</span><span class="dv">10</span>,</span>
+<span id="cb41-6"><a href="#cb41-6" aria-hidden="true"></a>    <span class="dt">width_ratio=</span><span class="fl">0.2</span>,</span>
+<span id="cb41-7"><a href="#cb41-7" aria-hidden="true"></a>    <span class="dt">set_sizes=</span><span class="kw">upset_set_size</span>(<span class="dt">width=</span><span class="fl">0.4</span>)</span>
+<span id="cb41-8"><a href="#cb41-8" aria-hidden="true"></a>        <span class="op">+</span><span class="st"> </span><span class="kw">scale_y_continuous</span>(</span>
+<span id="cb41-9"><a href="#cb41-9" aria-hidden="true"></a>            <span class="dt">trans=</span><span class="kw">reverse_log_trans</span>(),</span>
+<span id="cb41-10"><a href="#cb41-10" aria-hidden="true"></a>            <span class="dt">labels=</span>log10</span>
 <span id="cb41-11"><a href="#cb41-11" aria-hidden="true"></a>        )</span>
-<span id="cb41-12"><a href="#cb41-12" aria-hidden="true"></a>    ),</span>
-<span id="cb41-13"><a href="#cb41-13" aria-hidden="true"></a>    <span class="dt">themes=</span><span class="kw">upset_modify_themes</span>(</span>
-<span id="cb41-14"><a href="#cb41-14" aria-hidden="true"></a>        <span class="kw">list</span>(<span class="st">'overall_sizes'</span>=<span class="kw">theme</span>(<span class="dt">axis.text.x=</span><span class="kw">element_text</span>(<span class="dt">angle=</span><span class="dv">90</span>)))</span>
-<span id="cb41-15"><a href="#cb41-15" aria-hidden="true"></a>    ),</span>
-<span id="cb41-16"><a href="#cb41-16" aria-hidden="true"></a>    <span class="dt">queries=</span><span class="kw">list</span>(<span class="kw">upset_query</span>(<span class="dt">set=</span><span class="st">'Drama'</span>, <span class="dt">fill=</span><span class="st">'blue'</span>))</span>
-<span id="cb41-17"><a href="#cb41-17" aria-hidden="true"></a>)</span></code></pre></div>
+<span id="cb41-12"><a href="#cb41-12" aria-hidden="true"></a>        <span class="op">+</span><span class="st"> </span><span class="kw">ylab</span>(<span class="st">'log10(set size)'</span>)</span>
+<span id="cb41-13"><a href="#cb41-13" aria-hidden="true"></a>)</span></code></pre></div>
 <p><img src="Examples_Python_files/Examples_Python_87_0.png"></p>
-<p>We can also modify the labels to display the logged values:</p>
+<p>Or display the actual count:</p>
 <div class="sourceCode" id="cb42"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true"></a><span class="op">%%</span>R <span class="op">-</span>w <span class="dv">500</span> <span class="op">-</span>h <span class="dv">300</span></span>
 <span id="cb42-2"><a href="#cb42-2" aria-hidden="true"></a></span>
 <span id="cb42-3"><a href="#cb42-3" aria-hidden="true"></a><span class="kw">upset</span>(</span>
 <span id="cb42-4"><a href="#cb42-4" aria-hidden="true"></a>    movies, genres,</span>
 <span id="cb42-5"><a href="#cb42-5" aria-hidden="true"></a>    <span class="dt">min_size=</span><span class="dv">10</span>,</span>
-<span id="cb42-6"><a href="#cb42-6" aria-hidden="true"></a>    <span class="dt">width_ratio=</span><span class="fl">0.2</span>,</span>
-<span id="cb42-7"><a href="#cb42-7" aria-hidden="true"></a>    <span class="dt">set_sizes=</span><span class="kw">upset_set_size</span>(</span>
-<span id="cb42-8"><a href="#cb42-8" aria-hidden="true"></a>        <span class="dt">width=</span><span class="fl">0.4</span>,</span>
-<span id="cb42-9"><a href="#cb42-9" aria-hidden="true"></a>        <span class="dt">layers=</span><span class="kw">list</span>(</span>
-<span id="cb42-10"><a href="#cb42-10" aria-hidden="true"></a>            <span class="kw">scale_y_continuous</span>(</span>
-<span id="cb42-11"><a href="#cb42-11" aria-hidden="true"></a>                <span class="dt">trans=</span><span class="kw">reverse_log_trans</span>(),</span>
-<span id="cb42-12"><a href="#cb42-12" aria-hidden="true"></a>                <span class="dt">labels=</span>log10</span>
-<span id="cb42-13"><a href="#cb42-13" aria-hidden="true"></a>            ),</span>
-<span id="cb42-14"><a href="#cb42-14" aria-hidden="true"></a>            <span class="kw">ylab</span>(<span class="st">'log10(set size)'</span>)</span>
-<span id="cb42-15"><a href="#cb42-15" aria-hidden="true"></a>        )</span>
-<span id="cb42-16"><a href="#cb42-16" aria-hidden="true"></a>    )</span>
-<span id="cb42-17"><a href="#cb42-17" aria-hidden="true"></a>)</span></code></pre></div>
+<span id="cb42-6"><a href="#cb42-6" aria-hidden="true"></a>    <span class="dt">width_ratio=</span><span class="fl">0.3</span>,</span>
+<span id="cb42-7"><a href="#cb42-7" aria-hidden="true"></a>    <span class="dt">set_sizes=</span>(</span>
+<span id="cb42-8"><a href="#cb42-8" aria-hidden="true"></a>        <span class="kw">upset_set_size</span>(</span>
+<span id="cb42-9"><a href="#cb42-9" aria-hidden="true"></a>            <span class="dt">width=</span><span class="fl">0.4</span>,</span>
+<span id="cb42-10"><a href="#cb42-10" aria-hidden="true"></a>            <span class="dt">geom=</span><span class="cf">function</span>(...) {</span>
+<span id="cb42-11"><a href="#cb42-11" aria-hidden="true"></a>                <span class="kw">list</span>(</span>
+<span id="cb42-12"><a href="#cb42-12" aria-hidden="true"></a>                    <span class="kw">geom_bar</span>(...),</span>
+<span id="cb42-13"><a href="#cb42-13" aria-hidden="true"></a>                    <span class="kw">geom_text</span>(..., <span class="kw">aes</span>(<span class="dt">label=</span>..count..), <span class="dt">hjust=</span><span class="fl">1.1</span>)</span>
+<span id="cb42-14"><a href="#cb42-14" aria-hidden="true"></a>                )</span>
+<span id="cb42-15"><a href="#cb42-15" aria-hidden="true"></a>            },</span>
+<span id="cb42-16"><a href="#cb42-16" aria-hidden="true"></a>            <span class="dt">stat=</span><span class="st">'count'</span></span>
+<span id="cb42-17"><a href="#cb42-17" aria-hidden="true"></a>        )</span>
+<span id="cb42-18"><a href="#cb42-18" aria-hidden="true"></a>        <span class="op">+</span><span class="st"> </span><span class="kw">expand_limits</span>(<span class="dt">y=</span><span class="dv">1100</span>)</span>
+<span id="cb42-19"><a href="#cb42-19" aria-hidden="true"></a>        <span class="op">+</span><span class="st"> </span><span class="kw">theme</span>(<span class="dt">axis.text.x=</span><span class="kw">element_text</span>(<span class="dt">angle=</span><span class="dv">90</span>))</span>
+<span id="cb42-20"><a href="#cb42-20" aria-hidden="true"></a>    )</span>
+<span id="cb42-21"><a href="#cb42-21" aria-hidden="true"></a>)</span></code></pre></div>
 <p><img src="Examples_Python_files/Examples_Python_89_0.png"></p>
 </div>
 <div id="hide-the-set-sizes-altogether" class="section level3">
@@ -1955,7 +1946,7 @@ mpaa   Bartlett test of homogeneity of variances           NA</code></pre>
 <div id="display-percentages" class="section level2">
 <h2 class="hasAnchor">
 <a href="#display-percentages" class="anchor"></a>10. Display percentages</h2>
-<p>Use <code>aes_percentage()</code> utility preceeded with <code>!!</code> syntax to easily display percentages. In the examples below only percentages for the movies with R raiting are shown to avoid visual clutter.</p>
+<p>Use <code><a href="../reference/aes_percentage.html">aes_percentage()</a></code> utility preceeded with <code>!!</code> syntax to easily display percentages. In the examples below only percentages for the movies with R raiting are shown to avoid visual clutter.</p>
 <div class="sourceCode" id="cb66"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb66-1"><a href="#cb66-1" aria-hidden="true"></a><span class="op">%%</span>R</span>
 <span id="cb66-2"><a href="#cb66-2" aria-hidden="true"></a>raiting_scale =<span class="st"> </span><span class="kw">scale_fill_manual</span>(<span class="dt">values=</span><span class="kw">c</span>(</span>
 <span id="cb66-3"><a href="#cb66-3" aria-hidden="true"></a>    <span class="st">'R'</span>=<span class="st">'#E41A1C'</span>, <span class="st">'PG'</span>=<span class="st">'#377EB8'</span>,</span>
