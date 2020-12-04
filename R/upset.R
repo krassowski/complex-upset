@@ -2,7 +2,7 @@
 #' @importFrom ggplot2 ggplot aes aes_string coord_flip theme xlab ylab
 #' @importFrom ggplot2 scale_color_manual scale_x_discrete scale_y_discrete scale_y_reverse
 #' @importFrom ggplot2 geom_text geom_bar geom_col geom_point geom_segment
-#' @importFrom ggplot2 is.ggplot
+#' @importFrom ggplot2 is.ggplot %+%
 #' @importFrom patchwork plot_layout plot_spacer wrap_elements
 NULL
 
@@ -251,7 +251,7 @@ intersection_size = function(
 #'
 #' @export
 #' @examples
-#' intersection_size(text_aes=ggplot2::aes_(label=upset_text_percentage()))
+#' ggplot2::aes_(label=upset_text_percentage())
 upset_text_percentage = function(digits=0, sep='') {
     substitute(
         paste(
