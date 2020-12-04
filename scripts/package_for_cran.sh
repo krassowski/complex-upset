@@ -12,4 +12,8 @@ done;
 cd cran_package
 ../scripts/cmd_check.sh
 ../scripts/spell_check.sh
+cd vignettes
+echo "Compressing images"
+trimage -q -d Examples_R_files
+cd ..
 R CMD build .
