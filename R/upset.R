@@ -3,6 +3,7 @@
 #' @importFrom ggplot2 scale_color_manual scale_x_discrete scale_y_discrete scale_y_reverse
 #' @importFrom ggplot2 geom_text geom_bar geom_col geom_point geom_segment
 #' @importFrom ggplot2 is.ggplot %+%
+#' @importFrom scales log_breaks trans_new
 #' @importFrom patchwork plot_layout plot_spacer wrap_elements
 NULL
 
@@ -556,11 +557,11 @@ preserve_infinite = function(f) {
 #' @param base logarithm base (default 10)
 #' @export
 reverse_log_trans = function(base=10) {
-    scales::trans_new(
+    trans_new(
         paste0('reverselog-', base),
         preserve_infinite(function(x) -log(x, base)),
         preserve_infinite(function(x) base^-x),
-        scales::log_breaks(base=base),
+        log_breaks(base=base),
         domain=c(1e-100, Inf)
     )
 }
@@ -570,6 +571,7 @@ reverse_log_trans = function(base=10) {
 #'
 #' @param geom the geom to use
 #' @param layers a list of additonal layers (scales, geoms) to be included on the plot
+#' @param mapping additional aesthetics
 #' @param ... passed to the geom
 #' @export
 upset_set_size = function(geom=geom_bar, layers=list(), mapping=aes(), ...) {

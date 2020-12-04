@@ -11,6 +11,8 @@ upset_set_size(geom = geom_bar, layers = list(), mapping = aes(), ...)
 
 \item{layers}{a list of additonal layers (scales, geoms) to be included on the plot}
 
+\item{mapping}{additional aesthetics}
+
 \item{...}{passed to the geom}
 }
 \description{
