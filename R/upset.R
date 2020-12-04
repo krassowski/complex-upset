@@ -251,7 +251,7 @@ intersection_size = function(
 #'
 #' @export
 #' @examples
-#' intersection_size(text_aes=ggplot2::aes_(label=upset_text_percentage()))
+#' ggplot2::aes_(label=upset_text_percentage())
 upset_text_percentage = function(digits=0, sep='') {
     substitute(
         paste(
