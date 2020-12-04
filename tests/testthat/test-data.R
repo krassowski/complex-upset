@@ -26,6 +26,19 @@ test_that("intersections names assembly", {
 })
 
 
+test_that("Intersection degree is properly calculated", {
+    # see https://github.com/krassowski/complex-upset/issues/73
+    expect_equal(
+        calculate_degree(c(
+            EMPTY_INTERSECTION, 'a', 'a-b', 'a-b-c'
+        )),
+        c(
+            0, 1, 2, 3
+        )
+    )
+})
+
+
 test_that("hyphenated variables give the same results", {
 
     df_underscored = data.frame(

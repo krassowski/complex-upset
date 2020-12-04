@@ -1,6 +1,7 @@
 #' @importFrom utils stack
 NULL
 
+EMPTY_INTERSECTION = 'NOT_IN_EITHER_GROUP'
 
 sanitize_names = function(variables_names) {
     sanitized_names = c()
@@ -127,7 +128,9 @@ get_sort_order = function(data, sort_order) {
 
 
 calculate_degree = function(x) {
-    lengths(strsplit(x, '-', fixed=TRUE))
+    values = lengths(strsplit(x, '-', fixed=TRUE))
+    values[x == EMPTY_INTERSECTION] = 0
+    values
 }
 
 
@@ -244,7 +247,7 @@ upset_data = function(
       data[intersect], 1,
       names_of_members
     )
-    data$intersection[data$intersection == ''] = 'NOT_IN_EITHER_GROUP'
+    data$intersection[data$intersection == ''] = EMPTY_INTERSECTION
 
     intersections_by_size = table(data$intersection)
 
