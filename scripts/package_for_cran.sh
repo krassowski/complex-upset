@@ -16,9 +16,9 @@ done;
 # see: https://stackoverflow.com/questions/43550479/how-to-satisfy-both-cran-and-github-license-file-naming-requirements
 # and: https://github.com/tidyverse/tidyr/issues/262
 # and: https://r-pkgs.org/description.html#description-license
+cd cran_package
 echo "YEAR: 2020
 COPYRIGHT HOLDER: Michał Krassowski" > LICENSE
-cd cran_package
 ../scripts/cmd_check.sh
 ../scripts/spell_check.sh
 R CMD build .
