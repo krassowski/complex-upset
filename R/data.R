@@ -39,13 +39,24 @@ gather = function(data, idvar, col_name, value_name='value') {
 
 compute_matrix = function(sorted_intersections, sorted_groups) {
     rows = c()
-    for (group in sorted_groups) {
-        row = c()
-        for (intersection in sorted_intersections) {
-            i_groups = unlist(strsplit(intersection, '-'))
-            row = cbind(row, group %in% i_groups)
+
+    intersections_as_groups = lapply(
+        sorted_intersections,
+        function(intersection) {
+            unlist(strsplit(intersection, '-'))
         }
-        rows = rbind(rows, row)
+    )
+
+    for (group in sorted_groups) {
+        rows = rbind(
+            rows,
+            sapply(
+                intersections_as_groups,
+                function(i_groups) {
+                    group %in% i_groups
+                }
+            )
+        )
     }
 
     matrix_data = as.data.frame(rows, row.names=sorted_groups)
@@ -55,20 +66,21 @@ compute_matrix = function(sorted_intersections, sorted_groups) {
 
 
 compute_unions = function(data, sorted_intersections) {
-    rows = c()
+    rows = sapply(
+        sorted_intersections,
+        function(intersection) {
+            i_groups = unlist(strsplit(intersection, '-'))
+            union_for_intersection = data[data$group %in% i_groups, ]
 
-    for (intersection in sorted_intersections) {
-        i_groups = unlist(strsplit(intersection, '-'))
-        union_for_intersection = data[data$group %in% i_groups, ]
+            ids = union_for_intersection$id
+            deduplicated = union_for_intersection[!duplicated(ids), ]
 
-        ids = union_for_intersection$id
-        deduplicated = union_for_intersection[!duplicated(ids), ]
-
-        # NOTE:
-        # union: nrow(deduplicated)
-        # sum of counts: nrow(union_for_intersection)
-        rows = c(rows, nrow(deduplicated))
-    }
+            # NOTE:
+            # union: nrow(deduplicated)
+            # sum of counts: nrow(union_for_intersection)
+            nrow(deduplicated)
+        }
+    )
 
     names(rows) = sorted_intersections
     rows
