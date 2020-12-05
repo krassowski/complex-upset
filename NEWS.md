@@ -13,7 +13,7 @@
 
 - Prepare for CRAN submission
 - Fix various typos
-- Add more examples to documentation (#44,#38)
+- Add more examples to documentation (#44, #38)
 
 # Version 0.7.1
 
@@ -33,52 +33,52 @@
 2020-12-04
 
 - Move to GitHub CI
-- Use warnings rather than `print()` #53
+- Use warnings rather than `print()` (#53)
 - Eliminate unwanted warnings and messages
 
 # Version 0.6.3
 
 2020-12-03
 
-Including versions 0.6.0 - 0.6.1.
+Including versions 0.6.0 - 0.6.2.
 
 - Fix display of stripes in set size component
-- Refactor annotations of intersections to allow adding ggplot2 objects with `+`, see #67, #27, #61
-- Add `n_intersections` parameter #70
+- Refactor annotations of intersections to allow adding ggplot2 objects with `+` (#67, #27, #61)
+- Add `n_intersections` parameter (#70)
 
 # Version 0.5.19
 
 2020-11-08
 
-- Implement `group_by` argument #66
+- Implement `group_by` argument (#66)
 
 # Version 0.5.18
 
 2020-09-21
 
-- Fix coloring of queries #60
+- Multiple queries now work correctly (#60)
 
 # Version 0.5.17
 
 2020-09-11
 
-- Fix `min_degree` not working with intersections of size 1 #48
+- Fix `min_degree` not working with intersections of size one (#48)
 
 # Version 0.5.16
 
 2020-09-11
 
-- Refactor stripes implementation, allow stripes transparency #54
+- Refactor stripes implementation, allow stripes transparency (#54)
 
 # Version 0.5.15
 
 2020-06-18
 
-- Fix the counts not showing up on highlighted bars #43
+- Fix the counts not showing up on highlighted bars (#43)
 
 # Version 0.4.0
 
-- Sorting (descending/ascending/none) by degree/cardinality/ratio #18 #13 #10
-- Selective themes customization #13 
-- Set size customization including rotations, log, ticks and more #11 
+- Sorting (descending/ascending/none) by degree/cardinality/ratio (#18, #13, #10)
+- Selective themes customization (#13)
+- Set size customization including rotations, log, ticks and more (#11)
 - Added roxygen-based documentation and reference
