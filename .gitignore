@@ -3,6 +3,7 @@
 archive/
 docs/
 .virtual_documents/
+cran_package/
 
 # History files
 .Rhistory

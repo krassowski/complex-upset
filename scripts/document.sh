@@ -6,6 +6,7 @@ cd vignettes
 cd ..
 for v in Examples_Python Examples_R
 do
+    rm -r "vignettes/${v}_files"
     jupyter nbconvert  --to markdown "vignettes/${v}.ipynb" 
     mv "vignettes/${v}.md" "vignettes/${v}.Rmd"
     sed 's/```r/```{r eval=FALSE}/g' "vignettes/${v}.Rmd" -i
@@ -16,3 +17,8 @@ do
 done
 rm -rf docs/articles
 Rscript -e 'pkgdown::build_site()'
+echo "Compressing images"
+for v in Examples_Python Examples_R
+do
+    trimage -q -d "vignettes/${v}_files"
+done

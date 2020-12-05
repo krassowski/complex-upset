@@ -1,0 +1,35 @@
+citHeader("To cite ComplexUpset in publications use:")
+
+citEntry(
+  entry    = "Misc",
+  title    = "ComplexUpset",
+  author   = c(
+    person("Michał", "Krassowski")
+  ),
+  year     = 2020,
+  url      = "https://doi.org/10.5281/zenodo.3700590",
+  doi      = "10.5281/zenodo.3700590",
+  textVersion = paste(
+    "Michał Krassowski. (2020). krassowski/complex-upset.",
+    "Zenodo. http://doi.org/10.5281/zenodo.3700590"
+  )
+)
+
+
+citEntry(
+  entry    = "Article",
+  title    = "UpSet: Visualization of Intersecting Sets,",
+  author   = as.person("Alexander Lex, Nils Gehlenborg, Hendrik Strobelt, Romain Vuillemot, Hanspeter Pfister"),
+  journal  = "IEEE Transactions on Visualization and Computer Graphics",
+  year     = 2014,
+  volume   = 20,
+  number   = 12,
+  pages    = "1983–1992",
+  url      = "https://doi.org/10.1109/TVCG.2014.2346248",
+  doi      = "10.1109/TVCG.2014.2346248",
+  textVersion = paste(
+    "Alexander Lex, Nils Gehlenborg, Hendrik Strobelt, Romain Vuillemot, Hanspeter Pfister,",
+    "UpSet: Visualization of Intersecting Sets,",
+    "IEEE Transactions on Visualization and Computer Graphics (InfoVis '14), vol. 20, no. 12, pp. 1983–1992, 2014."
+  )
+)
