@@ -1,8 +1,8 @@
 pandoc: 2.9.2.1
-pkgdown: 1.6.1
-pkgdown_sha: ~
+pkgdown: 1.6.1.9000
+pkgdown_sha: 6094ac3dd80a1f3f1d4e2f47d0ed4716d51362b0
 articles:
   Examples_Python: Examples_Python.html
   Examples_R: Examples_R.html
-last_built: 2020-12-05T12:21Z
+last_built: 2020-12-05T18:54Z
 
