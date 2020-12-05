@@ -651,7 +651,7 @@ False
 <li>the first argument is expected to be a dataframe with both group indicator variables and covariates,</li>
 <li>the second argument specifies a list with names of column which indicate the group membership.</li>
 </ul>
-<p>Additional arguments can be provided, such as <code>name</code> (specifies xlab for intersection matrix) or <code>width_ratio</code> (specifies how much space should be occupied by the set size panel). Other such arguments are discussed at length later in this document.</p>
+<p>Additional arguments can be provided, such as <code>name</code> (specifies <code><a href="https://ggplot2.tidyverse.org/reference/labs.html">xlab()</a></code> for intersection matrix) or <code>width_ratio</code> (specifies how much space should be occupied by the set size panel). Other such arguments are discussed at length later in this document.</p>
 <div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true"></a><span class="op">%%</span>R <span class="op">-</span>w <span class="dv">800</span> <span class="op">-</span>h <span class="dv">300</span></span>
 <span id="cb10-2"><a href="#cb10-2" aria-hidden="true"></a><span class="kw">upset</span>(movies, genres, <span class="dt">name=</span><span class="st">'genre'</span>, <span class="dt">width_ratio=</span><span class="fl">0.1</span>)</span></code></pre></div>
 <p><img src="Examples_Python_files/Examples_Python_19_0.png"></p>
