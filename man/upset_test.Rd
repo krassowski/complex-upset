@@ -20,5 +20,5 @@ upset_test(data, intersect, ...)
   }}
 }
 \description{
-This is a wrapper around \code{compare_between_intersections()}, adding sorting by fdr, warnings, etc.
+This is a wrapper around \code{compare_between_intersections()}, adding sorting by FDR, warnings, etc.
 }

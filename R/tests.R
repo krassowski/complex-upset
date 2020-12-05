@@ -63,7 +63,7 @@ compare_between_intersections = function(data, intersect, test=kruskal.test, tes
 
 #' Test for differences between intersections
 #'
-#' This is a wrapper around `compare_between_intersections()`, adding sorting by fdr, warnings, etc.
+#' This is a wrapper around `compare_between_intersections()`, adding sorting by FDR, warnings, etc.
 #' @inheritParams upset_data
 #' @inheritDotParams compare_between_intersections
 #' @export
