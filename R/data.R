@@ -62,7 +62,8 @@ compute_matrix = function(sorted_intersections, sorted_groups) {
         intersections_as_groups,
         function(i_groups) {
             sorted_groups %in% i_groups
-        }
+        },
+        simplify=FALSE
     )
 
     matrix_data = as.data.frame(matrix, row.names=sorted_groups)
@@ -72,7 +73,7 @@ compute_matrix = function(sorted_intersections, sorted_groups) {
 
 
 compute_unions = function(data, sorted_intersections) {
-    rows = sapply(
+    sapply(
         sorted_intersections,
         function(intersection) {
             i_groups = unlist(strsplit(intersection, '-'))
@@ -89,11 +90,8 @@ compute_unions = function(data, sorted_intersections) {
 
             sum(!duplicated(ids_of_union_for_intersection))
         },
-        simplify=FALSE
+        simplify=TRUE
     )
-
-    names(rows) = sorted_intersections
-    rows
 }
 
 
