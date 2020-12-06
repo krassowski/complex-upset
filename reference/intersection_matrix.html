@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Function reference • ComplexUpset</title>
+<title>Prepare layers for sets sizes plot — intersection_matrix • ComplexUpset</title>
 
 
 <!-- jquery -->
@@ -39,7 +39,8 @@
 
 
 
-<meta property="og:title" content="Function reference" />
+<meta property="og:title" content="Prepare layers for sets sizes plot — intersection_matrix" />
+<meta property="og:description" content="Prepare layers for sets sizes plot" />
 <meta name="twitter:card" content="summary_large_image" />
 <meta name="twitter:creator" content="@krassowski" />
 <meta name="twitter:site" content="@krassowski" />
@@ -61,7 +62,7 @@
   </head>
 
   <body data-spy="scroll" data-target="#toc">
-    <div class="container template-reference-index">
+    <div class="container template-reference-topic">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
@@ -120,132 +121,42 @@
       </header>
 
 <div class="row">
-  <div class="contents col-md-9">
+  <div class="col-md-9 contents">
     <div class="page-header">
-      <h1>Reference</h1>
+    <h1>Prepare layers for sets sizes plot</h1>
+    <small class="dont-index">Source: <a href='https://github.com/krassowski/complex-upset/blob/master/R/upset.R'><code>R/upset.R</code></a></small>
+    <div class="hidden name"><code>intersection_matrix.Rd</code></div>
     </div>
 
-    <table class="ref-index">
+    <div class="ref-description">
+    <p>Prepare layers for sets sizes plot</p>
+    </div>
 
-    <colgroup>
-      
-      <col class="alias" />
-      <col class="title" />
-    </colgroup>
+    <pre class="usage"><span class='fu'>intersection_matrix</span><span class='op'>(</span>
+  geom <span class='op'>=</span> <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_point.html'>geom_point</a></span><span class='op'>(</span>size <span class='op'>=</span> <span class='fl'>3</span><span class='op'>)</span>,
+  segment <span class='op'>=</span> <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_segment.html'>geom_segment</a></span><span class='op'>(</span><span class='op'>)</span>,
+  outline_color <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>active <span class='op'>=</span> <span class='st'>"black"</span>, inactive <span class='op'>=</span> <span class='st'>"grey70"</span><span class='op'>)</span>
+<span class='op'>)</span></pre>
 
-    <tbody>
-      <tr>
-        <th colspan="2">
-          <h2 id="section-all-functions" class="hasAnchor"><a href="#section-all-functions" class="anchor"></a>All functions</h2>
-          <p class="section-desc"></p>
-        </th>
-      </tr>
-      
-      
-    </tbody><tbody>
-      
-      
-      <tr>
-        
-        <td>
-          <p><code><a href="aes_percentage.html">aes_percentage()</a></code> </p>
-        </td>
-        <td><p>Generate mapping for labeling percentages</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="compare_between_intersections.html">compare_between_intersections()</a></code> </p>
-        </td>
-        <td><p>Compare covariates between intersections</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="intersection_matrix.html">intersection_matrix()</a></code> </p>
-        </td>
-        <td><p>Prepare layers for sets sizes plot</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="intersection_ratio.html">intersection_ratio()</a></code> </p>
-        </td>
-        <td><p>Barplot annotation of relative intersections sizes</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="intersection_size.html">intersection_size()</a></code> </p>
-        </td>
-        <td><p>Barplot annotation of intersections sizes</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="reverse_log_trans.html">reverse_log_trans()</a></code> </p>
-        </td>
-        <td><p>Logarithmic scale for use with <code>upset_set_size()</code></p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="upset.html">upset()</a></code> </p>
-        </td>
-        <td><p>Compose an UpSet plot</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="upset_annotate.html">upset_annotate()</a></code> </p>
-        </td>
-        <td><p>Annotation panel shorthand</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="upset_data.html">upset_data()</a></code> </p>
-        </td>
-        <td><p>Prepare data for UpSet plots</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="upset_default_themes.html">upset_default_themes()</a></code> </p>
-        </td>
-        <td><p>Default themes modified by specified arguments</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="upset_modify_themes.html">upset_modify_themes()</a></code> </p>
-        </td>
-        <td><p>Default themes modified by specified component-specific arguments</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="upset_query.html">upset_query()</a></code> </p>
-        </td>
-        <td><p>Highlight chosen sets or intersections</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="upset_set_size.html">upset_set_size()</a></code> </p>
-        </td>
-        <td><p>Prepare layers for sets sizes plot</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="upset_test.html">upset_test()</a></code> </p>
-        </td>
-        <td><p>Test for differences between intersections</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="upset_text_percentage.html">upset_text_percentage()</a></code> </p>
-        </td>
-        <td><p>Generate percentage label of the intersection/union sizes ratio</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="upset_themes.html">upset_themes</a></code> </p>
-        </td>
-        <td><p>List of default themes for upset components</p></td>
-      </tr>
-    </tbody>
+    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
+    <table class="ref-arguments">
+    <colgroup><col class="name" /><col class="desc" /></colgroup>
+    <tr>
+      <th>geom</th>
+      <td><p>a geom_point call, allowing to specify parameters (e.g. <code>geom=geom_point(shape='square')</code>)</p></td>
+    </tr>
+    <tr>
+      <th>segment</th>
+      <td><p>a geom_segment call, allowing to specify parameters (e.g. <code>segment=geom_segment(linetype='dotted')</code>)</p></td>
+    </tr>
+    <tr>
+      <th>outline_color</th>
+      <td><p>a named list with two colors for outlines of active and inactive dots</p></td>
+    </tr>
     </table>
-  </div>
 
+
+  </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
       <h2 data-toc-skip>Contents</h2>
