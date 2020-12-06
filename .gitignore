@@ -4,6 +4,7 @@ archive/
 docs/
 .virtual_documents/
 cran_package/
+data/
 
 # History files
 .Rhistory
