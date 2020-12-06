@@ -1,6 +1,6 @@
 # Version 0.8.0
 
-(under development)
+2020-12-06
 
 - Breaking: `geom` of `upset_set_size()` now accepts geom object (e.g. `geom_bar()`) rather than a function (e.g. `geom_bar`)
 - Breaking: `upset_set_size()` no longer accepts variadic arguments (`...`); please modify the `geom` instead
@@ -9,7 +9,7 @@
    - `upset_set_size(geom=geom_bar(aes(fill=mpaa, x=group)))`
 - Intersections can now be sorted by multiple criteria, e.g. first by degree and then by cardinality: `sort_intersections_by=c('degree', 'cardinality')` (#47)
 - Breaking: `dot_size` argument was removed. Use `matrix=intersection_matrix(geom=geom_point(size=5))` instead
-- Intersection matrix can now be customized, including the points (e.g. changing shape to squares), segments (e.g. using dotted line) and outlines (changing color) allowing to create [example 5.4](https://krassowski.github.io/complex-upset/articles/Examples_R.html#5-4-adjusting-the-intersection-matrix):
+- Intersection matrix can now be customized, including the points (e.g. changing shape to squares), segments (e.g. using dotted line) and outlines (changing color) allowing to create [Example 5.4](https://krassowski.github.io/complex-upset/articles/Examples_R.html):
  > ![](https://raw.githubusercontent.com/krassowski/complex-upset/master/tests/figs/examples/example-5-4-adjusting-the-intersection-matrix-1.svg)
 
 # Version 0.7.4
