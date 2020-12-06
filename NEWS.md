@@ -1,3 +1,9 @@
+# Version 0.7.4
+
+(under development)
+
+- significant performance improvements, especially for large datasets (#12)
+
 # Version 0.7.3
 
 2020-12-05
