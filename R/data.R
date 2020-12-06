@@ -409,12 +409,12 @@ upset_data = function(
         })
     }
 
-   union_sizes = compute_unions(stacked, sorted_intersections)
+    union_sizes = compute_unions(stacked, sorted_intersections)
 
-   with_sizes = data.frame(data)
+    with_sizes = data.frame(data)
 
-   with_sizes[[union_count_column]] = sapply(data$intersection, function(intersection) { union_sizes[intersection] })
-   with_sizes[[intersection_count_column]] = sapply(data$intersection, function(intersection) { intersections_by_size[intersection] })
+    with_sizes[[union_count_column]] = union_sizes[data$intersection]
+    with_sizes[[intersection_count_column]] = intersections_by_size[data$intersection]
 
   list(
     with_sizes=with_sizes,
