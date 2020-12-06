@@ -22,8 +22,7 @@ Suggests:
     tibble,
     ggplot2movies,
     vdiffr,
-    jsonlite,
-    data.table
+    jsonlite
 Imports:
     ggplot2,
     patchwork,

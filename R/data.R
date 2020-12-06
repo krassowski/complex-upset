@@ -187,15 +187,6 @@ trim_intersections = function(
 }
 
 
-rbindlist = function(data) {
-    if (requireNamespace('data.table', quietly=TRUE)) {
-        # much faster - use data.table if present
-        data.table::rbindlist(data)
-    } else {
-        do.call(rbind, data)
-    }
-}
-
 #' Prepare data for UpSet plots
 #'
 #' @param data a dataframe including binary columns representing membership in classes
@@ -376,9 +367,12 @@ upset_data = function(
     if (group_by == 'degree') {
         sorted_intersections = unique_sorted_intersections
     } else if (group_by == 'sets') {
-        new_data = list()
         new_plot_intersections_subset = c()
         sorted_intersections = c()
+
+        intersections_indices = list()
+        new_intersection_column = list()
+        group_by_group_column = list()
 
         for (group in sorted_groups) {
             for (intersection in unique_sorted_intersections) {
@@ -387,10 +381,19 @@ upset_data = function(
                     new_intersection_id = paste(c(group, i_groups[i_groups!=group]), collapse='-')
                     sorted_intersections = c(sorted_intersections, new_intersection_id)
                     intersections_by_size[new_intersection_id] = intersections_by_size[intersection]
-                    intersection_data = data[data$intersection == intersection, , drop=FALSE]
-                    intersection_data$intersection = new_intersection_id
-                    intersection_data$group_by_group = group
-                    new_data[[length(new_data)+1]] = intersection_data
+
+                    intersection_ids = which(data$intersection == intersection)
+
+                    intersections_indices[[length(intersections_indices) + 1]] = intersection_ids
+                    new_intersection_column[[length(new_intersection_column) + 1]] = rep(
+                        new_intersection_id,
+                        length(intersection_ids)
+                    )
+                    group_by_group_column[[length(group_by_group_column) + 1]] = rep(
+                        group,
+                        length(intersection_ids)
+                    )
+
                     if (intersection %in% plot_intersections_subset) {
                         new_plot_intersections_subset = c(
                             new_plot_intersections_subset, new_intersection_id
@@ -399,7 +402,10 @@ upset_data = function(
                 }
             }
         }
-        data = rbindlist(new_data)
+        data = data[unlist(intersections_indices), ]
+        data$intersection = unlist(new_intersection_column)
+        data$group_by_group = unlist(group_by_group_column)
+
         plot_intersections_subset = new_plot_intersections_subset
     }
 
