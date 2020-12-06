@@ -40,6 +40,11 @@ names_of_members = function(row) {
 }
 
 
+get_intersection_members = function(x) {
+    strsplit(x, '-', fixed=TRUE)
+}
+
+
 gather = function(data, idvar, col_name, value_name='value') {
     not_idvar = colnames(data)
     not_idvar = not_idvar[not_idvar != idvar]
@@ -51,12 +56,7 @@ gather = function(data, idvar, col_name, value_name='value') {
 
 
 compute_matrix = function(sorted_intersections, sorted_groups) {
-    intersections_as_groups = lapply(
-        sorted_intersections,
-        function(intersection) {
-            unlist(strsplit(intersection, '-'))
-        }
-    )
+    intersections_as_groups = get_intersection_members(sorted_intersections)
 
      matrix = sapply(
         intersections_as_groups,
@@ -73,10 +73,11 @@ compute_matrix = function(sorted_intersections, sorted_groups) {
 
 
 compute_unions = function(data, sorted_intersections) {
-    sapply(
-        sorted_intersections,
-        function(intersection) {
-            i_groups = unlist(strsplit(intersection, '-'))
+    intersections_as_groups = get_intersection_members(sorted_intersections)
+
+    result = sapply(
+        intersections_as_groups,
+        function(i_groups) {
             ids_of_union_for_intersection = data[data$group %in% i_groups, 'id']
 
             # deduplicated = union_for_intersection[!duplicated(ids), ]
@@ -92,6 +93,8 @@ compute_unions = function(data, sorted_intersections) {
         },
         simplify=TRUE
     )
+    names(result) = sorted_intersections
+    result
 }
 
 
@@ -148,7 +151,7 @@ get_sort_order = function(data, sort_order) {
 
 
 calculate_degree = function(x) {
-    values = lengths(strsplit(x, '-', fixed=TRUE))
+    values = lengths(get_intersection_members(x))
     values[x == EMPTY_INTERSECTION] = 0
     values
 }
@@ -181,6 +184,16 @@ trim_intersections = function(
     }
 
     intersections_by_size
+}
+
+
+rbindlist = function(data) {
+    if (requireNamespace('data.table', quietly=TRUE)) {
+        # much faster - use data.table if present
+        data.table::rbindlist(data)
+    } else {
+        do.call(rbind, data)
+    }
 }
 
 #' Prepare data for UpSet plots
@@ -369,15 +382,15 @@ upset_data = function(
 
         for (group in sorted_groups) {
             for (intersection in unique_sorted_intersections) {
-                i_groups = unlist(strsplit(intersection, '-'))
+                i_groups = unlist(get_intersection_members(intersection))
                 if (group %in% i_groups) {
                     new_intersection_id = paste(c(group, i_groups[i_groups!=group]), collapse='-')
                     sorted_intersections = c(sorted_intersections, new_intersection_id)
                     intersections_by_size[new_intersection_id] = intersections_by_size[intersection]
-                    intersection_data = data[data$intersection == intersection, ]
+                    intersection_data = data[data$intersection == intersection, , drop=FALSE]
                     intersection_data$intersection = new_intersection_id
                     intersection_data$group_by_group = group
-                    new_data = rbind(new_data, intersection_data)
+                    new_data[[length(new_data)+1]] = intersection_data
                     if (intersection %in% plot_intersections_subset) {
                         new_plot_intersections_subset = c(
                             new_plot_intersections_subset, new_intersection_id
@@ -386,7 +399,7 @@ upset_data = function(
                 }
             }
         }
-        data = new_data
+        data = rbindlist(new_data)
         plot_intersections_subset = new_plot_intersections_subset
     }
 
@@ -402,9 +415,15 @@ upset_data = function(
     )
 
     if (group_by == 'sets') {
-        matrix_frame$group_by_group = sapply(matrix_frame$intersection, function(intersection) {
-            unlist(strsplit(as.character(intersection), '-'))[[1]]
-        })
+        # the set (group) by which the intersections were grouped is stored as the first element of "intersection"
+        # extract first element of intersection:
+        matrix_frame$group_by_group = sapply(
+            get_intersection_members(
+                as.character(matrix_frame$intersection)
+            ),
+            '[[',
+            1
+        )
     }
 
     union_sizes = compute_unions(stacked, sorted_intersections)
