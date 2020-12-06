@@ -1,3 +1,10 @@
+# Version 0.8.1
+
+*Under development*
+
+Bug fixes:
+- Layers added to `upset_set_size()` and `intersection_matrix()` will now always go on top (avoiding geoms being hidden underneath)
+
 # Version 0.8.0
 
 2020-12-06

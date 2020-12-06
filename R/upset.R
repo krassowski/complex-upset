@@ -809,12 +809,7 @@ upset = function(
   query_matrix = query_matrix[query_matrix$value == TRUE, ]
 
   matrix_frame = data$matrix_frame[data$matrix_frame$group %in% data$plot_sets_subset, ]
-
   intersections_matrix = matrix %+% matrix_frame
-  intersections_matrix$layers = c(
-      matrix_background_stripes(data, stripes),
-      intersections_matrix$layers
-  )
 
   point_geom = intersections_matrix$geom
 
@@ -824,6 +819,59 @@ upset = function(
       dot_size = 1
   }
 
+  geom_layers = c(
+    # the dots outline
+    list(intersections_matrix$geom * geom_point(
+        color=ifelse(
+            matrix_frame$value,
+            intersections_matrix$outline_color$active,
+            intersections_matrix$outline_color$inactive
+        ),
+        size=dot_size * 7/6,
+        na.rm=TRUE
+    )),
+    # the dot
+    list(intersections_matrix$geom * geom_point(
+        aes(color=value),
+        size=dot_size,
+        na.rm=TRUE
+    )),
+    # the highlighted dot
+    highlight_layer(
+        intersections_matrix$geom,
+        geom_point,
+        query_matrix,
+        args=list(size=dot_size)
+    ),
+    # interconnectors on the dots
+    list(intersections_matrix$segment * geom_segment(aes(
+          x=intersection,
+          xend=intersection,
+          y=segment_end(matrix_frame, data, intersection, head),
+          yend=segment_end(matrix_frame, data, intersection, tail)
+    ), na.rm=TRUE)),
+    # highlighted interconnectors
+    highlight_layer(
+        intersections_matrix$segment,
+        geom_segment,
+        query_matrix,
+        args=list(
+            aes(
+                x=intersection,
+                xend=intersection,
+                y=segment_end(query_matrix, data, intersection, head),
+                yend=segment_end(query_matrix, data, intersection, tail)
+             ),
+             na.rm=TRUE
+        )
+    )
+  )
+
+  intersections_matrix$layers = c(
+      matrix_background_stripes(data, stripes),
+      geom_layers,
+      intersections_matrix$layers
+  )
   y_scale = scale_y_discrete(
        limits=sets_limits,
        labels=function(sets) { labeller(data$non_sanitized_labels[sets]) }
@@ -842,51 +890,6 @@ upset = function(
 
   intersections_matrix = (
     intersections_matrix
-    # the dots outline
-    + intersections_matrix$geom * geom_point(
-        color=ifelse(
-            matrix_frame$value,
-            intersections_matrix$outline_color$active,
-            intersections_matrix$outline_color$inactive
-        ),
-        size=dot_size * 7/6,
-        na.rm=TRUE
-    )
-    # the dot
-    + intersections_matrix$geom * geom_point(
-        aes(color=value),
-        size=dot_size,
-        na.rm=TRUE
-    )
-    # the highlighted dot
-    + highlight_layer(
-        intersections_matrix$geom,
-        geom_point,
-        query_matrix,
-        args=list(size=dot_size)
-    )
-    # interconnectors on the dots
-    + intersections_matrix$segment * geom_segment(aes(
-          x=intersection,
-          xend=intersection,
-          y=segment_end(matrix_frame, data, intersection, head),
-          yend=segment_end(matrix_frame, data, intersection, tail)
-    ), na.rm=TRUE)
-    # highlighted interconnectors
-    + highlight_layer(
-        intersections_matrix$segment,
-        geom_segment,
-        query_matrix,
-        args=list(
-            aes(
-                x=intersection,
-                xend=intersection,
-                y=segment_end(query_matrix, data, intersection, head),
-                yend=segment_end(query_matrix, data, intersection, tail)
-             ),
-             na.rm=TRUE
-        )
-    )
     + xlab(name)
     + scale_intersections
     + y_scale
@@ -1019,6 +1022,7 @@ upset = function(
 
       set_sizes$layers = c(
           matrix_background_stripes(data, stripes, 'vertical'),
+          geom,
           set_sizes$layers
       )
 
@@ -1028,7 +1032,6 @@ upset = function(
         + themes$overall_sizes
         + do.call(theme, set_sizes$theme)
         + coord_flip()
-        + geom
         + scale_x_discrete(limits=sets_limits)
         + scale_if_missing(set_sizes, axis='y', scale=default_scale)
       )
