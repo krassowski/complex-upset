@@ -74,7 +74,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">ComplexUpset</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.7.4</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.8.0</span>
       </span>
     </div>
 
@@ -126,12 +126,32 @@
       <small>Source: <a href='https://github.com/krassowski/complex-upset/blob/master/NEWS.md'><code>NEWS.md</code></a></small>
     </div>
 
+    <div id="version-080" class="section level1">
+<h1 class="page-header" data-toc-text="0.8.0">
+<a href="#version-080" class="anchor"></a>Version 0.8.0</h1>
+<p>(under development)</p>
+<ul>
+<li>Breaking: <code>geom</code> of <code><a href="../reference/upset_set_size.html">upset_set_size()</a></code> now accepts geom object (e.g. <code><a href="https://ggplot2.tidyverse.org/reference/geom_bar.html">geom_bar()</a></code>) rather than a function (e.g. <code>geom_bar</code>)</li>
+<li>Breaking: <code><a href="../reference/upset_set_size.html">upset_set_size()</a></code> no longer accepts variadic arguments (<code>...</code>); please modify the <code>geom</code> instead</li>
+<li>Additional geoms added to <code><a href="../reference/upset_set_size.html">upset_set_size()</a></code> are now added on top of stripes, thus properly visible</li>
+<li>Data available for <code><a href="../reference/upset_set_size.html">upset_set_size()</a></code> now includes all metadata of the original data frame, enabling to annotate the bars, e.g.:
+<ul>
+<li><code><a href="../reference/upset_set_size.html">upset_set_size(geom=geom_bar(aes(fill=mpaa, x=group)))</a></code></li>
+</ul>
+</li>
+<li>Intersections can now be sorted by multiple criteria, e.g. first by degree and then by cardinality: <code>sort_intersections_by=c('degree', 'cardinality')</code> (<a href='https://github.com/krassowski/complex-upset/issues/47'>#47</a>)</li>
+</ul>
+</div>
     <div id="version-074" class="section level1">
 <h1 class="page-header" data-toc-text="0.7.4">
 <a href="#version-074" class="anchor"></a>Version 0.7.4</h1>
-<p>(under development)</p>
+<p>2020-12-06</p>
 <ul>
-<li>significant performance improvements, especially for large datasets (<a href='https://github.com/krassowski/complex-upset/issues/12'>#12</a>)</li>
+<li>Significant performance improvements, especially for large datasets and <code>group_by</code> (<a href='https://github.com/krassowski/complex-upset/issues/12'>#12</a>)</li>
+<li>Set sizes can now be moved to the right side of the plot using <code><a href="../reference/upset_set_size.html">upset_set_size(position='right')</a></code>
+</li>
+<li>
+<code>guides='over'</code> can be now passed to <code><a href="../reference/upset.html">upset()</a></code> to place the legends over the set sizes</li>
 </ul>
 </div>
     <div id="version-073" class="section level1">

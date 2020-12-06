@@ -34,7 +34,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">ComplexUpset</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.7.4</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.8.0</span>
       </span>
     </div>
 
@@ -1803,7 +1803,7 @@ NA
     min_size<span class="op">=</span><span class="fl">100</span>,
     width_ratio<span class="op">=</span><span class="fl">0.15</span>,
     set_sizes<span class="op">=</span><span class="op">(</span>
-        <span class="fu"><a href="../reference/upset_set_size.html">upset_set_size</a></span><span class="op">(</span>width<span class="op">=</span><span class="fl">0.6</span><span class="op">)</span>
+        <span class="fu"><a href="../reference/upset_set_size.html">upset_set_size</a></span><span class="op">(</span><span class="op">)</span>
         <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html">theme</a></span><span class="op">(</span>axis.text.x<span class="op">=</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_text</a></span><span class="op">(</span>angle<span class="op">=</span><span class="fl">90</span><span class="op">)</span><span class="op">)</span>
     <span class="op">)</span>
 <span class="op">)</span></code></pre></div>
@@ -1814,7 +1814,7 @@ NA
 <span class="fu"><a href="../reference/upset.html">upset</a></span><span class="op">(</span>
     <span class="va">movies</span>, <span class="va">genres</span>, width_ratio<span class="op">=</span><span class="fl">0.3</span>, min_size<span class="op">=</span><span class="fl">100</span>, wrap<span class="op">=</span><span class="cn">TRUE</span>,
     set_sizes<span class="op">=</span><span class="op">(</span>
-        <span class="fu"><a href="../reference/upset_set_size.html">upset_set_size</a></span><span class="op">(</span>width<span class="op">=</span><span class="fl">0.6</span><span class="op">)</span>
+        <span class="fu"><a href="../reference/upset_set_size.html">upset_set_size</a></span><span class="op">(</span><span class="op">)</span>
         <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html">theme</a></span><span class="op">(</span>axis.ticks.x<span class="op">=</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_line</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span>
     <span class="op">)</span>
 <span class="op">)</span></code></pre></div>
@@ -1823,7 +1823,7 @@ NA
 <div id="modify-geoms-and-other-layers" class="section level3">
 <h3 class="hasAnchor">
 <a href="#modify-geoms-and-other-layers" class="anchor"></a>4.2 Modify geoms and other layers</h3>
-<p>Arguments of the <code>geom_bar</code> can be passed to <code>upset_set_size</code>; it can even use a different geom, or be replaced with a custom list of layers altogether:</p>
+<p>Arguments of the <code>geom_bar</code> can be adjusted in <code>upset_set_size</code>; it can use a different geom, or be replaced with a custom list of layers altogether:</p>
 <div class="sourceCode" id="cb38"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">set_size</span><span class="op">(</span><span class="fl">8</span>, <span class="fl">3</span><span class="op">)</span>
 
@@ -1831,16 +1831,17 @@ NA
     <span class="fu"><a href="../reference/upset.html">upset</a></span><span class="op">(</span>
         <span class="va">movies</span>, <span class="va">genres</span>, width_ratio<span class="op">=</span><span class="fl">0.5</span>, max_size<span class="op">=</span><span class="fl">100</span>, min_size<span class="op">=</span><span class="fl">15</span>, wrap<span class="op">=</span><span class="cn">TRUE</span>,
         set_sizes<span class="op">=</span><span class="fu"><a href="../reference/upset_set_size.html">upset_set_size</a></span><span class="op">(</span>
-            width<span class="op">=</span><span class="fl">0.4</span>
+            geom<span class="op">=</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_bar.html">geom_bar</a></span><span class="op">(</span>width<span class="op">=</span><span class="fl">0.4</span><span class="op">)</span>
         <span class="op">)</span>
     <span class="op">)</span>
     <span class="op">+</span>
     <span class="fu"><a href="../reference/upset.html">upset</a></span><span class="op">(</span>
         <span class="va">movies</span>, <span class="va">genres</span>, width_ratio<span class="op">=</span><span class="fl">0.5</span>, max_size<span class="op">=</span><span class="fl">100</span>, min_size<span class="op">=</span><span class="fl">15</span>, wrap<span class="op">=</span><span class="cn">TRUE</span>,
         set_sizes<span class="op">=</span><span class="fu"><a href="../reference/upset_set_size.html">upset_set_size</a></span><span class="op">(</span>
-            geom<span class="op">=</span><span class="va">geom_point</span>,
-            stat<span class="op">=</span><span class="st">'count'</span>,
-            color<span class="op">=</span><span class="st">'blue'</span>
+            geom<span class="op">=</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html">geom_point</a></span><span class="op">(</span>
+                stat<span class="op">=</span><span class="st">'count'</span>,
+                color<span class="op">=</span><span class="st">'blue'</span>
+            <span class="op">)</span>
         <span class="op">)</span>
     <span class="op">)</span>
     <span class="op">+</span>
@@ -1848,9 +1849,8 @@ NA
         <span class="va">movies</span>, <span class="va">genres</span>, width_ratio<span class="op">=</span><span class="fl">0.5</span>, max_size<span class="op">=</span><span class="fl">100</span>, min_size<span class="op">=</span><span class="fl">15</span>, wrap<span class="op">=</span><span class="cn">TRUE</span>,
         set_sizes<span class="op">=</span><span class="op">(</span>
             <span class="fu"><a href="../reference/upset_set_size.html">upset_set_size</a></span><span class="op">(</span>
-                geom<span class="op">=</span><span class="va">geom_point</span>,
+                geom<span class="op">=</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html">geom_point</a></span><span class="op">(</span>stat<span class="op">=</span><span class="st">'count'</span><span class="op">)</span>,
                 mapping<span class="op">=</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>y<span class="op">=</span><span class="va">..count..</span><span class="op">/</span><span class="fu"><a href="https://rdrr.io/r/base/Extremes.html">max</a></span><span class="op">(</span><span class="va">..count..</span><span class="op">)</span><span class="op">)</span>,
-                stat<span class="op">=</span><span class="st">'count'</span>
             <span class="op">)</span>
             <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">ylab</a></span><span class="op">(</span><span class="st">'Size relative to the largest'</span><span class="op">)</span>
         <span class="op">)</span>
@@ -1870,7 +1870,7 @@ NA
     width_ratio<span class="op">=</span><span class="fl">0.1</span>,
     min_size<span class="op">=</span><span class="fl">10</span>,
     set_sizes<span class="op">=</span><span class="op">(</span>
-        <span class="fu"><a href="../reference/upset_set_size.html">upset_set_size</a></span><span class="op">(</span>width<span class="op">=</span><span class="fl">0.4</span><span class="op">)</span>
+        <span class="fu"><a href="../reference/upset_set_size.html">upset_set_size</a></span><span class="op">(</span><span class="op">)</span>
         <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html">theme</a></span><span class="op">(</span>axis.text.x<span class="op">=</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_text</a></span><span class="op">(</span>angle<span class="op">=</span><span class="fl">90</span><span class="op">)</span><span class="op">)</span>
         <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_continuous.html">scale_y_continuous</a></span><span class="op">(</span>trans<span class="op">=</span><span class="fu"><a href="../reference/reverse_log_trans.html">reverse_log_trans</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span>
     <span class="op">)</span>,
@@ -1885,7 +1885,7 @@ NA
     <span class="va">movies</span>, <span class="va">genres</span>,
     min_size<span class="op">=</span><span class="fl">10</span>,
     width_ratio<span class="op">=</span><span class="fl">0.2</span>,
-    set_sizes<span class="op">=</span><span class="fu"><a href="../reference/upset_set_size.html">upset_set_size</a></span><span class="op">(</span>width<span class="op">=</span><span class="fl">0.4</span><span class="op">)</span>
+    set_sizes<span class="op">=</span><span class="fu"><a href="../reference/upset_set_size.html">upset_set_size</a></span><span class="op">(</span><span class="op">)</span>
         <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_continuous.html">scale_y_continuous</a></span><span class="op">(</span>
             trans<span class="op">=</span><span class="fu"><a href="../reference/reverse_log_trans.html">reverse_log_trans</a></span><span class="op">(</span><span class="op">)</span>,
             labels<span class="op">=</span><span class="va">log10</span>
@@ -1893,7 +1893,11 @@ NA
         <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">ylab</a></span><span class="op">(</span><span class="st">'log10(set size)'</span><span class="op">)</span>
 <span class="op">)</span></code></pre></div>
 <p><img src="Examples_R_files/Examples_R_80_0.png"></p>
-<p>Or display the actual count:</p>
+</div>
+<div id="display-counts" class="section level3">
+<h3 class="hasAnchor">
+<a href="#display-counts" class="anchor"></a>4.4 Display counts</h3>
+<p>To display the count add <code><a href="https://ggplot2.tidyverse.org/reference/geom_text.html">geom_text()</a></code>:</p>
 <div class="sourceCode" id="cb41"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">set_size</span><span class="op">(</span><span class="fl">5</span>, <span class="fl">3</span><span class="op">)</span>
 
@@ -1902,26 +1906,42 @@ NA
     min_size<span class="op">=</span><span class="fl">10</span>,
     width_ratio<span class="op">=</span><span class="fl">0.3</span>,
     set_sizes<span class="op">=</span><span class="op">(</span>
-        <span class="fu"><a href="../reference/upset_set_size.html">upset_set_size</a></span><span class="op">(</span>
-            width<span class="op">=</span><span class="fl">0.4</span>,
-            geom<span class="op">=</span><span class="kw">function</span><span class="op">(</span><span class="va">...</span><span class="op">)</span> <span class="op">{</span>
-                <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>
-                    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_bar.html">geom_bar</a></span><span class="op">(</span><span class="va">...</span><span class="op">)</span>,
-                    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_text.html">geom_text</a></span><span class="op">(</span><span class="va">...</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>label<span class="op">=</span><span class="va">..count..</span><span class="op">)</span>, hjust<span class="op">=</span><span class="fl">1.1</span><span class="op">)</span>
-                <span class="op">)</span>
-            <span class="op">}</span>,
-            stat<span class="op">=</span><span class="st">'count'</span>
-        <span class="op">)</span>
+        <span class="fu"><a href="../reference/upset_set_size.html">upset_set_size</a></span><span class="op">(</span><span class="op">)</span>
+        <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_text.html">geom_text</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>label<span class="op">=</span><span class="va">..count..</span><span class="op">)</span>, hjust<span class="op">=</span><span class="fl">1.1</span>, stat<span class="op">=</span><span class="st">'count'</span><span class="op">)</span>
         <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/expand_limits.html">expand_limits</a></span><span class="op">(</span>y<span class="op">=</span><span class="fl">1100</span><span class="op">)</span>
         <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html">theme</a></span><span class="op">(</span>axis.text.x<span class="op">=</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_text</a></span><span class="op">(</span>angle<span class="op">=</span><span class="fl">90</span><span class="op">)</span><span class="op">)</span>
     <span class="op">)</span>
 <span class="op">)</span></code></pre></div>
-<p><img src="Examples_R_files/Examples_R_82_0.png"></p>
+<p><img src="Examples_R_files/Examples_R_83_0.png"></p>
+</div>
+<div id="change-position-and-add-fill" class="section level3">
+<h3 class="hasAnchor">
+<a href="#change-position-and-add-fill" class="anchor"></a>4.5 Change position and add fill</h3>
+<div class="sourceCode" id="cb42"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu">set_size</span><span class="op">(</span><span class="fl">5</span>, <span class="fl">3</span><span class="op">)</span>
+
+<span class="fu"><a href="../reference/upset.html">upset</a></span><span class="op">(</span>
+    <span class="va">movies</span>, <span class="va">genres</span>,
+    min_size<span class="op">=</span><span class="fl">10</span>,
+    width_ratio<span class="op">=</span><span class="fl">0.3</span>,
+    set_sizes<span class="op">=</span><span class="op">(</span>
+        <span class="fu"><a href="../reference/upset_set_size.html">upset_set_size</a></span><span class="op">(</span>
+            geom<span class="op">=</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_bar.html">geom_bar</a></span><span class="op">(</span>
+                <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>fill<span class="op">=</span><span class="va">mpaa</span>, x<span class="op">=</span><span class="va">group</span><span class="op">)</span>,
+                width<span class="op">=</span><span class="fl">0.8</span>
+            <span class="op">)</span>,
+            position<span class="op">=</span><span class="st">'right'</span>
+        <span class="op">)</span>
+    <span class="op">)</span>,
+    <span class="co"># moves legends over the set sizes</span>
+    guides<span class="op">=</span><span class="st">'over'</span>
+<span class="op">)</span></code></pre></div>
+<p><img src="Examples_R_files/Examples_R_85_0.png"></p>
 </div>
 <div id="hide-the-set-sizes-altogether" class="section level3">
 <h3 class="hasAnchor">
-<a href="#hide-the-set-sizes-altogether" class="anchor"></a>4.4 Hide the set sizes altogether</h3>
-<div class="sourceCode" id="cb42"><pre class="downlit sourceCode r">
+<a href="#hide-the-set-sizes-altogether" class="anchor"></a>4.6 Hide the set sizes altogether</h3>
+<div class="sourceCode" id="cb43"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">set_size</span><span class="op">(</span><span class="fl">5</span>, <span class="fl">3</span><span class="op">)</span>
 
 <span class="fu"><a href="../reference/upset.html">upset</a></span><span class="op">(</span>
@@ -1929,7 +1949,7 @@ NA
     min_size<span class="op">=</span><span class="fl">10</span>,
     set_sizes<span class="op">=</span><span class="cn">FALSE</span>
 <span class="op">)</span></code></pre></div>
-<p><img src="Examples_R_files/Examples_R_84_0.png"></p>
+<p><img src="Examples_R_files/Examples_R_87_0.png"></p>
 </div>
 </div>
 <div id="adjusting-other-aesthetics" class="section level2">
@@ -1939,7 +1959,7 @@ NA
 <h3 class="hasAnchor">
 <a href="#stripes" class="anchor"></a>5.1 Stripes</h3>
 <p>Change the colors:</p>
-<div class="sourceCode" id="cb43"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb44"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">set_size</span><span class="op">(</span><span class="fl">6</span>, <span class="fl">4</span><span class="op">)</span>
 <span class="fu"><a href="../reference/upset.html">upset</a></span><span class="op">(</span>
     <span class="va">movies</span>,
@@ -1948,9 +1968,9 @@ NA
     width_ratio<span class="op">=</span><span class="fl">0.2</span>,
     stripes<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">'cornsilk1'</span>, <span class="st">'deepskyblue1'</span><span class="op">)</span>
 <span class="op">)</span></code></pre></div>
-<p><img src="Examples_R_files/Examples_R_88_0.png"></p>
+<p><img src="Examples_R_files/Examples_R_91_0.png"></p>
 <p>You can use multiple colors:</p>
-<div class="sourceCode" id="cb44"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb45"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">set_size</span><span class="op">(</span><span class="fl">6</span>, <span class="fl">4</span><span class="op">)</span>
 <span class="fu"><a href="../reference/upset.html">upset</a></span><span class="op">(</span>
     <span class="va">movies</span>,
@@ -1959,9 +1979,9 @@ NA
     width_ratio<span class="op">=</span><span class="fl">0.2</span>,
     stripes<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">'cornsilk1'</span>, <span class="st">'deepskyblue1'</span>, <span class="st">'grey90'</span><span class="op">)</span>
 <span class="op">)</span></code></pre></div>
-<p><img src="Examples_R_files/Examples_R_90_0.png"></p>
+<p><img src="Examples_R_files/Examples_R_93_0.png"></p>
 <p>Or, set the color to white to effectively disable the stripes:</p>
-<div class="sourceCode" id="cb45"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb46"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">set_size</span><span class="op">(</span><span class="fl">6</span>, <span class="fl">4</span><span class="op">)</span>
 <span class="fu"><a href="../reference/upset.html">upset</a></span><span class="op">(</span>
     <span class="va">movies</span>,
@@ -1970,27 +1990,27 @@ NA
     width_ratio<span class="op">=</span><span class="fl">0.2</span>,
     stripes<span class="op">=</span><span class="st">'white'</span>
 <span class="op">)</span></code></pre></div>
-<p><img src="Examples_R_files/Examples_R_92_0.png"></p>
+<p><img src="Examples_R_files/Examples_R_95_0.png"></p>
 </div>
 <div id="adding-title" class="section level3">
 <h3 class="hasAnchor">
 <a href="#adding-title" class="anchor"></a>5.2 Adding title</h3>
 <p>Adding title with <code>ggtitle</code> with add it to the intersection matrix:</p>
-<div class="sourceCode" id="cb46"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu">set_size</span><span class="op">(</span><span class="fl">6</span>, <span class="fl">4</span><span class="op">)</span>
-<span class="fu"><a href="../reference/upset.html">upset</a></span><span class="op">(</span><span class="va">movies</span>, <span class="va">genres</span>, min_size<span class="op">=</span><span class="fl">10</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">ggtitle</a></span><span class="op">(</span><span class="st">'Intersection matrix title'</span><span class="op">)</span></code></pre></div>
-<p><img src="Examples_R_files/Examples_R_95_0.png"></p>
-<p>In order to add a title for the entire plot, you need to wrap the plot:</p>
 <div class="sourceCode" id="cb47"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">set_size</span><span class="op">(</span><span class="fl">6</span>, <span class="fl">4</span><span class="op">)</span>
+<span class="fu"><a href="../reference/upset.html">upset</a></span><span class="op">(</span><span class="va">movies</span>, <span class="va">genres</span>, min_size<span class="op">=</span><span class="fl">10</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">ggtitle</a></span><span class="op">(</span><span class="st">'Intersection matrix title'</span><span class="op">)</span></code></pre></div>
+<p><img src="Examples_R_files/Examples_R_98_0.png"></p>
+<p>In order to add a title for the entire plot, you need to wrap the plot:</p>
+<div class="sourceCode" id="cb48"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu">set_size</span><span class="op">(</span><span class="fl">6</span>, <span class="fl">4</span><span class="op">)</span>
 <span class="fu"><a href="../reference/upset.html">upset</a></span><span class="op">(</span><span class="va">movies</span>, <span class="va">genres</span>, min_size<span class="op">=</span><span class="fl">10</span>, wrap<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">ggtitle</a></span><span class="op">(</span><span class="st">'The overlap between genres'</span><span class="op">)</span></code></pre></div>
-<p><img src="Examples_R_files/Examples_R_97_0.png"></p>
+<p><img src="Examples_R_files/Examples_R_100_0.png"></p>
 </div>
 <div id="making-the-plot-transparent" class="section level3">
 <h3 class="hasAnchor">
 <a href="#making-the-plot-transparent" class="anchor"></a>5.3 Making the plot transparent</h3>
 <p>You need to set the plot background to transparent and adjust colors of stripes to your liking:</p>
-<div class="sourceCode" id="cb48"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb49"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">set_size</span><span class="op">(</span><span class="fl">6</span>, <span class="fl">4</span><span class="op">)</span>
 <span class="op">(</span>
     <span class="fu"><a href="../reference/upset.html">upset</a></span><span class="op">(</span>
@@ -1999,7 +2019,7 @@ NA
     <span class="op">)</span>
     <span class="op">&amp;</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html">theme</a></span><span class="op">(</span>plot.background<span class="op">=</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_rect</a></span><span class="op">(</span>fill<span class="op">=</span><span class="st">'transparent'</span>, color<span class="op">=</span><span class="cn">NA</span><span class="op">)</span><span class="op">)</span>
 <span class="op">)</span></code></pre></div>
-<p><img src="Examples_R_files/Examples_R_100_0.png"></p>
+<p><img src="Examples_R_files/Examples_R_103_0.png"></p>
 <p>Use <code><a href="https://ggplot2.tidyverse.org/reference/ggsave.html">ggsave('upset.png', bg="transparent")</a></code> when exporting to PNG.</p>
 </div>
 </div>
@@ -2007,7 +2027,7 @@ NA
 <h2 class="hasAnchor">
 <a href="#themes" class="anchor"></a>6. Themes</h2>
 <p>The themes for specific components are defined in <code>upset_themes</code> list, which contains themes for:</p>
-<div class="sourceCode" id="cb49"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb50"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/names.html">names</a></span><span class="op">(</span><span class="va">upset_themes</span><span class="op">)</span></code></pre></div>
 <style>
 .list-inline {list-style: none; margin:0; padding: 0}
@@ -2032,12 +2052,12 @@ NA
 <div id="substituting-themes" class="section level3">
 <h3 class="hasAnchor">
 <a href="#substituting-themes" class="anchor"></a>6.1 Substituting themes</h3>
-<div class="sourceCode" id="cb50"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb51"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">set_size</span><span class="op">(</span><span class="fl">8</span>, <span class="fl">4</span><span class="op">)</span>
 <span class="fu"><a href="../reference/upset.html">upset</a></span><span class="op">(</span><span class="va">movies</span>, <span class="va">genres</span>, min_size<span class="op">=</span><span class="fl">10</span>, themes<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>default<span class="op">=</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html">theme</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></code></pre></div>
-<p><img src="Examples_R_files/Examples_R_107_0.png"></p>
+<p><img src="Examples_R_files/Examples_R_110_0.png"></p>
 <p>You can also add themes for your custom panels/annotations:</p>
-<div class="sourceCode" id="cb51"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb52"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">set_size</span><span class="op">(</span><span class="fl">8</span>, <span class="fl">8</span><span class="op">)</span>
 
 <span class="fu"><a href="../reference/upset.html">upset</a></span><span class="op">(</span>
@@ -2063,22 +2083,22 @@ NA
         <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>Rating<span class="op">=</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html">theme_void</a></span><span class="op">(</span><span class="op">)</span>, Length<span class="op">=</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html">theme</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span>
     <span class="op">)</span>
 <span class="op">)</span></code></pre></div>
-<p><img src="Examples_R_files/Examples_R_109_0.png"></p>
+<p><img src="Examples_R_files/Examples_R_112_0.png"></p>
 </div>
 <div id="adjusting-the-default-themes" class="section level3">
 <h3 class="hasAnchor">
 <a href="#adjusting-the-default-themes" class="anchor"></a>6.2 Adjusting the default themes</h3>
 <p>Modify all the default themes as once with <code><a href="../reference/upset_default_themes.html">upset_default_themes()</a></code>:</p>
-<div class="sourceCode" id="cb52"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb53"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">set_size</span><span class="op">(</span><span class="fl">8</span>, <span class="fl">4</span><span class="op">)</span>
 
 <span class="fu"><a href="../reference/upset.html">upset</a></span><span class="op">(</span>
     <span class="va">movies</span>, <span class="va">genres</span>, min_size<span class="op">=</span><span class="fl">10</span>, width_ratio<span class="op">=</span><span class="fl">0.1</span>,
     themes<span class="op">=</span><span class="fu"><a href="../reference/upset_default_themes.html">upset_default_themes</a></span><span class="op">(</span>text<span class="op">=</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_text</a></span><span class="op">(</span>color<span class="op">=</span><span class="st">'red'</span><span class="op">)</span><span class="op">)</span>
 <span class="op">)</span></code></pre></div>
-<p><img src="Examples_R_files/Examples_R_112_0.png"></p>
+<p><img src="Examples_R_files/Examples_R_115_0.png"></p>
 <p>To modify only a subset of default themes use <code><a href="../reference/upset_modify_themes.html">upset_modify_themes()</a></code>:</p>
-<div class="sourceCode" id="cb53"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb54"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">set_size</span><span class="op">(</span><span class="fl">8</span>, <span class="fl">4</span><span class="op">)</span>
 
 <span class="fu"><a href="../reference/upset.html">upset</a></span><span class="op">(</span>
@@ -2093,7 +2113,7 @@ NA
         <span class="op">)</span>
     <span class="op">)</span>
 <span class="op">)</span></code></pre></div>
-<p><img src="Examples_R_files/Examples_R_114_0.png"></p>
+<p><img src="Examples_R_files/Examples_R_117_0.png"></p>
 </div>
 </div>
 <div id="highlighting-queries" class="section level2">
@@ -2101,7 +2121,7 @@ NA
 <a href="#highlighting-queries" class="anchor"></a>7. Highlighting (queries)</h2>
 <p>Pass a list of lists generated with <code><a href="../reference/upset_query.html">upset_query()</a></code> utility to the optional <code>queries</code> argument to selectively modify aesthetics of specific intersections or sets.</p>
 <p>Use one of the arguments: <code>set</code> or <code>intersection</code> (not both) to specify what to highlight: - <code>set</code> will highlight the bar of the set size, - <code>intersection</code> will highlight an intersection on all components (by default), or on components chosen with <code>only_components</code> - all other parameters will be used to modify the geoms</p>
-<div class="sourceCode" id="cb54"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb55"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">set_size</span><span class="op">(</span><span class="fl">8</span>, <span class="fl">6</span><span class="op">)</span>
 
 <span class="fu"><a href="../reference/upset.html">upset</a></span><span class="op">(</span>
@@ -2130,7 +2150,7 @@ NA
         <span class="op">)</span>
     <span class="op">)</span>
 <span class="op">)</span></code></pre></div>
-<p><img src="Examples_R_files/Examples_R_117_0.png"></p>
+<p><img src="Examples_R_files/Examples_R_120_0.png"></p>
 </div>
 <div id="sorting" class="section level2">
 <h2 class="hasAnchor">
@@ -2139,12 +2159,12 @@ NA
 <h3 class="hasAnchor">
 <a href="#sorting-intersections" class="anchor"></a>8.1 Sorting intersections</h3>
 <p>By degree:</p>
-<div class="sourceCode" id="cb55"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb56"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">set_size</span><span class="op">(</span><span class="fl">8</span>, <span class="fl">3</span><span class="op">)</span>
 <span class="fu"><a href="../reference/upset.html">upset</a></span><span class="op">(</span><span class="va">movies</span>, <span class="va">genres</span>, width_ratio<span class="op">=</span><span class="fl">0.1</span>, sort_intersections_by<span class="op">=</span><span class="st">'degree'</span><span class="op">)</span></code></pre></div>
-<p><img src="Examples_R_files/Examples_R_121_0.png"></p>
+<p><img src="Examples_R_files/Examples_R_124_0.png"></p>
 <p>By ratio:</p>
-<div class="sourceCode" id="cb56"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb57"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">set_size</span><span class="op">(</span><span class="fl">8</span>, <span class="fl">4</span><span class="op">)</span>
 <span class="fu"><a href="../reference/upset.html">upset</a></span><span class="op">(</span>
     <span class="va">movies</span>, <span class="va">genres</span>, name<span class="op">=</span><span class="st">'genre'</span>, width_ratio<span class="op">=</span><span class="fl">0.1</span>, min_size<span class="op">=</span><span class="fl">10</span>,
@@ -2154,28 +2174,33 @@ NA
         <span class="st">'Intersection ratio'</span><span class="op">=</span><span class="fu"><a href="../reference/intersection_ratio.html">intersection_ratio</a></span><span class="op">(</span>text_aes<span class="op">=</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes_.html">aes_</a></span><span class="op">(</span>label<span class="op">=</span><span class="fu"><a href="../reference/upset_text_percentage.html">upset_text_percentage</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>
     <span class="op">)</span>
 <span class="op">)</span></code></pre></div>
-<p><img src="Examples_R_files/Examples_R_123_0.png"></p>
+<p><img src="Examples_R_files/Examples_R_126_0.png"></p>
 <p>The other way around:</p>
-<div class="sourceCode" id="cb57"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu">set_size</span><span class="op">(</span><span class="fl">8</span>, <span class="fl">3</span><span class="op">)</span>
-<span class="fu"><a href="../reference/upset.html">upset</a></span><span class="op">(</span><span class="va">movies</span>, <span class="va">genres</span>, width_ratio<span class="op">=</span><span class="fl">0.1</span>, sort_intersections<span class="op">=</span><span class="st">'ascending'</span><span class="op">)</span></code></pre></div>
-<p><img src="Examples_R_files/Examples_R_125_0.png"></p>
-<p>Without any sorting:</p>
 <div class="sourceCode" id="cb58"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">set_size</span><span class="op">(</span><span class="fl">8</span>, <span class="fl">3</span><span class="op">)</span>
+<span class="fu"><a href="../reference/upset.html">upset</a></span><span class="op">(</span><span class="va">movies</span>, <span class="va">genres</span>, width_ratio<span class="op">=</span><span class="fl">0.1</span>, sort_intersections<span class="op">=</span><span class="st">'ascending'</span><span class="op">)</span></code></pre></div>
+<p><img src="Examples_R_files/Examples_R_128_0.png"></p>
+<p>Without any sorting:</p>
+<div class="sourceCode" id="cb59"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu">set_size</span><span class="op">(</span><span class="fl">8</span>, <span class="fl">3</span><span class="op">)</span>
 <span class="fu"><a href="../reference/upset.html">upset</a></span><span class="op">(</span><span class="va">movies</span>, <span class="va">genres</span>, width_ratio<span class="op">=</span><span class="fl">0.1</span>, sort_intersections<span class="op">=</span><span class="cn">FALSE</span><span class="op">)</span></code></pre></div>
-<p><img src="Examples_R_files/Examples_R_127_0.png"></p>
+<p><img src="Examples_R_files/Examples_R_130_0.png"></p>
+<p>First by degree then by cardinality:</p>
+<div class="sourceCode" id="cb60"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu">set_size</span><span class="op">(</span><span class="fl">8</span>, <span class="fl">3</span><span class="op">)</span>
+<span class="fu"><a href="../reference/upset.html">upset</a></span><span class="op">(</span><span class="va">movies</span>, <span class="va">genres</span>, width_ratio<span class="op">=</span><span class="fl">0.1</span>, sort_intersections_by<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">'degree'</span>, <span class="st">'cardinality'</span><span class="op">)</span><span class="op">)</span></code></pre></div>
+<p><img src="Examples_R_files/Examples_R_132_0.png"></p>
 </div>
 <div id="sorting-sets" class="section level3">
 <h3 class="hasAnchor">
 <a href="#sorting-sets" class="anchor"></a>8.2 Sorting sets</h3>
 <p>Ascending:</p>
-<div class="sourceCode" id="cb59"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb61"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">set_size</span><span class="op">(</span><span class="fl">8</span>, <span class="fl">3</span><span class="op">)</span>
 <span class="fu"><a href="../reference/upset.html">upset</a></span><span class="op">(</span><span class="va">movies</span>, <span class="va">genres</span>, width_ratio<span class="op">=</span><span class="fl">0.1</span>, sort_sets<span class="op">=</span><span class="st">'ascending'</span><span class="op">)</span></code></pre></div>
-<p><img src="Examples_R_files/Examples_R_130_0.png"></p>
+<p><img src="Examples_R_files/Examples_R_135_0.png"></p>
 <p>Without sorting - preserving the order as in genres:</p>
-<div class="sourceCode" id="cb60"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb62"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">genres</span></code></pre></div>
 <style>
 .list-inline {list-style: none; margin:0; padding: 0}
@@ -2205,10 +2230,10 @@ NA
 ‘Short’
 </li>
 </ol>
-<div class="sourceCode" id="cb61"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb63"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">set_size</span><span class="op">(</span><span class="fl">8</span>, <span class="fl">3</span><span class="op">)</span>
 <span class="fu"><a href="../reference/upset.html">upset</a></span><span class="op">(</span><span class="va">movies</span>, <span class="va">genres</span>, width_ratio<span class="op">=</span><span class="fl">0.1</span>, sort_sets<span class="op">=</span><span class="cn">FALSE</span><span class="op">)</span></code></pre></div>
-<p><img src="Examples_R_files/Examples_R_133_0.png"></p>
+<p><img src="Examples_R_files/Examples_R_138_0.png"></p>
 </div>
 </div>
 <div id="grouping" class="section level2">
@@ -2218,7 +2243,7 @@ NA
 <h3 class="hasAnchor">
 <a href="#grouping-intersections" class="anchor"></a>9.1 Grouping intersections</h3>
 <p>Use <code>group_by='sets'</code> to group intersections by set. If needed, the intersections will be repeated so that they appear in each set group. Use <code><a href="../reference/upset_query.html">upset_query()</a></code> with <code>group</code> argument to color the intersection matrix accordingly.</p>
-<div class="sourceCode" id="cb62"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb64"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">set_size</span><span class="op">(</span><span class="fl">8</span>, <span class="fl">3</span><span class="op">)</span>
 
 <span class="fu"><a href="../reference/upset.html">upset</a></span><span class="op">(</span>
@@ -2240,14 +2265,14 @@ NA
         <span class="fu"><a href="../reference/upset_query.html">upset_query</a></span><span class="op">(</span>set<span class="op">=</span><span class="st">'Action'</span>, fill<span class="op">=</span><span class="st">'purple'</span><span class="op">)</span>
     <span class="op">)</span>
 <span class="op">)</span></code></pre></div>
-<p><img src="Examples_R_files/Examples_R_137_0.png"></p>
+<p><img src="Examples_R_files/Examples_R_142_0.png"></p>
 </div>
 </div>
 <div id="display-percentages" class="section level2">
 <h2 class="hasAnchor">
 <a href="#display-percentages" class="anchor"></a>10. Display percentages</h2>
 <p>Use <code><a href="../reference/aes_percentage.html">aes_percentage()</a></code> utility preceded with <code>!!</code> syntax to easily display percentages. In the examples below only percentages for the movies with R rating are shown to avoid visual clutter.</p>
-<div class="sourceCode" id="cb63"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb65"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">rating_scale</span> <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_manual.html">scale_fill_manual</a></span><span class="op">(</span>values<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span>
     <span class="st">'R'</span><span class="op">=</span><span class="st">'#E41A1C'</span>, <span class="st">'PG'</span><span class="op">=</span><span class="st">'#377EB8'</span>,
     <span class="st">'PG-13'</span><span class="op">=</span><span class="st">'#4DAF4A'</span>, <span class="st">'NC-17'</span><span class="op">=</span><span class="st">'#FF7F00'</span>
@@ -2256,7 +2281,7 @@ NA
 <div id="within-intersection" class="section level3">
 <h3 class="hasAnchor">
 <a href="#within-intersection" class="anchor"></a>10.1 Within intersection</h3>
-<div class="sourceCode" id="cb64"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb66"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">set_size</span><span class="op">(</span><span class="fl">8</span>, <span class="fl">5</span><span class="op">)</span>
 
 <span class="fu"><a href="../reference/upset.html">upset</a></span><span class="op">(</span>
@@ -2281,12 +2306,12 @@ NA
         <span class="op">)</span>
     <span class="op">)</span>
 <span class="op">)</span></code></pre></div>
-<p><img src="Examples_R_files/Examples_R_142_0.png"></p>
+<p><img src="Examples_R_files/Examples_R_147_0.png"></p>
 </div>
 <div id="relative-to-the-group" class="section level3">
 <h3 class="hasAnchor">
 <a href="#relative-to-the-group" class="anchor"></a>10.2 Relative to the group</h3>
-<div class="sourceCode" id="cb65"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb67"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">set_size</span><span class="op">(</span><span class="fl">8</span>, <span class="fl">5</span><span class="op">)</span>
 
 <span class="fu"><a href="../reference/upset.html">upset</a></span><span class="op">(</span>
@@ -2312,12 +2337,12 @@ NA
         <span class="op">)</span>
     <span class="op">)</span>
 <span class="op">)</span></code></pre></div>
-<p><img src="Examples_R_files/Examples_R_144_0.png"></p>
+<p><img src="Examples_R_files/Examples_R_149_0.png"></p>
 </div>
 <div id="relative-to-all-observed-values" class="section level3">
 <h3 class="hasAnchor">
 <a href="#relative-to-all-observed-values" class="anchor"></a>10.3 Relative to all observed values</h3>
-<div class="sourceCode" id="cb66"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb68"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">set_size</span><span class="op">(</span><span class="fl">8</span>, <span class="fl">5</span><span class="op">)</span>
 
 <span class="fu"><a href="../reference/upset.html">upset</a></span><span class="op">(</span>
@@ -2342,7 +2367,7 @@ NA
         <span class="op">)</span>
     <span class="op">)</span>
 <span class="op">)</span></code></pre></div>
-<p><img src="Examples_R_files/Examples_R_146_0.png"></p>
+<p><img src="Examples_R_files/Examples_R_151_0.png"></p>
 </div>
 </div>
 <div id="advanced-usage-examples" class="section level2">
@@ -2351,7 +2376,7 @@ NA
 <div id="display-text-on-some-bars-only" class="section level3">
 <h3 class="hasAnchor">
 <a href="#display-text-on-some-bars-only" class="anchor"></a>11.1 Display text on some bars only</h3>
-<div class="sourceCode" id="cb67"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb69"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">set_size</span><span class="op">(</span><span class="fl">8</span>, <span class="fl">5</span><span class="op">)</span>
 
 <span class="fu"><a href="../reference/upset.html">upset</a></span><span class="op">(</span>
@@ -2373,12 +2398,12 @@ NA
         <span class="op">)</span>
     <span class="op">)</span>
 <span class="op">)</span></code></pre></div>
-<p><img src="Examples_R_files/Examples_R_149_0.png"></p>
+<p><img src="Examples_R_files/Examples_R_154_0.png"></p>
 </div>
 <div id="combine-multiple-plots-together" class="section level3">
 <h3 class="hasAnchor">
 <a href="#combine-multiple-plots-together" class="anchor"></a>11.2 Combine multiple plots together</h3>
-<div class="sourceCode" id="cb68"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb70"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">set_size</span><span class="op">(</span><span class="fl">8</span>, <span class="fl">5</span><span class="op">)</span>
 <span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://patchwork.data-imaginist.com">patchwork</a></span><span class="op">)</span>
 
@@ -2399,12 +2424,12 @@ NA
 <span class="va">u2</span> <span class="op">=</span> <span class="fu"><a href="../reference/upset.html">upset</a></span><span class="op">(</span><span class="va">data_2</span>, <span class="va">genres</span>, min_size<span class="op">=</span><span class="fl">5</span>, base_annotations<span class="op">=</span><span class="va">annotations</span><span class="op">)</span>
 
 <span class="op">(</span><span class="va">u1</span> <span class="op">|</span> <span class="va">u2</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://patchwork.data-imaginist.com/reference/plot_layout.html">plot_layout</a></span><span class="op">(</span>guides<span class="op">=</span><span class="st">'collect'</span><span class="op">)</span></code></pre></div>
-<p><img src="Examples_R_files/Examples_R_151_0.png"></p>
+<p><img src="Examples_R_files/Examples_R_156_0.png"></p>
 </div>
 <div id="change-height-of-the-annotations" class="section level3">
 <h3 class="hasAnchor">
 <a href="#change-height-of-the-annotations" class="anchor"></a>11.3 Change height of the annotations</h3>
-<div class="sourceCode" id="cb69"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb71"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">set_size</span><span class="op">(</span><span class="fl">8</span>, <span class="fl">3.5</span><span class="op">)</span>
 <span class="fu"><a href="../reference/upset.html">upset</a></span><span class="op">(</span>
     <span class="va">movies</span>, <span class="va">genres</span>, name<span class="op">=</span><span class="st">'genre'</span>, width_ratio<span class="op">=</span><span class="fl">0.1</span>, min_size<span class="op">=</span><span class="fl">100</span>,
@@ -2418,7 +2443,7 @@ NA
         <span class="op">)</span>
     <span class="op">)</span>
 <span class="op">)</span> <span class="op">+</span> <span class="fu">patchwork</span><span class="fu">::</span><span class="fu"><a href="https://patchwork.data-imaginist.com/reference/plot_layout.html">plot_layout</a></span><span class="op">(</span>heights<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0.5</span>, <span class="fl">1</span>, <span class="fl">0.5</span><span class="op">)</span><span class="op">)</span></code></pre></div>
-<p><img src="Examples_R_files/Examples_R_153_0.png"></p>
+<p><img src="Examples_R_files/Examples_R_158_0.png"></p>
 </div>
 </div>
   </div>

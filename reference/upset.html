@@ -75,7 +75,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">ComplexUpset</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.7.4</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.8.0</span>
       </span>
     </div>
 
@@ -144,8 +144,9 @@
   height_ratio <span class='op'>=</span> <span class='fl'>0.5</span>,
   width_ratio <span class='op'>=</span> <span class='fl'>0.3</span>,
   wrap <span class='op'>=</span> <span class='cn'>FALSE</span>,
-  set_sizes <span class='op'>=</span> <span class='fu'><a href='upset_set_size.html'>upset_set_size</a></span><span class='op'>(</span>width <span class='op'>=</span> <span class='fl'>0.6</span><span class='op'>)</span>,
+  set_sizes <span class='op'>=</span> <span class='fu'><a href='upset_set_size.html'>upset_set_size</a></span><span class='op'>(</span><span class='op'>)</span>,
   queries <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span><span class='op'>)</span>,
+  guides <span class='op'>=</span> <span class='cn'>NULL</span>,
   dot_size <span class='op'>=</span> <span class='fl'>3</span>,
   <span class='va'>...</span>
 <span class='op'>)</span></pre>
@@ -202,11 +203,15 @@
     </tr>
     <tr>
       <th>set_sizes</th>
-      <td><p>a list of layers defining the overall set sizes, e.g. from <code><a href='upset_set_size.html'>upset_set_size()</a></code> (<code>FALSE</code> to hide)</p></td>
+      <td><p>the overall set sizes plot, e.g. from <code><a href='upset_set_size.html'>upset_set_size()</a></code> (<code>FALSE</code> to hide)</p></td>
     </tr>
     <tr>
       <th>queries</th>
       <td><p>a list of queries generated with <code><a href='upset_query.html'>upset_query()</a></code></p></td>
+    </tr>
+    <tr>
+      <th>guides</th>
+      <td><p>action for legends aggregation and placement ('keep', 'collect', 'over' the set sizes)</p></td>
     </tr>
     <tr>
       <th>dot_size</th>
@@ -225,7 +230,7 @@
     <dt><code>warn_when_converting</code></dt><dd><p>whether a warning should  be issued when input is not boolean</p></dd>
     <dt><code>sort_sets</code></dt><dd><p>whether to sort the rows in the intersection matrix (descending sort by default); one of: <code>'ascending'</code>, <code>'descending'</code>, <code>FALSE</code></p></dd>
     <dt><code>sort_intersections</code></dt><dd><p>whether to sort the columns in the intersection matrix (descending sort by default); one of: <code>'ascending'</code>, <code>'descending'</code>, <code>FALSE</code></p></dd>
-    <dt><code>sort_intersections_by</code></dt><dd><p>the mode of sorting, the size of the intersection (cardinality) by default; one of: <code>'cardinality'</code>, <code>'degree'</code>, <code>'ratio'</code></p></dd>
+    <dt><code>sort_intersections_by</code></dt><dd><p>the mode of sorting, the size of the intersection (cardinality) by default; one of: <code>'cardinality'</code>, <code>'degree'</code>, <code>'ratio'</code>, or any combination of these (e.g. <code><a href='https://rdrr.io/r/base/c.html'>c('degree', 'cardinality')</a></code>)</p></dd>
     <dt><code>group_by</code></dt><dd><p>the mode of grouping intersections; one of: <code>'degree'</code>, <code>'sets'</code></p></dd>
     <dt><code>min_max_early</code></dt><dd><p>whether the min and max limits should be applied early (for faster plotting), or late (for accurate depiction of ratios)</p></dd>
     <dt><code>union_count_column</code></dt><dd><p>name of the column to store the union size (adjust if conflicts with your data)</p></dd>
