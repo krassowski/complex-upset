@@ -4,10 +4,18 @@
 \alias{upset_set_size}
 \title{Prepare layers for sets sizes plot}
 \usage{
-upset_set_size(geom = geom_bar, layers = list(), mapping = aes(), ...)
+upset_set_size(
+  geom = geom_bar,
+  position = "left",
+  layers = list(),
+  mapping = aes(),
+  ...
+)
 }
 \arguments{
 \item{geom}{the geom to use}
+
+\item{position}{on which side of the plot should the set sizes be displayed ('left' or 'right')}
 
 \item{layers}{a list of additional layers (scales, geoms) to be included on the plot}
 

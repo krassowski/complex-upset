@@ -570,14 +570,17 @@ reverse_log_trans = function(base=10) {
 #' Prepare layers for sets sizes plot
 #'
 #' @param geom the geom to use
+#' @param position on which side of the plot should the set sizes be displayed ('left' or 'right')
 #' @param layers a list of additional layers (scales, geoms) to be included on the plot
 #' @param mapping additional aesthetics
 #' @param ... passed to the geom
 #' @export
-upset_set_size = function(geom=geom_bar, layers=list(), mapping=aes(), ...) {
+upset_set_size = function(geom=geom_bar, position='left', layers=list(), mapping=aes(), ...) {
+    check_argument(position, allowed=c('left', 'right'), description='position')
+
     args = eval(list(...))
 
-    convert_annotation(
+    annotation = convert_annotation(
         geom=list(
             geom(...)
         ),
@@ -586,6 +589,8 @@ upset_set_size = function(geom=geom_bar, layers=list(), mapping=aes(), ...) {
             geom(...)
         )
     ) + ylab('Set size')
+    annotation$position = position
+    annotation
 }
 
 
@@ -679,7 +684,8 @@ scale_if_missing = function(annotation, axis, scale) {
 #' @param width_ratio ratio of the overall set size width to intersection matrix width
 #' @param stripes a characters vector, specifying the background colors for rows (e.g. odd and even if two elements)
 #' @param dot_size size of the points on the intersection matrix
-#' @param set_sizes a list of layers defining the overall set sizes, e.g. from `upset_set_size()` (`FALSE` to hide)
+#' @param set_sizes the overall set sizes plot, e.g. from `upset_set_size()` (`FALSE` to hide)
+#' @param guides action for legends aggregation and placement ('keep', 'collect', 'over' the set sizes)
 #' @param wrap whether the plot should be wrapped into a group (makes adding a tile/combining with other plots easier)
 #' @inheritDotParams upset_data
 #' @export
@@ -699,9 +705,14 @@ upset = function(
   wrap=FALSE,
   set_sizes=upset_set_size(width=0.6),
   queries=list(),
+  guides=NULL,
   dot_size=3,
   ...
 ) {
+  if (!is.null(guides)) {
+     check_argument(guides, allowed = c('keep', 'collect', 'over'), 'guides')
+  }
+
   annotations = c(annotations, base_annotations)
 
   data = upset_data(data, intersect, ...)
@@ -772,6 +783,12 @@ upset = function(
 
   rows = list()
 
+  if (show_overall_sizes) {
+    is_set_size_on_the_right = !is.null(set_sizes$position) && set_sizes$position == 'right'
+  }
+
+  annotation_number = 1
+
   for (name in names(annotations)) {
     annotation = annotations[[name]]
     geoms = annotation$geom
@@ -809,8 +826,14 @@ upset = function(
       selected_theme = themes[['default']]
     }
 
-    if (show_overall_sizes) {
-        rows[[length(rows) + 1]] = plot_spacer()
+    if (!is.null(guides) && guides == 'over' && round(length(annotations) / 2) == annotation_number) {
+        spacer = guide_area()
+    } else {
+        spacer = plot_spacer()
+    }
+
+    if (show_overall_sizes && !is_set_size_on_the_right) {
+        rows[[length(rows) + 1]] = spacer
     }
 
     if (is.ggplot(annotation)) {
@@ -818,7 +841,15 @@ upset = function(
         user_theme = annotation_plot$theme
         annotation_plot = annotation_plot + selected_theme + do.call(theme, user_theme)
 
-        if (is.null(annotation_plot$labels$y) || (!is.null(annotation_plot$default_y) && annotation_plot$default_y == annotation_plot$labels$y)) {
+        if (
+            is.null(annotation_plot$labels$y)
+            ||
+            (
+                !is.null(annotation_plot$default_y)
+                &&
+                annotation_plot$default_y == annotation_plot$labels$y
+            )
+        ) {
             annotation_plot = annotation_plot + ylab(name)
         }
     } else {
@@ -830,6 +861,12 @@ upset = function(
       + geoms_plus_highlights
       + scale_intersections
     )
+
+    if (show_overall_sizes && is_set_size_on_the_right) {
+        rows[[length(rows) + 1]] = spacer
+    }
+
+    annotation_number =  annotation_number + 1
   }
 
   if (show_overall_sizes) {
@@ -852,6 +889,12 @@ upset = function(
           geom = set_sizes$geom
       }
 
+      if (is_set_size_on_the_right) {
+          default_scale = scale_y_continuous()
+      } else {
+          default_scale = scale_y_reverse()
+      }
+
       overall_sizes = (
         set_sizes %+% data$presence[data$presence$group %in% data$plot_sets_subset, ]
         + aes(x=group)
@@ -861,10 +904,15 @@ upset = function(
         + coord_flip()
         + geom
         + scale_x_discrete(limits=sets_limits)
-        + scale_if_missing(set_sizes, axis='y', scale=scale_y_reverse())
+        + scale_if_missing(set_sizes, axis='y', scale=default_scale)
       )
 
-      matrix_row = list(overall_sizes, intersections_matrix)
+      if (is_set_size_on_the_right) {
+          matrix_row = list(intersections_matrix, overall_sizes)
+      } else {
+          # on the left by default
+          matrix_row = list(overall_sizes, intersections_matrix)
+      }
   } else {
       matrix_row = list(intersections_matrix)
   }
@@ -879,9 +927,17 @@ upset = function(
   plot = Reduce(f='+', matrix_row)
 
   if (show_overall_sizes) {
+      if (is_set_size_on_the_right) {
+          width_ratio = 1 - width_ratio
+      }
+
       width_ratios = c(width_ratio, 1 - width_ratio)
   } else {
       width_ratios = 1
+  }
+    
+  if (!is.null(guides) && guides == 'over') {
+      guides = 'collect'  # guide_area() works with collect only
   }
 
   plot = plot + plot_layout(
@@ -891,7 +947,8 @@ upset = function(
     heights=c(
       rep(1, length(annotations)),
       height_ratio
-    )
+    ),
+    guides=guides
   )
 
   if (wrap) {

@@ -18,6 +18,7 @@ upset(
   wrap = FALSE,
   set_sizes = upset_set_size(width = 0.6),
   queries = list(),
+  guides = NULL,
   dot_size = 3,
   ...
 )
@@ -49,9 +50,11 @@ upset(
 
 \item{wrap}{whether the plot should be wrapped into a group (makes adding a tile/combining with other plots easier)}
 
-\item{set_sizes}{a list of layers defining the overall set sizes, e.g. from \code{upset_set_size()} (\code{FALSE} to hide)}
+\item{set_sizes}{the overall set sizes plot, e.g. from \code{upset_set_size()} (\code{FALSE} to hide)}
 
 \item{queries}{a list of queries generated with \code{upset_query()}}
+
+\item{guides}{action for legends aggregation and placement ('keep', 'collect', 'over' the set sizes)}
 
 \item{dot_size}{size of the points on the intersection matrix}
 

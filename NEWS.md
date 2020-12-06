@@ -2,7 +2,9 @@
 
 (under development)
 
-- significant performance improvements, especially for large datasets (#12)
+- significant performance improvements, especially for large datasets and `group_by` (#12)
+- set sizes can now be moved to the right side of the plot using `upset_set_size(position='right')`
+- `guides='over'` can be now passed to `upset()` to place the legends over the set sizes
 
 # Version 0.7.3
 
