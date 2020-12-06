@@ -23,7 +23,20 @@ sanitize_names = function(variables_names) {
 
 
 names_of_members = function(row) {
-  paste(names(which(row)), collapse='-')
+  # the original implementation used which()
+  #    members = names(which(row))
+  # but which() is doing a few more things that are not needed;
+  # it is an equivalent to seq_along(x)[!is.na(x) & x] + names assignment
+  # and those steps can be omitted
+
+  members = names(row)[row]
+  if (length(members) != 0) {
+      paste(members, collapse='-')
+  } else {
+      # this optimization may not be beneficial for dense matrices,
+      # but we could add a heuristic that checks if the matrix is dense
+      ''
+  }
 }
 
 
@@ -38,8 +51,6 @@ gather = function(data, idvar, col_name, value_name='value') {
 
 
 compute_matrix = function(sorted_intersections, sorted_groups) {
-    rows = c()
-
     intersections_as_groups = lapply(
         sorted_intersections,
         function(intersection) {
@@ -47,19 +58,14 @@ compute_matrix = function(sorted_intersections, sorted_groups) {
         }
     )
 
-    for (group in sorted_groups) {
-        rows = rbind(
-            rows,
-            sapply(
-                intersections_as_groups,
-                function(i_groups) {
-                    group %in% i_groups
-                }
-            )
-        )
-    }
+     matrix = sapply(
+        intersections_as_groups,
+        function(i_groups) {
+            sorted_groups %in% i_groups
+        }
+    )
 
-    matrix_data = as.data.frame(rows, row.names=sorted_groups)
+    matrix_data = as.data.frame(matrix, row.names=sorted_groups)
     colnames(matrix_data) = sorted_intersections
     matrix_data
 }
@@ -70,16 +76,20 @@ compute_unions = function(data, sorted_intersections) {
         sorted_intersections,
         function(intersection) {
             i_groups = unlist(strsplit(intersection, '-'))
-            union_for_intersection = data[data$group %in% i_groups, ]
+            ids_of_union_for_intersection = data[data$group %in% i_groups, 'id']
 
-            ids = union_for_intersection$id
-            deduplicated = union_for_intersection[!duplicated(ids), ]
+            # deduplicated = union_for_intersection[!duplicated(ids), ]
+            # nrow(deduplicated)
+
+            # note nrow(deduplicated) == sum(!duplicated(ids))
 
             # NOTE:
             # union: nrow(deduplicated)
             # sum of counts: nrow(union_for_intersection)
-            nrow(deduplicated)
-        }
+
+            sum(!duplicated(ids_of_union_for_intersection))
+        },
+        simplify=FALSE
     )
 
     names(rows) = sorted_intersections
