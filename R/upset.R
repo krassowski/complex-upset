@@ -29,10 +29,6 @@ upset_themes = list(
       axis.ticks.x=element_blank(),
       # hide group title
       axis.title.y=element_blank()
-    ),
-    scale_color_manual(
-      values=list('TRUE'='black', 'FALSE'='grey85'),
-      guide=FALSE
     )
   ),
   'Intersection size'=list(
@@ -71,7 +67,8 @@ upset_default_themes = function(...)  {
     sapply(
         upset_themes, function(default) {
             c(default, list(theme(...)))
-        }
+        },
+        simplify=FALSE
     )
 }
 
@@ -471,19 +468,20 @@ get_highlights_data = function(data, key, queries) {
 }
 
 
-highlight_layer = function(geom, data, args=list()) {
+highlight_layer = function(geom, geom_class, data, args=list()) {
     if (nrow(data) == 0) {
         list()
     } else {
 
         list(
             do.call(
-                geom,
-                modifyList(
-                    c(list(data=data), args),
-                    extract_geom_params_for(data, geom())
+                geom_class,
+                c(
+                    list(data=data),
+                    args,
+                    extract_geom_params_for(data, geom_class())
                 )
-            )
+            ) * geom
         )
     }
 }
@@ -588,6 +586,71 @@ upset_set_size = function(geom=geom_bar(width=0.6), position='left', mapping=aes
 }
 
 
+extract_stat_params = function(geom) {
+    params_in_geom_and_stat = intersect(
+        names(geom$geom_params),
+        names(geom$stat_params)
+    )
+
+    # if there is a param in both stat and geom, and value is the same, remove it from stat params
+    # as otherwise we will get a spurious warning from ggplot: "Duplicated aesthetics after name standardisation"
+    stat_params = geom$stat_params
+    if (length(params_in_geom_and_stat) != 0) {
+        for (shared_param in params_in_geom_and_stat) {
+            if (!identical(geom$geom_params[[shared_param]], geom$stat_params[[shared_param]])) {
+                warning(paste0('A param in both geom and stat differs in value: ', shared_param))
+                next
+            }
+            stat_params = stat_params[names(stat_params) != shared_param]
+        }
+    }
+    stat_params
+}
+
+
+`*.gg` = function(a, b) {
+
+    a_params = c(a$aes_params, a$geom_params, extract_stat_params(a))
+    b_params = c(b$aes_params, b$geom_params, extract_stat_params(b))
+
+    if (is.null(a_params)) {
+        params = b_params
+    } else if (is.null(b_params)) {
+        params = a_params
+    } else {
+        params = modifyList(
+            a_params,
+            b_params
+        )
+    }
+
+    if (length(a$data)) {
+        data = a$data
+    } else if (length(b$data)) {
+        data = b$data
+    } else {
+        data = NULL
+    }
+
+    if (is.null(b$mapping)) {
+        mapping = a$mapping
+    } else if (is.null(a$mapping)) {
+        mapping = b$mapping
+    } else {
+        mapping = modifyList(a$mapping, b$mapping)
+    }
+
+    layer(
+        geom=a$geom,
+        params=params,
+        stat=a$stat,
+        data=data,
+        mapping=mapping,
+        position=a$position
+    )
+}
+
+
 add_highlights_to_geoms = function(geoms, highlight_geoms, highlight_data, annotation_queries, kind='intersection') {
     geoms_plus_highlights = list()
 
@@ -602,23 +665,8 @@ add_highlights_to_geoms = function(geoms, highlight_geoms, highlight_data, annot
         }
         highlight_geom = geom
 
-        params_in_geom_and_stat = intersect(
-            names(geom$geom_params),
-            names(geom$stat_params)
-        )
+        stat_params = extract_stat_params(geom)
 
-        # if there is a param in both stat and geom, and value is the same, remove it from stat params
-        # as otherwise we will get a spurious warning from ggplot: "Duplicated aesthetics after name standardisation"
-        stat_params = geom$stat_params
-        if (length(params_in_geom_and_stat) != 0) {
-            for (shared_param in params_in_geom_and_stat) {
-                if (!identical(geom$geom_params[[shared_param]], geom$stat_params[[shared_param]])) {
-                    warning(paste0('A param in both geom and stat differs in value: ', shared_param))
-                    next
-                }
-                stat_params = stat_params[names(stat_params) != shared_param]
-            }
-        }
         params = extract_geom_params_for(annotation_queries, geom, preserve_query=TRUE)
 
         if (!is.null(params$query)) {
@@ -652,15 +700,42 @@ add_highlights_to_geoms = function(geoms, highlight_geoms, highlight_data, annot
     geoms_plus_highlights
 }
 
-                          
-scale_if_missing = function(annotation, axis, scale) {
-    user_y_scales = lapply(annotation$scales$scales, function(scale_candidate) {
-        axis %in% scale_candidate$aesthetics
-    })
 
-    if (length(user_y_scales) == 0) {
+get_scale = function(annotation, axis) {
+    candidates = unlist(sapply(
+        annotation$scales$scales,
+        function(scale_candidate) {
+            any(axis %in% scale_candidate$aesthetics)
+        }
+    ))
+    annotation$scales$scales[candidates]
+}
+
+
+scale_if_missing = function(annotation, axis, scale) {
+    scales = get_scale(annotation, axis)
+
+    if (length(scales) == 0) {
         list(scale)
     }
+}
+                          
+#' Prepare layers for sets sizes plot
+#'
+#' @param geom a geom_point call, allowing to specify parameters (e.g. `geom=geom_point(shape='square')`)
+#' @param segment a geom_segment call, allowing to specify parameters (e.g. `segment=geom_segment(linetype='dotted')`)
+#' @param outline_color a named list with two colors for outlines of active and inactive dots
+#' @export
+intersection_matrix = function(
+    geom=geom_point(size=3),
+    segment=geom_segment(),
+    outline_color=list(active='black', inactive='grey70')
+) {
+    plot = ggplot(mapping=aes(x=intersection, y=group))
+    plot$geom = geom
+    plot$segment = segment
+    plot$outline_color = outline_color
+    plot
 }
                           
 
@@ -677,7 +752,7 @@ scale_if_missing = function(annotation, axis, scale) {
 #' @param height_ratio ratio of the intersection matrix to intersection size height
 #' @param width_ratio ratio of the overall set size width to intersection matrix width
 #' @param stripes a characters vector, specifying the background colors for rows (e.g. odd and even if two elements)
-#' @param dot_size size of the points on the intersection matrix
+#' @param matrix the intersection matrix plot
 #' @param set_sizes the overall set sizes plot, e.g. from `upset_set_size()` (`FALSE` to hide)
 #' @param guides action for legends aggregation and placement ('keep', 'collect', 'over' the set sizes)
 #' @param wrap whether the plot should be wrapped into a group (makes adding a tile/combining with other plots easier)
@@ -700,7 +775,7 @@ upset = function(
   set_sizes=upset_set_size(),
   queries=list(),
   guides=NULL,
-  dot_size=3,
+  matrix=intersection_matrix(),
   ...
 ) {
   if (!is.null(guides)) {
@@ -735,21 +810,63 @@ upset = function(
 
   matrix_frame = data$matrix_frame[data$matrix_frame$group %in% data$plot_sets_subset, ]
 
+  intersections_matrix = matrix %+% matrix_frame
+  intersections_matrix$layers = c(
+      matrix_background_stripes(data, stripes),
+      intersections_matrix$layers
+  )
+
+  point_geom = intersections_matrix$geom
+
+  if (!is.null(point_geom$aes_params$size)) {
+      dot_size = point_geom$aes_params$size
+  } else {
+      dot_size = 1
+  }
+
+  y_scale = scale_y_discrete(
+       limits=sets_limits,
+       labels=function(sets) { labeller(data$non_sanitized_labels[sets]) }
+  )
+
+  user_y_scale = get_scale(intersections_matrix, 'y')
+
+  if (length(user_y_scale) == 0) {
+      user_y_scale = scale_y_discrete()
+  } else {
+      user_y_scale = user_y_scale[[1]]
+      user_y_scale$limits = y_scale$limits
+      user_y_scale$labels = y_scale$labels
+      y_scale = NULL
+  }
+
   intersections_matrix = (
-    ggplot(matrix_frame, aes(x=intersection, y=group))
-    + matrix_background_stripes(data, stripes)
+    intersections_matrix
     # the dots outline
-    + geom_point(color=ifelse(matrix_frame$value, 'black', 'grey70'), size=dot_size * 7/6, na.rm=TRUE)
+    + intersections_matrix$geom * geom_point(
+        color=ifelse(
+            matrix_frame$value,
+            intersections_matrix$outline_color$active,
+            intersections_matrix$outline_color$inactive
+        ),
+        size=dot_size * 7/6,
+        na.rm=TRUE
+    )
     # the dot
-    + geom_point(aes(color=value), size=dot_size, na.rm=TRUE)
+    + intersections_matrix$geom * geom_point(
+        aes(color=value),
+        size=dot_size,
+        na.rm=TRUE
+    )
     # the highlighted dot
     + highlight_layer(
+        intersections_matrix$geom,
         geom_point,
         query_matrix,
         args=list(size=dot_size)
     )
     # interconnectors on the dots
-    + geom_segment(aes(
+    + intersections_matrix$segment * geom_segment(aes(
           x=intersection,
           xend=intersection,
           y=segment_end(matrix_frame, data, intersection, head),
@@ -757,6 +874,7 @@ upset = function(
     ), na.rm=TRUE)
     # highlighted interconnectors
     + highlight_layer(
+        intersections_matrix$segment,
         geom_segment,
         query_matrix,
         args=list(
@@ -770,8 +888,16 @@ upset = function(
         )
     )
     + xlab(name)
-    + scale_y_discrete(limits=sets_limits, labels=function(sets) { labeller(data$non_sanitized_labels[sets]) })
     + scale_intersections
+    + y_scale
+    + scale_if_missing(
+          intersections_matrix,
+          'colour',
+          scale_color_manual(
+              values=list('TRUE'='black', 'FALSE'='grey85'),
+              guide=FALSE
+          )
+    )
     + themes$intersections_matrix
   )
 

@@ -2,6 +2,7 @@
 
 export(aes_percentage)
 export(compare_between_intersections)
+export(intersection_matrix)
 export(intersection_ratio)
 export(intersection_size)
 export(reverse_log_trans)

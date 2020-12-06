@@ -19,7 +19,7 @@ upset(
   set_sizes = upset_set_size(),
   queries = list(),
   guides = NULL,
-  dot_size = 3,
+  matrix = intersection_matrix(),
   ...
 )
 }
@@ -56,7 +56,7 @@ upset(
 
 \item{guides}{action for legends aggregation and placement ('keep', 'collect', 'over' the set sizes)}
 
-\item{dot_size}{size of the points on the intersection matrix}
+\item{matrix}{the intersection matrix plot}
 
 \item{...}{
   Arguments passed on to \code{\link[=upset_data]{upset_data}}
