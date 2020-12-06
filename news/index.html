@@ -129,7 +129,7 @@
     <div id="version-080" class="section level1">
 <h1 class="page-header" data-toc-text="0.8.0">
 <a href="#version-080" class="anchor"></a>Version 0.8.0</h1>
-<p>(under development)</p>
+<p>2020-12-06</p>
 <ul>
 <li><p>Breaking: <code>geom</code> of <code><a href="../reference/upset_set_size.html">upset_set_size()</a></code> now accepts geom object (e.g. <code><a href="https://ggplot2.tidyverse.org/reference/geom_bar.html">geom_bar()</a></code>) rather than a function (e.g. <code>geom_bar</code>)</p></li>
 <li><p>Breaking: <code><a href="../reference/upset_set_size.html">upset_set_size()</a></code> no longer accepts variadic arguments (<code>...</code>); please modify the <code>geom</code> instead</p></li>
@@ -143,7 +143,7 @@
 <li><p>Intersections can now be sorted by multiple criteria, e.g. first by degree and then by cardinality: <code>sort_intersections_by=c('degree', 'cardinality')</code> (<a href='https://github.com/krassowski/complex-upset/issues/47'>#47</a>)</p></li>
 <li><p>Breaking: <code>dot_size</code> argument was removed. Use <code>matrix=intersection_matrix(geom=geom_point(size=5))</code> instead</p></li>
 <li>
-<p>Intersection matrix can now be customized, including the points (e.g. changing shape to squares), segments (e.g. using dotted line) and outlines (changing color) allowing to create <a href="https://krassowski.github.io/complex-upset/articles/Examples_R.html<a href='https://github.com/krassowski/complex-upset/issues/5'>#5</a>-4-adjusting-the-intersection-matrix">example 5.4</a>:</p>
+<p>Intersection matrix can now be customized, including the points (e.g. changing shape to squares), segments (e.g. using dotted line) and outlines (changing color) allowing to create <a href="https://krassowski.github.io/complex-upset/articles/Examples_R.html">Example 5.4</a>:</p>
 <blockquote>
 <p><img src="https://raw.githubusercontent.com/krassowski/complex-upset/master/tests/figs/examples/example-5-4-adjusting-the-intersection-matrix-1.svg"></p>
 </blockquote>
