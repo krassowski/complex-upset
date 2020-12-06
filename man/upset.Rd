@@ -71,7 +71,7 @@ upset(
     \item{\code{warn_when_converting}}{whether a warning should  be issued when input is not boolean}
     \item{\code{sort_sets}}{whether to sort the rows in the intersection matrix (descending sort by default); one of: \code{'ascending'}, \code{'descending'}, \code{FALSE}}
     \item{\code{sort_intersections}}{whether to sort the columns in the intersection matrix (descending sort by default); one of: \code{'ascending'}, \code{'descending'}, \code{FALSE}}
-    \item{\code{sort_intersections_by}}{the mode of sorting, the size of the intersection (cardinality) by default; one of: \code{'cardinality'}, \code{'degree'}, \code{'ratio'}}
+    \item{\code{sort_intersections_by}}{the mode of sorting, the size of the intersection (cardinality) by default; one of: \code{'cardinality'}, \code{'degree'}, \code{'ratio'}, or any combination of these (e.g. \code{c('degree', 'cardinality')})}
     \item{\code{group_by}}{the mode of grouping intersections; one of: \code{'degree'}, \code{'sets'}}
     \item{\code{min_max_early}}{whether the min and max limits should be applied early (for faster plotting), or late (for accurate depiction of ratios)}
     \item{\code{union_count_column}}{name of the column to store the union size (adjust if conflicts with your data)}

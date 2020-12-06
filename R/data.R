@@ -143,9 +143,9 @@ get_sort_order = function(data, sort_order) {
     check_sort(sort_order)
 
     if (sort_order == 'descending') {
-        order(data)
+        do.call(order, data)
     } else {
-        order(-data)
+        do.call(order, lapply(data, function(x) {-x}))
     }
 }
 
@@ -201,7 +201,7 @@ trim_intersections = function(
 #' @param warn_when_converting whether a warning should  be issued when input is not boolean
 #' @param sort_sets whether to sort the rows in the intersection matrix (descending sort by default); one of: `'ascending'`, `'descending'`, `FALSE`
 #' @param sort_intersections whether to sort the columns in the intersection matrix (descending sort by default); one of: `'ascending'`, `'descending'`, `FALSE`
-#' @param sort_intersections_by the mode of sorting, the size of the intersection (cardinality) by default; one of: `'cardinality'`, `'degree'`, `'ratio'`
+#' @param sort_intersections_by the mode of sorting, the size of the intersection (cardinality) by default; one of: `'cardinality'`, `'degree'`, `'ratio'`, or any combination of these (e.g. `c('degree', 'cardinality')`)
 #' @param group_by the mode of grouping intersections; one of: `'degree'`, `'sets'`
 #' @param min_max_early whether the min and max limits should be applied early (for faster plotting), or late (for accurate depiction of ratios)
 #' @param union_count_column name of the column to store the union size (adjust if conflicts with your data)
@@ -226,9 +226,10 @@ upset_data = function(
     }
 
     check_sort(sort_sets)
-    check_sort(sort_intersections)
 
-    check_sort(sort_intersections_by, allowed=c('cardinality', 'degree', 'ratio'), what='method')
+    for (by in sort_intersections_by) {
+        check_sort(by, allowed=c('cardinality', 'degree', 'ratio'), what='method')
+    }
 
     intersect = unlist(intersect)
     if (length(intersect) == 1) {
@@ -339,7 +340,7 @@ upset_data = function(
 
     groups_by_size = table(stacked$group)
     if (sort_sets != FALSE) {
-        groups_by_size = groups_by_size[get_sort_order(groups_by_size, sort_sets)]
+        groups_by_size = groups_by_size[get_sort_order(list(groups_by_size), sort_sets)]
     } else {
         groups_by_size = groups_by_size[names(groups_by_size)]
     }
@@ -347,20 +348,26 @@ upset_data = function(
 
     if (sort_intersections != FALSE) {
 
-        if (sort_intersections_by == 'cardinality') {
-            sort_value = intersections_by_size
-        } else if (sort_intersections_by == 'degree') {
-            original_intersections_names = names(intersections_by_size)
-            sort_value = calculate_degree(original_intersections_names)
-            names(sort_value) = original_intersections_names
-        } else if (sort_intersections_by == 'ratio') {
-            unsorted_union_sizes = compute_unions(stacked, names(intersections_by_size))
-            sort_value = intersections_by_size
-            sort_value = sort_value / unsorted_union_sizes
-        }
+        sort_values = lapply(
+            sort_intersections_by,
+            function(by) {
+                if (by == 'cardinality') {
+                    sort_value = intersections_by_size
+                } else if (by == 'degree') {
+                    original_intersections_names = names(intersections_by_size)
+                    sort_value = calculate_degree(original_intersections_names)
+                    names(sort_value) = original_intersections_names
+                } else if (by == 'ratio') {
+                    unsorted_union_sizes = compute_unions(stacked, names(intersections_by_size))
+                    sort_value = intersections_by_size
+                    sort_value = sort_value / unsorted_union_sizes
+                }
+                sort_value
+            }
+        )
 
         intersections_by_size = intersections_by_size[
-            get_sort_order(sort_value, sort_intersections)
+            get_sort_order(sort_values, sort_intersections)
         ]
     }
 

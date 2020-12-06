@@ -7,6 +7,7 @@
 - Additional geoms added to `upset_set_size()` are now added on top of stripes, thus properly visible
 - Data available for `upset_set_size()` now includes all metadata of the original data frame, enabling to annotate the bars, e.g.:
    - `upset_set_size(geom=geom_bar(aes(fill=mpaa, x=group)))`
+- Intersections can now be sorted by multiple criteria, e.g. first by degree and then by cardinality: `sort_intersections_by=c('degree', 'cardinality')` (#47)
 
 # Version 0.7.4
 

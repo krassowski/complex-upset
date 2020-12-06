@@ -69,7 +69,7 @@ test_that("upset_query requires set, group, or intersect, and not combinations",
         upset_query(set='Drama'),
         NA
     )
-    
+
     # accepts group
     expect_error(
         upset_query(group='Drama'),

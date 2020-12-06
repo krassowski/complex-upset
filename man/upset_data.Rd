@@ -49,7 +49,7 @@ upset_data(
 
 \item{sort_intersections}{whether to sort the columns in the intersection matrix (descending sort by default); one of: \code{'ascending'}, \code{'descending'}, \code{FALSE}}
 
-\item{sort_intersections_by}{the mode of sorting, the size of the intersection (cardinality) by default; one of: \code{'cardinality'}, \code{'degree'}, \code{'ratio'}}
+\item{sort_intersections_by}{the mode of sorting, the size of the intersection (cardinality) by default; one of: \code{'cardinality'}, \code{'degree'}, \code{'ratio'}, or any combination of these (e.g. \code{c('degree', 'cardinality')})}
 
 \item{group_by}{the mode of grouping intersections; one of: \code{'degree'}, \code{'sets'}}
 
