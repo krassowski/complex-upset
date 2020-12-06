@@ -1,9 +1,19 @@
+# Version 0.8.0
+
+(under development)
+
+- Breaking: `geom` of `upset_set_size()` now accepts geom object (e.g. `geom_bar()`) rather than a function (e.g. `geom_bar`)
+- Breaking: `upset_set_size()` no longer accepts variadic arguments (`...`); please modify the `geom` instead
+- Additional geoms added to `upset_set_size()` are now added on top of stripes, thus properly visible
+- Data available for `upset_set_size()` now includes all metadata of the original data frame, enabling to annotate the bars, e.g.:
+   - `upset_set_size(geom=geom_bar(aes(fill=mpaa, x=group)))`
+
 # Version 0.7.4
 
 2020-12-06
 
-- significant performance improvements, especially for large datasets and `group_by` (#12)
-- set sizes can now be moved to the right side of the plot using `upset_set_size(position='right')`
+- Significant performance improvements, especially for large datasets and `group_by` (#12)
+- Set sizes can now be moved to the right side of the plot using `upset_set_size(position='right')`
 - `guides='over'` can be now passed to `upset()` to place the legends over the set sizes
 
 # Version 0.7.3

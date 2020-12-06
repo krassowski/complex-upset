@@ -16,7 +16,7 @@ upset(
   height_ratio = 0.5,
   width_ratio = 0.3,
   wrap = FALSE,
-  set_sizes = upset_set_size(width = 0.6),
+  set_sizes = upset_set_size(),
   queries = list(),
   guides = NULL,
   dot_size = 3,

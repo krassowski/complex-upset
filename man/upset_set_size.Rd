@@ -5,21 +5,19 @@
 \title{Prepare layers for sets sizes plot}
 \usage{
 upset_set_size(
-  geom = geom_bar,
+  geom = geom_bar(width = 0.6),
   position = "left",
-  layers = list(),
-  mapping = aes(),
-  ...
+  mapping = aes()
 )
 }
 \arguments{
-\item{geom}{the geom to use}
+\item{geom}{a geom to use}
 
 \item{position}{on which side of the plot should the set sizes be displayed ('left' or 'right')}
 
-\item{layers}{a list of additional layers (scales, geoms) to be included on the plot}
-
 \item{mapping}{additional aesthetics}
+
+\item{layers}{a list of additional layers (scales, geoms) to be included on the plot}
 
 \item{...}{passed to the geom}
 }

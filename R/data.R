@@ -323,10 +323,18 @@ upset_data = function(
     }
 
     stacked = stack(data, intersect)
-
     stacked$id = rep(1:nrow(data), length(intersect))
-
     stacked = stacked[stacked$values == TRUE, ]
+
+    metadata = data[
+          match(
+              stacked$id,
+              1:nrow(data)
+          ),
+          setdiff(colnames(data), intersect)
+    ]
+    stacked = cbind(stacked, metadata)
+
     stacked$group = stacked$ind
 
     groups_by_size = table(stacked$group)

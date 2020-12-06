@@ -4,7 +4,7 @@
 #' @importFrom ggplot2 geom_text geom_bar geom_col geom_point geom_segment
 #' @importFrom ggplot2 is.ggplot %+%
 #' @importFrom scales log_breaks trans_new
-#' @importFrom patchwork plot_layout plot_spacer wrap_elements
+#' @importFrom patchwork plot_layout plot_spacer guide_area wrap_elements
 NULL
 
 globalVariables(c(
@@ -569,25 +569,19 @@ reverse_log_trans = function(base=10) {
 
 #' Prepare layers for sets sizes plot
 #'
-#' @param geom the geom to use
+#' @param geom a geom to use
 #' @param position on which side of the plot should the set sizes be displayed ('left' or 'right')
 #' @param layers a list of additional layers (scales, geoms) to be included on the plot
 #' @param mapping additional aesthetics
 #' @param ... passed to the geom
 #' @export
-upset_set_size = function(geom=geom_bar, position='left', layers=list(), mapping=aes(), ...) {
+upset_set_size = function(geom=geom_bar(width=0.6), position='left', mapping=aes()) {
     check_argument(position, allowed=c('left', 'right'), description='position')
 
-    args = eval(list(...))
-
     annotation = convert_annotation(
-        geom=list(
-            geom(...)
-        ),
+        geom=list(geom),
         aes=mapping,
-        highlight_geom=list(
-            geom(...)
-        )
+        highlight_geom=list(geom)
     ) + ylab('Set size')
     annotation$position = position
     annotation
@@ -703,7 +697,7 @@ upset = function(
   height_ratio=0.5,
   width_ratio=0.3,
   wrap=FALSE,
-  set_sizes=upset_set_size(width=0.6),
+  set_sizes=upset_set_size(),
   queries=list(),
   guides=NULL,
   dot_size=3,
@@ -826,7 +820,7 @@ upset = function(
       selected_theme = themes[['default']]
     }
 
-    if (!is.null(guides) && guides == 'over' && round(length(annotations) / 2) == annotation_number) {
+    if (!is.null(guides) && guides == 'over' && ceiling(length(annotations) / 2) == annotation_number) {
         spacer = guide_area()
     } else {
         spacer = plot_spacer()
@@ -895,12 +889,18 @@ upset = function(
           default_scale = scale_y_reverse()
       }
 
+      set_sizes_data = data$presence[data$presence$group %in% data$plot_sets_subset, ]
+
+      set_sizes$layers = c(
+          matrix_background_stripes(data, stripes, 'vertical'),
+          set_sizes$layers
+      )
+
       overall_sizes = (
-        set_sizes %+% data$presence[data$presence$group %in% data$plot_sets_subset, ]
+        set_sizes %+% set_sizes_data
         + aes(x=group)
         + themes$overall_sizes
         + do.call(theme, set_sizes$theme)
-        + matrix_background_stripes(data, stripes, 'vertical')
         + coord_flip()
         + geom
         + scale_x_discrete(limits=sets_limits)
@@ -935,7 +935,7 @@ upset = function(
   } else {
       width_ratios = 1
   }
-    
+
   if (!is.null(guides) && guides == 'over') {
       guides = 'collect'  # guide_area() works with collect only
   }
