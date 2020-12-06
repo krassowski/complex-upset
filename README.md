@@ -27,18 +27,11 @@ upset(
     movies,
     genres,
     annotations = list(
-        'Length'=list(
-            aes=aes(x=intersection, y=length),
-            geom=geom_boxplot()
-        ),
-        'Rating'=list(
-            aes=aes(x=intersection, y=rating),
-            geom=list(
-                # if you do not want to install ggbeeswarm, you can use geom_jitter
-                ggbeeswarm::geom_quasirandom(aes(color=log10(votes))),
-                geom_violin(width=1.1, alpha=0.5)
-            )
-        )
+        'Length'=ggplot(mapping=aes(x=intersection, y=length)) + geom_boxplot(),
+        'Rating'=ggplot(mapping=aes(x=intersection, y=rating))
+            # if you do not want to install ggbeeswarm, you can use geom_jitter
+            + ggbeeswarm::geom_quasirandom(aes(color=log10(votes)))
+            + geom_violin(width=1.1, alpha=0.5)
     ),
     queries=list(
         upset_query(

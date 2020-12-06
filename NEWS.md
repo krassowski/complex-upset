@@ -4,6 +4,7 @@
 
 Bug fixes:
 - Layers added to `upset_set_size()` and `intersection_matrix()` will now always go on top (avoiding geoms being hidden underneath)
+- Declare layer in NAMESPACE to allow basic usage without loading `ggplot2`
 
 # Version 0.8.0
 

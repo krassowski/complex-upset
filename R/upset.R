@@ -1,7 +1,7 @@
 #' @importFrom utils head modifyList tail
 #' @importFrom ggplot2 ggplot aes aes_string coord_flip theme xlab ylab
 #' @importFrom ggplot2 scale_color_manual scale_x_discrete scale_y_discrete scale_y_reverse
-#' @importFrom ggplot2 geom_text geom_bar geom_col geom_point geom_segment
+#' @importFrom ggplot2 geom_text geom_bar geom_col geom_point geom_segment layer
 #' @importFrom ggplot2 is.ggplot %+%
 #' @importFrom scales log_breaks trans_new
 #' @importFrom patchwork plot_layout plot_spacer guide_area wrap_elements
@@ -12,7 +12,6 @@ globalVariables(c(
     'group',
     'union_size',
     '..count..',
-    'layer',
     'value'
 ))
 
