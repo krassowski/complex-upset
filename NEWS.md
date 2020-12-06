@@ -1,6 +1,6 @@
 # Version 0.7.4
 
-(under development)
+2020-12-06
 
 - significant performance improvements, especially for large datasets and `group_by` (#12)
 - set sizes can now be moved to the right side of the plot using `upset_set_size(position='right')`
