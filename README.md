@@ -62,11 +62,17 @@ The full list of examples is available in the [documentation](https://krassowski
 
 ## Install
 
-From `R` console run:
+To get the most recent version, open `R` and run:
 
 ```R
 if(!require(devtools)) install.packages("devtools")
 devtools::install_github("krassowski/complex-upset")
+```
+
+Alternatively, to get a stable CRAN release (which may be one version behind at times):
+
+```R
+install.packages('ComplexUpset')
 ```
 
 ## How it compares to other packages?
