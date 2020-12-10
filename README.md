@@ -91,9 +91,9 @@ For the interactive use, check out the [VCG/upset](https://github.com/VCG/upset)
 Here are example publications and preprints including figures generated with this library:
 
 - Martín-Martín et al. (2020). [Google Scholar, Microsoft Academic, Scopus, Dimensions, Web of Science, and OpenCitations’ COCI: a multidisciplinary comparison of coverage via citations](https://doi.org/10.1007/s11192-020-03690-4), *Scientometrics*: [Figure 2](https://link.springer.com/article/10.1007/s11192-020-03690-4#Fig2)
+- Krassowski et al. (2020). [Analyses for "State of the field in multi-omics research: from computational needs to data mining and sharing](https://doi.org/10.3389/fgene.2020.610798), *Frontiers in Genetics*: [Figure 5](https://www.frontiersin.org/articles/10.3389/fgene.2020.610798/full#F5)
 - Green et al. (2020). [Metabolic correlates of late midlife cognitive function: findings from the 1946 British Birth Cohort](https://doi.org/10.1101/2020.11.23.20236463), *medRxiv*: [Figure 2](https://www.medrxiv.org/content/10.1101/2020.11.23.20236463v2.full#F2)
-- McDaniel et al. (2020). [Metabolic differentiation of co-occurring Accumulibacter clades revealed through genome-resolved metatranscriptomics
-](https://doi.org/10.1101/2020.11.23.394700), *bioRxiv* [Figure 3](https://www.biorxiv.org/content/10.1101/2020.11.23.394700v1.full#F3)
+- McDaniel et al. (2020). [Metabolic differentiation of co-occurring Accumulibacter clades revealed through genome-resolved metatranscriptomics](https://doi.org/10.1101/2020.11.23.394700), *bioRxiv* [Figure 3](https://www.biorxiv.org/content/10.1101/2020.11.23.394700v1.full#F3)
 - Kozlowski et al. (2020). [Transposable Elements are an evolutionary force shaping genomic plasticity in the parthenogenetic root-knot nematode Meloidogyne incognita](https://doi.org/10.1101/2020.04.30.069948), *bioRxiv*: [Figure 7](https://www.biorxiv.org/content/10.1101/2020.04.30.069948v4.full#F7)
 - Swamy et al. (2020). [A long read optimized de novo transcriptome pipeline reveals novel ocular developmentally regulated gene isoforms and disease targets](https://doi.org/10.1101/2020.08.21.261644), *bioRxiv*: [Figure 4](https://www.biorxiv.org/content/10.1101/2020.08.21.261644v2.full#F4)
 
