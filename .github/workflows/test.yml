@@ -24,7 +24,7 @@ jobs:
           r-version: ${{ matrix.r }}
       - name: Install Linux dependencies
         if: runner.os == 'Linux'
-        run: sudo apt install libcurl4-openssl-dev
+        run: sudo apt install libcurl4-openssl-dev libgit2-dev
       - name: Install MacOs dependencies
         if: runner.os == 'macOS'
         run: brew cask install xquartz
