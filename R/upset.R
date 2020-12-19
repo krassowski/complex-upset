@@ -2,7 +2,7 @@
 #' @importFrom ggplot2 ggplot aes aes_string coord_flip theme xlab ylab
 #' @importFrom ggplot2 scale_color_manual scale_x_discrete scale_y_discrete scale_y_reverse
 #' @importFrom ggplot2 geom_text geom_bar geom_col geom_point geom_segment layer
-#' @importFrom ggplot2 is.ggplot %+%
+#' @importFrom ggplot2 is.ggplot %+% sym expr
 #' @importFrom scales log_breaks trans_new
 #' @importFrom patchwork plot_layout plot_spacer guide_area wrap_elements
 NULL
@@ -10,7 +10,6 @@ NULL
 globalVariables(c(
     'intersection',
     'group',
-    'union_size',
     '..count..',
     'value'
 ))
@@ -300,21 +299,27 @@ intersection_ratio = function(
   text_colors=c(on_background='black', on_bar='white'),
   text=list(),
   text_aes=aes_string(),
-  aest=aes_string()
+  aest=aes_string(),
+  mode='distinct',
+  denominator_mode='union'
 ) {
+  size = get_size_for_mode(mode)
+  denominator_size = get_size_for_mode(denominator_mode)
 
   if (counts) {
+    ratio = expr(!!size / !!denominator_size)
+
     text = modifyList(intersection_size_text, text)
     text_aes = modifyList(
         aes(
-            label=paste(intersection_size, '/', union_size),
+            label=paste(!!size, '/', !!denominator_size),
             y=ifelse(
-                intersection_size/union_size <= bar_number_threshold * max((intersection_size/union_size)[union_size!=0]),
-                intersection_size/union_size,
-                bar_number_threshold * intersection_size/union_size
+                !!ratio <= bar_number_threshold * max((!!ratio)[!!denominator_size != 0]),
+                !!ratio,
+                bar_number_threshold * !!ratio
             ),
             colour=ifelse(
-                intersection_size/union_size <= bar_number_threshold * max((intersection_size/union_size)[union_size!=0]),
+                !!ratio <= bar_number_threshold * max((!!ratio)[!!denominator_size != 0]),
                 'on_background',
                 'on_bar'
             )
@@ -344,7 +349,7 @@ intersection_ratio = function(
   }
 
   bar_geom = list(geom_col(
-      aes(y=ifelse(union_size == 0, 0, 1/union_size)),
+      aes(y=ifelse(!!denominator_size == 0, 0, 1/!!denominator_size)),
       # does not work, see
       # https://github.com/tidyverse/ggplot2/issues/3532
       na.rm=TRUE
