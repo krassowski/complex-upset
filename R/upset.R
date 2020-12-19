@@ -809,14 +809,14 @@ upset = function(
 
     if (class(base_annotations) == 'character') {
         if (base_annotations != 'auto') {
-            stop('Unsupported value fo base_annotations: provide a named list, or "auto"')
+            stop('Unsupported value for `base_annotations`: provide a named list, or `"auto"`')
         } else {
             lab = switch(
                 mode,
                 distinct='Intersection size',
                 # TODO: from next commit it will become:
                 # distinct='Distinct intersection size',
-                # the goal is to keep visual tests same for the first commit
+                # the goal is to keep visual tests same until they pass
                 intersect='Full intersection size',
                 union='Union size'
             )
