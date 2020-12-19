@@ -313,7 +313,6 @@ test_that("counts are properly computed in all modes", {
     ]
     rownames(sizes) = as.character(1:8)
 
-    # TODO: adjust numbers (1 should always give 2)
     expected_sizes = read.table(
         text="A     B     C size_union_mode size_distinct_mode size_intersect_mode
         1 FALSE FALSE FALSE               2                  2                   2
