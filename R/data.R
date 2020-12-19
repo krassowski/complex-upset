@@ -72,7 +72,7 @@ compute_matrix = function(sorted_intersections, sorted_groups) {
 }
 
 
-compute_unions = function(data, sorted_intersections) {
+compute_mode_unions = function(data, sorted_intersections) {
     intersections_as_groups = get_intersection_members(sorted_intersections)
 
     result = sapply(
@@ -90,6 +90,28 @@ compute_unions = function(data, sorted_intersections) {
             # sum of counts: nrow(union_for_intersection)
 
             sum(!duplicated(ids_of_union_for_intersection))
+        },
+        simplify=TRUE
+    )
+    names(result) = sorted_intersections
+    result
+}
+
+
+compute_mode_intersect = function(data, sorted_intersections) {
+    intersections_as_groups = get_intersection_members(sorted_intersections)
+
+    members = get_intersection_members(data[!duplicated(data$id), 'metadata'])
+
+    result = sapply(
+        intersections_as_groups,
+        function(i_groups) {
+            is_intersect = sapply(members, function(i_members) {
+                common = intersect(i_members, i_groups)
+                setequal(common, i_groups)
+            })
+
+            sum(is_intersect)
         },
         simplify=TRUE
     )
@@ -218,8 +240,9 @@ upset_data = function(
     sort_intersections_by='cardinality',
     group_by='degree',
     min_max_early=TRUE,
-    union_count_column='union_size',
-    intersection_count_column='intersection_size'
+    union_count_column='size_union_mode',
+    intersect_count_column='size_intersect_mode',
+    distinct_count_column='size_distinct_mode'
 ) {
     if ('tbl' %in% class(data)) {
         data = as.data.frame(data)
@@ -328,12 +351,14 @@ upset_data = function(
     stacked = stacked[stacked$values == TRUE, ]
 
     metadata = data[
-          match(
-              stacked$id,
-              1:nrow(data)
-          ),
-          setdiff(colnames(data), intersect)
-    ]
+        match(
+            stacked$id,
+            1:nrow(data)
+        ),
+        setdiff(colnames(data), intersect),
+        drop=FALSE
+    ]$intersection   # this has to be this way with drop as otherwise additional attributes would be included
+
     stacked = cbind(stacked, metadata)
 
     stacked$group = stacked$ind
@@ -358,7 +383,7 @@ upset_data = function(
                     sort_value = calculate_degree(original_intersections_names)
                     names(sort_value) = original_intersections_names
                 } else if (by == 'ratio') {
-                    unsorted_union_sizes = compute_unions(stacked, names(intersections_by_size))
+                    unsorted_union_sizes = compute_mode_unions(stacked, names(intersections_by_size))
                     sort_value = intersections_by_size
                     sort_value = sort_value / unsorted_union_sizes
                 }
@@ -447,12 +472,34 @@ upset_data = function(
         )
     }
 
-    union_sizes = compute_unions(stacked, sorted_intersections)
+    # "stacked"  does not contain the empty intersection, so those need to be added manually!
+    empty_observations = data$intersection[data$intersection == EMPTY_INTERSECTION]
+
+    if (length(empty_observations) != 0) {
+        highest_non_empty_id = max(stacked$id)
+        data_for_size_calculation = rbind(
+            stacked,
+            data.frame(
+                values=TRUE,
+                ind=empty_observations,
+                id=(highest_non_empty_id + 1):(highest_non_empty_id + length(empty_observations)),
+                metadata=empty_observations,
+                group=empty_observations
+            )
+        )
+    } else {
+        data_for_size_calculation = stacked
+    }
+
+    union_sizes = compute_mode_unions(data_for_size_calculation, sorted_intersections)
+    intersect_mode_sizes = compute_mode_intersect(data_for_size_calculation, sorted_intersections)
 
     with_sizes = data.frame(data)
 
     with_sizes[[union_count_column]] = union_sizes[data$intersection]
-    with_sizes[[intersection_count_column]] = intersections_by_size[data$intersection]
+    with_sizes[[distinct_count_column]] = as.numeric(intersections_by_size[data$intersection])
+    with_sizes[[intersect_count_column]] = intersect_mode_sizes[data$intersection]
+
 
   list(
     with_sizes=with_sizes,
@@ -466,6 +513,7 @@ upset_data = function(
       intersections=sorted_intersections
     ),
     union_sizes=union_sizes,
+    intersect_mode_sizes=intersect_mode_sizes,
     plot_intersections_subset=plot_intersections_subset,
     plot_sets_subset=plot_sets_subset,
     non_sanitized_labels=non_sanitized_labels

@@ -242,6 +242,98 @@ test_that("upset_data() accepts non logical columns (and warns about conversion)
     )
 })
 
+test_that("counts are properly computed in all modes", {
+
+    set_data <- data.frame(
+        # 1) 100 in A only, 2) 100 in B only, 3) 1000 in C only
+        # 4) 10 in A-B only, 5) 6 in A-C only, 6) 6 in B-C only
+        # 7) 1 in A-B-C only, 8) 2 in neither
+        A = c(
+            # 1) 100 in A only
+            rep(T, 100),
+            # 2) 100 in B only
+            rep(F, 100),
+            # 3) 1000 in C only
+            rep(F, 1000),
+            # 4) 10 in A-B only
+            rep(T, 10),
+            # 5) 6 in A-C only
+            rep(T, 6),
+            # 6) 6 in B-C only
+            rep(F, 6),
+            # 7) 1 in A-B-C only
+            rep(T, 1),
+            # 8) 2 in neither
+            rep(F, 2)
+        ),
+        B = c(
+            # 1) 100 in A only
+            rep(F, 100),
+            # 2) 100 in B only
+            rep(T, 100),
+            # 3) 1000 in C only
+            rep(F, 1000),
+            # 4) 10 in A-B only
+            rep(T, 10),
+            # 5) 6 in A-C only
+            rep(F, 6),
+            # 6) 6 in B-C only
+            rep(T, 6),
+            # 7) 1 in A-B-C only
+            rep(T, 1),
+            # 8) 2 in neither
+            rep(F, 2)
+        ),
+        C = c(
+            # 1) 100 in A only
+            rep(F, 100),
+            # 2) 100 in B only
+            rep(F, 100),
+            # 3) 1000 in C only
+            rep(T, 1000),
+            # 4) 10 in A-B only
+            rep(F, 10),
+            # 5) 6 in A-C only
+            rep(T, 6),
+            # 6) 6 in B-C only
+            rep(T, 6),
+            # 7) 1 in A-B-C only
+            rep(T, 1),
+            # 8) 2 in neither
+            rep(F, 2)
+        )
+    )
+
+    sets = colnames(set_data)
+    sizes = upset_data(set_data, sets)$with_sizes
+    sizes = sizes[!duplicated(sizes[, sets]), ]
+    sizes = sizes[
+        order(sizes$A, sizes$B, sizes$C),
+        c(sets, 'size_union_mode', 'size_distinct_mode', 'size_intersect_mode')
+    ]
+    rownames(sizes) = as.character(1:8)
+
+    # TODO: adjust numbers (1 should always give 2)
+    expected_sizes = read.table(
+        text="A     B     C size_union_mode size_distinct_mode size_intersect_mode
+        1 FALSE FALSE FALSE               2                  2                   2
+        2 FALSE FALSE  TRUE            1013               1000                1013
+        3 FALSE  TRUE FALSE             117                100                 117
+        4 FALSE  TRUE  TRUE            1123                  6                   7
+        5  TRUE FALSE FALSE             117                100                 117
+        6  TRUE FALSE  TRUE            1123                  6                   7
+        7  TRUE  TRUE FALSE             223                 10                  11
+        8  TRUE  TRUE  TRUE            1223                  1                   1",
+        header = TRUE,
+        stringsAsFactors = TRUE
+    )
+
+    expect_equal(
+        sizes,
+        expected_sizes
+    )
+})
+
 test_that("upset_data() filters by min_size, max_size, min_degree and max_degree", {
     # intersection: size, degree
     # a:     1, 1

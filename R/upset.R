@@ -175,6 +175,21 @@ matrix_background_stripes = function(data, stripes, orient='horizontal') {
 intersection_size_text = list(vjust=-0.25)
 
 
+get_size_for_mode = function(mode) {
+    check_argument(mode, allowed = c('distinct', 'intersect', 'union'), 'mode')
+
+    if (mode == 'distinct') {
+        size = sym('size_distinct_mode')
+    }
+    else if (mode == 'intersect') {
+        size = sym('size_intersect_mode')
+    }
+    else if (mode == 'union') {
+        size = sym('size_union_mode')
+    }
+}
+
+
 #' Barplot annotation of intersections sizes
 #'
 #' @param counts whether to display count number labels above the bars
@@ -190,20 +205,23 @@ intersection_size = function(
   text_colors=c(on_background='black', on_bar='white'),
   text=list(),
   text_aes=aes_string(),
-  aest=aes_string()
+  aest=aes_string(),
+  mode='distinct'
 ) {
+  size = get_size_for_mode(mode)
+
   if (counts) {
     text = modifyList(intersection_size_text, text)
     text_aes = modifyList(
         aes(
-            label=..count..,
+            label=!!size,
             y=ifelse(
-                ..count.. <= bar_number_threshold * max(..count..),
-                ..count..,
-                bar_number_threshold * ..count..
+                !!size <= bar_number_threshold * max(!!size),
+                !!size,
+                bar_number_threshold * !!size
             ),
             colour=ifelse(
-                ..count.. <= bar_number_threshold * max(..count..),
+                !!size <= bar_number_threshold * max(!!size),
                 'on_background',
                 'on_bar'
             )
@@ -216,9 +234,10 @@ intersection_size = function(
         geom_text,
         c(
             list(
-                stat='count',
+                stat='identity',
                 text_aes,
-                na.rm=TRUE
+                na.rm=TRUE,
+                check_overlap=TRUE
             ),
             text
         )
@@ -232,10 +251,10 @@ intersection_size = function(
     counts_geoms = list()
   }
 
-  bar_geom = list(geom_bar(na.rm=TRUE))
+  bar_geom = list(geom_bar(na.rm=TRUE, stat='identity'))
 
   convert_annotation(
-    aes=modifyList(aes(x=intersection), aest),
+    aes=modifyList(aes(x=intersection, y=!!size / !!sym('size_distinct_mode')), aest),
     geom=bar_geom,
     highlight_geom=bar_geom,
     top_geom=counts_geoms
@@ -253,11 +272,12 @@ intersection_size = function(
 #' @export
 #' @examples
 #' ggplot2::aes_(label=upset_text_percentage())
-upset_text_percentage = function(digits=0, sep='') {
+upset_text_percentage = function(digits=0, sep='', mode='distinct') {
+    size = get_size_for_mode(mode)
     substitute(
         paste(
             round(
-                intersection_size / union_size * 100,
+                !!size / size_union_mode * 100,
                 digits
             ),
             '%',
@@ -760,9 +780,7 @@ intersection_matrix = function(
 upset = function(
   data,
   intersect,
-  base_annotations=list(
-    'Intersection size'=intersection_size(counts=TRUE)
-  ),
+  base_annotations='auto',
   name='group',
   annotations=list(),
   themes=upset_themes,
@@ -772,6 +790,7 @@ upset = function(
   width_ratio=0.3,
   wrap=FALSE,
   set_sizes=upset_set_size(),
+  mode='distinct',
   queries=list(),
   guides=NULL,
   matrix=intersection_matrix(),
@@ -779,6 +798,28 @@ upset = function(
 ) {
   if (!is.null(guides)) {
      check_argument(guides, allowed = c('keep', 'collect', 'over'), 'guides')
+  }
+
+  check_argument(mode, allowed = c('distinct', 'intersect', 'union'), 'mode')
+
+    if (class(base_annotations) == 'character') {
+        if (base_annotations != 'auto') {
+            stop('Unsupported value fo base_annotations: provide a named list, or "auto"')
+        } else {
+            lab = switch(
+                mode,
+                distinct='Intersection size',
+                # TODO: from next commit it will become:
+                # distinct='Distinct intersection size',
+                # the goal is to keep visual tests same for the first commit
+                intersect='Full intersection size',
+                union='Union size'
+            )
+
+            base_annotations = list(
+                lab = intersection_size(counts=TRUE, mode=mode) + ylab(lab)
+            )
+        }
   }
 
   annotations = c(annotations, base_annotations)
