@@ -261,7 +261,12 @@ intersection_size = function(
   }
 
   bar_geom = list(
-      stat_summary(fun=sum, geom='bar', position=position_stack())
+      stat_summary(
+          fun=sum,
+          geom='bar',
+          position=position_stack(),
+          na.rm=TRUE
+      )
   )
 
   convert_annotation(
