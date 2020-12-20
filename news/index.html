@@ -74,7 +74,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">ComplexUpset</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.8.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.9.0</span>
       </span>
     </div>
 
@@ -126,9 +126,33 @@
       <small>Source: <a href='https://github.com/krassowski/complex-upset/blob/master/NEWS.md'><code>NEWS.md</code></a></small>
     </div>
 
+    <div id="version-090" class="section level1">
+<h1 class="page-header" data-toc-text="0.9.0">
+<a href="#version-090" class="anchor"></a>Version 0.9.0<small> Unreleased </small>
+</h1>
+<p>2020-12-20</p>
+<p>New features:</p>
+<ul>
+<li>Intersection modes were formalized with the default remaining <code>exclusive_intersection</code> (alias <code>distinct</code>); additional modes are: <code>inclusive_intersection</code> (alias <code>intersect</code>), <code>inclusive_union</code> and <code>exclusive_union</code>; please read the relevant part of the documentation for details (<a href='https://github.com/krassowski/complex-upset/issues/78'>#78</a>).</li>
+<li>Simple Venn diagrams (for two or three sets) can now be constructed using same input (binary presence data frame) using pseudo geoms: <code><a href="../reference/geom_venn_circle.html">geom_venn_circle()</a></code>, <code><a href="../reference/geom_venn_label_region.html">geom_venn_label_region()</a></code>, <code><a href="../reference/geom_venn_label_set.html">geom_venn_label_set()</a></code>, <code><a href="../reference/geom_venn_region.html">geom_venn_region()</a></code> and scales <code><a href="../reference/scale_color_venn_mix.html">scale_color_venn_mix()</a></code> and <code><a href="../reference/scale_fill_venn_mix.html">scale_fill_venn_mix()</a></code>; while developed mostly for the documentation needs, it provides unique capability of highlighting relevant regions of the Venn diagram and placing observations within appropriate regions (which allows to demonstrate their attributes with appropriate aesthetics mapping).</li>
+</ul>
+<p>Changes:</p>
+<ul>
+<li>Breaking: union size for “empty” intersection is now equal to its size</li>
+</ul>
+<p>Bug fixes:</p>
+<ul>
+<li>Layers added to <code><a href="../reference/upset_set_size.html">upset_set_size()</a></code> and <code><a href="../reference/intersection_matrix.html">intersection_matrix()</a></code> will now always go on top (avoiding geoms being hidden underneath)</li>
+<li>Declare layer in NAMESPACE to allow basic usage without loading <code>ggplot2</code>
+</li>
+<li>
+<code><a href="../reference/upset_query.html">upset_query()</a></code> will now throw an informative error when the user forgets to pass any aesthetics (<a href='https://github.com/krassowski/complex-upset/issues/79'>#79</a>)</li>
+</ul>
+</div>
     <div id="version-080" class="section level1">
 <h1 class="page-header" data-toc-text="0.8.0">
-<a href="#version-080" class="anchor"></a>Version 0.8.0</h1>
+<a href="#version-080" class="anchor"></a>Version 0.8.0<small> Unreleased </small>
+</h1>
 <p>2020-12-06</p>
 <ul>
 <li><p>Breaking: <code>geom</code> of <code><a href="../reference/upset_set_size.html">upset_set_size()</a></code> now accepts geom object (e.g. <code><a href="https://ggplot2.tidyverse.org/reference/geom_bar.html">geom_bar()</a></code>) rather than a function (e.g. <code>geom_bar</code>)</p></li>
@@ -152,7 +176,8 @@
 </div>
     <div id="version-074" class="section level1">
 <h1 class="page-header" data-toc-text="0.7.4">
-<a href="#version-074" class="anchor"></a>Version 0.7.4</h1>
+<a href="#version-074" class="anchor"></a>Version 0.7.4<small> Unreleased </small>
+</h1>
 <p>2020-12-06</p>
 <ul>
 <li>Significant performance improvements, especially for large datasets and <code>group_by</code> (<a href='https://github.com/krassowski/complex-upset/issues/12'>#12</a>)</li>
@@ -164,7 +189,8 @@
 </div>
     <div id="version-073" class="section level1">
 <h1 class="page-header" data-toc-text="0.7.3">
-<a href="#version-073" class="anchor"></a>Version 0.7.3</h1>
+<a href="#version-073" class="anchor"></a>Version 0.7.3<small> 2020-12-08 </small>
+</h1>
 <p>2020-12-05</p>
 <ul>
 <li>Address CRAN review comments</li>
@@ -175,7 +201,8 @@
 </div>
     <div id="version-072" class="section level1">
 <h1 class="page-header" data-toc-text="0.7.2">
-<a href="#version-072" class="anchor"></a>Version 0.7.2</h1>
+<a href="#version-072" class="anchor"></a>Version 0.7.2<small> Unreleased </small>
+</h1>
 <p>2020-12-04</p>
 <ul>
 <li>Prepare for CRAN submission</li>
@@ -185,7 +212,8 @@
 </div>
     <div id="version-071" class="section level1">
 <h1 class="page-header" data-toc-text="0.7.1">
-<a href="#version-071" class="anchor"></a>Version 0.7.1</h1>
+<a href="#version-071" class="anchor"></a>Version 0.7.1<small> Unreleased </small>
+</h1>
 <p>2020-12-04</p>
 <ul>
 <li>Fix degree calculation for empty intersections (<a href='https://github.com/krassowski/complex-upset/issues/73'>#73</a>)</li>
@@ -193,7 +221,8 @@
 </div>
     <div id="version-070" class="section level1">
 <h1 class="page-header" data-toc-text="0.7.0">
-<a href="#version-070" class="anchor"></a>Version 0.7.0</h1>
+<a href="#version-070" class="anchor"></a>Version 0.7.0<small> Unreleased </small>
+</h1>
 <p>2020-12-04</p>
 <ul>
 <li>Refactor <code><a href="../reference/upset_set_size.html">upset_set_size()</a></code> to enable addition of ggplot2 objects with <code><a href="https://rdrr.io/r/base/Arithmetic.html">+</a></code>.</li>
@@ -203,7 +232,8 @@
 </div>
     <div id="version-063" class="section level1">
 <h1 class="page-header" data-toc-text="0.6.3">
-<a href="#version-063" class="anchor"></a>Version 0.6.3</h1>
+<a href="#version-063" class="anchor"></a>Version 0.6.3<small> Unreleased </small>
+</h1>
 <p>2020-12-04</p>
 <ul>
 <li>Move to GitHub CI</li>
@@ -213,7 +243,8 @@
 </div>
     <div id="version-063-1" class="section level1">
 <h1 class="page-header" data-toc-text="0.6.3">
-<a href="#version-063-1" class="anchor"></a>Version 0.6.3</h1>
+<a href="#version-063-1" class="anchor"></a>Version 0.6.3<small> Unreleased </small>
+</h1>
 <p>2020-12-03</p>
 <p>Including versions 0.6.0 - 0.6.2.</p>
 <ul>
@@ -224,7 +255,8 @@
 </div>
     <div id="version-0519" class="section level1">
 <h1 class="page-header" data-toc-text="0.5.19">
-<a href="#version-0519" class="anchor"></a>Version 0.5.19</h1>
+<a href="#version-0519" class="anchor"></a>Version 0.5.19<small> Unreleased </small>
+</h1>
 <p>2020-11-08</p>
 <ul>
 <li>Implement <code>group_by</code> argument (<a href='https://github.com/krassowski/complex-upset/issues/66'>#66</a>)</li>
@@ -232,7 +264,8 @@
 </div>
     <div id="version-0518" class="section level1">
 <h1 class="page-header" data-toc-text="0.5.18">
-<a href="#version-0518" class="anchor"></a>Version 0.5.18</h1>
+<a href="#version-0518" class="anchor"></a>Version 0.5.18<small> Unreleased </small>
+</h1>
 <p>2020-09-21</p>
 <ul>
 <li>Multiple queries now work correctly (<a href='https://github.com/krassowski/complex-upset/issues/60'>#60</a>)</li>
@@ -240,7 +273,8 @@
 </div>
     <div id="version-0517" class="section level1">
 <h1 class="page-header" data-toc-text="0.5.17">
-<a href="#version-0517" class="anchor"></a>Version 0.5.17</h1>
+<a href="#version-0517" class="anchor"></a>Version 0.5.17<small> Unreleased </small>
+</h1>
 <p>2020-09-11</p>
 <ul>
 <li>Fix <code>min_degree</code> not working with intersections of size one (<a href='https://github.com/krassowski/complex-upset/issues/48'>#48</a>)</li>
@@ -248,7 +282,8 @@
 </div>
     <div id="version-0516" class="section level1">
 <h1 class="page-header" data-toc-text="0.5.16">
-<a href="#version-0516" class="anchor"></a>Version 0.5.16</h1>
+<a href="#version-0516" class="anchor"></a>Version 0.5.16<small> Unreleased </small>
+</h1>
 <p>2020-09-11</p>
 <ul>
 <li>Refactor stripes implementation, allow stripes transparency (<a href='https://github.com/krassowski/complex-upset/issues/54'>#54</a>)</li>
@@ -256,7 +291,8 @@
 </div>
     <div id="version-0515" class="section level1">
 <h1 class="page-header" data-toc-text="0.5.15">
-<a href="#version-0515" class="anchor"></a>Version 0.5.15</h1>
+<a href="#version-0515" class="anchor"></a>Version 0.5.15<small> Unreleased </small>
+</h1>
 <p>2020-06-18</p>
 <ul>
 <li>Fix the counts not showing up on highlighted bars (<a href='https://github.com/krassowski/complex-upset/issues/43'>#43</a>)</li>
@@ -264,7 +300,8 @@
 </div>
     <div id="version-040" class="section level1">
 <h1 class="page-header" data-toc-text="0.4.0">
-<a href="#version-040" class="anchor"></a>Version 0.4.0</h1>
+<a href="#version-040" class="anchor"></a>Version 0.4.0<small> Unreleased </small>
+</h1>
 <ul>
 <li>Sorting (descending/ascending/none) by degree/cardinality/ratio (<a href='https://github.com/krassowski/complex-upset/issues/18'>#18</a>, <a href='https://github.com/krassowski/complex-upset/issues/13'>#13</a>, <a href='https://github.com/krassowski/complex-upset/issues/10'>#10</a>)</li>
 <li>Selective themes customization (<a href='https://github.com/krassowski/complex-upset/issues/13'>#13</a>)</li>

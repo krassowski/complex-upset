@@ -34,7 +34,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="index.html">ComplexUpset</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.8.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.9.0</span>
       </span>
     </div>
 
@@ -104,18 +104,11 @@
     <span class="va">movies</span>,
     <span class="va">genres</span>,
     annotations <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>
-        <span class="st">'Length'</span><span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>
-            aes<span class="op">=</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x<span class="op">=</span><span class="va">intersection</span>, y<span class="op">=</span><span class="va">length</span><span class="op">)</span>,
-            geom<span class="op">=</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_boxplot.html">geom_boxplot</a></span><span class="op">(</span><span class="op">)</span>
-        <span class="op">)</span>,
-        <span class="st">'Rating'</span><span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>
-            aes<span class="op">=</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x<span class="op">=</span><span class="va">intersection</span>, y<span class="op">=</span><span class="va">rating</span><span class="op">)</span>,
-            geom<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>
-                <span class="co"># if you do not want to install ggbeeswarm, you can use geom_jitter</span>
-                <span class="fu">ggbeeswarm</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/ggbeeswarm/man/geom_quasirandom.html">geom_quasirandom</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>color<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/Log.html">log10</a></span><span class="op">(</span><span class="va">votes</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>,
-                <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_violin.html">geom_violin</a></span><span class="op">(</span>width<span class="op">=</span><span class="fl">1.1</span>, alpha<span class="op">=</span><span class="fl">0.5</span><span class="op">)</span>
-            <span class="op">)</span>
-        <span class="op">)</span>
+        <span class="st">'Length'</span><span class="op">=</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span>mapping<span class="op">=</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x<span class="op">=</span><span class="va">intersection</span>, y<span class="op">=</span><span class="va">length</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_boxplot.html">geom_boxplot</a></span><span class="op">(</span><span class="op">)</span>,
+        <span class="st">'Rating'</span><span class="op">=</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span>mapping<span class="op">=</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x<span class="op">=</span><span class="va">intersection</span>, y<span class="op">=</span><span class="va">rating</span><span class="op">)</span><span class="op">)</span>
+            <span class="co"># if you do not want to install ggbeeswarm, you can use geom_jitter</span>
+            <span class="op">+</span> <span class="fu">ggbeeswarm</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/ggbeeswarm/man/geom_quasirandom.html">geom_quasirandom</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>color<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/Log.html">log10</a></span><span class="op">(</span><span class="va">votes</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>
+            <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_violin.html">geom_violin</a></span><span class="op">(</span>width<span class="op">=</span><span class="fl">1.1</span>, alpha<span class="op">=</span><span class="fl">0.5</span><span class="op">)</span>
     <span class="op">)</span>,
     queries<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>
         <span class="fu"><a href="reference/upset_query.html">upset_query</a></span><span class="op">(</span>
@@ -142,10 +135,13 @@
 <div id="install" class="section level2">
 <h2 class="hasAnchor">
 <a href="#install" class="anchor"></a>Install</h2>
-<p>From <code>R</code> console run:</p>
+<p>To get the most recent version, open <code>R</code> and run:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="kw">if</span><span class="op">(</span><span class="op">!</span><span class="kw"><a href="https://rdrr.io/r/base/library.html">require</a></span><span class="op">(</span><span class="va"><a href="https://devtools.r-lib.org/">devtools</a></span><span class="op">)</span><span class="op">)</span> <span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span><span class="op">(</span><span class="st">"devtools"</span><span class="op">)</span>
 <span class="fu">devtools</span><span class="fu">::</span><span class="fu"><a href="https://devtools.r-lib.org//reference/remote-reexports.html">install_github</a></span><span class="op">(</span><span class="st">"krassowski/complex-upset"</span><span class="op">)</span></code></pre></div>
+<p>Alternatively, to get a stable CRAN release (which may be one version behind at times):</p>
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span><span class="op">(</span><span class="st">'ComplexUpset'</span><span class="op">)</span></code></pre></div>
 </div>
 <div id="how-it-compares-to-other-packages" class="section level2">
 <h2 class="hasAnchor">
@@ -168,6 +164,8 @@
 <p>Here are example publications and preprints including figures generated with this library:</p>
 <ul>
 <li>Martín-Martín et al. (2020). <a href="https://doi.org/10.1007/s11192-020-03690-4">Google Scholar, Microsoft Academic, Scopus, Dimensions, Web of Science, and OpenCitations’ COCI: a multidisciplinary comparison of coverage via citations</a>, <em>Scientometrics</em>: <a href="https://link.springer.com/article/10.1007/s11192-020-03690-4#Fig2">Figure 2</a>
+</li>
+<li>Krassowski et al. (2020). <a href="https://doi.org/10.3389/fgene.2020.610798">Analyses for "State of the field in multi-omics research: from computational needs to data mining and sharing</a>, <em>Frontiers in Genetics</em>: <a href="https://www.frontiersin.org/articles/10.3389/fgene.2020.610798/full#F5">Figure 5</a>
 </li>
 <li>Green et al. (2020). <a href="https://doi.org/10.1101/2020.11.23.20236463">Metabolic correlates of late midlife cognitive function: findings from the 1946 British Birth Cohort</a>, <em>medRxiv</em>: <a href="https://www.medrxiv.org/content/10.1101/2020.11.23.20236463v2.full#F2">Figure 2</a>
 </li>
@@ -204,6 +202,8 @@
     <div class="links">
 <h2>Links</h2>
 <ul class="list-unstyled">
+<li>Download from CRAN at <br><a href="https://cloud.r-project.org/package=ComplexUpset">https://​cloud.r-project.org/​package=ComplexUpset</a>
+</li>
 <li>Browse source code at <br><a href="https://github.com/krassowski/complex-upset/">https://​github.com/​krassowski/​complex-upset/​</a>
 </li>
 <li>Report a bug at <br><a href="https://github.com/krassowski/complex-upset/issues">https://​github.com/​krassowski/​complex-upset/​issues</a>

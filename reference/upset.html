@@ -75,7 +75,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">ComplexUpset</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.8.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.9.0</span>
       </span>
     </div>
 
@@ -135,7 +135,7 @@
     <pre class="usage"><span class='fu'>upset</span><span class='op'>(</span>
   <span class='va'>data</span>,
   <span class='va'>intersect</span>,
-  base_annotations <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>`Intersection size` <span class='op'>=</span> <span class='fu'><a href='intersection_size.html'>intersection_size</a></span><span class='op'>(</span>counts <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span><span class='op'>)</span>,
+  base_annotations <span class='op'>=</span> <span class='st'>"auto"</span>,
   name <span class='op'>=</span> <span class='st'>"group"</span>,
   annotations <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span><span class='op'>)</span>,
   themes <span class='op'>=</span> <span class='va'>upset_themes</span>,
@@ -145,6 +145,7 @@
   width_ratio <span class='op'>=</span> <span class='fl'>0.3</span>,
   wrap <span class='op'>=</span> <span class='cn'>FALSE</span>,
   set_sizes <span class='op'>=</span> <span class='fu'><a href='upset_set_size.html'>upset_set_size</a></span><span class='op'>(</span><span class='op'>)</span>,
+  mode <span class='op'>=</span> <span class='st'>"distinct"</span>,
   queries <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span><span class='op'>)</span>,
   guides <span class='op'>=</span> <span class='cn'>NULL</span>,
   matrix <span class='op'>=</span> <span class='fu'><a href='intersection_matrix.html'>intersection_matrix</a></span><span class='op'>(</span><span class='op'>)</span>,
@@ -206,6 +207,10 @@
       <td><p>the overall set sizes plot, e.g. from <code><a href='upset_set_size.html'>upset_set_size()</a></code> (<code>FALSE</code> to hide)</p></td>
     </tr>
     <tr>
+      <th>mode</th>
+      <td><p>region selection mode for computing the number of elements in intersection fragment See <code><a href='get_size_mode.html'>get_size_mode()</a></code> for accepted values.</p></td>
+    </tr>
+    <tr>
       <th>queries</th>
       <td><p>a list of queries generated with <code><a href='upset_query.html'>upset_query()</a></code></p></td>
     </tr>
@@ -233,8 +238,10 @@
     <dt><code>sort_intersections_by</code></dt><dd><p>the mode of sorting, the size of the intersection (cardinality) by default; one of: <code>'cardinality'</code>, <code>'degree'</code>, <code>'ratio'</code>, or any combination of these (e.g. <code><a href='https://rdrr.io/r/base/c.html'>c('degree', 'cardinality')</a></code>)</p></dd>
     <dt><code>group_by</code></dt><dd><p>the mode of grouping intersections; one of: <code>'degree'</code>, <code>'sets'</code></p></dd>
     <dt><code>min_max_early</code></dt><dd><p>whether the min and max limits should be applied early (for faster plotting), or late (for accurate depiction of ratios)</p></dd>
-    <dt><code>union_count_column</code></dt><dd><p>name of the column to store the union size (adjust if conflicts with your data)</p></dd>
-    <dt><code>intersection_count_column</code></dt><dd><p>name of the column to store the intersection size (adjust if conflicts with your data)</p></dd>
+    <dt><code>inclusive_union_count_column</code></dt><dd><p>name of the column to store the inclusive union size (adjust if conflicts with your data)</p></dd>
+    <dt><code>exclusive_union_count_column</code></dt><dd><p>name of the column to store the exclusive union size (adjust if conflicts with your data)</p></dd>
+    <dt><code>inclusive_intersection_column</code></dt><dd><p>name of the column to store the inclusive intersection size (adjust if conflicts with your data)</p></dd>
+    <dt><code>exclusive_intersection_column</code></dt><dd><p>name of the column to store the exclusive intersection size (adjust if conflicts with your data)</p></dd>
   
 </dl></td>
     </tr>

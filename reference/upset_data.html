@@ -75,7 +75,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">ComplexUpset</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.8.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.9.0</span>
       </span>
     </div>
 
@@ -148,8 +148,10 @@
   sort_intersections_by <span class='op'>=</span> <span class='st'>"cardinality"</span>,
   group_by <span class='op'>=</span> <span class='st'>"degree"</span>,
   min_max_early <span class='op'>=</span> <span class='cn'>TRUE</span>,
-  union_count_column <span class='op'>=</span> <span class='st'>"union_size"</span>,
-  intersection_count_column <span class='op'>=</span> <span class='st'>"intersection_size"</span>
+  inclusive_intersection_column <span class='op'>=</span> <span class='st'>"size_intersect_mode"</span>,
+  exclusive_intersection_column <span class='op'>=</span> <span class='st'>"size_distinct_mode"</span>,
+  inclusive_union_count_column <span class='op'>=</span> <span class='st'>"size_inclusive_union_mode"</span>,
+  exclusive_union_count_column <span class='op'>=</span> <span class='st'>"size_exclusive_union_mode"</span>
 <span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
@@ -216,12 +218,20 @@
       <td><p>whether the min and max limits should be applied early (for faster plotting), or late (for accurate depiction of ratios)</p></td>
     </tr>
     <tr>
-      <th>union_count_column</th>
-      <td><p>name of the column to store the union size (adjust if conflicts with your data)</p></td>
+      <th>inclusive_intersection_column</th>
+      <td><p>name of the column to store the inclusive intersection size (adjust if conflicts with your data)</p></td>
     </tr>
     <tr>
-      <th>intersection_count_column</th>
-      <td><p>name of the column to store the intersection size (adjust if conflicts with your data)</p></td>
+      <th>exclusive_intersection_column</th>
+      <td><p>name of the column to store the exclusive intersection size (adjust if conflicts with your data)</p></td>
+    </tr>
+    <tr>
+      <th>inclusive_union_count_column</th>
+      <td><p>name of the column to store the inclusive union size (adjust if conflicts with your data)</p></td>
+    </tr>
+    <tr>
+      <th>exclusive_union_count_column</th>
+      <td><p>name of the column to store the exclusive union size (adjust if conflicts with your data)</p></td>
     </tr>
     </table>
 
