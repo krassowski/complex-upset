@@ -716,14 +716,9 @@ add_highlights_to_geoms = function(geoms, highlight_geoms, highlight_data, annot
                 stop(paste('The queries are not unique:', params$query[non_unique]))
             }
 
-            if (kind == 'intersection') {
-                selection = match(highlight_data[, kind], params$query)
-            } else {
-                selection = match(unique(highlight_data[, kind]), params$query)
-            }
             # reorder to match the data order:
             params = params[
-                selection,
+                match(unique(highlight_data[, kind]), params$query),
                 colnames(params) != 'query',
                 drop=FALSE
             ]
