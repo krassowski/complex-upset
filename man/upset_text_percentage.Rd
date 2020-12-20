@@ -4,7 +4,7 @@
 \alias{upset_text_percentage}
 \title{Generate percentage label of the intersection/union sizes ratio}
 \usage{
-upset_text_percentage(digits = 0, sep = "")
+upset_text_percentage(digits = 0, sep = "", mode = "distinct")
 }
 \arguments{
 \item{digits}{How many digits to show when rounding the percentage?}

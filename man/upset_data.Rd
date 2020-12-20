@@ -20,8 +20,9 @@ upset_data(
   sort_intersections_by = "cardinality",
   group_by = "degree",
   min_max_early = TRUE,
-  union_count_column = "union_size",
-  intersection_count_column = "intersection_size"
+  union_count_column = "size_union_mode",
+  intersect_count_column = "size_intersect_mode",
+  distinct_count_column = "size_distinct_mode"
 )
 }
 \arguments{

@@ -519,3 +519,68 @@ upset_data = function(
     non_sanitized_labels=non_sanitized_labels
   )
 }
+
+#' Create an example dataset with three sets: A, B and C
+#'
+#' @export
+create_upset_abc_example = function() {
+    data.frame(
+        # 1) 100 in A only, 2) 100 in B only, 3) 1000 in C only
+        # 4) 10 in A-B only, 5) 6 in A-C only, 6) 6 in B-C only
+        # 7) 1 in A-B-C only, 8) 2 in neither
+        A = c(
+            # 1) 100 in A only
+            rep(T, 100),
+            # 2) 100 in B only
+            rep(F, 100),
+            # 3) 1000 in C only
+            rep(F, 1000),
+            # 4) 10 in A-B only
+            rep(T, 10),
+            # 5) 6 in A-C only
+            rep(T, 6),
+            # 6) 6 in B-C only
+            rep(F, 6),
+            # 7) 1 in A-B-C only
+            rep(T, 1),
+            # 8) 2 in neither
+            rep(F, 2)
+        ),
+        B = c(
+            # 1) 100 in A only
+            rep(F, 100),
+            # 2) 100 in B only
+            rep(T, 100),
+            # 3) 1000 in C only
+            rep(F, 1000),
+            # 4) 10 in A-B only
+            rep(T, 10),
+            # 5) 6 in A-C only
+            rep(F, 6),
+            # 6) 6 in B-C only
+            rep(T, 6),
+            # 7) 1 in A-B-C only
+            rep(T, 1),
+            # 8) 2 in neither
+            rep(F, 2)
+        ),
+        C = c(
+            # 1) 100 in A only
+            rep(F, 100),
+            # 2) 100 in B only
+            rep(F, 100),
+            # 3) 1000 in C only
+            rep(T, 1000),
+            # 4) 10 in A-B only
+            rep(F, 10),
+            # 5) 6 in A-C only
+            rep(T, 6),
+            # 6) 6 in B-C only
+            rep(T, 6),
+            # 7) 1 in A-B-C only
+            rep(T, 1),
+            # 8) 2 in neither
+            rep(F, 2)
+        )
+    )
+}

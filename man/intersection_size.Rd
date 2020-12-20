@@ -10,7 +10,8 @@ intersection_size(
   text_colors = c(on_background = "black", on_bar = "white"),
   text = list(),
   text_aes = aes_string(),
-  aest = aes_string()
+  aest = aes_string(),
+  mode = "distinct"
 )
 }
 \arguments{

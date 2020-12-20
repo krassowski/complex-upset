@@ -7,7 +7,7 @@
 upset(
   data,
   intersect,
-  base_annotations = list(`Intersection size` = intersection_size(counts = TRUE)),
+  base_annotations = "auto",
   name = "group",
   annotations = list(),
   themes = upset_themes,
@@ -17,6 +17,7 @@ upset(
   width_ratio = 0.3,
   wrap = FALSE,
   set_sizes = upset_set_size(),
+  mode = "distinct",
   queries = list(),
   guides = NULL,
   matrix = intersection_matrix(),
@@ -75,7 +76,6 @@ upset(
     \item{\code{group_by}}{the mode of grouping intersections; one of: \code{'degree'}, \code{'sets'}}
     \item{\code{min_max_early}}{whether the min and max limits should be applied early (for faster plotting), or late (for accurate depiction of ratios)}
     \item{\code{union_count_column}}{name of the column to store the union size (adjust if conflicts with your data)}
-    \item{\code{intersection_count_column}}{name of the column to store the intersection size (adjust if conflicts with your data)}
   }}
 }
 \description{
