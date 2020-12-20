@@ -75,7 +75,8 @@ upset(
     \item{\code{sort_intersections_by}}{the mode of sorting, the size of the intersection (cardinality) by default; one of: \code{'cardinality'}, \code{'degree'}, \code{'ratio'}, or any combination of these (e.g. \code{c('degree', 'cardinality')})}
     \item{\code{group_by}}{the mode of grouping intersections; one of: \code{'degree'}, \code{'sets'}}
     \item{\code{min_max_early}}{whether the min and max limits should be applied early (for faster plotting), or late (for accurate depiction of ratios)}
-    \item{\code{union_count_column}}{name of the column to store the union size (adjust if conflicts with your data)}
+    \item{\code{inclusive_union_count_column}}{name of the column to store the inclusive union size (adjust if conflicts with your data)}
+    \item{\code{exclusive_union_count_column}}{name of the column to store the exclusive union size (adjust if conflicts with your data)}
   }}
 }
 \description{

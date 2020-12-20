@@ -20,9 +20,10 @@ upset_data(
   sort_intersections_by = "cardinality",
   group_by = "degree",
   min_max_early = TRUE,
-  union_count_column = "size_union_mode",
   intersect_count_column = "size_intersect_mode",
-  distinct_count_column = "size_distinct_mode"
+  distinct_count_column = "size_distinct_mode",
+  inclusive_union_count_column = "size_inclusive_union_mode",
+  exclusive_union_count_column = "size_exclusive_union_mode"
 )
 }
 \arguments{
@@ -56,7 +57,9 @@ upset_data(
 
 \item{min_max_early}{whether the min and max limits should be applied early (for faster plotting), or late (for accurate depiction of ratios)}
 
-\item{union_count_column}{name of the column to store the union size (adjust if conflicts with your data)}
+\item{inclusive_union_count_column}{name of the column to store the inclusive union size (adjust if conflicts with your data)}
+
+\item{exclusive_union_count_column}{name of the column to store the exclusive union size (adjust if conflicts with your data)}
 
 \item{intersection_count_column}{name of the column to store the intersection size (adjust if conflicts with your data)}
 }

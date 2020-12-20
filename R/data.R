@@ -72,7 +72,7 @@ compute_matrix = function(sorted_intersections, sorted_groups) {
 }
 
 
-compute_mode_unions = function(data, sorted_intersections) {
+compute_mode_inclusive_unions = function(data, sorted_intersections) {
     intersections_as_groups = get_intersection_members(sorted_intersections)
 
     result = sapply(
@@ -98,6 +98,32 @@ compute_mode_unions = function(data, sorted_intersections) {
 }
 
 
+
+
+compute_mode_exclusive_unions = function(data, sorted_intersections) {
+
+    intersections_as_groups = get_intersection_members(sorted_intersections)
+
+    members = get_intersection_members(data[!duplicated(data$id), 'metadata'])
+
+    result = sapply(
+        intersections_as_groups,
+        function(i_groups) {
+            is_in_exclusive_union = sapply(members, function(i_members) {
+                common = setdiff(i_members, i_groups)
+                length(common) == 0
+            })
+
+            sum(is_in_exclusive_union)
+        },
+        simplify=TRUE
+    )
+    names(result) = sorted_intersections
+    result
+}
+
+
+# inclusive intersection
 compute_mode_intersect = function(data, sorted_intersections) {
     intersections_as_groups = get_intersection_members(sorted_intersections)
 
@@ -226,7 +252,8 @@ trim_intersections = function(
 #' @param sort_intersections_by the mode of sorting, the size of the intersection (cardinality) by default; one of: `'cardinality'`, `'degree'`, `'ratio'`, or any combination of these (e.g. `c('degree', 'cardinality')`)
 #' @param group_by the mode of grouping intersections; one of: `'degree'`, `'sets'`
 #' @param min_max_early whether the min and max limits should be applied early (for faster plotting), or late (for accurate depiction of ratios)
-#' @param union_count_column name of the column to store the union size (adjust if conflicts with your data)
+#' @param inclusive_union_count_column name of the column to store the inclusive union size (adjust if conflicts with your data)
+#' @param exclusive_union_count_column name of the column to store the exclusive union size (adjust if conflicts with your data)
 #' @param intersection_count_column name of the column to store the intersection size (adjust if conflicts with your data)
 #' @export
 upset_data = function(
@@ -240,9 +267,10 @@ upset_data = function(
     sort_intersections_by='cardinality',
     group_by='degree',
     min_max_early=TRUE,
-    union_count_column='size_union_mode',
     intersect_count_column='size_intersect_mode',
-    distinct_count_column='size_distinct_mode'
+    distinct_count_column='size_distinct_mode',
+    inclusive_union_count_column='size_inclusive_union_mode',
+    exclusive_union_count_column='size_exclusive_union_mode'
 ) {
     if ('tbl' %in% class(data)) {
         data = as.data.frame(data)
@@ -383,7 +411,7 @@ upset_data = function(
                     sort_value = calculate_degree(original_intersections_names)
                     names(sort_value) = original_intersections_names
                 } else if (by == 'ratio') {
-                    unsorted_union_sizes = compute_mode_unions(stacked, names(intersections_by_size))
+                    unsorted_union_sizes = compute_mode_inclusive_unions(stacked, names(intersections_by_size))
                     sort_value = intersections_by_size
                     sort_value = sort_value / unsorted_union_sizes
                 }
@@ -491,12 +519,16 @@ upset_data = function(
         data_for_size_calculation = stacked
     }
 
-    union_sizes = compute_mode_unions(data_for_size_calculation, sorted_intersections)
+    inclusive_union_sizes = compute_mode_inclusive_unions(data_for_size_calculation, sorted_intersections)
+    exclusive_union_sizes = compute_mode_exclusive_unions(data_for_size_calculation, sorted_intersections)
+
     intersect_mode_sizes = compute_mode_intersect(data_for_size_calculation, sorted_intersections)
 
     with_sizes = data.frame(data)
 
-    with_sizes[[union_count_column]] = union_sizes[data$intersection]
+    with_sizes[[inclusive_union_count_column]] = inclusive_union_sizes[data$intersection]
+    with_sizes[[exclusive_union_count_column]] = exclusive_union_sizes[data$intersection]
+
     with_sizes[[distinct_count_column]] = as.numeric(intersections_by_size[data$intersection])
     with_sizes[[intersect_count_column]] = intersect_mode_sizes[data$intersection]
 
@@ -512,7 +544,7 @@ upset_data = function(
       groups=sorted_groups,
       intersections=sorted_intersections
     ),
-    union_sizes=union_sizes,
+    union_sizes=inclusive_union_sizes,
     intersect_mode_sizes=intersect_mode_sizes,
     plot_intersections_subset=plot_intersections_subset,
     plot_sets_subset=plot_sets_subset,

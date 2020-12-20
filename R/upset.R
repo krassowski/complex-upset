@@ -175,17 +175,16 @@ intersection_size_text = list(vjust=-0.25)
 
 
 get_size_for_mode = function(mode) {
-    check_argument(mode, allowed = c('distinct', 'intersect', 'union'), 'mode')
+    mode = solve_mode(mode)
 
-    if (mode == 'distinct') {
-        size = sym('size_distinct_mode')
-    }
-    else if (mode == 'intersect') {
-        size = sym('size_intersect_mode')
-    }
-    else if (mode == 'union') {
-        size = sym('size_union_mode')
-    }
+    size = switch(
+        mode,
+        exclusive_intersection=sym('size_distinct_mode'),
+        inclusive_intersection=sym('size_intersect_mode'),
+        inclusive_union=sym('size_inclusive_union_mode'),
+        exclusive_union=sym('size_exclusive_union_mode'),
+    )
+    size
 }
 
 
@@ -761,7 +760,29 @@ intersection_matrix = function(
     plot$outline_color = outline_color
     plot
 }
-                          
+
+
+solve_mode = function (mode) {
+  check_argument(
+      mode,
+      allowed = c(
+          'exclusive_intersection', 'distinct',
+          'inclusive_intersection', 'intersect',
+          'exclusive_union', # no alias
+          'inclusive_union', 'union'
+      ),
+      'mode'
+  )
+
+    # resolve aliases
+    mode = switch(
+        mode,
+        distinct='exclusive_intersection',
+        intersect='inclusive_intersection',
+        union='inclusive_union',
+        mode
+    )
+}
 
 #' Compose an UpSet plot
 #' @inheritParams upset_data
@@ -805,7 +826,7 @@ upset = function(
      check_argument(guides, allowed = c('keep', 'collect', 'over'), 'guides')
   }
 
-  check_argument(mode, allowed = c('distinct', 'intersect', 'union'), 'mode')
+    mode = solve_mode(mode)
 
     if (class(base_annotations) == 'character') {
         if (base_annotations != 'auto') {
@@ -813,12 +834,10 @@ upset = function(
         } else {
             lab = switch(
                 mode,
-                distinct='Intersection size',
-                # TODO: from next commit it will become:
-                # distinct='Distinct intersection size',
-                # the goal is to keep visual tests same until they pass
-                intersect='Full intersection size',
-                union='Union size'
+                exclusive_intersection='Intersection size',
+                inclusive_intersection='Inclusive intersection size',
+                inclusive_union='Union size',
+                exclusive_union='Exclusive union size'
             )
 
             base_annotations = list(
