@@ -259,7 +259,9 @@ intersection_size = function(
     counts_geoms = list()
   }
 
-  bar_geom = list(geom_bar(na.rm=TRUE, stat='identity'))
+  bar_geom = list(
+      stat_summary(fun=sum, geom='bar', position=position_stack())
+  )
 
   convert_annotation(
     aes=modifyList(
