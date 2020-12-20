@@ -104,7 +104,7 @@ compute_mode_exclusive_unions = function(data, sorted_intersections) {
 
     intersections_as_groups = get_intersection_members(sorted_intersections)
 
-    members = get_intersection_members(data[!duplicated(data$id), 'metadata'])
+    members = get_intersection_members(data[!duplicated(data$id), 'intersection'])
 
     result = sapply(
         intersections_as_groups,
@@ -127,7 +127,7 @@ compute_mode_exclusive_unions = function(data, sorted_intersections) {
 compute_mode_intersect = function(data, sorted_intersections) {
     intersections_as_groups = get_intersection_members(sorted_intersections)
 
-    members = get_intersection_members(data[!duplicated(data$id), 'metadata'])
+    members = get_intersection_members(data[!duplicated(data$id), 'intersection'])
 
     result = sapply(
         intersections_as_groups,
@@ -378,6 +378,7 @@ upset_data = function(
     stacked$id = rep(1:nrow(data), length(intersect))
     stacked = stacked[stacked$values == TRUE, ]
 
+    # Note: we do want to include the additional attributes as those provide info for filling set sizes
     metadata = data[
         match(
             stacked$id,
@@ -385,7 +386,7 @@ upset_data = function(
         ),
         setdiff(colnames(data), intersect),
         drop=FALSE
-    ]$intersection   # this has to be this way with drop as otherwise additional attributes would be included
+    ]
 
     stacked = cbind(stacked, metadata)
 
@@ -505,15 +506,17 @@ upset_data = function(
 
     if (length(empty_observations) != 0) {
         highest_non_empty_id = max(stacked$id)
+        stack_for_empty = data.frame(
+            values=TRUE,
+            ind=empty_observations,
+            id=(highest_non_empty_id + 1):(highest_non_empty_id + length(empty_observations)),
+            intersection=empty_observations,
+            group=empty_observations
+        )
+
         data_for_size_calculation = rbind(
-            stacked,
-            data.frame(
-                values=TRUE,
-                ind=empty_observations,
-                id=(highest_non_empty_id + 1):(highest_non_empty_id + length(empty_observations)),
-                metadata=empty_observations,
-                group=empty_observations
-            )
+            stacked[, colnames(stack_for_empty)],
+            stack_for_empty
         )
     } else {
         data_for_size_calculation = stacked
