@@ -1,6 +1,6 @@
 # Version 0.9.0
 
-*Under development*
+2020-12-20
 
 New features:
 - Intersection modes were formalized with the default remaining `exclusive_intersection` (alias `distinct`); additional modes are: `inclusive_intersection` (alias `intersect`), `inclusive_union` and `exclusive_union`; please read the relevant part of the documentation for details (#78).
@@ -12,6 +12,7 @@ Changes:
 Bug fixes:
 - Layers added to `upset_set_size()` and `intersection_matrix()` will now always go on top (avoiding geoms being hidden underneath)
 - Declare layer in NAMESPACE to allow basic usage without loading `ggplot2`
+- `upset_query()` will now throw an informative error when the user forgets to pass any aesthetics (#79)
 
 # Version 0.8.0
 
