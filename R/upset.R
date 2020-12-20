@@ -243,10 +243,9 @@ intersection_size = function(
         geom_text,
         c(
             list(
-                stat='identity',
+                stat='unique',
                 text_aes,
-                na.rm=TRUE,
-                check_overlap=TRUE
+                na.rm=TRUE
             ),
             text
         )
