@@ -14,3 +14,4 @@ movies.png
 requirements.txt
 run_tests.sh
 ^data$
+^.github$
