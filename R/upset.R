@@ -576,6 +576,11 @@ upset_query = function(set=NULL, intersect=NULL, group=NULL, only_components=NUL
     if (passed_count == 0) {
         stop('Please pass "set", "intersect", or "group"')
     }
+
+    if (length(list(...)) == 0) {
+        stop('Please pass at least one option or aesthetic (e.g. `color` or `fill`) to highlight the queried elements')
+    }
+
     list(set=set, intersect=intersect, group_by_group=group, only_components=only_components, ...)
 }
 

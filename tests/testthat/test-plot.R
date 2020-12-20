@@ -63,28 +63,34 @@ test_that("The example plot works", {
 })
 
 
-test_that("upset_query requires set, group, or intersect, and not combinations", {
-    # accepts set
+test_that("upset_query requires set, group, or intersect, and not combinations & at least one aesthetic", {
+    # requires at least on aesthetic
     expect_error(
         upset_query(set='Drama'),
+        'Please pass at least one option or aesthetic \\(e.g. `color` or `fill`\\) to highlight the queried elements'
+    )
+
+    # accepts set
+    expect_error(
+        upset_query(set='Drama', fill='red'),
         NA
     )
 
     # accepts group
     expect_error(
-        upset_query(group='Drama'),
+        upset_query(group='Drama', fill='red'),
         NA
     )
 
     # accepts intersect
     expect_error(
-        upset_query(intersect=c('Romance', 'Drama')),
+        upset_query(intersect=c('Romance', 'Drama'), fill='red'),
         NA
     )
 
     # does not accept set and intersect together
     expect_error(
-        upset_query(set='Drama', intersect=c('Romance', 'Drama')),
+        upset_query(set='Drama', intersect=c('Romance', 'Drama'), fill='red'),
         'Please pass only one of: "set", "intersect", or "group"'
     )
 
