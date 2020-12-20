@@ -3,7 +3,7 @@
 2020-12-20
 
 New features:
-- Intersection modes were formalized with the default remaining `exclusive_intersection` (alias `distinct`); additional modes are: `inclusive_intersection` (alias `intersect`), `inclusive_union` and `exclusive_union`; please read the relevant part of the documentation for details (#78).
+- Intersection modes were formalized with the default remaining `exclusive_intersection` (alias `distinct`); additional modes are: `inclusive_intersection` (alias `intersect`), `inclusive_union` and `exclusive_union`; please read the [relevant part of the documentation](https://krassowski.github.io/complex-upset/articles/Examples_R.html#0-2-region-selection-modes) for details (#78).
 - Simple Venn diagrams (for two or three sets) can now be constructed using same input (binary presence data frame) using pseudo geoms: `geom_venn_circle()`, `geom_venn_label_region()`, `geom_venn_label_set()`, `geom_venn_region()` and scales `scale_color_venn_mix()` and `scale_fill_venn_mix()`; while developed mostly for the documentation needs, it provides unique capability of highlighting relevant regions of the Venn diagram and placing observations within appropriate regions (which allows to demonstrate their attributes with appropriate aesthetics mapping).
 
 Changes:
