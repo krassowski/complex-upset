@@ -548,7 +548,7 @@ arrange_venn = function(
         is_enough_slots = aligned_sizes >= region_sizes
         is_capturing_all_sets = !any(is.na(is_enough_slots))
 
-        slots_surplus = min(aligned_sizes - region_sizes)
+        slots_surplus = min(aligned_sizes - region_sizes, na.rm=TRUE)
 
         slots_surplus_ratio = slots_surplus / region_sizes[[which.min(aligned_sizes - region_sizes)]]
 
@@ -567,6 +567,7 @@ arrange_venn = function(
 
     }
     iteration = 1
+    prebious_ratios = c()
 
     while (!large_enough) {
 
@@ -582,7 +583,8 @@ arrange_venn = function(
             if (new_grid_size >= grid_size) {
                 # reasonable convergence
                 large_enough = TRUE
-            } else if (slots_surplus_ratio < 0.01) {
+            # prevent infinite loops
+            } else if (slots_surplus_ratio < 0.01 || slots_surplus_ratio %in% prebious_ratios) {
                 large_enough = TRUE
             } else {
                 grid_size = new_grid_size
@@ -598,6 +600,7 @@ arrange_venn = function(
             grid_size = as.integer(round(grid_size * factor))
 
         }
+        prebious_ratios = c(slots_surplus_ratio, prebious_ratios)
         iteration = iteration + 1
     }
 
