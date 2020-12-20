@@ -1,7 +1,7 @@
 Package: ComplexUpset
 Type: Package
 Title: Create Complex UpSet Plots Using 'ggplot2' Components
-Version: 0.8.1
+Version: 0.9.0
 Authors@R: person(
   "Michał", "Krassowski", email = "krassowski.michal+r@gmail.com", role = c("aut", "cre"),
   comment = c(ORCID = "0000-0002-9638-7785"))
@@ -26,7 +26,8 @@ Suggests:
 Imports:
     ggplot2,
     patchwork,
-    scales
+    scales,
+    colorspace
 VignetteBuilder: knitr
 RoxygenNote: 7.1.1
 Roxygen: list(markdown = TRUE)

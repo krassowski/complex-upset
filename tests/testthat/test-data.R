@@ -242,6 +242,39 @@ test_that("upset_data() accepts non logical columns (and warns about conversion)
     )
 })
 
+test_that("counts are properly computed in all modes", {
+
+    set_data <- create_upset_abc_example()
+
+    sets = colnames(set_data)
+    sizes = upset_data(set_data, sets)$with_sizes
+    sizes = sizes[!duplicated(sizes[, sets]), ]
+    sizes = sizes[
+        order(sizes$A, sizes$B, sizes$C),
+        c(sets, 'size_inclusive_union_mode', 'size_exclusive_union_mode', 'size_distinct_mode', 'size_intersect_mode')
+    ]
+    rownames(sizes) = as.character(1:8)
+
+    expected_sizes = read.table(
+        text="A     B     C size_inclusive_union_mode size_exclusive_union_mode size_distinct_mode size_intersect_mode
+        1 FALSE FALSE FALSE                         2                         2                  2                   2
+        2 FALSE FALSE  TRUE                      1013                      1000               1000                1013
+        3 FALSE  TRUE FALSE                       117                       100                100                 117
+        4 FALSE  TRUE  TRUE                      1123                      1106                  6                   7
+        5  TRUE FALSE FALSE                       117                       100                100                 117
+        6  TRUE FALSE  TRUE                      1123                      1106                  6                   7
+        7  TRUE  TRUE FALSE                       223                       210                 10                  11
+        8  TRUE  TRUE  TRUE                      1223                      1223                  1                   1",
+        header = TRUE,
+        stringsAsFactors = TRUE
+    )
+
+    expect_equal(
+        sizes,
+        expected_sizes
+    )
+})
+
 test_that("upset_data() filters by min_size, max_size, min_degree and max_degree", {
     # intersection: size, degree
     # a:     1, 1

@@ -10,7 +10,9 @@ intersection_ratio(
   text_colors = c(on_background = "black", on_bar = "white"),
   text = list(),
   text_aes = aes_string(),
-  aest = aes_string()
+  aest = aes_string(),
+  mode = "distinct",
+  denominator_mode = "union"
 )
 }
 \arguments{
@@ -25,6 +27,10 @@ intersection_ratio(
 \item{text_aes}{additional aesthetics for \code{geom_text}}
 
 \item{aest}{additional aesthetics for \code{geom_bar}}
+
+\item{mode}{region selection mode, defines which intersection regions will be accounted for when computing the size. See \code{get_size_mode()} for accepted values.}
+
+\item{denominator_mode}{region selection mode for computing the denominator in ratio. See \code{get_size_mode()} for accepted values.}
 }
 \description{
 A large intersection size can be driven by a large number of members in a group;

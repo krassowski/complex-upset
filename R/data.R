@@ -72,7 +72,7 @@ compute_matrix = function(sorted_intersections, sorted_groups) {
 }
 
 
-compute_unions = function(data, sorted_intersections) {
+compute_mode_inclusive_unions = function(data, sorted_intersections) {
     intersections_as_groups = get_intersection_members(sorted_intersections)
 
     result = sapply(
@@ -90,6 +90,54 @@ compute_unions = function(data, sorted_intersections) {
             # sum of counts: nrow(union_for_intersection)
 
             sum(!duplicated(ids_of_union_for_intersection))
+        },
+        simplify=TRUE
+    )
+    names(result) = sorted_intersections
+    result
+}
+
+
+
+
+compute_mode_exclusive_unions = function(data, sorted_intersections) {
+
+    intersections_as_groups = get_intersection_members(sorted_intersections)
+
+    members = get_intersection_members(data[!duplicated(data$id), 'intersection'])
+
+    result = sapply(
+        intersections_as_groups,
+        function(i_groups) {
+            is_in_exclusive_union = sapply(members, function(i_members) {
+                common = setdiff(i_members, i_groups)
+                length(common) == 0
+            })
+
+            sum(is_in_exclusive_union)
+        },
+        simplify=TRUE
+    )
+    names(result) = sorted_intersections
+    result
+}
+
+
+# inclusive intersection
+compute_mode_intersect = function(data, sorted_intersections) {
+    intersections_as_groups = get_intersection_members(sorted_intersections)
+
+    members = get_intersection_members(data[!duplicated(data$id), 'intersection'])
+
+    result = sapply(
+        intersections_as_groups,
+        function(i_groups) {
+            is_intersect = sapply(members, function(i_members) {
+                common = intersect(i_members, i_groups)
+                setequal(common, i_groups)
+            })
+
+            sum(is_intersect)
         },
         simplify=TRUE
     )
@@ -204,8 +252,10 @@ trim_intersections = function(
 #' @param sort_intersections_by the mode of sorting, the size of the intersection (cardinality) by default; one of: `'cardinality'`, `'degree'`, `'ratio'`, or any combination of these (e.g. `c('degree', 'cardinality')`)
 #' @param group_by the mode of grouping intersections; one of: `'degree'`, `'sets'`
 #' @param min_max_early whether the min and max limits should be applied early (for faster plotting), or late (for accurate depiction of ratios)
-#' @param union_count_column name of the column to store the union size (adjust if conflicts with your data)
-#' @param intersection_count_column name of the column to store the intersection size (adjust if conflicts with your data)
+#' @param inclusive_union_count_column name of the column to store the inclusive union size (adjust if conflicts with your data)
+#' @param exclusive_union_count_column name of the column to store the exclusive union size (adjust if conflicts with your data)
+#' @param inclusive_intersection_column name of the column to store the inclusive intersection size (adjust if conflicts with your data)
+#' @param exclusive_intersection_column name of the column to store the exclusive intersection size (adjust if conflicts with your data)
 #' @export
 upset_data = function(
     data, intersect, min_size=0, max_size=Inf, min_degree=0, max_degree=Inf,
@@ -218,8 +268,10 @@ upset_data = function(
     sort_intersections_by='cardinality',
     group_by='degree',
     min_max_early=TRUE,
-    union_count_column='union_size',
-    intersection_count_column='intersection_size'
+    inclusive_intersection_column='size_intersect_mode',
+    exclusive_intersection_column='size_distinct_mode',
+    inclusive_union_count_column='size_inclusive_union_mode',
+    exclusive_union_count_column='size_exclusive_union_mode'
 ) {
     if ('tbl' %in% class(data)) {
         data = as.data.frame(data)
@@ -327,13 +379,16 @@ upset_data = function(
     stacked$id = rep(1:nrow(data), length(intersect))
     stacked = stacked[stacked$values == TRUE, ]
 
+    # Note: we do want to include the additional attributes as those provide info for filling set sizes
     metadata = data[
-          match(
-              stacked$id,
-              1:nrow(data)
-          ),
-          setdiff(colnames(data), intersect)
+        match(
+            stacked$id,
+            1:nrow(data)
+        ),
+        setdiff(colnames(data), intersect),
+        drop=FALSE
     ]
+
     stacked = cbind(stacked, metadata)
 
     stacked$group = stacked$ind
@@ -358,7 +413,7 @@ upset_data = function(
                     sort_value = calculate_degree(original_intersections_names)
                     names(sort_value) = original_intersections_names
                 } else if (by == 'ratio') {
-                    unsorted_union_sizes = compute_unions(stacked, names(intersections_by_size))
+                    unsorted_union_sizes = compute_mode_inclusive_unions(stacked, names(intersections_by_size))
                     sort_value = intersections_by_size
                     sort_value = sort_value / unsorted_union_sizes
                 }
@@ -447,12 +502,40 @@ upset_data = function(
         )
     }
 
-    union_sizes = compute_unions(stacked, sorted_intersections)
+    # "stacked"  does not contain the empty intersection, so those need to be added manually!
+    empty_observations = data$intersection[data$intersection == EMPTY_INTERSECTION]
+
+    if (length(empty_observations) != 0) {
+        highest_non_empty_id = max(stacked$id)
+        stack_for_empty = data.frame(
+            values=TRUE,
+            ind=empty_observations,
+            id=(highest_non_empty_id + 1):(highest_non_empty_id + length(empty_observations)),
+            intersection=empty_observations,
+            group=empty_observations
+        )
+
+        data_for_size_calculation = rbind(
+            stacked[, colnames(stack_for_empty)],
+            stack_for_empty
+        )
+    } else {
+        data_for_size_calculation = stacked
+    }
+
+    inclusive_union_sizes = compute_mode_inclusive_unions(data_for_size_calculation, sorted_intersections)
+    exclusive_union_sizes = compute_mode_exclusive_unions(data_for_size_calculation, sorted_intersections)
+
+    intersect_mode_sizes = compute_mode_intersect(data_for_size_calculation, sorted_intersections)
 
     with_sizes = data.frame(data)
 
-    with_sizes[[union_count_column]] = union_sizes[data$intersection]
-    with_sizes[[intersection_count_column]] = intersections_by_size[data$intersection]
+    with_sizes[[inclusive_union_count_column]] = inclusive_union_sizes[data$intersection]
+    with_sizes[[exclusive_union_count_column]] = exclusive_union_sizes[data$intersection]
+
+    with_sizes[[exclusive_intersection_column]] = as.numeric(intersections_by_size[data$intersection])
+    with_sizes[[inclusive_intersection_column]] = intersect_mode_sizes[data$intersection]
+
 
   list(
     with_sizes=with_sizes,
@@ -465,9 +548,75 @@ upset_data = function(
       groups=sorted_groups,
       intersections=sorted_intersections
     ),
-    union_sizes=union_sizes,
+    union_sizes=inclusive_union_sizes,
+    intersect_mode_sizes=intersect_mode_sizes,
     plot_intersections_subset=plot_intersections_subset,
     plot_sets_subset=plot_sets_subset,
     non_sanitized_labels=non_sanitized_labels
   )
+}
+
+#' Create an example dataset with three sets: A, B and C
+#'
+#' @export
+create_upset_abc_example = function() {
+    data.frame(
+        # 1) 100 in A only, 2) 100 in B only, 3) 1000 in C only
+        # 4) 10 in A-B only, 5) 6 in A-C only, 6) 6 in B-C only
+        # 7) 1 in A-B-C only, 8) 2 in neither
+        A = c(
+            # 1) 100 in A only
+            rep(T, 100),
+            # 2) 100 in B only
+            rep(F, 100),
+            # 3) 1000 in C only
+            rep(F, 1000),
+            # 4) 10 in A-B only
+            rep(T, 10),
+            # 5) 6 in A-C only
+            rep(T, 6),
+            # 6) 6 in B-C only
+            rep(F, 6),
+            # 7) 1 in A-B-C only
+            rep(T, 1),
+            # 8) 2 in neither
+            rep(F, 2)
+        ),
+        B = c(
+            # 1) 100 in A only
+            rep(F, 100),
+            # 2) 100 in B only
+            rep(T, 100),
+            # 3) 1000 in C only
+            rep(F, 1000),
+            # 4) 10 in A-B only
+            rep(T, 10),
+            # 5) 6 in A-C only
+            rep(F, 6),
+            # 6) 6 in B-C only
+            rep(T, 6),
+            # 7) 1 in A-B-C only
+            rep(T, 1),
+            # 8) 2 in neither
+            rep(F, 2)
+        ),
+        C = c(
+            # 1) 100 in A only
+            rep(F, 100),
+            # 2) 100 in B only
+            rep(F, 100),
+            # 3) 1000 in C only
+            rep(T, 1000),
+            # 4) 10 in A-B only
+            rep(F, 10),
+            # 5) 6 in A-C only
+            rep(T, 6),
+            # 6) 6 in B-C only
+            rep(T, 6),
+            # 7) 1 in A-B-C only
+            rep(T, 1),
+            # 8) 2 in neither
+            rep(F, 2)
+        )
+    )
 }

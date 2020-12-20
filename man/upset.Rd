@@ -7,7 +7,7 @@
 upset(
   data,
   intersect,
-  base_annotations = list(`Intersection size` = intersection_size(counts = TRUE)),
+  base_annotations = "auto",
   name = "group",
   annotations = list(),
   themes = upset_themes,
@@ -17,6 +17,7 @@ upset(
   width_ratio = 0.3,
   wrap = FALSE,
   set_sizes = upset_set_size(),
+  mode = "distinct",
   queries = list(),
   guides = NULL,
   matrix = intersection_matrix(),
@@ -52,6 +53,8 @@ upset(
 
 \item{set_sizes}{the overall set sizes plot, e.g. from \code{upset_set_size()} (\code{FALSE} to hide)}
 
+\item{mode}{region selection mode for computing the number of elements in intersection fragment See \code{get_size_mode()} for accepted values.}
+
 \item{queries}{a list of queries generated with \code{upset_query()}}
 
 \item{guides}{action for legends aggregation and placement ('keep', 'collect', 'over' the set sizes)}
@@ -74,8 +77,10 @@ upset(
     \item{\code{sort_intersections_by}}{the mode of sorting, the size of the intersection (cardinality) by default; one of: \code{'cardinality'}, \code{'degree'}, \code{'ratio'}, or any combination of these (e.g. \code{c('degree', 'cardinality')})}
     \item{\code{group_by}}{the mode of grouping intersections; one of: \code{'degree'}, \code{'sets'}}
     \item{\code{min_max_early}}{whether the min and max limits should be applied early (for faster plotting), or late (for accurate depiction of ratios)}
-    \item{\code{union_count_column}}{name of the column to store the union size (adjust if conflicts with your data)}
-    \item{\code{intersection_count_column}}{name of the column to store the intersection size (adjust if conflicts with your data)}
+    \item{\code{inclusive_union_count_column}}{name of the column to store the inclusive union size (adjust if conflicts with your data)}
+    \item{\code{exclusive_union_count_column}}{name of the column to store the exclusive union size (adjust if conflicts with your data)}
+    \item{\code{inclusive_intersection_column}}{name of the column to store the inclusive intersection size (adjust if conflicts with your data)}
+    \item{\code{exclusive_intersection_column}}{name of the column to store the exclusive intersection size (adjust if conflicts with your data)}
   }}
 }
 \description{

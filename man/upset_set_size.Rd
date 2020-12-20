@@ -16,10 +16,6 @@ upset_set_size(
 \item{position}{on which side of the plot should the set sizes be displayed ('left' or 'right')}
 
 \item{mapping}{additional aesthetics}
-
-\item{layers}{a list of additional layers (scales, geoms) to be included on the plot}
-
-\item{...}{passed to the geom}
 }
 \description{
 Prepare layers for sets sizes plot

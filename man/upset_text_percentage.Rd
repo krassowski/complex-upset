@@ -4,16 +4,18 @@
 \alias{upset_text_percentage}
 \title{Generate percentage label of the intersection/union sizes ratio}
 \usage{
-upset_text_percentage(digits = 0, sep = "")
+upset_text_percentage(digits = 0, sep = "", mode = "distinct")
 }
 \arguments{
 \item{digits}{How many digits to show when rounding the percentage?}
 
 \item{sep}{set to space (\code{' '}) if you prefer a whitespace between the number and the \verb{\\\%} sign.}
+
+\item{mode}{region selection mode for computing the numerator in ratio. See \code{get_size_mode()} for accepted values.}
 }
 \description{
 For use together with \code{intersection_size} or \code{intersection_ratio}
 }
 \examples{
-ggplot2::aes_(label=upset_text_percentage())
+ggplot2::aes(label=!!upset_text_percentage())
 }

@@ -1,10 +1,18 @@
-# Version 0.8.1
+# Version 0.9.0
 
-*Under development*
+2020-12-20
+
+New features:
+- Intersection modes were formalized with the default remaining `exclusive_intersection` (alias `distinct`); additional modes are: `inclusive_intersection` (alias `intersect`), `inclusive_union` and `exclusive_union`; please read the relevant part of the documentation for details (#78).
+- Simple Venn diagrams (for two or three sets) can now be constructed using same input (binary presence data frame) using pseudo geoms: `geom_venn_circle()`, `geom_venn_label_region()`, `geom_venn_label_set()`, `geom_venn_region()` and scales `scale_color_venn_mix()` and `scale_fill_venn_mix()`; while developed mostly for the documentation needs, it provides unique capability of highlighting relevant regions of the Venn diagram and placing observations within appropriate regions (which allows to demonstrate their attributes with appropriate aesthetics mapping).
+
+Changes:
+- Breaking: union size for "empty" intersection is now equal to its size
 
 Bug fixes:
 - Layers added to `upset_set_size()` and `intersection_matrix()` will now always go on top (avoiding geoms being hidden underneath)
 - Declare layer in NAMESPACE to allow basic usage without loading `ggplot2`
+- `upset_query()` will now throw an informative error when the user forgets to pass any aesthetics (#79)
 
 # Version 0.8.0
 
