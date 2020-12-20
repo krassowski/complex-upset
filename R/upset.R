@@ -173,7 +173,7 @@ matrix_background_stripes = function(data, stripes, orient='horizontal') {
 
 intersection_size_text = list(vjust=-0.25)
 
-#' Retrieve symbol for given mode that can be used in aes mapping with double bang (!!)
+#' Retrieve symbol for given mode that can be used in aesthetics mapping with double bang (!!)
 #'
 #' @param mode the mode to use. Accepted values: `exclusive_intersection` (alias `distinct`), `inclusive_intersection` (alias `intersect`), `inclusive_union` (alias `union`), `exclusive_union`.
 #' @export
@@ -315,7 +315,7 @@ upset_text_percentage = function(digits=0, sep='', mode='distinct') {
 #' A large intersection size can be driven by a large number of members in a group;
 #' to account for that, one can divide the intersection size by the size of a union of the same groups.
 #' This cannot be calculated for the null intersection (observations which do not belong to either of the groups).
-#' @param denominator_mode region selection mode for computing the denumerator in ratio. See `get_size_mode()` for accepted values.
+#' @param denominator_mode region selection mode for computing the denominator in ratio. See `get_size_mode()` for accepted values.
 #' @inheritParams intersection_size
 #' @export
 intersection_ratio = function(

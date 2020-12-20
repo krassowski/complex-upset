@@ -2,7 +2,7 @@
 % Please edit documentation in R/upset.R
 \name{get_size_mode}
 \alias{get_size_mode}
-\title{Retrieve symbol for given mode that can be used in aes mapping with double bang (!!)}
+\title{Retrieve symbol for given mode that can be used in aesthetics mapping with double bang (!!)}
 \usage{
 get_size_mode(mode)
 }
@@ -10,5 +10,5 @@ get_size_mode(mode)
 \item{mode}{the mode to use. Accepted values: \code{exclusive_intersection} (alias \code{distinct}), \code{inclusive_intersection} (alias \code{intersect}), \code{inclusive_union} (alias \code{union}), \code{exclusive_union}.}
 }
 \description{
-Retrieve symbol for given mode that can be used in aes mapping with double bang (!!)
+Retrieve symbol for given mode that can be used in aesthetics mapping with double bang (!!)
 }

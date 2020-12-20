@@ -24,17 +24,17 @@ arrange_venn(
 
 \item{radius}{the radius of the circle}
 
-\item{max_iterations}{the maximal numer of iterations}
+\item{max_iterations}{the maximal number of iterations}
 
 \item{verbose}{should debugging notes be printed?}
 
 \item{outwards_adjust}{the multiplier defining the distance from the centre}
 
-\item{extract_sets}{should only sets be extreacted?}
+\item{extract_sets}{should only sets be extracted?}
 
-\item{extract_regions}{should all unique regions be extreacted?}
+\item{extract_regions}{should all unique regions be extracted?}
 
-\item{repeat_in_intersections}{reapeat intersection k times where k is the number of sets it belongs to?}
+\item{repeat_in_intersections}{repeat intersection k times where k is the number of sets it belongs to?}
 
 \item{starting_grid_size}{the starting size of the grid for placement of elements}
 }

@@ -485,12 +485,12 @@ allocate_slots = function(layout, grid_size_x, grid_size_y, store_coordinates=FA
 #' @param data a dataframe including binary columns representing membership in sets
 #' @param sets vector with names of columns representing membership in sets
 #' @param radius the radius of the circle
-#' @param max_iterations the maximal numer of iterations
+#' @param max_iterations the maximal number of iterations
 #' @param verbose should debugging notes be printed?
 #' @param outwards_adjust the multiplier defining the distance from the centre
-#' @param extract_sets should only sets be extreacted?
-#' @param extract_regions should all unique regions be extreacted?
-#' @param repeat_in_intersections reapeat intersection k times where k is the number of sets it belongs to?
+#' @param extract_sets should only sets be extracted?
+#' @param extract_regions should all unique regions be extracted?
+#' @param repeat_in_intersections repeat intersection k times where k is the number of sets it belongs to?
 #' @param starting_grid_size the starting size of the grid for placement of elements
 #' @export
 arrange_venn = function(
