@@ -214,12 +214,12 @@ intersection_size = function(
         aes(
             label=!!size,
             y=ifelse(
-                !!size <= bar_number_threshold * max(!!size),
+                !!size <= bar_number_threshold * max(!!size, na.rm=TRUE),
                 !!size,
                 bar_number_threshold * !!size
             ),
             colour=ifelse(
-                !!size <= bar_number_threshold * max(!!size),
+                !!size <= bar_number_threshold * max(!!size, na.rm=TRUE),
                 'on_background',
                 'on_bar'
             )
@@ -252,7 +252,13 @@ intersection_size = function(
   bar_geom = list(geom_bar(na.rm=TRUE, stat='identity'))
 
   convert_annotation(
-    aes=modifyList(aes(x=intersection, y=!!size / !!sym('size_distinct_mode')), aest),
+    aes=modifyList(
+        aes(
+            x=intersection,
+            y=!!size / !!sym('size_distinct_mode')
+        ),
+        aest
+    ),
     geom=bar_geom,
     highlight_geom=bar_geom,
     top_geom=counts_geoms
