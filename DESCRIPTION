@@ -26,7 +26,8 @@ Suggests:
 Imports:
     ggplot2,
     patchwork,
-    scales
+    scales,
+    colorspace
 VignetteBuilder: knitr
 RoxygenNote: 7.1.1
 Roxygen: list(markdown = TRUE)

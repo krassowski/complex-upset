@@ -53,6 +53,8 @@ upset(
 
 \item{set_sizes}{the overall set sizes plot, e.g. from \code{upset_set_size()} (\code{FALSE} to hide)}
 
+\item{mode}{region selection mode for computing the number of elements in intersection fragment See \code{get_size_mode()} for accepted values.}
+
 \item{queries}{a list of queries generated with \code{upset_query()}}
 
 \item{guides}{action for legends aggregation and placement ('keep', 'collect', 'over' the set sizes)}
@@ -77,6 +79,8 @@ upset(
     \item{\code{min_max_early}}{whether the min and max limits should be applied early (for faster plotting), or late (for accurate depiction of ratios)}
     \item{\code{inclusive_union_count_column}}{name of the column to store the inclusive union size (adjust if conflicts with your data)}
     \item{\code{exclusive_union_count_column}}{name of the column to store the exclusive union size (adjust if conflicts with your data)}
+    \item{\code{inclusive_intersection_column}}{name of the column to store the inclusive intersection size (adjust if conflicts with your data)}
+    \item{\code{exclusive_intersection_column}}{name of the column to store the exclusive intersection size (adjust if conflicts with your data)}
   }}
 }
 \description{

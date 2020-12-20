@@ -1,7 +1,7 @@
 #' @importFrom utils head modifyList tail
 #' @importFrom ggplot2 ggplot aes aes_string coord_flip theme xlab ylab
-#' @importFrom ggplot2 scale_color_manual scale_x_discrete scale_y_discrete scale_y_reverse
-#' @importFrom ggplot2 geom_text geom_bar geom_col geom_point geom_segment layer
+#' @importFrom ggplot2 scale_color_manual scale_x_discrete scale_y_discrete scale_y_reverse scale_y_continuous
+#' @importFrom ggplot2 geom_text geom_bar geom_col geom_point geom_segment layer position_stack stat_summary
 #' @importFrom ggplot2 is.ggplot %+% sym expr
 #' @importFrom scales log_breaks trans_new
 #' @importFrom patchwork plot_layout plot_spacer guide_area wrap_elements
@@ -175,9 +175,9 @@ intersection_size_text = list(vjust=-0.25)
 
 #' Retrieve symbol for given mode that can be used in aes mapping with double bang (!!)
 #'
-#' @param mode the mode to use
+#' @param mode the mode to use. Accepted values: `exclusive_intersection` (alias `distinct`), `inclusive_intersection` (alias `intersect`), `inclusive_union` (alias `union`), `exclusive_union`.
 #' @export
-get_size_for_mode = function(mode) {
+get_size_mode = function(mode) {
     mode = solve_mode(mode)
 
     size = switch(
@@ -199,6 +199,7 @@ get_size_for_mode = function(mode) {
 #' @param text additional parameters passed to `geom_text`
 #' @param text_aes additional aesthetics for `geom_text`
 #' @param aest additional aesthetics for `geom_bar`
+#' @param mode region selection mode, defines which intersection regions will be accounted for when computing the size. See `get_size_mode()` for accepted values.
 #' @export
 intersection_size = function(
   counts=TRUE,
@@ -209,7 +210,7 @@ intersection_size = function(
   aest=aes_string(),
   mode='distinct'
 ) {
-  size = get_size_for_mode(mode)
+  size = get_size_mode(mode)
 
     lab = switch(
         mode,
@@ -284,16 +285,17 @@ intersection_size = function(
 #'
 #' @param digits How many digits to show when rounding the percentage?
 #' @param sep set to space (`' '`) if you prefer a whitespace between the number and the `\%` sign.
+#' @param mode region selection mode for computing the numerator in ratio. See `get_size_mode()` for accepted values.
 #'
 #' @export
 #' @examples
-#' ggplot2::aes(label=!!set_text_percentage())
+#' ggplot2::aes(label=!!upset_text_percentage())
 upset_text_percentage = function(digits=0, sep='', mode='distinct') {
-    size = get_size_for_mode(mode)
+    size = get_size_mode(mode)
     expr(
         paste(
             round(
-                !!size / !!get_size_for_mode('inclusive_union') * 100,
+                !!size / !!get_size_mode('inclusive_union') * 100,
                 !!digits
             ),
             '%',
@@ -308,6 +310,7 @@ upset_text_percentage = function(digits=0, sep='', mode='distinct') {
 #' A large intersection size can be driven by a large number of members in a group;
 #' to account for that, one can divide the intersection size by the size of a union of the same groups.
 #' This cannot be calculated for the null intersection (observations which do not belong to either of the groups).
+#' @param denominator_mode region selection mode for computing the denumerator in ratio. See `get_size_mode()` for accepted values.
 #' @inheritParams intersection_size
 #' @export
 intersection_ratio = function(
@@ -320,8 +323,8 @@ intersection_ratio = function(
   mode='distinct',
   denominator_mode='union'
 ) {
-  size = get_size_for_mode(mode)
-  denominator_size = get_size_for_mode(denominator_mode)
+  size = get_size_mode(mode)
+  denominator_size = get_size_mode(denominator_mode)
 
   if (counts) {
     ratio = expr(!!size / !!denominator_size)
@@ -610,9 +613,7 @@ reverse_log_trans = function(base=10) {
 #'
 #' @param geom a geom to use
 #' @param position on which side of the plot should the set sizes be displayed ('left' or 'right')
-#' @param layers a list of additional layers (scales, geoms) to be included on the plot
 #' @param mapping additional aesthetics
-#' @param ... passed to the geom
 #' @export
 upset_set_size = function(geom=geom_bar(width=0.6), position='left', mapping=aes()) {
     check_argument(position, allowed=c('left', 'right'), description='position')
@@ -820,6 +821,7 @@ solve_mode = function (mode) {
 #' @param set_sizes the overall set sizes plot, e.g. from `upset_set_size()` (`FALSE` to hide)
 #' @param guides action for legends aggregation and placement ('keep', 'collect', 'over' the set sizes)
 #' @param wrap whether the plot should be wrapped into a group (makes adding a tile/combining with other plots easier)
+#' @param mode region selection mode for computing the number of elements in intersection fragment See `get_size_mode()` for accepted values.
 #' @inheritDotParams upset_data
 #' @export
 upset = function(

@@ -37,8 +37,6 @@ arrange_venn(
 \item{repeat_in_intersections}{reapeat intersection k times where k is the number of sets it belongs to?}
 
 \item{starting_grid_size}{the starting size of the grid for placement of elements}
-
-\item{mapping}{the aesthetics mapping}
 }
 \description{
 Arrange points for Venn diagram

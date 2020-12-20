@@ -1,8 +1,17 @@
 #' @importFrom utils modifyList
+#' @importFrom grDevices col2rgb rgb
+#' @importFrom colorspace RGB mixcolor
 #' @importFrom ggplot2 aes aes_
 #' @importFrom ggplot2 scale_color_manual scale_fill_manual
 #' @importFrom ggplot2 geom_label geom_polygon
 NULL
+
+globalVariables(c(
+    'x',
+    'y',
+    'alpha',
+    'region'
+))
 
 empty_region = 'NOT_IN_ANY_REGION'
 
@@ -46,11 +55,11 @@ prepare_colors = function(
         alpha = 1 / length(present)
 
         region_colors = sapply(region_colors, function(color) {
-            do.call(colorspace::RGB, as.list(t(col2rgb(color))))
+            do.call(RGB, as.list(t(col2rgb(color))))
         })
         mixed_color = Reduce(
             f=function(color_a, color_b) {
-                colorspace::mixcolor(
+                mixcolor(
                     alpha,
                     color_a,
                     color_b
@@ -62,9 +71,9 @@ prepare_colors = function(
         mixed_color = attr(mixed_color, 'coords')
 
         rgb(
-            r=mixed_color[, 'R'],
-            g=mixed_color[, 'G'],
-            b=mixed_color[, 'B'],
+            red=mixed_color[, 'R'],
+            green=mixed_color[, 'G'],
+            blue=mixed_color[, 'B'],
             maxColorValue=255
         )
 
@@ -96,7 +105,7 @@ scale_color_venn_mix = function(
     highlight=NULL, active_color='orange', inactive_color='grey60', scale=scale_color_manual,
     ...
 ) {
-    values = prepare_colors(data, set=sets, colors=colors, empty_color=na.value)
+    values = prepare_colors(data, sets=sets, colors=colors, empty_color=na.value)
 
     if (!is.null(highlight)) {
         values[!(names(values) %in% highlight)] = inactive_color
@@ -111,9 +120,9 @@ scale_color_venn_mix = function(
         present = names(members)[members]
         excluding = setdiff(sets, present)
         paste(
-            paste(present, collapse = ' ∩ '),
-            ifelse(length(excluding), '-', ''),
-            paste(excluding, collapse = ' - ')
+            paste(present, collapse = ' \u2229 '),
+            ifelse(length(excluding), '\\', ''),
+            paste(excluding, collapse = ' \\ ')
         )
     })
 
@@ -121,7 +130,7 @@ scale_color_venn_mix = function(
     labels = present_sets$label
     names(labels) = present_sets$name
 
-    empty_name = '∅'
+    empty_name = '\u2205'
     names(empty_name) = empty_region
 
     scale(
@@ -246,7 +255,6 @@ geom_venn_label_region = function(
     sets=NULL,
     outwards_adjust=1.3,
     fill=alpha('white', 0.85),
-    include='all',
     size=5,
     label.size=0,
     ...
@@ -284,7 +292,6 @@ geom_venn_label_set = function(
     sets=NULL,
     outwards_adjust=2.5,
     fill=alpha('white', 0.85),
-    include='all',
     size=5,
     label.size=0,
     ...
@@ -476,7 +483,6 @@ allocate_slots = function(layout, grid_size_x, grid_size_y, store_coordinates=FA
 #' Arrange points for Venn diagram
 #'
 #' @param data a dataframe including binary columns representing membership in sets
-#' @param mapping the aesthetics mapping
 #' @param sets vector with names of columns representing membership in sets
 #' @param radius the radius of the circle
 #' @param max_iterations the maximal numer of iterations

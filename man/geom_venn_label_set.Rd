@@ -10,7 +10,6 @@ geom_venn_label_set(
   sets = NULL,
   outwards_adjust = 2.5,
   fill = alpha("white", 0.85),
-  include = "all",
   size = 5,
   label.size = 0,
   ...

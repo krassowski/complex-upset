@@ -254,7 +254,8 @@ trim_intersections = function(
 #' @param min_max_early whether the min and max limits should be applied early (for faster plotting), or late (for accurate depiction of ratios)
 #' @param inclusive_union_count_column name of the column to store the inclusive union size (adjust if conflicts with your data)
 #' @param exclusive_union_count_column name of the column to store the exclusive union size (adjust if conflicts with your data)
-#' @param intersection_count_column name of the column to store the intersection size (adjust if conflicts with your data)
+#' @param inclusive_intersection_column name of the column to store the inclusive intersection size (adjust if conflicts with your data)
+#' @param exclusive_intersection_column name of the column to store the exclusive intersection size (adjust if conflicts with your data)
 #' @export
 upset_data = function(
     data, intersect, min_size=0, max_size=Inf, min_degree=0, max_degree=Inf,
@@ -267,8 +268,8 @@ upset_data = function(
     sort_intersections_by='cardinality',
     group_by='degree',
     min_max_early=TRUE,
-    intersect_count_column='size_intersect_mode',
-    distinct_count_column='size_distinct_mode',
+    inclusive_intersection_column='size_intersect_mode',
+    exclusive_intersection_column='size_distinct_mode',
     inclusive_union_count_column='size_inclusive_union_mode',
     exclusive_union_count_column='size_exclusive_union_mode'
 ) {
@@ -532,8 +533,8 @@ upset_data = function(
     with_sizes[[inclusive_union_count_column]] = inclusive_union_sizes[data$intersection]
     with_sizes[[exclusive_union_count_column]] = exclusive_union_sizes[data$intersection]
 
-    with_sizes[[distinct_count_column]] = as.numeric(intersections_by_size[data$intersection])
-    with_sizes[[intersect_count_column]] = intersect_mode_sizes[data$intersection]
+    with_sizes[[exclusive_intersection_column]] = as.numeric(intersections_by_size[data$intersection])
+    with_sizes[[inclusive_intersection_column]] = intersect_mode_sizes[data$intersection]
 
 
   list(
