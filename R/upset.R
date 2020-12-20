@@ -173,7 +173,10 @@ matrix_background_stripes = function(data, stripes, orient='horizontal') {
 
 intersection_size_text = list(vjust=-0.25)
 
-
+#' Retrieve symbol for given mode that can be used in aes mapping with double bang (!!)
+#'
+#' @param mode the mode to use
+#' @export
 get_size_for_mode = function(mode) {
     mode = solve_mode(mode)
 
@@ -207,6 +210,14 @@ intersection_size = function(
   mode='distinct'
 ) {
   size = get_size_for_mode(mode)
+
+    lab = switch(
+        mode,
+        exclusive_intersection='Intersection size',
+        inclusive_intersection='Inclusive intersection size',
+        inclusive_union='Union size',
+        exclusive_union='Exclusive union size'
+    )
 
   if (counts) {
     text = modifyList(intersection_size_text, text)
@@ -262,7 +273,7 @@ intersection_size = function(
     geom=bar_geom,
     highlight_geom=bar_geom,
     top_geom=counts_geoms
-  )
+  ) + ylab(lab)
 }
 
 
@@ -275,17 +286,17 @@ intersection_size = function(
 #'
 #' @export
 #' @examples
-#' ggplot2::aes_(label=upset_text_percentage())
+#' ggplot2::aes(label=!!set_text_percentage())
 upset_text_percentage = function(digits=0, sep='', mode='distinct') {
     size = get_size_for_mode(mode)
-    substitute(
+    expr(
         paste(
             round(
-                !!size / size_union_mode * 100,
-                digits
+                !!size / !!get_size_for_mode('inclusive_union') * 100,
+                !!digits
             ),
             '%',
-            sep=sep
+            sep=!!sep
         )
     )
 }
@@ -838,16 +849,8 @@ upset = function(
         if (base_annotations != 'auto') {
             stop('Unsupported value for `base_annotations`: provide a named list, or `"auto"`')
         } else {
-            lab = switch(
-                mode,
-                exclusive_intersection='Intersection size',
-                inclusive_intersection='Inclusive intersection size',
-                inclusive_union='Union size',
-                exclusive_union='Exclusive union size'
-            )
-
             base_annotations = list(
-                lab = intersection_size(counts=TRUE, mode=mode) + ylab(lab)
+                'Intersection size'=intersection_size(counts=TRUE, mode=mode)
             )
         }
   }
