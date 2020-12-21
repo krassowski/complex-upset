@@ -352,6 +352,26 @@ upset_data = function(
             intersect_subset = intersect
         }
 
+        if (length(intersections_by_size_trimmed) == 0) {
+
+            if (min_size > 0) {
+                tip = paste(': the maximal size for `min_size` for this dataset is', max(intersections_by_size))
+            } else if (min_degree > 0) {
+                degrees = calculate_degree(names(intersections_by_size))
+                tip = paste(': the maximal degree for `min_degree` for this dataset is', max(degrees))
+            } else if (!is.null(n_intersections) && n_intersections < 1) {
+                tip = paste0(': provide `n_intersections` >= 1 (you provoided: ', n_intersections, ')')
+            } else if (max_size < 1) {
+                tip = paste0(': provide `max_size` >= 1 (you provoided: ', max_size, ')')
+            } else if (max_degree < 1) {
+                tip = paste0(': provide `max_degree` >= 1 (you provoided: ', max_degree, ')')
+            } else {
+                tip = ''
+            }
+
+            stop(paste0('No intersections left after filtering', tip))
+        }
+
         if (min_max_early == TRUE) {
             intersections_by_size = intersections_by_size_trimmed
             for (mode in names(sizes)) {

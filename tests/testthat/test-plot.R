@@ -63,6 +63,42 @@ test_that("The example plot works", {
 })
 
 
+test_that("upset throws an informative error if filtering leads to empty dataset", {
+    # intersection: size, degree
+    # a:     1, 1
+    # a-b:   2, 2
+    # b-c:   1, 2
+    # a-b-d: 1, 3
+    # NA:    1, 0
+    df = data.frame(
+        a=c(TRUE, FALSE, TRUE, TRUE, FALSE, TRUE),
+        b=c(TRUE, TRUE, TRUE, TRUE, FALSE, FALSE),
+        c=c(FALSE, TRUE, FALSE, FALSE, FALSE, FALSE),
+        d=c(FALSE, FALSE, FALSE, TRUE, FALSE, FALSE)
+    )
+    expect_error(
+        upset(df, c('a', 'b', 'c', 'd'), min_size=3),
+        'No intersections left after filtering: the maximal size for `min_size` for this dataset is 2'
+    )
+    expect_error(
+        upset(df, c('a', 'b', 'c', 'd'), min_degree=4),
+        'No intersections left after filtering: the maximal degree for `min_degree` for this dataset is 3'
+    )
+    expect_error(
+        upset(df, c('a', 'b', 'c', 'd'), n_intersections=0),
+        'No intersections left after filtering: provide `n_intersections` >= 1 \\(you provoided: 0\\)'
+    )
+    expect_error(
+        upset(df, c('a', 'b', 'c', 'd'), max_size=-1),
+        'No intersections left after filtering: provide `max_size` >= 1 \\(you provoided: -1\\)'
+    )
+    expect_error(
+        upset(df, c('a', 'b', 'c', 'd'), max_degree=-1),
+        'No intersections left after filtering: provide `max_degree` >= 1 \\(you provoided: -1\\)'
+    )
+})
+
+
 test_that("upset_query requires set, group, or intersect, and not combinations & at least one aesthetic", {
     # requires at least on aesthetic
     expect_error(
