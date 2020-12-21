@@ -25,6 +25,33 @@ test_that("Data with hyphenated variables can be supplied", {
 })
 
 
+test_that("Columns names are available for plotting, even if not valid R variable names", {
+    library(ggplot2)
+
+    df = data.frame(
+        'set a'=c(TRUE, FALSE, TRUE, TRUE),
+        'set b'=c(TRUE, TRUE, TRUE, TRUE),
+        'set c'=c(FALSE, TRUE, FALSE, FALSE),
+        'set d'=c(FALSE, FALSE, FALSE, TRUE),
+        check.names=FALSE
+    )
+
+    expect_doppelganger(
+        title='Invalid columns names are available for plotting',
+        upset(
+            df, colnames(df),
+            annotations=list(
+                'Has members in set A?'=(
+                    ggplot(mapping=aes(x=intersection, y=`set a`))
+                    + geom_label(aes(label=`set a`))
+                    + ylab('Has members in set A?')
+                )
+            )
+        )
+    )
+})
+
+
 test_that("Multiple queries of the same kind highlight intersections", {
     library(ggplot2)
 

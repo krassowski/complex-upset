@@ -508,7 +508,7 @@ upset_data = function(
         )
     }
 
-    with_sizes = data.frame(data)
+    with_sizes = data.frame(data, check.names=FALSE)
 
     for (mode in names(sizes)) {
         column_name = paste0(mode, size_columns_suffix)

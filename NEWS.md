@@ -6,6 +6,7 @@ Changes:
 - Lists with computed sizes are now returned in a single list called `sizes` by `upset_data()`
 - Union sizes are now calculated before data trimming providing more accurate ratio estimates
 - Added examples for Venn diagrams which are now covered by automated tests to protect against regressions
+- Column names are no longer modified when supplying to `ggplot2` allowing to easily use them in annotations (#82)
 
 Bug fixes:
 - Modes passed to `upset()` are now also used for sorting and trimming
