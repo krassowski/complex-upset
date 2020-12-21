@@ -1,3 +1,10 @@
+# Version 0.9.1
+
+2020-12-20
+
+Changes:
+- Pass metadata to the ggplot when arranging Venn diagram, allowing to map elements aesthetics details
+
 # Version 0.9.0
 
 2020-12-20

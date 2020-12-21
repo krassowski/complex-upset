@@ -639,5 +639,5 @@ arrange_venn = function(
     }))
 
     new_coords$region[new_coords$region == ''] = empty_region
-    new_coords
+    cbind(new_coords, data[, setdiff(colnames(data), sets)])
 }
