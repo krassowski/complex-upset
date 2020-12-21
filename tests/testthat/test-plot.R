@@ -1,4 +1,4 @@
-movies = ggplot2movies::movies
+movies = head(ggplot2movies::movies, 2000)
 genres = c('Action', 'Animation', 'Comedy', 'Drama', 'Documentary', 'Romance')
 
 
