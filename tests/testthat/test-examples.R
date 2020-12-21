@@ -32,7 +32,7 @@ test_that("The examples in documentation work as expected", {
         } else if (cell_type == 'code') {
             code = paste(lines, collapse='\n')
 
-            is_example = grepl('upset(', code, fixed=TRUE)
+            is_example = grepl('upset(', code, fixed=TRUE) || grepl('venn', code, fixed=TRUE)
 
             if (is_example) {
                 if (last_title == example_title) {
