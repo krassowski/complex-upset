@@ -55,8 +55,7 @@ gather = function(data, idvar, col_name, value_name='value') {
 }
 
 
-compute_matrix = function(sorted_intersections, sorted_groups) {
-    intersections_as_groups = get_intersection_members(sorted_intersections)
+compute_matrix = function(intersections_as_groups, sorted_groups) {
 
      matrix = sapply(
         intersections_as_groups,
@@ -66,47 +65,31 @@ compute_matrix = function(sorted_intersections, sorted_groups) {
         simplify=FALSE
     )
 
-    matrix_data = as.data.frame(matrix, row.names=sorted_groups)
-    colnames(matrix_data) = sorted_intersections
+    matrix_data = as.data.frame(matrix, row.names=sorted_groups, check.names=FALSE)
     matrix_data
 }
 
 
-compute_mode_inclusive_unions = function(data, sorted_intersections) {
-    intersections_as_groups = get_intersection_members(sorted_intersections)
-
-    result = sapply(
+compute_mode_inclusive_unions = function(members, intersections_as_groups) {
+    sapply(
         intersections_as_groups,
         function(i_groups) {
-            ids_of_union_for_intersection = data[data$group %in% i_groups, 'id']
+            is_in_inclusive_union = sapply(members, function(i_members) {
+                common = intersect(i_members, i_groups)
+                length(common) != 0
+            })
 
-            # deduplicated = union_for_intersection[!duplicated(ids), ]
-            # nrow(deduplicated)
-
-            # note nrow(deduplicated) == sum(!duplicated(ids))
-
-            # NOTE:
-            # union: nrow(deduplicated)
-            # sum of counts: nrow(union_for_intersection)
-
-            sum(!duplicated(ids_of_union_for_intersection))
+            sum(is_in_inclusive_union)
         },
         simplify=TRUE
     )
-    names(result) = sorted_intersections
-    result
 }
 
 
 
 
-compute_mode_exclusive_unions = function(data, sorted_intersections) {
-
-    intersections_as_groups = get_intersection_members(sorted_intersections)
-
-    members = get_intersection_members(data[!duplicated(data$id), 'intersection'])
-
-    result = sapply(
+compute_mode_exclusive_unions = function(members, intersections_as_groups) {
+    sapply(
         intersections_as_groups,
         function(i_groups) {
             is_in_exclusive_union = sapply(members, function(i_members) {
@@ -118,18 +101,11 @@ compute_mode_exclusive_unions = function(data, sorted_intersections) {
         },
         simplify=TRUE
     )
-    names(result) = sorted_intersections
-    result
 }
 
 
-# inclusive intersection
-compute_mode_intersect = function(data, sorted_intersections) {
-    intersections_as_groups = get_intersection_members(sorted_intersections)
-
-    members = get_intersection_members(data[!duplicated(data$id), 'intersection'])
-
-    result = sapply(
+compute_mode_inclusive_intersection = function(members, intersections_as_groups) {
+    sapply(
         intersections_as_groups,
         function(i_groups) {
             is_intersect = sapply(members, function(i_members) {
@@ -141,8 +117,6 @@ compute_mode_intersect = function(data, sorted_intersections) {
         },
         simplify=TRUE
     )
-    names(result) = sorted_intersections
-    result
 }
 
 
@@ -250,12 +224,12 @@ trim_intersections = function(
 #' @param sort_sets whether to sort the rows in the intersection matrix (descending sort by default); one of: `'ascending'`, `'descending'`, `FALSE`
 #' @param sort_intersections whether to sort the columns in the intersection matrix (descending sort by default); one of: `'ascending'`, `'descending'`, `FALSE`
 #' @param sort_intersections_by the mode of sorting, the size of the intersection (cardinality) by default; one of: `'cardinality'`, `'degree'`, `'ratio'`, or any combination of these (e.g. `c('degree', 'cardinality')`)
+#' @param sort_ratio_numerator the mode for numerator when sorting by ratio
+#' @param sort_ratio_numerator the mode for denominator when sorting by ratio
 #' @param group_by the mode of grouping intersections; one of: `'degree'`, `'sets'`
 #' @param min_max_early whether the min and max limits should be applied early (for faster plotting), or late (for accurate depiction of ratios)
-#' @param inclusive_union_count_column name of the column to store the inclusive union size (adjust if conflicts with your data)
-#' @param exclusive_union_count_column name of the column to store the exclusive union size (adjust if conflicts with your data)
-#' @param inclusive_intersection_column name of the column to store the inclusive intersection size (adjust if conflicts with your data)
-#' @param exclusive_intersection_column name of the column to store the exclusive intersection size (adjust if conflicts with your data)
+#' @param mode region selection mode for sorting and trimming by size. See `get_size_mode()` for accepted values.
+#' @param size_columns_suffix suffix for the columns to store the sizes (adjust if conflicts with your data)
 #' @export
 upset_data = function(
     data, intersect, min_size=0, max_size=Inf, min_degree=0, max_degree=Inf,
@@ -266,16 +240,17 @@ upset_data = function(
     sort_sets='descending',
     sort_intersections='descending',
     sort_intersections_by='cardinality',
+    sort_ratio_numerator='exclusive_intersection',
+    sort_ratio_denominator='inclusive_union',
     group_by='degree',
     min_max_early=TRUE,
-    inclusive_intersection_column='size_intersect_mode',
-    exclusive_intersection_column='size_distinct_mode',
-    inclusive_union_count_column='size_inclusive_union_mode',
-    exclusive_union_count_column='size_exclusive_union_mode'
+    mode='exclusive_intersection',
+    size_columns_suffix='_size'
 ) {
     if ('tbl' %in% class(data)) {
         data = as.data.frame(data)
     }
+    mode = solve_mode(mode)
 
     check_sort(sort_sets)
 
@@ -326,7 +301,22 @@ upset_data = function(
     )
     data$intersection[data$intersection == ''] = EMPTY_INTERSECTION
 
-    intersections_by_size = table(data$intersection)
+    unsorted_intersections = unique(data$intersection)
+    data_for_inital_size_calc = data[, 'intersection', drop=FALSE]
+
+    all_intersections_as_groups = get_intersection_members(unsorted_intersections)
+    names(all_intersections_as_groups) = unsorted_intersections
+
+    members = get_intersection_members(data_for_inital_size_calc$intersection)
+
+    sizes = list(
+        exclusive_intersection=table(data_for_inital_size_calc$intersection),
+        inclusive_intersection=compute_mode_inclusive_intersection(members, all_intersections_as_groups),
+        exclusive_union=compute_mode_exclusive_unions(members, all_intersections_as_groups),
+        inclusive_union=compute_mode_inclusive_unions(members, all_intersections_as_groups)
+    )
+
+    intersections_by_size = sizes[[mode]]
 
     plot_intersections_subset = names(intersections_by_size)
     plot_sets_subset = intersect
@@ -364,6 +354,9 @@ upset_data = function(
 
         if (min_max_early == TRUE) {
             intersections_by_size = intersections_by_size_trimmed
+            for (mode in names(sizes)) {
+                sizes[[mode]] = sizes[[mode]][names(sizes[[mode]]) %in% names(intersections_by_size_trimmed)]
+            }
 
             if (!keep_empty_groups) {
                 intersect = intersect_subset
@@ -413,17 +406,23 @@ upset_data = function(
                     sort_value = calculate_degree(original_intersections_names)
                     names(sort_value) = original_intersections_names
                 } else if (by == 'ratio') {
-                    unsorted_union_sizes = compute_mode_inclusive_unions(stacked, names(intersections_by_size))
-                    sort_value = intersections_by_size
-                    sort_value = sort_value / unsorted_union_sizes
+                    sort_value = (
+                        sizes[[sort_ratio_numerator]][names(intersections_by_size)]
+                        /
+                        sizes[[sort_ratio_denominator]][names(intersections_by_size)]
+                    )
                 }
                 sort_value
             }
         )
 
-        intersections_by_size = intersections_by_size[
-            get_sort_order(sort_values, sort_intersections)
-        ]
+        sort_order = get_sort_order(sort_values, sort_intersections)
+
+        intersections_by_size = intersections_by_size[sort_order]
+
+         for (mode in names(sizes)) {
+            sizes[[mode]] = sizes[[mode]][names(intersections_by_size)]
+        }
     }
 
     check_argument(
@@ -450,7 +449,11 @@ upset_data = function(
                 if (group %in% i_groups) {
                     new_intersection_id = paste(c(group, i_groups[i_groups!=group]), collapse='-')
                     sorted_intersections = c(sorted_intersections, new_intersection_id)
+
                     intersections_by_size[new_intersection_id] = intersections_by_size[intersection]
+                    for (mode in names(sizes)) {
+                        sizes[[mode]][new_intersection_id] = sizes[[mode]][intersection]
+                    }
 
                     intersection_ids = which(data$intersection == intersection)
 
@@ -479,7 +482,10 @@ upset_data = function(
         plot_intersections_subset = new_plot_intersections_subset
     }
 
-    matrix_data = compute_matrix(sorted_intersections, sorted_groups)
+    intersections_as_groups = get_intersection_members(sorted_intersections)
+    names(intersections_as_groups) = sorted_intersections
+
+    matrix_data = compute_matrix(intersections_as_groups, sorted_groups)
 
     group = rownames(matrix_data)
 
@@ -502,39 +508,14 @@ upset_data = function(
         )
     }
 
-    # "stacked"  does not contain the empty intersection, so those need to be added manually!
-    empty_observations = data$intersection[data$intersection == EMPTY_INTERSECTION]
-
-    if (length(empty_observations) != 0) {
-        highest_non_empty_id = max(stacked$id)
-        stack_for_empty = data.frame(
-            values=TRUE,
-            ind=empty_observations,
-            id=(highest_non_empty_id + 1):(highest_non_empty_id + length(empty_observations)),
-            intersection=empty_observations,
-            group=empty_observations
-        )
-
-        data_for_size_calculation = rbind(
-            stacked[, colnames(stack_for_empty)],
-            stack_for_empty
-        )
-    } else {
-        data_for_size_calculation = stacked
-    }
-
-    inclusive_union_sizes = compute_mode_inclusive_unions(data_for_size_calculation, sorted_intersections)
-    exclusive_union_sizes = compute_mode_exclusive_unions(data_for_size_calculation, sorted_intersections)
-
-    intersect_mode_sizes = compute_mode_intersect(data_for_size_calculation, sorted_intersections)
-
     with_sizes = data.frame(data)
 
-    with_sizes[[inclusive_union_count_column]] = inclusive_union_sizes[data$intersection]
-    with_sizes[[exclusive_union_count_column]] = exclusive_union_sizes[data$intersection]
-
-    with_sizes[[exclusive_intersection_column]] = as.numeric(intersections_by_size[data$intersection])
-    with_sizes[[inclusive_intersection_column]] = intersect_mode_sizes[data$intersection]
+    for (mode in names(sizes)) {
+        column_name = paste0(mode, size_columns_suffix)
+        with_sizes[[column_name]] = as.numeric(
+            sizes[[mode]][data$intersection]
+        )
+    }
 
 
   list(
@@ -548,8 +529,7 @@ upset_data = function(
       groups=sorted_groups,
       intersections=sorted_intersections
     ),
-    union_sizes=inclusive_union_sizes,
-    intersect_mode_sizes=intersect_mode_sizes,
+    sizes=sizes,
     plot_intersections_subset=plot_intersections_subset,
     plot_sets_subset=plot_sets_subset,
     non_sanitized_labels=non_sanitized_labels

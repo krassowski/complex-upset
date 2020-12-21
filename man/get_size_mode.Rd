@@ -4,10 +4,12 @@
 \alias{get_size_mode}
 \title{Retrieve symbol for given mode that can be used in aesthetics mapping with double bang (!!)}
 \usage{
-get_size_mode(mode)
+get_size_mode(mode, suffix = "_size")
 }
 \arguments{
 \item{mode}{the mode to use. Accepted values: \code{exclusive_intersection} (alias \code{distinct}), \code{inclusive_intersection} (alias \code{intersect}), \code{inclusive_union} (alias \code{union}), \code{exclusive_union}.}
+
+\item{suffix}{the column suffix in use as passed to \code{upset_data()}}
 }
 \description{
 Retrieve symbol for given mode that can be used in aesthetics mapping with double bang (!!)

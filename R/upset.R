@@ -176,18 +176,11 @@ intersection_size_text = list(vjust=-0.25)
 #' Retrieve symbol for given mode that can be used in aesthetics mapping with double bang (!!)
 #'
 #' @param mode the mode to use. Accepted values: `exclusive_intersection` (alias `distinct`), `inclusive_intersection` (alias `intersect`), `inclusive_union` (alias `union`), `exclusive_union`.
+#' @param suffix the column suffix in use as passed to `upset_data()`
 #' @export
-get_size_mode = function(mode) {
+get_size_mode = function(mode, suffix='_size') {
     mode = solve_mode(mode)
-
-    size = switch(
-        mode,
-        exclusive_intersection=sym('size_distinct_mode'),
-        inclusive_intersection=sym('size_intersect_mode'),
-        inclusive_union=sym('size_inclusive_union_mode'),
-        exclusive_union=sym('size_exclusive_union_mode'),
-    )
-    size
+    sym(paste0(mode, suffix))
 }
 
 
@@ -273,7 +266,7 @@ intersection_size = function(
     aes=modifyList(
         aes(
             x=intersection,
-            y=!!size / !!sym('size_distinct_mode')
+            y=!!size / !!get_size_mode('exclusive_intersection')
         ),
         aest
     ),
@@ -831,7 +824,7 @@ solve_mode = function (mode) {
 #' @param set_sizes the overall set sizes plot, e.g. from `upset_set_size()` (`FALSE` to hide)
 #' @param guides action for legends aggregation and placement ('keep', 'collect', 'over' the set sizes)
 #' @param wrap whether the plot should be wrapped into a group (makes adding a tile/combining with other plots easier)
-#' @param mode region selection mode for computing the number of elements in intersection fragment See `get_size_mode()` for accepted values.
+#' @param mode region selection mode for computing the number of elements in intersection fragment. See `get_size_mode()` for accepted values.
 #' @inheritDotParams upset_data
 #' @export
 upset = function(
@@ -871,7 +864,7 @@ upset = function(
 
   annotations = c(annotations, base_annotations)
 
-  data = upset_data(data, intersect, ...)
+  data = upset_data(data, intersect, mode=mode, ...)
 
   intersections_sorted = rev(data$sorted$intersections)
   intersections_limits = intersections_sorted[intersections_sorted %in% data$plot_intersections_subset]

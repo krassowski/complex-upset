@@ -1,9 +1,21 @@
+# Version 1.0.0
+
+*under development*
+
+Changes:
+- Lists with computed sizes are now returned in a single list called `sizes` by `upset_data()`
+- Union sizes are now calculated before data trimming providing more accurate ratio estimates
+
+Bug fixes:
+- Modes passed to `upset()` are now also used for sorting and trimming
+- Size calculation for modes was optimized for better performance
+
 # Version 0.9.1
 
 2020-12-20
 
 Changes:
-- Pass metadata to the ggplot when arranging Venn diagram, allowing to map elements aesthetics details
+- Pass metadata to the `ggplot2` when arranging Venn diagram, allowing to map elements aesthetics details
 
 # Version 0.9.0
 
