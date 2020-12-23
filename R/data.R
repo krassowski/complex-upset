@@ -175,6 +175,41 @@ trim_intersections = function(
 }
 
 
+binary_grid = function(n, m) {
+    if (m == 0) {
+        return (matrix(rep(0, n), byrow=TRUE, nrow=1))
+    }
+    if (n == m) {
+        return (matrix(rep(1, n), byrow=TRUE, nrow=1))
+    }
+    m_minus_n = m - n
+    paths = list(
+        c(0, rep(NA, n-1)),
+        c(1, rep(NA, n-1))
+    )
+    sums = c(0, 1)
+    for (level in 2:n) {
+        upper_threshold = level + m_minus_n
+
+        is_worth_adding_0 = (sums <= m) & (upper_threshold <= sums)
+        is_worth_adding_1 = (sums <= m - 1) & (upper_threshold - 1 <= sums)
+
+        x = paths[is_worth_adding_0]
+        y = paths[is_worth_adding_1]
+
+        for (i in 1:length(x)) {
+            x[[i]][[level]] = 0
+        }
+        for (i in 1:length(y)) {
+            y[[i]][[level]] = 1
+        }
+        paths = c(x, y)
+        sums = c(sums[is_worth_adding_0], sums[is_worth_adding_1] + 1)
+    }
+    matrix(unlist(paths), byrow=TRUE, nrow=length(paths))
+}
+
+
 #' Prepare data for UpSet plots
 #'
 #' @param data a dataframe including binary columns representing membership in classes
@@ -213,12 +248,24 @@ upset_data = function(
     min_max_early=TRUE,
     mode='exclusive_intersection',
     size_columns_suffix='_size',
-    encode_sets=FALSE
+    encode_sets=FALSE,
+    max_combinations_n=24,
+    intersections='observed'
 ) {
-    if ('tbl' %in% class(data)) {
-        data = as.data.frame(data)
-    }
+    # Check arguments
     mode = solve_mode(mode)
+
+    check_argument(
+        intersections,
+        allowed=c('observed', 'all'),
+        description='intersections'
+    )
+
+    check_argument(
+        group_by,
+        allowed=c('degree', 'sets'),
+        description='group_by'
+    )
 
     check_sort(sort_sets)
 
@@ -229,6 +276,12 @@ upset_data = function(
     intersect = unlist(intersect)
     if (length(intersect) == 1) {
         stop('Needs at least two indicator variables')
+    }
+
+    # Transform data
+
+    if ('tbl' %in% class(data)) {
+        data = as.data.frame(data)
     }
 
     # convert to logical if needed
@@ -275,19 +328,45 @@ upset_data = function(
 
     unique_members_matrix = data[!duplicated(data$intersection), intersect]
     rownames(unique_members_matrix) = apply(unique_members_matrix, 1, names_of_members)
+
     unique_members_matrix = apply(unique_members_matrix, 1, as.numeric)
 
-    if (TRUE) {
-        unsorted_intersections = rownames(unique_members_matrix)
+    intersections_matrix = t(unique_members_matrix)
+
+    if (intersections == 'observed') {
+        # unsorted_intersections = rownames(unique_members_matrix)
         intersections_matrix = t(unique_members_matrix)
     } else {
-        # TODO gerenate all posible combinations!!!
+        if (length(intersect) > max_combinations_n && max_degree == Inf)  {
+            stop('Your memory is likely to explode, please adjust max_combinations_n if you wish to proceed anyways, or better set max_degree')
+        }
+
+        if (max_degree == Inf) {
+            intersections_matrix = do.call(expand.grid, rep(list(0:1), length(intersect)))
+        } else {
+            if (max_degree > length(intersect)) {
+                warn('provided max_degree was greater than the number of sets, reducing max_degree to the number of sets')
+                max_degree = length(intersect)
+            }
+            intersections_matrix = do.call(rbind, lapply(min_degree:max_degree, function(degree) {
+                binary_grid(n=length(intersect), m=degree)
+            }))
+        }
+
+        colnames(intersections_matrix) = intersect
+        rownames(intersections_matrix) = apply(intersections_matrix == TRUE, 1, names_of_members)
+        intersections_matrix = as.matrix(intersections_matrix)
+        unique_members_matrix = t(intersections_matrix)
     }
 
     exclusive_intersection = table(data$intersection)
+    observed_intersections = names(exclusive_intersection)
 
-    product_matrix = intersections_matrix %*%  unique_members_matrix
-    product_matrix[EMPTY_INTERSECTION, EMPTY_INTERSECTION] = 1
+    product_matrix = intersections_matrix %*% unique_members_matrix
+
+    if (EMPTY_INTERSECTION %in% rownames(product_matrix) && EMPTY_INTERSECTION %in% colnames(product_matrix)) {
+        product_matrix[EMPTY_INTERSECTION, EMPTY_INTERSECTION] = 1
+    }
 
     exclusive_intersection_counts = as.numeric(exclusive_intersection[colnames(product_matrix)])
 
@@ -304,12 +383,29 @@ upset_data = function(
 
     desired_intersections_degrees[EMPTY_INTERSECTION] = 1
 
+    intersection_condition = t(t(product_matrix) >= desired_intersections_degrees)
+
     inclusive_intersection = apply(
-        t(t(product_matrix) >= desired_intersections_degrees),
+        intersection_condition,
         2,
         as.numeric
     ) * exclusive_intersection_counts
 
+    if (intersections != 'observed') {
+        exclusive_intersection = t(t(product_matrix) == observed_intersections_degrees) & (product_matrix == observed_intersections_degrees)
+        exclusive_intersection = apply(
+            exclusive_intersection,
+            2,
+            as.numeric
+        ) * exclusive_intersection_counts
+        exclusive_intersection[is.na(exclusive_intersection)] = 0
+        exclusive_intersection = colSums(exclusive_intersection)
+    }
+
+
+    inclusive_intersection[is.na(inclusive_intersection)] = 0
+    exclusive_union[is.na(exclusive_union)] = 0
+    inclusive_union[is.na(inclusive_union)] = 0
 
     sizes = list(
         exclusive_intersection=exclusive_intersection,
@@ -319,6 +415,73 @@ upset_data = function(
     )
 
     intersections_by_size = sizes[[mode]]
+
+    rownames(inclusive_union) = rownames(product_matrix)
+    selected_intersections = intersect(colnames(inclusive_union), observed_intersections)
+
+    indices = lapply(colnames(inclusive_union), function(region) {
+        counts = inclusive_union[selected_intersections[selected_intersections != region], region]
+        non_empty_subregions = names(counts[counts != 0])
+
+        (1:nrow(data))[data$intersection %in% non_empty_subregions]
+    })
+
+    rownames(inclusive_intersection) = rownames(product_matrix)
+    selected_intersections = intersect(colnames(inclusive_intersection), observed_intersections)
+    inlusive_intersection_indices = lapply(colnames(inclusive_intersection), function(region) {
+        counts = inclusive_intersection[selected_intersections, region]
+        non_empty_subregions = names(counts[counts != 0])
+
+        (1:nrow(data))[data$intersection %in% non_empty_subregions]
+    })
+
+    rownames(exclusive_union) = rownames(product_matrix)
+    selected_intersections = intersect(colnames(exclusive_union), observed_intersections)
+    exclusive_union_indices = lapply(colnames(exclusive_union), function(region) {
+        counts = exclusive_union[selected_intersections, region]
+        non_empty_subregions = names(counts[counts != 0])
+
+        (1:nrow(data))[data$intersection %in% non_empty_subregions]
+    })
+
+
+    original_data_indices = 1:nrow(data)
+
+    ## assert sapply(indices, length)) == colSums(inclusive_union[, union_to_be_added])
+
+    lengths = sapply(indices, length)
+
+    all_indices = c(original_data_indices, unlist(indices))
+    data = data[all_indices, ]
+
+    data$original_index = all_indices
+
+    data$exclusive_intersection = data$intersection[all_indices]
+
+    data$intersection = c(
+        data$intersection[original_data_indices],
+        rep(colnames(inclusive_union), times=lengths)
+    )
+    data$in_exclusive_intersection = c(
+        rep(c(1, 0), times=c(length(original_data_indices), sum(lengths)))
+    )
+    data$in_inclusive_union = 1
+
+    names(inlusive_intersection_indices) = colnames(inclusive_intersection)
+
+    is_in_any_inclusive = lapply(names(inlusive_intersection_indices), function(intersection) {
+        indices = inlusive_intersection_indices[[intersection]]
+        (data$intersection == intersection) & (data$original_index %in% indices)
+    })
+    data$in_inclusive_intersection = as.numeric(Reduce(is_in_any_inclusive, f='|'))
+
+    names(exclusive_union_indices) = colnames(exclusive_union)
+
+    is_in_any_exclusive_union = lapply(names(exclusive_union_indices), function(intersection) {
+        indices = exclusive_union_indices[[intersection]]
+        (data$intersection == intersection) & (data$original_index %in% indices)
+    })
+    data$in_exclusive_union = as.numeric(Reduce(is_in_any_exclusive_union, f='|'))
 
     plot_intersections_subset = names(intersections_by_size)
     plot_sets_subset = intersect
@@ -447,66 +610,62 @@ upset_data = function(
         }
     }
 
-    check_argument(
-        group_by,
-        allowed=c('degree', 'sets'),
-        description='group_by'
-    )
-
     unique_sorted_intersections = names(intersections_by_size)
+    rm(intersections_by_size)
+
+    unique_intersection_members = get_intersection_members(unique_sorted_intersections)
+    names(unique_intersection_members) = unique_sorted_intersections
 
     if (group_by == 'degree') {
         sorted_intersections = unique_sorted_intersections
     } else if (group_by == 'sets') {
-        new_plot_intersections_subset = c()
-        sorted_intersections = c()
+        # failed refactoring attempt 1 note:
+        # returning a (named) list with lapply and rbind has comparable (marginally worse)
+        # time performance and worse memory performance
+        # failed refactoring attempt 2 note:
+        # using outer does not work here as difficult to vectorize just yet
 
         intersections_indices = list()
-        new_intersection_column = list()
-        group_by_group_column = list()
+        new_intersections_ids = list()
+        old_intersections_ids = list()
+        lead_groups = list()
+        i = 0
 
         for (group in sorted_groups) {
-            for (intersection in unique_sorted_intersections) {
-                i_groups = unlist(get_intersection_members(intersection))
+            for (intersection in names(unique_intersection_members)) {
+                i_groups = unique_intersection_members[[intersection]]
+
                 if (group %in% i_groups) {
-                    new_intersection_id = paste(c(group, i_groups[i_groups!=group]), collapse='-')
-                    sorted_intersections = c(sorted_intersections, new_intersection_id)
+                    i = i + 1
 
-                    intersections_by_size[new_intersection_id] = intersections_by_size[intersection]
-                    for (mode in names(sizes)) {
-                        sizes[[mode]][new_intersection_id] = sizes[[mode]][intersection]
-                    }
-
-                    intersection_ids = which(data$intersection == intersection)
-
-                    intersections_indices[[length(intersections_indices) + 1]] = intersection_ids
-                    new_intersection_column[[length(new_intersection_column) + 1]] = rep(
-                        new_intersection_id,
-                        length(intersection_ids)
-                    )
-                    group_by_group_column[[length(group_by_group_column) + 1]] = rep(
-                        group,
-                        length(intersection_ids)
-                    )
-
-                    if (intersection %in% plot_intersections_subset) {
-                        new_plot_intersections_subset = c(
-                            new_plot_intersections_subset, new_intersection_id
-                        )
-                    }
+                    old_intersections_ids[[i]] = intersection
+                    lead_groups[[i]] = group
+                    intersections_indices[[i]] = which(data$intersection == intersection)
+                    new_intersections_ids[[i]] = paste(c(group, i_groups[i_groups != group]), collapse='-')
                 }
             }
         }
 
+        lengths = sapply(intersections_indices, length)
+
+        new_intersections_ids = unlist(new_intersections_ids)
+        old_intersections_ids = unlist(old_intersections_ids)
+
+        plot_intersections_subset = new_intersections_ids[old_intersections_ids %in% plot_intersections_subset]
+        sorted_intersections = new_intersections_ids
+
+        for (mode in names(sizes)) {
+            sizes[[mode]][new_intersections_ids] = sizes[[mode]][old_intersections_ids]
+        }
+
         data = data[unlist(intersections_indices), ]
-        data$intersection = unlist(new_intersection_column)
-        data$group_by_group = unlist(group_by_group_column)
+        data$intersection = unlist(rep(new_intersections_ids, times=lengths))
+        data$group_by_group = unlist(rep(lead_groups, times=lengths))
 
-        plot_intersections_subset = new_plot_intersections_subset
+        unique_intersection_members = unique_intersection_members[old_intersections_ids]
+        names(unique_intersection_members) = new_intersections_ids
     }
-
-    intersections_as_groups = get_intersection_members(sorted_intersections)
-    names(intersections_as_groups) = sorted_intersections
+    intersections_as_groups = unique_intersection_members
 
     matrix_data = compute_matrix(intersections_as_groups, sorted_groups)
 
@@ -522,13 +681,10 @@ upset_data = function(
     if (group_by == 'sets') {
         # the set (group) by which the intersections were grouped is stored as the first element of "intersection"
         # extract first element of intersection:
-        matrix_frame$group_by_group = sapply(
-            get_intersection_members(
-                as.character(matrix_frame$intersection)
-            ),
-            '[[',
-            1
-        )
+
+        intersection_to_group = lead_groups
+        names(intersection_to_group) = new_intersections_ids
+        matrix_frame$group_by_group = unlist(intersection_to_group[as.character(matrix_frame$intersection)])
     }
 
     with_sizes = data.frame(data, check.names=FALSE)
@@ -539,7 +695,11 @@ upset_data = function(
             sizes[[mode]][data$intersection]
         )
     }
-
+    if (intersections != 'observed') {
+        exclusive_mode_column = paste('exclusive_intersection', size_columns_suffix)
+        #print(with_sizes[!with_sizes$keep_for_exclusive_intersection, exclusive_mode_column])
+        #with_sizes$keep_for_exclusive_intersection
+    }
 
   list(
     with_sizes=with_sizes,

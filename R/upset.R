@@ -266,7 +266,7 @@ intersection_size = function(
     aes=modifyList(
         aes(
             x=intersection,
-            y=!!size / !!get_size_mode('exclusive_intersection')
+            y=!!sym(paste0('in_', solve_mode(mode)))
         ),
         aest
     ),
@@ -825,6 +825,7 @@ solve_mode = function (mode) {
 #' @param guides action for legends aggregation and placement ('keep', 'collect', 'over' the set sizes)
 #' @param wrap whether the plot should be wrapped into a group (makes adding a tile/combining with other plots easier)
 #' @param mode region selection mode for computing the number of elements in intersection fragment. See `get_size_mode()` for accepted values.
+#' @param encode_sets whether set names (column in input data) should be encoded as numbers (set to TRUE to overcome R limitations of max 10 kB for variable names for datasets with huge numbers of sets); default TRUE for upset() and FALSE for upset_data().
 #' @inheritDotParams upset_data
 #' @export
 upset = function(
@@ -843,6 +844,7 @@ upset = function(
   mode='distinct',
   queries=list(),
   guides=NULL,
+  encode_sets=TRUE,
   matrix=intersection_matrix(),
   ...
 ) {
@@ -864,7 +866,7 @@ upset = function(
 
   annotations = c(annotations, base_annotations)
 
-  data = upset_data(data, intersect, mode=mode, ...)
+  data = upset_data(data, intersect, mode=mode, encode_sets=encode_sets, ...)
 
   intersections_sorted = rev(data$sorted$intersections)
   intersections_limits = intersections_sorted[intersections_sorted %in% data$plot_intersections_subset]
