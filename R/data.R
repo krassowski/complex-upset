@@ -27,8 +27,6 @@ encode_names = function(variables_names, avoid) {
         as.character(1:length(variables_names)),
         function (name) {
             while (any(name %in% avoid)) {
-                print(avoid)
-                print(name)
                 name = name + 'x'
             }
             name
@@ -317,7 +315,7 @@ upset_data = function(
 
     if (encode_sets) {
         colnames(data)[colnames(data) %in% intersect] <- encode_names(intersect_in_order_of_data, avoid=to_avoid)
-        intersect = encode_names(intersect, avoid=to_avoid)
+        intersect = unlist(encode_names(intersect, avoid=to_avoid))
     } else {
         colnames(data)[colnames(data) %in% intersect] <- sanitize_names(intersect_in_order_of_data)
         intersect = sanitize_names(intersect)
@@ -419,33 +417,35 @@ upset_data = function(
     rownames(inclusive_union) = rownames(product_matrix)
     selected_intersections = intersect(colnames(inclusive_union), observed_intersections)
 
+    original_data_indices = 1:nrow(data)
+
     indices = lapply(colnames(inclusive_union), function(region) {
         counts = inclusive_union[selected_intersections[selected_intersections != region], region]
         non_empty_subregions = names(counts[counts != 0])
 
-        (1:nrow(data))[data$intersection %in% non_empty_subregions]
+        original_data_indices[data$intersection %in% non_empty_subregions]
     })
 
     rownames(inclusive_intersection) = rownames(product_matrix)
-    selected_intersections = intersect(colnames(inclusive_intersection), observed_intersections)
+
+    inclusive_intersections_counts = inclusive_intersection[
+        intersect(colnames(inclusive_intersection), observed_intersections),
+    ]
     inlusive_intersection_indices = lapply(colnames(inclusive_intersection), function(region) {
-        counts = inclusive_intersection[selected_intersections, region]
+        counts = inclusive_intersections_counts[, region]
         non_empty_subregions = names(counts[counts != 0])
 
-        (1:nrow(data))[data$intersection %in% non_empty_subregions]
+        original_data_indices[data$intersection %in% non_empty_subregions]
     })
 
     rownames(exclusive_union) = rownames(product_matrix)
-    selected_intersections = intersect(colnames(exclusive_union), observed_intersections)
+    exclusive_intersections_counts = exclusive_union[intersect(colnames(exclusive_union), observed_intersections), ]
     exclusive_union_indices = lapply(colnames(exclusive_union), function(region) {
-        counts = exclusive_union[selected_intersections, region]
+        counts = exclusive_intersections_counts[, region]
         non_empty_subregions = names(counts[counts != 0])
 
-        (1:nrow(data))[data$intersection %in% non_empty_subregions]
+        original_data_indices[data$intersection %in% non_empty_subregions]
     })
-
-
-    original_data_indices = 1:nrow(data)
 
     ## assert sapply(indices, length)) == colSums(inclusive_union[, union_to_be_added])
 
@@ -572,6 +572,7 @@ upset_data = function(
     stacked$group = stacked$ind
 
     groups_by_size = table(stacked$group)
+
     if (sort_sets != FALSE) {
         groups_by_size = groups_by_size[get_sort_order(list(groups_by_size), sort_sets)]
     } else {
@@ -694,11 +695,6 @@ upset_data = function(
         with_sizes[[column_name]] = as.numeric(
             sizes[[mode]][data$intersection]
         )
-    }
-    if (intersections != 'observed') {
-        exclusive_mode_column = paste('exclusive_intersection', size_columns_suffix)
-        #print(with_sizes[!with_sizes$keep_for_exclusive_intersection, exclusive_mode_column])
-        #with_sizes$keep_for_exclusive_intersection
     }
 
   list(
