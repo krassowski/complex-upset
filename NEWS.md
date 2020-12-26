@@ -4,10 +4,12 @@
 
 Changes:
 - Lists with computed sizes are now returned in a single list called `sizes` by `upset_data()`
+- Set sizes are now not filtered by default when selecting intersections by `min_*` or `max_*` criteria. Use `filter_set_sizes=TRUE` to restore the previous behaviour.
 - Union sizes are now calculated before data trimming providing more accurate ratio estimates
 - Added examples for Venn diagrams which are now covered by automated tests to protect against regressions
 - Column names are no longer modified when supplying to `ggplot2` allowing to easily use them in annotations (#82)
 - Removed `upset_data()` `intersected` member to avoid needless duplication of the data frames; access `with_sizes` instead
+- Annotations can now access data for any of the available modes by adding `upset_mode()` layer. By default the annotations are given data corresponding to the same mode as the mode of the passed in the `upset()` call.
 
 Bug fixes:
 - Modes passed to `upset()` are now also used for sorting and trimming

@@ -20,6 +20,7 @@ upset(
   mode = "distinct",
   queries = list(),
   guides = NULL,
+  encode_sets = TRUE,
   matrix = intersection_matrix(),
   ...
 )
@@ -58,6 +59,8 @@ upset(
 \item{queries}{a list of queries generated with \code{upset_query()}}
 
 \item{guides}{action for legends aggregation and placement ('keep', 'collect', 'over' the set sizes)}
+
+\item{encode_sets}{whether set names (column in input data) should be encoded as numbers (set to TRUE to overcome R limitations of max 10 kB for variable names for datasets with huge numbers of sets); default TRUE for upset() and FALSE for upset_data().}
 
 \item{matrix}{the intersection matrix plot}
 

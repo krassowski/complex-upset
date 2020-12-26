@@ -42,7 +42,7 @@ test_that("Data with hyphenated variables can queried", {
             c('a-x', 'b', 'c', 'd'),
             queries=list(
                 upset_query(set='a-x', fill='red'),
-                upset_query(intersect=c('a-x', 'b'), fill='blue')
+                upset_query(intersect=c('a-x', 'b'), fill='blue', color='blue')
             )
         )
     )

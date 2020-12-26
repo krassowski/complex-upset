@@ -2,7 +2,7 @@
 #' @importFrom ggplot2 ggplot aes aes_string coord_flip theme xlab ylab
 #' @importFrom ggplot2 scale_color_manual scale_x_discrete scale_y_discrete scale_y_reverse scale_y_continuous
 #' @importFrom ggplot2 geom_text geom_bar geom_col geom_point geom_segment layer position_stack stat_summary
-#' @importFrom ggplot2 is.ggplot %+% sym expr
+#' @importFrom ggplot2 is.ggplot %+% sym expr ggproto Stat
 #' @importFrom scales log_breaks trans_new
 #' @importFrom patchwork plot_layout plot_spacer guide_area wrap_elements
 NULL
@@ -183,8 +183,38 @@ get_size_mode = function(mode, suffix='_size') {
     sym(paste0(mode, suffix))
 }
 
-get_mode_presence = function(mode, prefix='in_') {
-    sym(paste0(prefix, solve_mode(mode)))
+
+get_mode_presence = function(mode, prefix='in_', symbol=TRUE) {
+    column = paste0(prefix, solve_mode(mode))
+    if (symbol) {
+        sym(column)
+    } else {
+        column
+    }
+}
+
+
+StatMode = ggproto(
+    "StatMode",
+    Stat,
+    compute_group = function(data, scales, params, mode='exclusive_intersection') {
+        data
+    }
+)
+
+
+#' Layer defining the intersection mode for the data to be displayed
+#'
+#' By default the annotations are given data corresponding to the same mode as the mode of the passed in the `upset()` call.
+#'
+#' @param mode region selection mode, defines which mode data will be made available for the annotation. See `get_size_mode()` for accepted values.
+#' @export
+upset_mode = function(mode) {
+  layer(
+    stat = StatMode, data = NULL, mapping = NULL, geom = "blank",
+    position = "identity", show.legend = FALSE, inherit.aes = TRUE,
+    params = list(mode=solve_mode(mode))
+  )
 }
 
 
@@ -277,7 +307,7 @@ intersection_size = function(
     geom=bar_geom,
     highlight_geom=bar_geom,
     top_geom=counts_geoms
-  ) + ylab(lab)
+  ) + ylab(lab) + upset_mode(mode)
 }
 
 
@@ -337,12 +367,12 @@ intersection_ratio = function(
         aes(
             label=paste(!!size, '/', !!denominator_size),
             y=ifelse(
-                !!ratio <= bar_number_threshold * max((!!ratio)[!!denominator_size != 0]),
+                !!ratio <= bar_number_threshold * max((!!ratio)[!!denominator_size != 0], na.rm=TRUE),
                 !!ratio,
                 bar_number_threshold * !!ratio
             ),
             colour=ifelse(
-                !!ratio <= bar_number_threshold * max((!!ratio)[!!denominator_size != 0]),
+                !!ratio <= bar_number_threshold * max((!!ratio)[!!denominator_size != 0], na.rm=TRUE),
                 'on_background',
                 'on_bar'
             )
@@ -387,7 +417,7 @@ intersection_ratio = function(
     geom=bar_geom,
     highlight_geom=bar_geom,
     top_geom=counts_geoms
-  )
+  ) + upset_mode(mode)
 }
 
 
@@ -1013,7 +1043,18 @@ upset = function(
 
   for (name in names(annotations)) {
     annotation = annotations[[name]]
+
     geoms = annotation$geom
+
+    annotation_mode = mode
+
+    for (layer in annotation$layers) {
+        if (inherits(layer$stat, 'StatMode')) {
+            annotation_mode = layer$stat_params$mode
+        }
+    }
+
+    annotation_data = data$with_sizes[data$with_sizes[get_mode_presence(annotation_mode, symbol=FALSE)] == 1, ]
 
     if (!inherits(geoms, 'list')) {
         geoms = list(geoms)
@@ -1022,7 +1063,7 @@ upset = function(
     annotation_queries = intersect_queries(queries_for(queries, name), data)
 
     if (nrow(annotation_queries) != 0) {
-        highlight_data = merge(data$with_sizes, annotation_queries, by.x='intersection', by.y='intersect', all.y=TRUE)
+        highlight_data = merge(annotation_data, annotation_queries, by.x='intersection', by.y='intersect', all.y=TRUE)
 
         if (is.null(annotation$highlight_geom)) {
             highlight_geom = geoms
@@ -1059,7 +1100,7 @@ upset = function(
     }
 
     if (is.ggplot(annotation)) {
-        annotation_plot = annotation %+% data$with_sizes
+        annotation_plot = annotation %+% annotation_data
         user_theme = annotation_plot$theme
         annotation_plot = annotation_plot + selected_theme + do.call(theme, user_theme)
 
@@ -1075,7 +1116,7 @@ upset = function(
             annotation_plot = annotation_plot + ylab(name)
         }
     } else {
-        annotation_plot = ggplot(data$with_sizes, annotation$aes) + selected_theme + xlab(name) + ylab(name)
+        annotation_plot = ggplot(annotation_data, annotation$aes) + selected_theme + xlab(name) + ylab(name)
     }
 
     rows[[length(rows) + 1]] = (

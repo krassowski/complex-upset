@@ -23,7 +23,10 @@ upset_data(
   group_by = "degree",
   min_max_early = TRUE,
   mode = "exclusive_intersection",
-  size_columns_suffix = "_size"
+  size_columns_suffix = "_size",
+  encode_sets = FALSE,
+  max_combinations_n = 24,
+  intersections = "observed"
 )
 }
 \arguments{
@@ -62,6 +65,8 @@ upset_data(
 \item{mode}{region selection mode for sorting and trimming by size. See \code{get_size_mode()} for accepted values.}
 
 \item{size_columns_suffix}{suffix for the columns to store the sizes (adjust if conflicts with your data)}
+
+\item{encode_sets}{whether set names (column in input data) should be encoded as numbers (set to TRUE to overcome R limitations of max 10 kB for variable names for datasets with huge numbers of sets); default TRUE for upset() and FALSE for upset_data().}
 }
 \description{
 Prepare data for UpSet plots

@@ -514,7 +514,12 @@ upset_data = function(
             max_degree=max_degree,
             n_intersections=n_intersections
         )
-        data_subset = data[data$intersection %in% names(intersections_by_size_trimmed), ]
+
+        data_subset = data[
+            data[, paste0('in_', solve_mode(mode))]
+            &
+            (data$intersection %in% names(intersections_by_size_trimmed)),
+        ]
 
         # once the unused intersections are removed, we need to decide
         # if the groups not participating in any of the intersections should be kept or removed
@@ -563,7 +568,6 @@ upset_data = function(
 
             if (!keep_empty_groups) {
                 intersect = intersect_subset
-                data = data_subset
             }
         }
 
