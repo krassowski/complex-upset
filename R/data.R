@@ -569,17 +569,15 @@ upset_data = function(
         plot_sets_subset = intersect_subset
     }
 
-    new_indices = 1:nrow(data)
-
-    stacked = stack(data, intersect)
-    stacked$id = rep(new_indices, length(intersect))
+    stacked = stack(data[original_data_indices, ], intersect)
+    stacked$id = rep(original_data_indices, length(intersect))
     stacked = stacked[stacked$values == TRUE, ]
 
     # Note: we do want to include the additional attributes as those provide info for filling set sizes
     metadata = data[
         match(
             stacked$id,
-            new_indices
+            original_data_indices
         ),
         setdiff(colnames(data), intersect),
         drop=FALSE
@@ -648,6 +646,7 @@ upset_data = function(
         old_intersections_ids = list()
         lead_groups = list()
         i = 0
+        new_indices = 1:nrow(data)
         indices_by_intersection = split(new_indices, data$intersection)
 
         for (group in sorted_groups) {
