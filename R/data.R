@@ -470,6 +470,7 @@ upset_data = function(
         offsets[[region]] + additional_indices
     })))
 
+
     data = data[all_indices, ]
 
     data$original_index = all_indices
@@ -568,15 +569,17 @@ upset_data = function(
         plot_sets_subset = intersect_subset
     }
 
+    new_indices = 1:nrow(data)
+
     stacked = stack(data, intersect)
-    stacked$id = rep(1:nrow(data), length(intersect))
+    stacked$id = rep(new_indices, length(intersect))
     stacked = stacked[stacked$values == TRUE, ]
 
     # Note: we do want to include the additional attributes as those provide info for filling set sizes
     metadata = data[
         match(
             stacked$id,
-            1:nrow(data)
+            new_indices
         ),
         setdiff(colnames(data), intersect),
         drop=FALSE
@@ -585,7 +588,6 @@ upset_data = function(
     stacked = cbind(stacked, metadata)
 
     stacked$group = stacked$ind
-
     groups_by_size = table(stacked$group)
 
     if (sort_sets != FALSE) {
@@ -646,6 +648,7 @@ upset_data = function(
         old_intersections_ids = list()
         lead_groups = list()
         i = 0
+        indices_by_intersection = split(new_indices, data$intersection)
 
         for (group in sorted_groups) {
             for (intersection in names(unique_intersection_members)) {
@@ -656,7 +659,7 @@ upset_data = function(
 
                     old_intersections_ids[[i]] = intersection
                     lead_groups[[i]] = group
-                    intersections_indices[[i]] = which(data$intersection == intersection)
+                    intersections_indices[[i]] = indices_by_intersection[[intersection]]
                     new_intersections_ids[[i]] = paste(c(group, i_groups[i_groups != group]), collapse='-')
                 }
             }
@@ -681,6 +684,7 @@ upset_data = function(
         unique_intersection_members = unique_intersection_members[old_intersections_ids]
         names(unique_intersection_members) = new_intersections_ids
     }
+
     intersections_as_groups = unique_intersection_members
 
     matrix_data = compute_matrix(intersections_as_groups, sorted_groups)
