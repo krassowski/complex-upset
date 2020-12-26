@@ -431,8 +431,8 @@ upset_data = function(
 
     lengths = sapply(inclusive_union_indices, length)
     all_indices = c(original_data_indices, unlist(inclusive_union_indices))
-    offests = cumsum(c(length(original_data_indices), lengths))
-    names(offests) = c(colnames(inclusive_union), NaN)
+    offsets = cumsum(c(length(original_data_indices), lengths))
+    names(offsets) = c(colnames(inclusive_union), NaN)
 
 
     # the initial length(original_data_indices) entries are only for regions of exclusive intersections
@@ -451,10 +451,9 @@ upset_data = function(
         non_empty_subregions = names(counts[counts != 0])
 
         indices_in_input_space = unlist(unname(indices_by_exclusive_intersection[non_empty_subregions]))
-        offset = offests[[region]]
 
         additional_indices = which(inclusive_union_indices[[region]] %in% indices_in_input_space)
-        offset + additional_indices
+        offsets[[region]] + additional_indices
     })))
 
 
@@ -466,10 +465,9 @@ upset_data = function(
         non_empty_subregions = names(counts[counts != 0])
 
         indices_in_input_space = unlist(unname(indices_by_exclusive_intersection[non_empty_subregions]))
-        offset = offests[[region]]
 
         additional_indices = which(inclusive_union_indices[[region]] %in% indices_in_input_space)
-        offset + additional_indices
+        offsets[[region]] + additional_indices
     })))
 
     data = data[all_indices, ]
@@ -488,20 +486,17 @@ upset_data = function(
     )
     data$in_inclusive_union = 1
 
-    # note: new_indices = 1:nrow(data); new_indices %in% inlusive_intersection_ids is slightly slower
-    data[, 'in_inclusive_intersection'] = 0
-    inlusive_intersection_ids = c(exclusive_intersection_indices, inlusive_intersection_ids)
+    data[, 'in_inclusive_intersection'] = data$in_exclusive_intersection
     data[inlusive_intersection_ids, 'in_inclusive_intersection'] = 1
-    # assert max(inlusive_intersection_ids) < nrow(data)
-    # assert !any(duplicated(inlusive_intersection_ids))
-
-    # assert length(inlusive_intersection_ids) == sum(colSums(inclusive_intersection))
+    # note: new_indices = 1:nrow(data); new_indices %in% all_inlusive_intersection_ids is slightly slower
+    # assuming all_inlusive_intersection_ids = c(exclusive_intersection_indices, inlusive_intersection_ids)
+    # assert max(all_inlusive_intersection_ids) < nrow(data)
+    # assert !any(duplicated(all_inlusive_intersection_ids))
+    # assert length(all_inlusive_intersection_ids) == sum(colSums(inclusive_intersection))
     # assert sum(data$in_inclusive_intersection) == sum(colSums(inclusive_intersection))
 
-    data[, 'in_exclusive_union'] = 0
-    exclusive_union_ids = c(exclusive_intersection_indices, exclusive_union_ids)
+    data[, 'in_exclusive_union'] = data$in_exclusive_intersection
     data[exclusive_union_ids, 'in_exclusive_union'] = 1
-    # data$in_exclusive_union = as.numeric(intersection_and_index %in% exclusive_union_ids)
 
     plot_intersections_subset = names(intersections_by_size)
     plot_sets_subset = intersect
