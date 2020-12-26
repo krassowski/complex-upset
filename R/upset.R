@@ -183,6 +183,10 @@ get_size_mode = function(mode, suffix='_size') {
     sym(paste0(mode, suffix))
 }
 
+get_mode_presence = function(mode, prefix='in_') {
+    sym(paste0(prefix, solve_mode(mode)))
+}
+
 
 #' Barplot annotation of intersections sizes
 #'
@@ -266,7 +270,7 @@ intersection_size = function(
     aes=modifyList(
         aes(
             x=intersection,
-            y=!!sym(paste0('in_', solve_mode(mode)))
+            y=!!get_mode_presence(mode)
         ),
         aest
     ),
@@ -322,6 +326,7 @@ intersection_ratio = function(
   denominator_mode='union'
 ) {
   size = get_size_mode(mode)
+  presence = get_mode_presence(mode)
   denominator_size = get_size_mode(denominator_mode)
 
   if (counts) {
@@ -367,7 +372,11 @@ intersection_ratio = function(
   }
 
   bar_geom = list(geom_col(
-      aes(y=ifelse(!!denominator_size == 0, 0, 1/!!denominator_size)),
+      aes(y=ifelse(
+          !!denominator_size == 0,
+          0,
+          !!presence/!!denominator_size
+      )),
       # does not work, see
       # https://github.com/tidyverse/ggplot2/issues/3532
       na.rm=TRUE
