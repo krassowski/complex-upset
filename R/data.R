@@ -707,19 +707,23 @@ upset_data = function(
         matrix_frame$group_by_group = unlist(intersection_to_group[as.character(matrix_frame$intersection)])
     }
 
-    with_sizes = data.frame(data, check.names=FALSE)
+    # restore the previous column names
+    sanitized_labels = intersect
+    colnames(data)[colnames(data) %in% sanitized_labels] <- non_sanitized_labels[sanitized_labels]
 
     for (mode in names(sizes)) {
         column_name = paste0(mode, size_columns_suffix)
-        with_sizes[[column_name]] = as.numeric(
+        data[[column_name]] = as.numeric(
             sizes[[mode]][data$intersection]
         )
     }
 
+  sanitized_labels = names(non_sanitized_labels)
+  names(sanitized_labels) = non_sanitized_labels
+
   list(
-    with_sizes=with_sizes,
+    with_sizes=data,
     sets_ordering_in_ids=intersect,
-    intersected=data,
     presence=stacked,
     matrix=matrix_data,
     matrix_frame=matrix_frame,
@@ -730,6 +734,7 @@ upset_data = function(
     sizes=sizes,
     plot_intersections_subset=plot_intersections_subset,
     plot_sets_subset=plot_sets_subset,
+    sanitized_labels=sanitized_labels,
     non_sanitized_labels=non_sanitized_labels
   )
 }

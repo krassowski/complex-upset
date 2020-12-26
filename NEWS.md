@@ -7,6 +7,7 @@ Changes:
 - Union sizes are now calculated before data trimming providing more accurate ratio estimates
 - Added examples for Venn diagrams which are now covered by automated tests to protect against regressions
 - Column names are no longer modified when supplying to `ggplot2` allowing to easily use them in annotations (#82)
+- Removed `upset_data()` `intersected` member to avoid needless duplication of the data frames; access `with_sizes` instead
 
 Bug fixes:
 - Modes passed to `upset()` are now also used for sorting and trimming

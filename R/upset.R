@@ -430,21 +430,29 @@ queries_for = function(queries, component) {
 }
 
 
-set_queries = function(queries) {
-    queries[queries$method == 'set', ]
+set_queries = function(queries, sanitized_labels) {
+    queries = queries[queries$method == 'set', ]
+    queries$query = sanitized_labels[unlist(queries$query)]
+    queries
 }
 
 
-group_by_queries = function(queries) {
-    queries[queries$method == 'group_by_group', ]
+group_by_queries = function(queries, sanitized_labels) {
+    queries = queries[queries$method == 'group_by_group', ]
+    queries$group_by_group = sanitized_labels[unlist(queries$group_by_group)]
+    queries$query = sanitized_labels[unlist(queries$query)]
+    queries
 }
 
 
 intersect_queries = function(queries, data) {
     queries = queries[queries$method == 'intersect', ]
+
     queries$intersect = sapply(
         queries$intersect,
         function(sets) {
+            sets = unname(data$sanitized_labels[sets])
+
             if (length(sets) == 1 && is.na(sets)) {
                 'NOT_IN_EITHER_GROUP'
             } else {
@@ -495,7 +503,7 @@ extract_geom_params_for = function(queries, geom, preserve_query=FALSE) {
 }
 
 
-get_highlights_data = function(data, key, queries) {
+get_highlights_data = function(data, key, queries, sanitized_labels) {
     if (nrow(queries) > 0) {
         merge(
             data,
@@ -878,7 +886,7 @@ upset = function(
   show_overall_sizes = !(inherits(set_sizes, 'logical') && set_sizes == FALSE)
 
   matrix_intersect_queries = intersect_queries(queries_for(queries, 'intersections_matrix'), data)
-  matrix_group_by_queries = group_by_queries(queries_for(queries, 'intersections_matrix'))
+  matrix_group_by_queries = group_by_queries(queries_for(queries, 'intersections_matrix'), data$sanitized_labels)
 
   intersection_query_matrix = get_highlights_data(data$matrix_frame, 'intersection', matrix_intersect_queries)
   group_query_matrix = get_highlights_data(data$matrix_frame, 'group_by_group', matrix_group_by_queries)
@@ -1075,7 +1083,7 @@ upset = function(
   }
 
   if (show_overall_sizes) {
-      overall_sizes_queries = set_queries(queries_for(queries, 'overall_sizes'))
+      overall_sizes_queries = set_queries(queries_for(queries, 'overall_sizes'), data$sanitized_labels)
       overall_sizes_highlights_data = get_highlights_data(data$presence, 'group', overall_sizes_queries)
 
       if (nrow(overall_sizes_queries) != 0) {

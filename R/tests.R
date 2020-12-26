@@ -11,7 +11,7 @@ NULL
 #' @export
 compare_between_intersections = function(data, intersect, test=kruskal.test, tests=list(), ignore=list(), ...) {
   data = upset_data(data, intersect, ...)
-  isect = data$intersected
+  isect = data$with_sizes
 
   ignore = c('intersection', ignore)
 

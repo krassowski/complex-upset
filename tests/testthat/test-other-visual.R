@@ -25,6 +25,30 @@ test_that("Data with hyphenated variables can be supplied", {
 })
 
 
+test_that("Data with hyphenated variables can queried", {
+
+    df = data.frame(
+        'a-x'=c(TRUE, FALSE, TRUE, TRUE),
+        b=c(TRUE, TRUE, TRUE, TRUE),
+        c=c(FALSE, TRUE, FALSE, FALSE),
+        d=c(FALSE, FALSE, FALSE, TRUE),
+        check.names=FALSE
+    )
+
+    expect_doppelganger(
+        title='Hyphenated variables can be queried',
+        upset(
+            df,
+            c('a-x', 'b', 'c', 'd'),
+            queries=list(
+                upset_query(set='a-x', fill='red'),
+                upset_query(intersect=c('a-x', 'b'), fill='blue')
+            )
+        )
+    )
+})
+
+
 test_that("Columns names are available for plotting, even if not valid R variable names", {
     library(ggplot2)
 
