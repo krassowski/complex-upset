@@ -1,7 +1,7 @@
 #' @importFrom utils stack
 NULL
 
-EMPTY_INTERSECTION = 'NOT_IN_EITHER_GROUP'
+NOT_IN_KNOWN_SETS = 'Outside of known sets'
 
 sanitize_names = function(variables_names) {
     sanitized_names = c()
@@ -50,7 +50,7 @@ names_of_members = function(row) {
   } else {
       # this optimization may not be beneficial for dense matrices,
       # but we could add a heuristic that checks if the matrix is dense
-      EMPTY_INTERSECTION
+      NOT_IN_KNOWN_SETS
   }
 }
 
@@ -140,7 +140,7 @@ get_sort_order = function(data, sort_order) {
 
 calculate_degree = function(x) {
     values = lengths(get_intersection_members(x))
-    values[x == EMPTY_INTERSECTION] = 0
+    values[x == NOT_IN_KNOWN_SETS] = 0
     values
 }
 
@@ -364,8 +364,8 @@ upset_data = function(
 
     product_matrix = intersections_matrix %*% unique_members_matrix
 
-    if (EMPTY_INTERSECTION %in% rownames(product_matrix) && EMPTY_INTERSECTION %in% colnames(product_matrix)) {
-        product_matrix[EMPTY_INTERSECTION, EMPTY_INTERSECTION] = 1
+    if (NOT_IN_KNOWN_SETS %in% rownames(product_matrix) && NOT_IN_KNOWN_SETS %in% colnames(product_matrix)) {
+        product_matrix[NOT_IN_KNOWN_SETS, NOT_IN_KNOWN_SETS] = 1
     }
 
     exclusive_intersection_counts = as.numeric(exclusive_intersection[colnames(product_matrix)])
@@ -381,7 +381,7 @@ upset_data = function(
         as.numeric
     ) * exclusive_intersection_counts
 
-    desired_intersections_degrees[EMPTY_INTERSECTION] = 1
+    desired_intersections_degrees[NOT_IN_KNOWN_SETS] = 1
 
     intersection_condition = t(t(product_matrix) >= desired_intersections_degrees)
 

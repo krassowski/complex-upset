@@ -13,8 +13,6 @@ globalVariables(c(
     'region'
 ))
 
-empty_region = 'NOT_IN_ANY_REGION'
-
 
 get_sets = function(data, sets=NULL) {
     if (is.null(sets)) {
@@ -41,7 +39,7 @@ prepare_colors = function(
         names(colors) = sets
     }
 
-    names(empty_color) = empty_region
+    names(empty_color) = NOT_IN_KNOWN_SETS
 
     present_sets = data[, sets]
     present_sets = present_sets[!duplicated(present_sets), ]
@@ -131,7 +129,7 @@ scale_color_venn_mix = function(
     names(labels) = present_sets$name
 
     empty_name = '\u2205'
-    names(empty_name) = empty_region
+    names(empty_name) = NOT_IN_KNOWN_SETS
 
     scale(
         values=values,
@@ -153,7 +151,7 @@ scale_fill_venn_mix = function(...) {
 
 
 push_outwards = function(coords, centre_of_mass, mul) {
-    original_coords_for_empty = coords[coords$region == '', ]
+    original_coords_for_empty = coords[coords$region == NOT_IN_KNOWN_SETS, ]
 
     coords$x = coords$x - centre_of_mass['x']
     coords$y = coords$y - centre_of_mass['y']
@@ -161,7 +159,7 @@ push_outwards = function(coords, centre_of_mass, mul) {
     coords$y = coords$y * mul
     coords$x = coords$x + centre_of_mass['x']
     coords$y = coords$y + centre_of_mass['y']
-    coords[coords$region == '', ] = original_coords_for_empty
+    coords[coords$region == NOT_IN_KNOWN_SETS, ] = original_coords_for_empty
 
     coords
 }
@@ -516,13 +514,13 @@ arrange_venn = function(
     }
 
     sphere_centres = coords[!duplicated(coords), ]
-    centre_of_mass = colMeans(sphere_centres[sphere_centres$region != '', c('x', 'y')])
+    centre_of_mass = colMeans(sphere_centres[sphere_centres$region != NOT_IN_KNOWN_SETS, c('x', 'y')])
 
-    names(region_sizes)[names(region_sizes) == ''] = empty_region
+    names(region_sizes)[names(region_sizes) == NOT_IN_KNOWN_SETS] = NOT_IN_KNOWN_SETS
 
     if (extract_sets || extract_regions) {
         coords = push_outwards(coords, centre_of_mass, outwards_adjust)
-        coords[coords$region == '', 'region'] = empty_region
+        coords[coords$region == '', 'region'] = NOT_IN_KNOWN_SETS
         coords$size = as.numeric(region_sizes[coords$region])
 
         return (coords)
@@ -541,7 +539,6 @@ arrange_venn = function(
         grid_membership = allocate_slots(layout, grid_size_x, grid_size_y)
 
         grid_slots_by_region = table(grid_membership$region)
-        names(grid_slots_by_region)[names(grid_slots_by_region) == ''] = empty_region
 
         aligned_sizes = grid_slots_by_region[names(region_sizes)]
 
@@ -638,6 +635,5 @@ arrange_venn = function(
         region_coords
     }))
 
-    new_coords$region[new_coords$region == ''] = empty_region
     cbind(new_coords, data[, setdiff(colnames(data), sets)])
 }
