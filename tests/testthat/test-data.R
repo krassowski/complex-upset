@@ -258,13 +258,13 @@ test_that("counts are properly computed in all modes", {
     expected_sizes = read.table(
         text="A     B     C  inclusive_union_size exclusive_union_size exclusive_intersection_size inclusive_intersection_size
         1 FALSE FALSE FALSE                     2                    2                           2                           2
-        2 FALSE FALSE  TRUE                  1013                 1000                        1000                        1013
+        2 FALSE FALSE  TRUE                   513                  500                         500                         513
         3 FALSE  TRUE FALSE                   117                  100                         100                         117
-        4 FALSE  TRUE  TRUE                  1123                 1106                           6                           7
+        4 FALSE  TRUE  TRUE                   623                  606                           6                           7
         5  TRUE FALSE FALSE                   117                  100                         100                         117
-        6  TRUE FALSE  TRUE                  1123                 1106                           6                           7
+        6  TRUE FALSE  TRUE                   623                  606                           6                           7
         7  TRUE  TRUE FALSE                   223                  210                          10                          11
-        8  TRUE  TRUE  TRUE                  1223                 1223                           1                           1",
+        8  TRUE  TRUE  TRUE                   723                  723                           1                           1",
         header = TRUE,
         stringsAsFactors = TRUE
     )

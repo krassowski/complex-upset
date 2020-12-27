@@ -145,8 +145,8 @@ scale_color_venn_mix = function(
 #'
 #' @inheritDotParams scale_color_venn_mix
 #' @export
-scale_fill_venn_mix = function(...) {
-    scale_color_venn_mix(..., scale=scale_fill_manual)
+scale_fill_venn_mix = function(..., na.value='transparent') {
+    scale_color_venn_mix(..., scale=scale_fill_manual, na.value=na.value)
 }
 
 
