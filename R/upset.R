@@ -1119,9 +1119,13 @@ upset = function(
         annotation_plot = ggplot(annotation_data, annotation$aes) + selected_theme + xlab(name) + ylab(name)
     }
 
+    user_layers = annotation_plot$layers
+    annotation_plot$layers = c()
+    annotation_plot = annotation_plot + geoms_plus_highlights
+    annotation_plot$layers = c(annotation_plot$layers, user_layers)
+
     rows[[length(rows) + 1]] = (
       annotation_plot
-      + geoms_plus_highlights
       + scale_intersections
     )
 

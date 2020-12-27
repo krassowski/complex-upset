@@ -14,6 +14,7 @@ Changes:
 Bug fixes:
 - Modes passed to `upset()` are now also used for sorting and trimming
 - Size calculation for modes was optimized for better performance
+- User-added layers are now shown on top of `intersection_size()` and `intersection_union()`
 
 # Version 0.9.1
 
