@@ -224,18 +224,18 @@ upset_mode = function(mode) {
 #' @param bar_number_threshold if less than one, labels for bars height greater than this threshold will be placed on (not above) the bars
 #' @param text_colors a name vector of characters specifying the color when `on_background` and `on_bar` (see `bar_number_threshold`)
 #' @param text additional parameters passed to `geom_text`
-#' @param text_aes additional aesthetics for `geom_text`
-#' @param aest additional aesthetics for `geom_bar`
+#' @param text_mapping additional aesthetics for `geom_text`
+#' @param mapping additional aesthetics for `geom_bar`
 #' @param mode region selection mode, defines which intersection regions will be accounted for when computing the size. See `get_size_mode()` for accepted values.
 #' @export
 intersection_size = function(
-  counts=TRUE,
-  bar_number_threshold=0.85,
-  text_colors=c(on_background='black', on_bar='white'),
-  text=list(),
-  text_aes=aes_string(),
-  aest=aes_string(),
-  mode='distinct'
+    mapping=aes(),
+    counts=TRUE,
+    bar_number_threshold=0.85,
+    text_colors=c(on_background='black', on_bar='white'),
+    text=list(),
+    text_mapping=aes_string(),
+    mode='distinct'
 ) {
   size = get_size_mode(mode)
 
@@ -249,7 +249,7 @@ intersection_size = function(
 
   if (counts) {
     text = modifyList(intersection_size_text, text)
-    text_aes = modifyList(
+    text_mapping = modifyList(
         aes(
             label=!!size,
             y=ifelse(
@@ -263,7 +263,7 @@ intersection_size = function(
                 'on_bar'
             )
         ),
-        text_aes
+        text_mapping
     )
 
     counts_geoms = list(
@@ -272,7 +272,7 @@ intersection_size = function(
         c(
             list(
                 stat='unique',
-                text_aes,
+                text_mapping,
                 na.rm=TRUE
             ),
             text
@@ -302,7 +302,7 @@ intersection_size = function(
             x=intersection,
             y=!!get_mode_presence(mode)
         ),
-        aest
+        mapping
     ),
     geom=bar_geom,
     highlight_geom=bar_geom,
@@ -350,8 +350,8 @@ intersection_ratio = function(
   bar_number_threshold=0.75,
   text_colors=c(on_background='black', on_bar='white'),
   text=list(),
-  text_aes=aes_string(),
-  aest=aes_string(),
+  text_mapping=aes_string(),
+  mapping=aes_string(),
   mode='distinct',
   denominator_mode='union'
 ) {
@@ -363,7 +363,7 @@ intersection_ratio = function(
     ratio = expr(!!size / !!denominator_size)
 
     text = modifyList(intersection_size_text, text)
-    text_aes = modifyList(
+    text_mapping = modifyList(
         aes(
             label=paste(!!size, '/', !!denominator_size),
             y=ifelse(
@@ -377,7 +377,7 @@ intersection_ratio = function(
                 'on_bar'
             )
         ),
-        text_aes
+        text_mapping
     )
 
     counts_geoms = list(
@@ -385,7 +385,7 @@ intersection_ratio = function(
         geom_text,
         c(
             list(
-                text_aes,
+                text_mapping,
                 check_overlap=TRUE,
                 na.rm=TRUE
             ),
@@ -413,7 +413,7 @@ intersection_ratio = function(
   ))
 
   convert_annotation(
-    aes=modifyList(aes(x=intersection), aest),
+    aes=modifyList(aes(x=intersection), mapping),
     geom=bar_geom,
     highlight_geom=bar_geom,
     top_geom=counts_geoms
@@ -664,8 +664,9 @@ reverse_log_trans = function(base=10) {
 #' @param geom a geom to use
 #' @param position on which side of the plot should the set sizes be displayed ('left' or 'right')
 #' @param mapping additional aesthetics
+#' @param filter_intersections whether the intersections filters (e.g. `n_intersections` or `min_size`) should influnce displayed set sizes
 #' @export
-upset_set_size = function(geom=geom_bar(width=0.6), position='left', mapping=aes()) {
+upset_set_size = function(mapping=aes(), geom=geom_bar(width=0.6), position='left', filter_intersections=FALSE) {
     check_argument(position, allowed=c('left', 'right'), description='position')
 
     annotation = convert_annotation(
@@ -674,6 +675,7 @@ upset_set_size = function(geom=geom_bar(width=0.6), position='left', mapping=aes
         highlight_geom=list(geom)
     ) + ylab('Set size')
     annotation$position = position
+    annotation$filter_intersections = filter_intersections
     annotation
 }
 
@@ -1163,6 +1165,10 @@ upset = function(
       }
 
       set_sizes_data = data$presence[data$presence$group %in% data$plot_sets_subset, ]
+
+      if (set_sizes$filter_intersections) {
+          set_sizes_data = set_sizes_data[set_sizes_data$intersection %in% data$plot_intersections_subset, ]
+      }
 
       set_sizes$layers = c(
           matrix_background_stripes(data, stripes, 'vertical'),

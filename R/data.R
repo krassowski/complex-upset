@@ -228,7 +228,6 @@ binary_grid = function(n, m) {
 #' @param sort_ratio_numerator the mode for numerator when sorting by ratio
 #' @param sort_ratio_numerator the mode for denominator when sorting by ratio
 #' @param group_by the mode of grouping intersections; one of: `'degree'`, `'sets'`
-#' @param min_max_early whether the min and max limits should be applied early (for faster plotting), or late (for accurate depiction of ratios)
 #' @param mode region selection mode for sorting and trimming by size. See `get_size_mode()` for accepted values.
 #' @param size_columns_suffix suffix for the columns to store the sizes (adjust if conflicts with your data)
 #' @param encode_sets whether set names (column in input data) should be encoded as numbers (set to TRUE to overcome R limitations of max 10 kB for variable names for datasets with huge numbers of sets); default TRUE for upset() and FALSE for upset_data().
@@ -245,7 +244,6 @@ upset_data = function(
     sort_ratio_numerator='exclusive_intersection',
     sort_ratio_denominator='inclusive_union',
     group_by='degree',
-    min_max_early=TRUE,
     mode='exclusive_intersection',
     size_columns_suffix='_size',
     encode_sets=FALSE,
@@ -560,16 +558,12 @@ upset_data = function(
             stop(paste0('No intersections left after filtering', tip))
         }
 
-        if (min_max_early == TRUE) {
-            intersections_by_size = intersections_by_size_trimmed
-            for (mode in names(sizes)) {
-                sizes[[mode]] = sizes[[mode]][names(sizes[[mode]]) %in% names(intersections_by_size_trimmed)]
-            }
-
-            if (!keep_empty_groups) {
-                intersect = intersect_subset
-            }
+        intersections_by_size = intersections_by_size_trimmed
+        for (mode in names(sizes)) {
+            sizes[[mode]] = sizes[[mode]][names(sizes[[mode]]) %in% names(intersections_by_size_trimmed)]
         }
+
+        intersect = intersect_subset
 
         plot_intersections_subset = names(intersections_by_size_trimmed)
         plot_sets_subset = intersect_subset
