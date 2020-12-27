@@ -223,10 +223,12 @@ upset_mode = function(mode) {
 #' @param counts whether to display count number labels above the bars
 #' @param bar_number_threshold if less than one, labels for bars height greater than this threshold will be placed on (not above) the bars
 #' @param text_colors a name vector of characters specifying the color when `on_background` and `on_bar` (see `bar_number_threshold`)
-#' @param text additional parameters passed to `geom_text`
-#' @param text_mapping additional aesthetics for `geom_text`
-#' @param mapping additional aesthetics for `geom_bar`
+#' @param text additional parameters passed to `geom_text()`
+#' @param text_mapping additional aesthetics for `geom_text()`
+#' @param mapping additional aesthetics for `geom_bar()`
 #' @param mode region selection mode, defines which intersection regions will be accounted for when computing the size. See `get_size_mode()` for accepted values.
+#' @param position position passed to `geom_bar()`
+#' @inheritDotParams ggplot2::geom_bar
 #' @export
 intersection_size = function(
     mapping=aes(),
@@ -235,7 +237,9 @@ intersection_size = function(
     text_colors=c(on_background='black', on_bar='white'),
     text=list(),
     text_mapping=aes_string(),
-    mode='distinct'
+    mode='distinct',
+    position=position_stack(),
+    ...
 ) {
   size = get_size_mode(mode)
 
@@ -291,8 +295,9 @@ intersection_size = function(
       stat_summary(
           fun=sum,
           geom='bar',
-          position=position_stack(),
-          na.rm=TRUE
+          position=position,
+          na.rm=TRUE,
+          ...
       )
   )
 
@@ -346,14 +351,15 @@ upset_text_percentage = function(digits=0, sep='', mode='distinct') {
 #' @inheritParams intersection_size
 #' @export
 intersection_ratio = function(
+  mapping=aes_string(),
   counts=TRUE,
   bar_number_threshold=0.75,
   text_colors=c(on_background='black', on_bar='white'),
   text=list(),
   text_mapping=aes_string(),
-  mapping=aes_string(),
   mode='distinct',
-  denominator_mode='union'
+  denominator_mode='union',
+  ...
 ) {
   size = get_size_mode(mode)
   presence = get_mode_presence(mode)
@@ -409,7 +415,8 @@ intersection_ratio = function(
       )),
       # does not work, see
       # https://github.com/tidyverse/ggplot2/issues/3532
-      na.rm=TRUE
+      na.rm=TRUE,
+      ...
   ))
 
   convert_annotation(
