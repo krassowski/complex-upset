@@ -100,7 +100,7 @@ prepare_colors = function(
 #' @export
 scale_color_venn_mix = function(
     data, sets=NULL, colors=c('red', 'blue', 'green'), na.value='grey40',
-    highlight=NULL, active_color='orange', inactive_color='grey60', scale=scale_color_manual,
+    highlight=NULL, active_color='orange', inactive_color='NA', scale=scale_color_manual,
     ...
 ) {
     values = prepare_colors(data, sets=sets, colors=colors, empty_color=na.value)
