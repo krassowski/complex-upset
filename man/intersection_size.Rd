@@ -10,7 +10,7 @@ intersection_size(
   bar_number_threshold = 0.85,
   text_colors = c(on_background = "black", on_bar = "white"),
   text = list(),
-  text_mapping = aes_string(),
+  text_mapping = aes(),
   mode = "distinct",
   position = position_stack(),
   ...

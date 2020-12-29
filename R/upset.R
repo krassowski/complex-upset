@@ -2,7 +2,7 @@
 #' @importFrom ggplot2 ggplot aes aes_string coord_flip theme xlab ylab
 #' @importFrom ggplot2 scale_color_manual scale_x_discrete scale_y_discrete scale_y_reverse scale_y_continuous
 #' @importFrom ggplot2 geom_text geom_bar geom_col geom_point geom_segment layer position_stack stat_summary
-#' @importFrom ggplot2 is.ggplot %+% sym expr ggproto Stat
+#' @importFrom ggplot2 is.ggplot %+% sym expr ggproto Stat quo_name
 #' @importFrom scales log_breaks trans_new
 #' @importFrom patchwork plot_layout plot_spacer guide_area wrap_elements
 NULL
@@ -236,7 +236,7 @@ intersection_size = function(
     bar_number_threshold=0.85,
     text_colors=c(on_background='black', on_bar='white'),
     text=list(),
-    text_mapping=aes_string(),
+    text_mapping=aes(),
     mode='distinct',
     position=position_stack(),
     ...
@@ -351,12 +351,12 @@ upset_text_percentage = function(digits=0, sep='', mode='distinct') {
 #' @inheritParams intersection_size
 #' @export
 intersection_ratio = function(
-  mapping=aes_string(),
+  mapping=aes(),
   counts=TRUE,
   bar_number_threshold=0.75,
   text_colors=c(on_background='black', on_bar='white'),
   text=list(),
-  text_mapping=aes_string(),
+  text_mapping=aes(),
   mode='distinct',
   denominator_mode='union',
   ...

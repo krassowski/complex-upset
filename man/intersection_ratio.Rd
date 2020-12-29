@@ -5,12 +5,12 @@
 \title{Barplot annotation of relative intersections sizes}
 \usage{
 intersection_ratio(
-  mapping = aes_string(),
+  mapping = aes(),
   counts = TRUE,
   bar_number_threshold = 0.75,
   text_colors = c(on_background = "black", on_bar = "white"),
   text = list(),
-  text_mapping = aes_string(),
+  text_mapping = aes(),
   mode = "distinct",
   denominator_mode = "union",
   ...
