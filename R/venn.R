@@ -145,7 +145,7 @@ scale_color_venn_mix = function(
 #'
 #' @inheritDotParams scale_color_venn_mix
 #' @export
-scale_fill_venn_mix = function(..., na.value='transparent') {
+scale_fill_venn_mix = function(..., na.value='NA') {
     scale_color_venn_mix(..., scale=scale_fill_manual, na.value=na.value)
 }
 
@@ -317,152 +317,23 @@ geom_venn_label_set = function(
 #' @param mapping the aesthetics mapping
 #' @param sets vector with names of columns representing membership in sets
 #' @param resolution the resolution of the circle rasterizer
-#' @param method method for approximation of polygon: min_max (fast, inaccurate but ok for opaque regions), heuristic (slower, less inaccurate)
 #' @inheritDotParams ggplot2::geom_polygon
 #' @export
 geom_venn_region = function(
     data,
     mapping=aes_(),
     sets=NULL,
-    resolution=251,
-    method='min_max',
+    resolution=250,
     ...
 ) {
     mapping = modifyList(aes(x=x, y=y, group=subregion, fill=region), mapping)
 
     geom_polygon(
-        data=approximate_polygon(data, sets=sets, resolution=resolution, method=method),
+        data=approximate_polygon(data, sets=sets, resolution=resolution),
         mapping=mapping,
         ...
     )
 }
-
-# TODO: for some weird reason opacity needs to be half of that for method='min_max'. Why is that?
-heuristic_polygon = function(data, layout, grid, resolution) {
-    rownames(grid) = paste(grid$i, grid$j)
-
-    coords = place_equidistantly_from_sets(data, layout)
-    sphere_centres = coords[!duplicated(coords), ]
-
-    rownames(sphere_centres) = sphere_centres$region
-
-    coords = do.call(rbind, sapply(unique(grid$region), function(region) {
-        region_grid = grid[grid$region == region, ]
-
-        is_border_region = apply(region_grid, 1, function(point) {
-            i = as.numeric(point['i'])
-            j = as.numeric(point['j'])
-
-            neighbors = sum(!is.na(region_grid[paste(c(
-                i - 1,
-                i + 1,
-                i - 1,
-                i + 1
-            ), c(
-                j - 1,
-                j - 1,
-                j + 1,
-                j + 1
-            )), 'i']))
-            neighbors > 1 && neighbors <= 3
-        })
-
-        region_border = region_grid[is_border_region, ]
-        border_len = nrow(region_border)
-        border_path = list()
-
-        choose_starting_id = function() {
-            next_subregion_start_candidates = which(!is.na(region_border$x))
-            candidates_neibgours = sapply(next_subregion_start_candidates, function(start_candidate_id) {
-                start_candidate = region_border[start_candidate_id, ]
-                distances_to_unvisited = sqrt(
-                    (region_border$i - start_candidate$i)^2 + (region_border$j - start_candidate$j)^2
-                )
-                unvisited_neighbours = sum(distances_to_unvisited < 1.5, na.rm=TRUE)
-                unvisited_neighbours
-            })
-
-            next_subregion_start_candidates[order(candidates_neibgours)][1]
-        }
-
-        next_ids = list(choose_starting_id())
-        sub_region = 1
-        sub_regions = list()
-        shortest_distance = 0
-        subregion_ordinal = 1
-        subregion_ordinals = list()
-
-        # note: all distances squared to save on sqrt()
-        while (length(next_ids) != 0) {
-            next_id = next_ids[[1]]
-            next_ids[[1]] = NULL
-            current_point = region_border[next_id, ]
-
-            if (shortest_distance >= 4) {
-                border_path_df = do.call(rbind, border_path[sub_regions == sub_region])
-                distances_to_previous_reigon = (
-                    (border_path_df$i - current_point$i)^2 + (border_path_df$j - current_point$j)^2
-                )
-                if (min(distances_to_previous_reigon) >= 2.1 || shortest_distance > resolution / 10) {
-                    sub_region = 1 + sub_region
-                    subregion_ordinal = 1
-
-                    next_id = choose_starting_id()
-                    current_point = region_border[next_id, ]
-                }
-
-            }
-            region_border[next_id, ] = NA
-
-            sub_regions[[length(sub_regions) + 1]] = sub_region
-            border_path[[length(border_path) + 1]] = current_point
-            subregion_ordinals[[length(subregion_ordinals) + 1]] = subregion_ordinal
-            subregion_ordinal = subregion_ordinal +1
-
-            distances = (
-                (region_border$i - current_point$i)^2 + (region_border$j - current_point$j)^2
-            )
-
-            if (any(!is.na(distances))) {
-                shortest_distance = min(distances, na.rm=T)
-                neigbourhood = which(distances == shortest_distance)
-                additions = setdiff(neigbourhood, next_ids)
-
-                common = intersect(neigbourhood, next_ids)
-                rest = setdiff(next_ids, neigbourhood)
-
-                next_ids = c(
-                    common,
-                    additions,
-                    rest
-                )
-
-                if (length(next_ids) > 1) {
-                    border_path_df = do.call(rbind, border_path)
-                    centre_x = mean(border_path_df$x)
-                    centre_y = mean(border_path_df$y)
-                    next_points = region_border[unlist(next_ids), ]
-                    neighbours_in_region = sapply(unlist(next_ids), function(next_id) {
-                        x = region_border[next_id, ]
-                        neighbor_distances = (border_path_df$i - x$i)^2 + (border_path_df$j - x$j)^2
-                        sum(neighbor_distances <= 4)
-                    })
-                    centre_distances = (next_points$x - centre_x)^2 + (next_points$y - centre_y)^2
-                    next_ids = next_ids[order(-centre_distances, -neighbours_in_region)]
-                }
-                next_ids = next_ids[distances[unlist(next_ids)] < 3 * shortest_distance]
-            }
-        }
-        df = do.call(rbind, border_path)
-        df$region = region
-        df$subregion = paste(region, sub_regions)
-        df$ordinal = subregion_ordinals
-        df
-
-    }, simplify =FALSE))
-    coords
-}
-
 
 minmax_polygon = function(data, layout, grid, resolution, size=0.01) {
 
@@ -470,6 +341,9 @@ minmax_polygon = function(data, layout, grid, resolution, size=0.01) {
         region_grid = grid[grid$region == region, ]
         x_space = unique(region_grid$x)
         x_space = x_space[order(x_space)]
+
+        y_space = unique(region_grid$y)
+        y_space = y_space[order(y_space)]
 
         region_coords_min = do.call(rbind, sapply(x_space, function(x) {
             grid_region_at_x = region_grid[region_grid$x == x, ]
@@ -485,6 +359,17 @@ minmax_polygon = function(data, layout, grid, resolution, size=0.01) {
             max_y
         }, simplify=FALSE))
 
+        region_coords_min_y = do.call(rbind, sapply(y_space, function(y) {
+            grid_region_at_y = region_grid[region_grid$y == y, ]
+            grid_region_at_y[grid_region_at_y$x == min(grid_region_at_y$x), ]
+        }, simplify=FALSE))
+
+        region_coords_max_y = do.call(rbind, sapply(y_space, function(y) {
+            grid_region_at_y = region_grid[region_grid$y == y, ]
+            grid_region_at_y[grid_region_at_y$x == max(grid_region_at_y$x), ]
+        }, simplify=FALSE))
+
+
         region_coords = rbind(
             region_coords_min,
             region_coords_max[nrow(region_coords_max):1, ]
@@ -499,21 +384,15 @@ minmax_polygon = function(data, layout, grid, resolution, size=0.01) {
 }
 
 
-approximate_polygon = function(data, sets=NULL, radius=1.5, resolution=200, method='min_max') {
+approximate_polygon = function(data, sets=NULL, radius=1.5, resolution=200) {
     sets = get_sets(data, sets)
-    check_argument(method, c('min_max', 'heuristic'), 'polygon method')
 
     layout = compute_layout(data, sets, radius=radius)
 
     grid = allocate_slots(layout, grid_size_x=resolution, grid_size_y=resolution, store_coordinates=TRUE)
     grid = grid[, c('region', 'x', 'y', 'i', 'j')]
 
-    if (method == 'heuristic') {
-        coords = heuristic_polygon(data, layout, grid, resolution)
-    } else {
-        coords = minmax_polygon(data, layout, grid, resolution)
-    }
-
+    coords = minmax_polygon(data, layout, grid, resolution)
     coords
 }
 
