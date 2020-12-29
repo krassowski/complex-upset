@@ -497,11 +497,10 @@ intersect_queries = function(queries, data) {
     queries$intersect = sapply(
         queries$intersect,
         function(sets) {
-            sets = unname(data$sanitized_labels[sets])
-
             if (length(sets) == 1 && is.na(sets)) {
-                'NOT_IN_EITHER_GROUP'
+                NOT_IN_KNOWN_SETS
             } else {
+                sets = unname(data$sanitized_labels[sets])
                 paste(data$sets_ordering_in_ids[data$sets_ordering_in_ids %in% sets], collapse='-')
             }
         }
