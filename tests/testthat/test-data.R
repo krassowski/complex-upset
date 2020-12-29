@@ -30,7 +30,7 @@ test_that("Intersection degree is properly calculated", {
     # see https://github.com/krassowski/complex-upset/issues/73
     expect_equal(
         calculate_degree(c(
-            EMPTY_INTERSECTION, 'a', 'a-b', 'a-b-c'
+            NOT_IN_KNOWN_SETS, 'a', 'a-b', 'a-b-c'
         )),
         c(
             0, 1, 2, 3
@@ -294,11 +294,7 @@ test_that("upset_data() filters by min_size, max_size, min_degree and max_degree
     # turn off locale-specific sorting for tests (might not work on some platforms)
     Sys.setlocale("LC_COLLATE", "C")
 
-    result = upset_data(df, c('a', 'b', 'c', 'd'), min_size=2, sort_intersections=FALSE, min_max_early=TRUE)
-    expect_equal(result$sorted$intersections, c('a-b'))
-    expect_equal(result$plot_intersections_subset, c('a-b'))
-
-    result = upset_data(df, c('a', 'b', 'c', 'd'), min_size=2, sort_intersections=FALSE, min_max_early=FALSE)
+    result = upset_data(df, c('a', 'b', 'c', 'd'), min_size=2, sort_intersections=FALSE)
     expect_equal(result$sorted$intersections, c(empty, 'a', 'a-b', 'a-b-d', 'b-c'))
     expect_equal(result$plot_intersections_subset, c('a-b'))
 

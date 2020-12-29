@@ -3,6 +3,7 @@ expect_doppelganger = vdiffr::expect_doppelganger
 
 
 test_that("The examples in documentation work as expected", {
+    cat('\n')
 
     examples_notebook = jsonlite::fromJSON('Examples_R.json')
     cells = examples_notebook[['cells']]
@@ -32,7 +33,7 @@ test_that("The examples in documentation work as expected", {
         } else if (cell_type == 'code') {
             code = paste(lines, collapse='\n')
 
-            is_example = grepl('upset(', code, fixed=TRUE) || grepl('venn', code, fixed=TRUE)
+            is_example = grepl('upset(', code, fixed=TRUE) || grepl('venn_', code, fixed=TRUE)
 
             if (is_example) {
                 if (last_title == example_title) {
@@ -40,10 +41,13 @@ test_that("The examples in documentation work as expected", {
                 } else {
                     sub_examples_counter = 1
                 }
+                title = paste0('Example: ', example_title, ': ', sub_examples_counter)
+                cat(paste0(title, ': '))
                 expect_doppelganger(
-                    title=paste0('Example: ', example_title, ': ', sub_examples_counter),
+                    title=title,
                     eval(parse(text=code))
                 )
+                cat('\n')
                 last_title = example_title
             } else {
                 eval(parse(text=code))
