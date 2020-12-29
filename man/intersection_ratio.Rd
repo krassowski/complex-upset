@@ -5,28 +5,29 @@
 \title{Barplot annotation of relative intersections sizes}
 \usage{
 intersection_ratio(
+  mapping = aes_string(),
   counts = TRUE,
   bar_number_threshold = 0.75,
   text_colors = c(on_background = "black", on_bar = "white"),
   text = list(),
-  text_aes = aes_string(),
-  aest = aes_string(),
+  text_mapping = aes_string(),
   mode = "distinct",
-  denominator_mode = "union"
+  denominator_mode = "union",
+  ...
 )
 }
 \arguments{
+\item{mapping}{additional aesthetics for \code{geom_bar()}}
+
 \item{counts}{whether to display count number labels above the bars}
 
 \item{bar_number_threshold}{if less than one, labels for bars height greater than this threshold will be placed on (not above) the bars}
 
 \item{text_colors}{a name vector of characters specifying the color when \code{on_background} and \code{on_bar} (see \code{bar_number_threshold})}
 
-\item{text}{additional parameters passed to \code{geom_text}}
+\item{text}{additional parameters passed to \code{geom_text()}}
 
-\item{text_aes}{additional aesthetics for \code{geom_text}}
-
-\item{aest}{additional aesthetics for \code{geom_bar}}
+\item{text_mapping}{additional aesthetics for \code{geom_text()}}
 
 \item{mode}{region selection mode, defines which intersection regions will be accounted for when computing the size. See \code{get_size_mode()} for accepted values.}
 

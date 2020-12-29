@@ -5,17 +5,20 @@
 \title{Prepare layers for sets sizes plot}
 \usage{
 upset_set_size(
+  mapping = aes(),
   geom = geom_bar(width = 0.6),
   position = "left",
-  mapping = aes()
+  filter_intersections = FALSE
 )
 }
 \arguments{
+\item{mapping}{additional aesthetics}
+
 \item{geom}{a geom to use}
 
 \item{position}{on which side of the plot should the set sizes be displayed ('left' or 'right')}
 
-\item{mapping}{additional aesthetics}
+\item{filter_intersections}{whether the intersections filters (e.g. \code{n_intersections} or \code{min_size}) should influnce displayed set sizes}
 }
 \description{
 Prepare layers for sets sizes plot

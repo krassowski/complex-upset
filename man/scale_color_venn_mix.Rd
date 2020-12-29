@@ -11,7 +11,7 @@ scale_color_venn_mix(
   na.value = "grey40",
   highlight = NULL,
   active_color = "orange",
-  inactive_color = "grey60",
+  inactive_color = "NA",
   scale = scale_color_manual,
   ...
 )

@@ -21,7 +21,6 @@ upset_data(
   sort_ratio_numerator = "exclusive_intersection",
   sort_ratio_denominator = "inclusive_union",
   group_by = "degree",
-  min_max_early = TRUE,
   mode = "exclusive_intersection",
   size_columns_suffix = "_size",
   encode_sets = FALSE,
@@ -59,8 +58,6 @@ upset_data(
 \item{sort_ratio_numerator}{the mode for denominator when sorting by ratio}
 
 \item{group_by}{the mode of grouping intersections; one of: \code{'degree'}, \code{'sets'}}
-
-\item{min_max_early}{whether the min and max limits should be applied early (for faster plotting), or late (for accurate depiction of ratios)}
 
 \item{mode}{region selection mode for sorting and trimming by size. See \code{get_size_mode()} for accepted values.}
 
