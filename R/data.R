@@ -473,8 +473,6 @@ upset_data = function(
 
     data = data[all_indices, ]
 
-    data$original_index = all_indices
-
     data$exclusive_intersection = data$intersection[all_indices]
 
     data$intersection = c(

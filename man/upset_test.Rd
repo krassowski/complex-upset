@@ -17,6 +17,7 @@ upset_test(data, intersect, ...)
     \item{\code{test}}{the default test function; it is expected to accept \code{formula} and \code{data} parameters, and a list with \code{p.value}, \code{statistic}, and \code{method}}
     \item{\code{tests}}{a named list with tests for specific variables, overwriting the default test}
     \item{\code{ignore}}{a list with names of variables to exclude from testing}
+    \item{\code{ignore_mode_columns}}{whether the membership columns and size columns for all modes should be ignored}
   }}
 }
 \description{

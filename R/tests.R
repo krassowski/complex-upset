@@ -7,11 +7,28 @@ NULL
 #' @param test the default test function; it is expected to accept `formula` and `data` parameters, and a list with `p.value`, `statistic`, and `method`
 #' @param tests a named list with tests for specific variables, overwriting the default test
 #' @param ignore a list with names of variables to exclude from testing
+#' @param ignore_mode_columns whether the membership columns and size columns for all modes should be ignored
 #' @param ... passed to `upset_data()`
 #' @export
-compare_between_intersections = function(data, intersect, test=kruskal.test, tests=list(), ignore=list(), ...) {
+compare_between_intersections = function(data, intersect, test=kruskal.test, tests=list(), ignore=list(), ignore_mode_columns=TRUE, ...) {
   data = upset_data(data, intersect, ...)
   isect = data$with_sizes
+
+  modes = c(
+      'exclusive_intersection',
+      'inclusive_intersection',
+      'exclusive_union',
+      'inclusive_union'
+  )
+
+  if (ignore_mode_columns) {
+      ignore = c(
+          ignore,
+          paste0('in_', modes),
+          paste0(modes, '_size'),
+          'exclusive_intersection'
+      )
+  }
 
   ignore = c('intersection', ignore)
 
