@@ -743,16 +743,16 @@ upset_data = function(
 #' @export
 create_upset_abc_example = function() {
     data.frame(
-        # 1) 100 in A only, 2) 100 in B only, 3) 500 in C only
+        # 1) 50 in A only, 2) 50 in B only, 3) 200 in C only
         # 4) 10 in A-B only, 5) 6 in A-C only, 6) 6 in B-C only
         # 7) 1 in A-B-C only, 8) 2 in neither
         A = c(
-            # 1) 100 in A only
-            rep(T, 100),
-            # 2) 100 in B only
-            rep(F, 100),
-            # 3) 500 in C only
-            rep(F, 500),
+            # 1) 50 in A only
+            rep(T, 50),
+            # 2) 50 in B only
+            rep(F, 50),
+            # 3) 200 in C only
+            rep(F, 200),
             # 4) 10 in A-B only
             rep(T, 10),
             # 5) 6 in A-C only
@@ -765,12 +765,12 @@ create_upset_abc_example = function() {
             rep(F, 2)
         ),
         B = c(
-            # 1) 100 in A only
-            rep(F, 100),
-            # 2) 100 in B only
-            rep(T, 100),
-            # 3) 500 in C only
-            rep(F, 500),
+            # 1) 50 in A only
+            rep(F, 50),
+            # 2) 50 in B only
+            rep(T, 50),
+            # 3) 200 in C only
+            rep(F, 200),
             # 4) 10 in A-B only
             rep(T, 10),
             # 5) 6 in A-C only
@@ -783,12 +783,12 @@ create_upset_abc_example = function() {
             rep(F, 2)
         ),
         C = c(
-            # 1) 100 in A only
-            rep(F, 100),
-            # 2) 100 in B only
-            rep(F, 100),
-            # 3) 500 in C only
-            rep(T, 500),
+            # 1) 50 in A only
+            rep(F, 50),
+            # 2) 50 in B only
+            rep(F, 50),
+            # 3) 200 in C only
+            rep(T, 200),
             # 4) 10 in A-B only
             rep(F, 10),
             # 5) 6 in A-C only
