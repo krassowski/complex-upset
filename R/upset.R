@@ -1109,10 +1109,16 @@ upset = function(
     }
 
     if (is.ggplot(annotation)) {
+        if (is.null(annotation$mapping$x)) {
+            annotation = annotation + aes(x=intersection)
+        }
         annotation_plot = annotation %+% annotation_data
         user_theme = annotation_plot$theme
         annotation_plot = annotation_plot + selected_theme + do.call(theme, user_theme)
 
+        if (is.null(annotation_plot$default_y) && !is.null(annotation_plot$mapping$y)) {
+            annotation_plot$default_y = quo_name(annotation_plot$mapping$y)
+        }
         if (
             is.null(annotation_plot$labels$y)
             ||
