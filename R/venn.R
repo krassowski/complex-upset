@@ -128,7 +128,7 @@ scale_color_venn_mix = function(
     labels = present_sets$label
     names(labels) = present_sets$name
 
-    empty_name = '\u2205'
+    empty_name = 'Not in any'
     names(empty_name) = NOT_IN_KNOWN_SETS
 
     scale(
