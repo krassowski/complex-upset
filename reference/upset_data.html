@@ -75,7 +75,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">ComplexUpset</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.9.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.0.0</span>
       </span>
     </div>
 
@@ -146,12 +146,14 @@
   sort_sets <span class='op'>=</span> <span class='st'>"descending"</span>,
   sort_intersections <span class='op'>=</span> <span class='st'>"descending"</span>,
   sort_intersections_by <span class='op'>=</span> <span class='st'>"cardinality"</span>,
+  sort_ratio_numerator <span class='op'>=</span> <span class='st'>"exclusive_intersection"</span>,
+  sort_ratio_denominator <span class='op'>=</span> <span class='st'>"inclusive_union"</span>,
   group_by <span class='op'>=</span> <span class='st'>"degree"</span>,
-  min_max_early <span class='op'>=</span> <span class='cn'>TRUE</span>,
-  inclusive_intersection_column <span class='op'>=</span> <span class='st'>"size_intersect_mode"</span>,
-  exclusive_intersection_column <span class='op'>=</span> <span class='st'>"size_distinct_mode"</span>,
-  inclusive_union_count_column <span class='op'>=</span> <span class='st'>"size_inclusive_union_mode"</span>,
-  exclusive_union_count_column <span class='op'>=</span> <span class='st'>"size_exclusive_union_mode"</span>
+  mode <span class='op'>=</span> <span class='st'>"exclusive_intersection"</span>,
+  size_columns_suffix <span class='op'>=</span> <span class='st'>"_size"</span>,
+  encode_sets <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  max_combinations_n <span class='op'>=</span> <span class='fl'>24</span>,
+  intersections <span class='op'>=</span> <span class='st'>"observed"</span>
 <span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
@@ -210,28 +212,36 @@
       <td><p>the mode of sorting, the size of the intersection (cardinality) by default; one of: <code>'cardinality'</code>, <code>'degree'</code>, <code>'ratio'</code>, or any combination of these (e.g. <code><a href='https://rdrr.io/r/base/c.html'>c('degree', 'cardinality')</a></code>)</p></td>
     </tr>
     <tr>
+      <th>sort_ratio_numerator</th>
+      <td><p>the mode for numerator when sorting by ratio</p></td>
+    </tr>
+    <tr>
+      <th>sort_ratio_denominator</th>
+      <td><p>the mode for denominator when sorting by ratio</p></td>
+    </tr>
+    <tr>
       <th>group_by</th>
       <td><p>the mode of grouping intersections; one of: <code>'degree'</code>, <code>'sets'</code></p></td>
     </tr>
     <tr>
-      <th>min_max_early</th>
-      <td><p>whether the min and max limits should be applied early (for faster plotting), or late (for accurate depiction of ratios)</p></td>
+      <th>mode</th>
+      <td><p>region selection mode for sorting and trimming by size. See <code><a href='get_size_mode.html'>get_size_mode()</a></code> for accepted values.</p></td>
     </tr>
     <tr>
-      <th>inclusive_intersection_column</th>
-      <td><p>name of the column to store the inclusive intersection size (adjust if conflicts with your data)</p></td>
+      <th>size_columns_suffix</th>
+      <td><p>suffix for the columns to store the sizes (adjust if conflicts with your data)</p></td>
     </tr>
     <tr>
-      <th>exclusive_intersection_column</th>
-      <td><p>name of the column to store the exclusive intersection size (adjust if conflicts with your data)</p></td>
+      <th>encode_sets</th>
+      <td><p>whether set names (column in input data) should be encoded as numbers (set to TRUE to overcome R limitations of max 10 kB for variable names for datasets with huge numbers of sets); default TRUE for upset() and FALSE for upset_data().</p></td>
     </tr>
     <tr>
-      <th>inclusive_union_count_column</th>
-      <td><p>name of the column to store the inclusive union size (adjust if conflicts with your data)</p></td>
+      <th>max_combinations_n</th>
+      <td><p>the limit preventing accidental use of <code>intersections='all'</code> with a high number of sets</p></td>
     </tr>
     <tr>
-      <th>exclusive_union_count_column</th>
-      <td><p>name of the column to store the exclusive union size (adjust if conflicts with your data)</p></td>
+      <th>intersections</th>
+      <td><p>whether only the intersections present in data (<code>observed</code>, default), or all intersections (<code>all</code>) should be computed; using all intersections for a high number of sets is not computationally feasible - use <code>min_degree</code> and <code>max_degree</code> to narrow down the selection; this is only useful for modes different from the default exclusive intersection.</p></td>
     </tr>
     </table>
 

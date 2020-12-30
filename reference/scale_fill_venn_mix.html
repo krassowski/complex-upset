@@ -75,7 +75,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">ComplexUpset</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.9.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.0.0</span>
       </span>
     </div>
 
@@ -132,7 +132,7 @@
     <p>Fill scale for Venn diagram</p>
     </div>
 
-    <pre class="usage"><span class='fu'>scale_fill_venn_mix</span><span class='op'>(</span><span class='va'>...</span><span class='op'>)</span></pre>
+    <pre class="usage"><span class='fu'>scale_fill_venn_mix</span><span class='op'>(</span><span class='va'>...</span>, na.value <span class='op'>=</span> <span class='st'>"NA"</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -143,13 +143,16 @@
     <dt><code>data</code></dt><dd><p>a dataframe including binary columns representing membership in sets</p></dd>
     <dt><code>sets</code></dt><dd><p>vector with names of columns representing membership in sets</p></dd>
     <dt><code>colors</code></dt><dd><p>named list of colors for sets (one set=one color)</p></dd>
-    <dt><code>na.value</code></dt><dd><p>value for elements not belonging to any of the sets</p></dd>
     <dt><code>highlight</code></dt><dd><p>which regions of the diagram to highlight</p></dd>
     <dt><code>active_color</code></dt><dd><p>color for highlight</p></dd>
     <dt><code>inactive_color</code></dt><dd><p>color for lack of highlight</p></dd>
     <dt><code>scale</code></dt><dd><p>the base scale (default=<code><a href='https://ggplot2.tidyverse.org/reference/scale_manual.html'>scale_color_manual()</a></code>)</p></dd>
   
 </dl></td>
+    </tr>
+    <tr>
+      <th>na.value</th>
+      <td><p>value for elements not belonging to any of the known sets</p></td>
     </tr>
     </table>
 

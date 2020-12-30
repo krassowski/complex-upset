@@ -75,7 +75,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">ComplexUpset</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.9.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.0.0</span>
       </span>
     </div>
 
@@ -138,6 +138,7 @@
   test <span class='op'>=</span> <span class='va'>kruskal.test</span>,
   tests <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span><span class='op'>)</span>,
   ignore <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span><span class='op'>)</span>,
+  ignore_mode_columns <span class='op'>=</span> <span class='cn'>TRUE</span>,
   <span class='va'>...</span>
 <span class='op'>)</span></pre>
 
@@ -163,6 +164,10 @@
     <tr>
       <th>ignore</th>
       <td><p>a list with names of variables to exclude from testing</p></td>
+    </tr>
+    <tr>
+      <th>ignore_mode_columns</th>
+      <td><p>whether the membership columns and size columns for all modes should be ignored</p></td>
     </tr>
     <tr>
       <th>...</th>

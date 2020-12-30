@@ -75,7 +75,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">ComplexUpset</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.9.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.0.0</span>
       </span>
     </div>
 
@@ -148,6 +148,7 @@
   mode <span class='op'>=</span> <span class='st'>"distinct"</span>,
   queries <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span><span class='op'>)</span>,
   guides <span class='op'>=</span> <span class='cn'>NULL</span>,
+  encode_sets <span class='op'>=</span> <span class='cn'>TRUE</span>,
   matrix <span class='op'>=</span> <span class='fu'><a href='intersection_matrix.html'>intersection_matrix</a></span><span class='op'>(</span><span class='op'>)</span>,
   <span class='va'>...</span>
 <span class='op'>)</span></pre>
@@ -208,7 +209,7 @@
     </tr>
     <tr>
       <th>mode</th>
-      <td><p>region selection mode for computing the number of elements in intersection fragment See <code><a href='get_size_mode.html'>get_size_mode()</a></code> for accepted values.</p></td>
+      <td><p>region selection mode for computing the number of elements in intersection fragment. See <code><a href='get_size_mode.html'>get_size_mode()</a></code> for accepted values.</p></td>
     </tr>
     <tr>
       <th>queries</th>
@@ -217,6 +218,10 @@
     <tr>
       <th>guides</th>
       <td><p>action for legends aggregation and placement ('keep', 'collect', 'over' the set sizes)</p></td>
+    </tr>
+    <tr>
+      <th>encode_sets</th>
+      <td><p>whether set names (column in input data) should be encoded as numbers (set to TRUE to overcome R limitations of max 10 kB for variable names for datasets with huge numbers of sets); default TRUE for upset() and FALSE for upset_data().</p></td>
     </tr>
     <tr>
       <th>matrix</th>
@@ -236,12 +241,12 @@
     <dt><code>sort_sets</code></dt><dd><p>whether to sort the rows in the intersection matrix (descending sort by default); one of: <code>'ascending'</code>, <code>'descending'</code>, <code>FALSE</code></p></dd>
     <dt><code>sort_intersections</code></dt><dd><p>whether to sort the columns in the intersection matrix (descending sort by default); one of: <code>'ascending'</code>, <code>'descending'</code>, <code>FALSE</code></p></dd>
     <dt><code>sort_intersections_by</code></dt><dd><p>the mode of sorting, the size of the intersection (cardinality) by default; one of: <code>'cardinality'</code>, <code>'degree'</code>, <code>'ratio'</code>, or any combination of these (e.g. <code><a href='https://rdrr.io/r/base/c.html'>c('degree', 'cardinality')</a></code>)</p></dd>
+    <dt><code>sort_ratio_numerator</code></dt><dd><p>the mode for numerator when sorting by ratio</p></dd>
+    <dt><code>sort_ratio_denominator</code></dt><dd><p>the mode for denominator when sorting by ratio</p></dd>
     <dt><code>group_by</code></dt><dd><p>the mode of grouping intersections; one of: <code>'degree'</code>, <code>'sets'</code></p></dd>
-    <dt><code>min_max_early</code></dt><dd><p>whether the min and max limits should be applied early (for faster plotting), or late (for accurate depiction of ratios)</p></dd>
-    <dt><code>inclusive_union_count_column</code></dt><dd><p>name of the column to store the inclusive union size (adjust if conflicts with your data)</p></dd>
-    <dt><code>exclusive_union_count_column</code></dt><dd><p>name of the column to store the exclusive union size (adjust if conflicts with your data)</p></dd>
-    <dt><code>inclusive_intersection_column</code></dt><dd><p>name of the column to store the inclusive intersection size (adjust if conflicts with your data)</p></dd>
-    <dt><code>exclusive_intersection_column</code></dt><dd><p>name of the column to store the exclusive intersection size (adjust if conflicts with your data)</p></dd>
+    <dt><code>size_columns_suffix</code></dt><dd><p>suffix for the columns to store the sizes (adjust if conflicts with your data)</p></dd>
+    <dt><code>intersections</code></dt><dd><p>whether only the intersections present in data (<code>observed</code>, default), or all intersections (<code>all</code>) should be computed; using all intersections for a high number of sets is not computationally feasible - use <code>min_degree</code> and <code>max_degree</code> to narrow down the selection; this is only useful for modes different from the default exclusive intersection.</p></dd>
+    <dt><code>max_combinations_n</code></dt><dd><p>the limit preventing accidental use of <code>intersections='all'</code> with a high number of sets</p></dd>
   
 </dl></td>
     </tr>

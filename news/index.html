@@ -74,7 +74,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">ComplexUpset</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.9.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.0.0</span>
       </span>
     </div>
 
@@ -126,6 +126,49 @@
       <small>Source: <a href='https://github.com/krassowski/complex-upset/blob/master/NEWS.md'><code>NEWS.md</code></a></small>
     </div>
 
+    <div id="version-100" class="section level1">
+<h1 class="page-header" data-toc-text="1.0.0">
+<a href="#version-100" class="anchor"></a>Version 1.0.0<small> Unreleased </small>
+</h1>
+<p>2020-12-30</p>
+<p>Changes:</p>
+<ul>
+<li>Lists with computed sizes are now returned in a single list called <code>sizes</code> by <code><a href="../reference/upset_data.html">upset_data()</a></code>
+</li>
+<li>Set sizes are now <strong>not</strong> filtered by default when selecting intersections by <code>min_*</code> or <code>max_*</code> criteria. Pass <code>filter_intersections=TRUE</code> to <code>upset_set_sizes()</code> to restore the previous behavior</li>
+<li>Union sizes are now calculated before data trimming which provides more accurate ratio estimates</li>
+<li>Added examples for Venn diagrams which are now covered by automated tests to protect against regressions</li>
+<li>Removed <code><a href="../reference/upset_data.html">upset_data()</a></code> <code>intersected</code> member to avoid needless duplication of the data frames; access <code>with_sizes</code> instead</li>
+<li>
+<code>aest</code> argument of <code><a href="../reference/intersection_size.html">intersection_size()</a></code> and related functions was renamed to <code>mapping</code> and is now the first positional argument</li>
+<li>
+<code>min_max_early</code> argument is no longer required and was removed</li>
+</ul>
+<p>New features:</p>
+<ul>
+<li>Annotations can now access data for any of the available modes by adding <code><a href="../reference/upset_mode.html">upset_mode()</a></code> layer. By default the annotations are given data corresponding to the same mode as the mode of the passed in the <code><a href="../reference/upset.html">upset()</a></code> call.</li>
+<li>It is now possible to display all intersections, even if those are not present in the data by passing <code>intersections='all'</code> to <code><a href="../reference/upset.html">upset()</a></code>; this is only feasible for &lt;20 sets, but filtering by degree can allow to explore a subset of all intersections when there are many more sets; this is only useful for modes different from the default exclusive intersection.</li>
+<li>If filtering leads to no intersections, an informative error is shown (<a href='https://github.com/krassowski/complex-upset/issues/80'>#80</a>)</li>
+</ul>
+<p>Bug fixes:</p>
+<ul>
+<li>Modes passed to <code><a href="../reference/upset.html">upset()</a></code> are now also used for sorting and trimming</li>
+<li>Size calculation for modes was optimized for better performance</li>
+<li>User-added layers are now shown on top of <code><a href="../reference/intersection_size.html">intersection_size()</a></code> and <code>intersection_union()</code>
+</li>
+<li>Column names are no longer modified when supplying to <code>ggplot2</code> allowing to easily use them in annotations (<a href='https://github.com/krassowski/complex-upset/issues/82'>#82</a>)</li>
+</ul>
+</div>
+    <div id="version-091" class="section level1">
+<h1 class="page-header" data-toc-text="0.9.1">
+<a href="#version-091" class="anchor"></a>Version 0.9.1<small> Unreleased </small>
+</h1>
+<p>2020-12-20</p>
+<p>Changes:</p>
+<ul>
+<li>Pass metadata to the <code>ggplot2</code> when arranging Venn diagram, allowing to map elements aesthetics details</li>
+</ul>
+</div>
     <div id="version-090" class="section level1">
 <h1 class="page-header" data-toc-text="0.9.0">
 <a href="#version-090" class="anchor"></a>Version 0.9.0<small> Unreleased </small>
@@ -133,7 +176,7 @@
 <p>2020-12-20</p>
 <p>New features:</p>
 <ul>
-<li>Intersection modes were formalized with the default remaining <code>exclusive_intersection</code> (alias <code>distinct</code>); additional modes are: <code>inclusive_intersection</code> (alias <code>intersect</code>), <code>inclusive_union</code> and <code>exclusive_union</code>; please read the relevant part of the documentation for details (<a href='https://github.com/krassowski/complex-upset/issues/78'>#78</a>).</li>
+<li>Intersection modes were formalized with the default remaining <code>exclusive_intersection</code> (alias <code>distinct</code>); additional modes are: <code>inclusive_intersection</code> (alias <code>intersect</code>), <code>inclusive_union</code> and <code>exclusive_union</code>; please read the <a href="https://krassowski.github.io/complex-upset/articles/Examples_R.html<a href='https://github.com/krassowski/complex-upset/issues/0'>#0</a>-2-region-selection-modes">relevant part of the documentation</a> for details (<a href='https://github.com/krassowski/complex-upset/issues/78'>#78</a>).</li>
 <li>Simple Venn diagrams (for two or three sets) can now be constructed using same input (binary presence data frame) using pseudo geoms: <code><a href="../reference/geom_venn_circle.html">geom_venn_circle()</a></code>, <code><a href="../reference/geom_venn_label_region.html">geom_venn_label_region()</a></code>, <code><a href="../reference/geom_venn_label_set.html">geom_venn_label_set()</a></code>, <code><a href="../reference/geom_venn_region.html">geom_venn_region()</a></code> and scales <code><a href="../reference/scale_color_venn_mix.html">scale_color_venn_mix()</a></code> and <code><a href="../reference/scale_fill_venn_mix.html">scale_fill_venn_mix()</a></code>; while developed mostly for the documentation needs, it provides unique capability of highlighting relevant regions of the Venn diagram and placing observations within appropriate regions (which allows to demonstrate their attributes with appropriate aesthetics mapping).</li>
 </ul>
 <p>Changes:</p>

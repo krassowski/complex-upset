@@ -77,7 +77,7 @@ This cannot be calculated for the null intersection (observations which do not b
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">ComplexUpset</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.9.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.0.0</span>
       </span>
     </div>
 
@@ -137,19 +137,24 @@ This cannot be calculated for the null intersection (observations which do not b
     </div>
 
     <pre class="usage"><span class='fu'>intersection_ratio</span><span class='op'>(</span>
+  mapping <span class='op'>=</span> <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span><span class='op'>)</span>,
   counts <span class='op'>=</span> <span class='cn'>TRUE</span>,
   bar_number_threshold <span class='op'>=</span> <span class='fl'>0.75</span>,
   text_colors <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span>on_background <span class='op'>=</span> <span class='st'>"black"</span>, on_bar <span class='op'>=</span> <span class='st'>"white"</span><span class='op'>)</span>,
   text <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span><span class='op'>)</span>,
-  text_aes <span class='op'>=</span> <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes_.html'>aes_string</a></span><span class='op'>(</span><span class='op'>)</span>,
-  aest <span class='op'>=</span> <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes_.html'>aes_string</a></span><span class='op'>(</span><span class='op'>)</span>,
+  text_mapping <span class='op'>=</span> <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span><span class='op'>)</span>,
   mode <span class='op'>=</span> <span class='st'>"distinct"</span>,
-  denominator_mode <span class='op'>=</span> <span class='st'>"union"</span>
+  denominator_mode <span class='op'>=</span> <span class='st'>"union"</span>,
+  <span class='va'>...</span>
 <span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
+    <tr>
+      <th>mapping</th>
+      <td><p>additional aesthetics for <code><a href='https://ggplot2.tidyverse.org/reference/geom_bar.html'>geom_bar()</a></code></p></td>
+    </tr>
     <tr>
       <th>counts</th>
       <td><p>whether to display count number labels above the bars</p></td>
@@ -164,15 +169,11 @@ This cannot be calculated for the null intersection (observations which do not b
     </tr>
     <tr>
       <th>text</th>
-      <td><p>additional parameters passed to <code>geom_text</code></p></td>
+      <td><p>additional parameters passed to <code><a href='https://ggplot2.tidyverse.org/reference/geom_text.html'>geom_text()</a></code></p></td>
     </tr>
     <tr>
-      <th>text_aes</th>
-      <td><p>additional aesthetics for <code>geom_text</code></p></td>
-    </tr>
-    <tr>
-      <th>aest</th>
-      <td><p>additional aesthetics for <code>geom_bar</code></p></td>
+      <th>text_mapping</th>
+      <td><p>additional aesthetics for <code><a href='https://ggplot2.tidyverse.org/reference/geom_text.html'>geom_text()</a></code></p></td>
     </tr>
     <tr>
       <th>mode</th>
@@ -181,6 +182,13 @@ This cannot be calculated for the null intersection (observations which do not b
     <tr>
       <th>denominator_mode</th>
       <td><p>region selection mode for computing the denominator in ratio. See <code><a href='get_size_mode.html'>get_size_mode()</a></code> for accepted values.</p></td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td><p>Arguments passed on to <code><a href='intersection_size.html'>intersection_size</a></code></p><dl>
+    <dt><code>position</code></dt><dd><p>position passed to <code><a href='https://ggplot2.tidyverse.org/reference/geom_bar.html'>geom_bar()</a></code></p></dd>
+  
+</dl></td>
     </tr>
     </table>
 

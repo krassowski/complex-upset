@@ -75,7 +75,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">ComplexUpset</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.9.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.0.0</span>
       </span>
     </div>
 
@@ -132,7 +132,7 @@
     <p>Retrieve symbol for given mode that can be used in aesthetics mapping with double bang (!!)</p>
     </div>
 
-    <pre class="usage"><span class='fu'>get_size_mode</span><span class='op'>(</span><span class='va'>mode</span><span class='op'>)</span></pre>
+    <pre class="usage"><span class='fu'>get_size_mode</span><span class='op'>(</span><span class='va'>mode</span>, suffix <span class='op'>=</span> <span class='st'>"_size"</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -140,6 +140,10 @@
     <tr>
       <th>mode</th>
       <td><p>the mode to use. Accepted values: <code>exclusive_intersection</code> (alias <code>distinct</code>), <code>inclusive_intersection</code> (alias <code>intersect</code>), <code>inclusive_union</code> (alias <code>union</code>), <code>exclusive_union</code>.</p></td>
+    </tr>
+    <tr>
+      <th>suffix</th>
+      <td><p>the column suffix in use as passed to <code><a href='upset_data.html'>upset_data()</a></code></p></td>
     </tr>
     </table>
 
