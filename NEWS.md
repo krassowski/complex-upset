@@ -13,7 +13,7 @@ Changes:
 
 New features:
 - Annotations can now access data for any of the available modes by adding `upset_mode()` layer. By default the annotations are given data corresponding to the same mode as the mode of the passed in the `upset()` call.
-- It is now possible to display all intersections, even if those are not present in the data by passing `intersections='all'` to `upset()`; this is only feasible for <20 sets, but filtering by degree can allow to explore a subset of all intersections when there are many more sets
+- It is now possible to display all intersections, even if those are not present in the data by passing `intersections='all'` to `upset()`; this is only feasible for <20 sets, but filtering by degree can allow to explore a subset of all intersections when there are many more sets; this is only useful for modes different from the default exclusive intersection.
 - If filtering leads to no intersections, an informative error is shown (#80)
 
 

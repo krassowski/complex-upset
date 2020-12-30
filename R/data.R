@@ -231,7 +231,7 @@ binary_grid = function(n, m) {
 #' @param mode region selection mode for sorting and trimming by size. See `get_size_mode()` for accepted values.
 #' @param size_columns_suffix suffix for the columns to store the sizes (adjust if conflicts with your data)
 #' @param encode_sets whether set names (column in input data) should be encoded as numbers (set to TRUE to overcome R limitations of max 10 kB for variable names for datasets with huge numbers of sets); default TRUE for upset() and FALSE for upset_data().
-#' @param intersections whether only the intersections present in data (`observed`, default), or all intersections (`all`) should be computed; using all intersections for a high number of sets is not computationally feasible - use `min_degree` and `max_degree` to narrow down the selection
+#' @param intersections whether only the intersections present in data (`observed`, default), or all intersections (`all`) should be computed; using all intersections for a high number of sets is not computationally feasible - use `min_degree` and `max_degree` to narrow down the selection; this is only useful for modes different from the default exclusive intersection.
 #' @param max_combinations_n the limit preventing accidental use of `intersections='all'` with a high number of sets
 
 #' @export
