@@ -260,14 +260,16 @@ test_that("counts are properly computed in all modes", {
         1 FALSE FALSE FALSE                     2                    2                           2                           2
         2 FALSE FALSE  TRUE                   213                  200                         200                         213
         3 FALSE  TRUE FALSE                    67                   50                          50                          67
-        4 FALSE  TRUE  TRUE                   323                  356                           6                           7
+        4 FALSE  TRUE  TRUE                   273                  256                           6                           7
         5  TRUE FALSE FALSE                    67                   50                          50                          67
-        6  TRUE FALSE  TRUE                   323                  256                           6                           7
+        6  TRUE FALSE  TRUE                   273                  256                           6                           7
         7  TRUE  TRUE FALSE                   123                  110                          10                          11
         8  TRUE  TRUE  TRUE                   323                  323                           1                           1",
         header = TRUE,
         stringsAsFactors = TRUE
     )
+    print(expected_sizes)
+    print(sizes)
 
     expect_equal(
         sizes,
@@ -288,7 +290,7 @@ test_that("upset_data() filters by min_size, max_size, min_degree and max_degree
         c=c(FALSE, TRUE, FALSE, FALSE, FALSE, FALSE),
         d=c(FALSE, FALSE, FALSE, TRUE, FALSE, FALSE)
     )
-    empty = 'NOT_IN_EITHER_GROUP'
+    empty = NOT_IN_KNOWN_SETS
 
     old_locale = Sys.getlocale("LC_COLLATE")
     # turn off locale-specific sorting for tests (might not work on some platforms)
