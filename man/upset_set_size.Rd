@@ -18,7 +18,7 @@ upset_set_size(
 
 \item{position}{on which side of the plot should the set sizes be displayed ('left' or 'right')}
 
-\item{filter_intersections}{whether the intersections filters (e.g. \code{n_intersections} or \code{min_size}) should influnce displayed set sizes}
+\item{filter_intersections}{whether the intersections filters (e.g. \code{n_intersections} or \code{min_size}) should influence displayed set sizes}
 }
 \description{
 Prepare layers for sets sizes plot

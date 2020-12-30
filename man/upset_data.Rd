@@ -55,7 +55,9 @@ upset_data(
 
 \item{sort_intersections_by}{the mode of sorting, the size of the intersection (cardinality) by default; one of: \code{'cardinality'}, \code{'degree'}, \code{'ratio'}, or any combination of these (e.g. \code{c('degree', 'cardinality')})}
 
-\item{sort_ratio_numerator}{the mode for denominator when sorting by ratio}
+\item{sort_ratio_numerator}{the mode for numerator when sorting by ratio}
+
+\item{sort_ratio_denominator}{the mode for denominator when sorting by ratio}
 
 \item{group_by}{the mode of grouping intersections; one of: \code{'degree'}, \code{'sets'}}
 
@@ -64,6 +66,10 @@ upset_data(
 \item{size_columns_suffix}{suffix for the columns to store the sizes (adjust if conflicts with your data)}
 
 \item{encode_sets}{whether set names (column in input data) should be encoded as numbers (set to TRUE to overcome R limitations of max 10 kB for variable names for datasets with huge numbers of sets); default TRUE for upset() and FALSE for upset_data().}
+
+\item{max_combinations_n}{the limit preventing accidental use of \code{intersections='all'} with a high number of sets}
+
+\item{intersections}{whether only the intersections present in data (\code{observed}, default), or all intersections (\code{all}) should be computed; using all intersections for a high number of sets is not computationally feasible - use \code{min_degree} and \code{max_degree} to narrow down the selection}
 }
 \description{
 Prepare data for UpSet plots

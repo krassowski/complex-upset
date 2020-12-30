@@ -349,6 +349,7 @@ upset_text_percentage = function(digits=0, sep='', mode='distinct') {
 #' This cannot be calculated for the null intersection (observations which do not belong to either of the groups).
 #' @param denominator_mode region selection mode for computing the denominator in ratio. See `get_size_mode()` for accepted values.
 #' @inheritParams intersection_size
+#' @inheritDotParams intersection_size
 #' @export
 intersection_ratio = function(
   mapping=aes(),
@@ -670,7 +671,7 @@ reverse_log_trans = function(base=10) {
 #' @param geom a geom to use
 #' @param position on which side of the plot should the set sizes be displayed ('left' or 'right')
 #' @param mapping additional aesthetics
-#' @param filter_intersections whether the intersections filters (e.g. `n_intersections` or `min_size`) should influnce displayed set sizes
+#' @param filter_intersections whether the intersections filters (e.g. `n_intersections` or `min_size`) should influence displayed set sizes
 #' @export
 upset_set_size = function(mapping=aes(), geom=geom_bar(width=0.6), position='left', filter_intersections=FALSE) {
     check_argument(position, allowed=c('left', 'right'), description='position')

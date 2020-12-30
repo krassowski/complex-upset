@@ -32,6 +32,12 @@ intersection_ratio(
 \item{mode}{region selection mode, defines which intersection regions will be accounted for when computing the size. See \code{get_size_mode()} for accepted values.}
 
 \item{denominator_mode}{region selection mode for computing the denominator in ratio. See \code{get_size_mode()} for accepted values.}
+
+\item{...}{
+  Arguments passed on to \code{\link[=intersection_size]{intersection_size}}
+  \describe{
+    \item{\code{position}}{position passed to \code{geom_bar()}}
+  }}
 }
 \description{
 A large intersection size can be driven by a large number of members in a group;

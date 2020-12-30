@@ -226,11 +226,14 @@ binary_grid = function(n, m) {
 #' @param sort_intersections whether to sort the columns in the intersection matrix (descending sort by default); one of: `'ascending'`, `'descending'`, `FALSE`
 #' @param sort_intersections_by the mode of sorting, the size of the intersection (cardinality) by default; one of: `'cardinality'`, `'degree'`, `'ratio'`, or any combination of these (e.g. `c('degree', 'cardinality')`)
 #' @param sort_ratio_numerator the mode for numerator when sorting by ratio
-#' @param sort_ratio_numerator the mode for denominator when sorting by ratio
+#' @param sort_ratio_denominator the mode for denominator when sorting by ratio
 #' @param group_by the mode of grouping intersections; one of: `'degree'`, `'sets'`
 #' @param mode region selection mode for sorting and trimming by size. See `get_size_mode()` for accepted values.
 #' @param size_columns_suffix suffix for the columns to store the sizes (adjust if conflicts with your data)
 #' @param encode_sets whether set names (column in input data) should be encoded as numbers (set to TRUE to overcome R limitations of max 10 kB for variable names for datasets with huge numbers of sets); default TRUE for upset() and FALSE for upset_data().
+#' @param intersections whether only the intersections present in data (`observed`, default), or all intersections (`all`) should be computed; using all intersections for a high number of sets is not computationally feasible - use `min_degree` and `max_degree` to narrow down the selection
+#' @param max_combinations_n the limit preventing accidental use of `intersections='all'` with a high number of sets
+
 #' @export
 upset_data = function(
     data, intersect, min_size=0, max_size=Inf, min_degree=0, max_degree=Inf,
@@ -332,7 +335,6 @@ upset_data = function(
     intersections_matrix = t(unique_members_matrix)
 
     if (intersections == 'observed') {
-        # unsorted_intersections = rownames(unique_members_matrix)
         intersections_matrix = t(unique_members_matrix)
     } else {
         if (length(intersect) > max_combinations_n && max_degree == Inf)  {
@@ -343,7 +345,7 @@ upset_data = function(
             intersections_matrix = do.call(expand.grid, rep(list(0:1), length(intersect)))
         } else {
             if (max_degree > length(intersect)) {
-                warn('provided max_degree was greater than the number of sets, reducing max_degree to the number of sets')
+                warning('provided max_degree was greater than the number of sets, reducing max_degree to the number of sets')
                 max_degree = length(intersect)
             }
             intersections_matrix = do.call(rbind, lapply(min_degree:max_degree, function(degree) {

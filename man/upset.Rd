@@ -78,9 +78,12 @@ upset(
     \item{\code{sort_sets}}{whether to sort the rows in the intersection matrix (descending sort by default); one of: \code{'ascending'}, \code{'descending'}, \code{FALSE}}
     \item{\code{sort_intersections}}{whether to sort the columns in the intersection matrix (descending sort by default); one of: \code{'ascending'}, \code{'descending'}, \code{FALSE}}
     \item{\code{sort_intersections_by}}{the mode of sorting, the size of the intersection (cardinality) by default; one of: \code{'cardinality'}, \code{'degree'}, \code{'ratio'}, or any combination of these (e.g. \code{c('degree', 'cardinality')})}
-    \item{\code{sort_ratio_numerator}}{the mode for denominator when sorting by ratio}
+    \item{\code{sort_ratio_numerator}}{the mode for numerator when sorting by ratio}
+    \item{\code{sort_ratio_denominator}}{the mode for denominator when sorting by ratio}
     \item{\code{group_by}}{the mode of grouping intersections; one of: \code{'degree'}, \code{'sets'}}
     \item{\code{size_columns_suffix}}{suffix for the columns to store the sizes (adjust if conflicts with your data)}
+    \item{\code{intersections}}{whether only the intersections present in data (\code{observed}, default), or all intersections (\code{all}) should be computed; using all intersections for a high number of sets is not computationally feasible - use \code{min_degree} and \code{max_degree} to narrow down the selection}
+    \item{\code{max_combinations_n}}{the limit preventing accidental use of \code{intersections='all'} with a high number of sets}
   }}
 }
 \description{

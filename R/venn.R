@@ -3,13 +3,12 @@
 #' @importFrom colorspace RGB mixcolor
 #' @importFrom ggplot2 aes aes_
 #' @importFrom ggplot2 scale_color_manual scale_fill_manual
-#' @importFrom ggplot2 geom_label geom_polygon
+#' @importFrom ggplot2 geom_label geom_polygon alpha
 NULL
 
 globalVariables(c(
     'x',
     'y',
-    'alpha',
     'region'
 ))
 
@@ -143,6 +142,7 @@ scale_color_venn_mix = function(
 
 #' Fill scale for Venn diagram
 #'
+#' @param na.value value for elements not belonging to any of the known sets
 #' @inheritDotParams scale_color_venn_mix
 #' @export
 scale_fill_venn_mix = function(..., na.value='NA') {
@@ -165,7 +165,7 @@ push_outwards = function(coords, centre_of_mass, mul) {
 }
 
 
-#' Cricle for Venn diagram
+#' Circle for Venn diagram
 #'
 #' @param data a dataframe including binary columns representing membership in sets
 #' @param mapping the aesthetics mapping
@@ -326,7 +326,7 @@ geom_venn_region = function(
     resolution=250,
     ...
 ) {
-    mapping = modifyList(aes(x=x, y=y, group=subregion, fill=region), mapping)
+    mapping = modifyList(aes(x=x, y=y, group=region, fill=region), mapping)
 
     geom_polygon(
         data=approximate_polygon(data, sets=sets, resolution=resolution),
@@ -379,7 +379,6 @@ minmax_polygon = function(data, layout, grid, resolution, size=0.01) {
         region_coords
     }, simplify =FALSE))
 
-    coords$subregion = coords$region
     coords
 }
 

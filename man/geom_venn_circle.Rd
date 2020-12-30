@@ -2,7 +2,7 @@
 % Please edit documentation in R/venn.R
 \name{geom_venn_circle}
 \alias{geom_venn_circle}
-\title{Cricle for Venn diagram}
+\title{Circle for Venn diagram}
 \usage{
 geom_venn_circle(
   data,
@@ -55,5 +55,5 @@ the default plot specification, e.g. \code{\link[ggplot2:borders]{borders()}}.}
   }}
 }
 \description{
-Cricle for Venn diagram
+Circle for Venn diagram
 }

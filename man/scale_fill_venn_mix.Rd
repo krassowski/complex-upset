@@ -13,12 +13,13 @@ scale_fill_venn_mix(..., na.value = "NA")
     \item{\code{data}}{a dataframe including binary columns representing membership in sets}
     \item{\code{sets}}{vector with names of columns representing membership in sets}
     \item{\code{colors}}{named list of colors for sets (one set=one color)}
-    \item{\code{na.value}}{value for elements not belonging to any of the sets}
     \item{\code{highlight}}{which regions of the diagram to highlight}
     \item{\code{active_color}}{color for highlight}
     \item{\code{inactive_color}}{color for lack of highlight}
     \item{\code{scale}}{the base scale (default=\code{scale_color_manual()})}
   }}
+
+\item{na.value}{value for elements not belonging to any of the known sets}
 }
 \description{
 Fill scale for Venn diagram
