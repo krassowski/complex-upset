@@ -379,7 +379,9 @@ upset_data = function(
         as.numeric
     ) * exclusive_intersection_counts
 
-    desired_intersections_degrees[NOT_IN_KNOWN_SETS] = 1
+    if (NOT_IN_KNOWN_SETS %in% colnames(product_matrix)) {
+        desired_intersections_degrees[NOT_IN_KNOWN_SETS] = 1
+    }
 
     intersection_condition = t(t(product_matrix) >= desired_intersections_degrees)
 
