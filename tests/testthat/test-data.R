@@ -60,9 +60,18 @@ test_that("hyphenated variables give the same results", {
     data_underscored = upset_data(df_underscored, c('a_x', 'b', 'c', 'd'))
     data_hyphenated = upset_data(df_hyphenated, c('a-x', 'b', 'c', 'd'))
 
+    allowed_to_differ = c('sanitized_labels', 'non_sanitized_labels', 'with_sizes')
+
     expect_equal(
-        data_underscored[names(data_underscored) != 'non_sanitized_labels'],
-        data_hyphenated[names(data_hyphenated) != 'non_sanitized_labels']
+        data_underscored[!(names(data_underscored) %in% allowed_to_differ)],
+        data_hyphenated[!(names(data_hyphenated) %in% allowed_to_differ)]
+    )
+
+    colnames(data_hyphenated$with_sizes)[1] = 'a_x'
+
+    expect_equal(
+        data_underscored$with_sizes,
+        data_hyphenated$with_sizes
     )
 
     expect_equal(
@@ -268,8 +277,6 @@ test_that("counts are properly computed in all modes", {
         header = TRUE,
         stringsAsFactors = TRUE
     )
-    print(expected_sizes)
-    print(sizes)
 
     expect_equal(
         sizes,
