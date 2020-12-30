@@ -841,9 +841,9 @@ False
 <div id="displaying-all-intersections" class="section level3">
 <h3 class="hasAnchor">
 <a href="#displaying-all-intersections" class="anchor"></a>0.3 Displaying all intersections</h3>
-<p>Too display all possible intersections (rather than only the observed ones) use <code>intersections='all'</code>.</p>
-<p>Note 1: it is usually desired to filter all the possible intersections down with <code>max_degree</code> and/or <code>min_degree</code> to avoid generating all combinations as those can easily use up all available RAM memory when dealing with multiple sets (e.g. all human genes) due to sheer number of possible combinations</p>
-<p>Note 2: using <code>intersections='all'</code> is only reasonable for mode different from the default <em>exclusive intersection</em>.</p>
+<p>To display all possible intersections (rather than only the observed ones) use <code>intersections='all'</code>.</p>
+<p><strong>Note 1</strong>: it is usually desired to filter all the possible intersections down with <code>max_degree</code> and/or <code>min_degree</code> to avoid generating all combinations as those can easily use up all available RAM memory when dealing with multiple sets (e.g. all human genes) due to sheer number of possible combinations</p>
+<p><strong>Note 2</strong>: using <code>intersections='all'</code> is only reasonable for mode different from the default <em>exclusive intersection</em>.</p>
 <div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true"></a><span class="op">%%</span>R <span class="op">-</span>w <span class="dv">800</span> <span class="op">-</span>h <span class="dv">300</span></span>
 <span id="cb17-2"><a href="#cb17-2" aria-hidden="true"></a><span class="kw">upset</span>(</span>
 <span id="cb17-3"><a href="#cb17-3" aria-hidden="true"></a>    movies, genres,</span>
@@ -1828,7 +1828,7 @@ mpaa          NA</code></pre>
 <div id="logarithmic-scale" class="section level3">
 <h3 class="hasAnchor">
 <a href="#logarithmic-scale" class="anchor"></a>4.3 Logarithmic scale</h3>
-<p>In order to use a log scale we need pass additional scale to in <code>layers</code> argument. However, as the bars are on flipped coordinates, we need a reversed log transformation. Appropriate function, <code><a href="../reference/reverse_log_trans.html">reverse_log_trans()</a></code> is provided:</p>
+<p>In order to use a log scale we need to pass additional scale to in <code>layers</code> argument. However, as the bars are on flipped coordinates, we need a reversed log transformation. Appropriate function, <code><a href="../reference/reverse_log_trans.html">reverse_log_trans()</a></code> is provided:</p>
 <div class="sourceCode" id="cb45"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true"></a><span class="op">%%</span>R <span class="op">-</span>w <span class="dv">500</span> <span class="op">-</span>h <span class="dv">300</span></span>
 <span id="cb45-2"><a href="#cb45-2" aria-hidden="true"></a></span>
 <span id="cb45-3"><a href="#cb45-3" aria-hidden="true"></a><span class="kw">upset</span>(</span>
@@ -1873,11 +1873,12 @@ mpaa          NA</code></pre>
 <span id="cb47-8"><a href="#cb47-8" aria-hidden="true"></a>    <span class="dt">set_sizes=</span>(</span>
 <span id="cb47-9"><a href="#cb47-9" aria-hidden="true"></a>        <span class="kw">upset_set_size</span>()</span>
 <span id="cb47-10"><a href="#cb47-10" aria-hidden="true"></a>        <span class="op">+</span><span class="st"> </span><span class="kw">geom_text</span>(<span class="kw">aes</span>(<span class="dt">label=</span>..count..), <span class="dt">hjust=</span><span class="fl">1.1</span>, <span class="dt">stat=</span><span class="st">'count'</span>)</span>
-<span id="cb47-11"><a href="#cb47-11" aria-hidden="true"></a>        <span class="op">+</span><span class="st"> </span><span class="kw">annotate</span>(<span class="dt">geom=</span><span class="st">'text'</span>, <span class="dt">label=</span><span class="st">'✲'</span>, <span class="dt">x=</span><span class="st">'Drama'</span>, <span class="dt">y=</span><span class="dv">850</span>, <span class="dt">color=</span><span class="st">'white'</span>, <span class="dt">size=</span><span class="dv">3</span>)</span>
-<span id="cb47-12"><a href="#cb47-12" aria-hidden="true"></a>        <span class="op">+</span><span class="st"> </span><span class="kw">expand_limits</span>(<span class="dt">y=</span><span class="dv">1100</span>)</span>
-<span id="cb47-13"><a href="#cb47-13" aria-hidden="true"></a>        <span class="op">+</span><span class="st"> </span><span class="kw">theme</span>(<span class="dt">axis.text.x=</span><span class="kw">element_text</span>(<span class="dt">angle=</span><span class="dv">90</span>))</span>
-<span id="cb47-14"><a href="#cb47-14" aria-hidden="true"></a>    )</span>
-<span id="cb47-15"><a href="#cb47-15" aria-hidden="true"></a>)</span></code></pre></div>
+<span id="cb47-11"><a href="#cb47-11" aria-hidden="true"></a>        <span class="co"># you can also add annotations on top of bars:</span></span>
+<span id="cb47-12"><a href="#cb47-12" aria-hidden="true"></a>        <span class="op">+</span><span class="st"> </span><span class="kw">annotate</span>(<span class="dt">geom=</span><span class="st">'text'</span>, <span class="dt">label=</span><span class="st">'@'</span>, <span class="dt">x=</span><span class="st">'Drama'</span>, <span class="dt">y=</span><span class="dv">850</span>, <span class="dt">color=</span><span class="st">'white'</span>, <span class="dt">size=</span><span class="dv">3</span>)</span>
+<span id="cb47-13"><a href="#cb47-13" aria-hidden="true"></a>        <span class="op">+</span><span class="st"> </span><span class="kw">expand_limits</span>(<span class="dt">y=</span><span class="dv">1100</span>)</span>
+<span id="cb47-14"><a href="#cb47-14" aria-hidden="true"></a>        <span class="op">+</span><span class="st"> </span><span class="kw">theme</span>(<span class="dt">axis.text.x=</span><span class="kw">element_text</span>(<span class="dt">angle=</span><span class="dv">90</span>))</span>
+<span id="cb47-15"><a href="#cb47-15" aria-hidden="true"></a>    )</span>
+<span id="cb47-16"><a href="#cb47-16" aria-hidden="true"></a>)</span></code></pre></div>
 <p><img src="Examples_Python_files/Examples_Python_105_0.png"></p>
 </div>
 <div id="change-position-and-add-fill" class="section level3">
@@ -2056,13 +2057,13 @@ mpaa          NA</code></pre>
 <span id="cb60-6"><a href="#cb60-6" aria-hidden="true"></a>    <span class="dt">annotations =</span> <span class="kw">list</span>(</span>
 <span id="cb60-7"><a href="#cb60-7" aria-hidden="true"></a>        <span class="st">'Length'</span>=<span class="kw">list</span>(</span>
 <span id="cb60-8"><a href="#cb60-8" aria-hidden="true"></a>            <span class="dt">aes=</span><span class="kw">aes</span>(<span class="dt">x=</span>intersection, <span class="dt">y=</span>length),</span>
-<span id="cb60-9"><a href="#cb60-9" aria-hidden="true"></a>            <span class="dt">geom=</span><span class="kw">geom_boxplot</span>()</span>
+<span id="cb60-9"><a href="#cb60-9" aria-hidden="true"></a>            <span class="dt">geom=</span><span class="kw">geom_boxplot</span>(<span class="dt">na.rm=</span><span class="ot">TRUE</span>)</span>
 <span id="cb60-10"><a href="#cb60-10" aria-hidden="true"></a>        ),</span>
 <span id="cb60-11"><a href="#cb60-11" aria-hidden="true"></a>        <span class="st">'Rating'</span>=<span class="kw">list</span>(</span>
 <span id="cb60-12"><a href="#cb60-12" aria-hidden="true"></a>            <span class="dt">aes=</span><span class="kw">aes</span>(<span class="dt">x=</span>intersection, <span class="dt">y=</span>rating),</span>
 <span id="cb60-13"><a href="#cb60-13" aria-hidden="true"></a>            <span class="dt">geom=</span><span class="kw">list</span>(</span>
-<span id="cb60-14"><a href="#cb60-14" aria-hidden="true"></a>                <span class="kw">geom_jitter</span>(<span class="kw">aes</span>(<span class="dt">color=</span><span class="kw">log10</span>(votes))),</span>
-<span id="cb60-15"><a href="#cb60-15" aria-hidden="true"></a>                <span class="kw">geom_violin</span>(<span class="dt">alpha=</span><span class="fl">0.5</span>)</span>
+<span id="cb60-14"><a href="#cb60-14" aria-hidden="true"></a>                <span class="kw">geom_jitter</span>(<span class="kw">aes</span>(<span class="dt">color=</span><span class="kw">log10</span>(votes)), <span class="dt">na.rm=</span><span class="ot">TRUE</span>),</span>
+<span id="cb60-15"><a href="#cb60-15" aria-hidden="true"></a>                <span class="kw">geom_violin</span>(<span class="dt">alpha=</span><span class="fl">0.5</span>, <span class="dt">na.rm=</span><span class="ot">TRUE</span>)</span>
 <span id="cb60-16"><a href="#cb60-16" aria-hidden="true"></a>            )</span>
 <span id="cb60-17"><a href="#cb60-17" aria-hidden="true"></a>        )</span>
 <span id="cb60-18"><a href="#cb60-18" aria-hidden="true"></a>    ),</span>
@@ -2116,7 +2117,7 @@ mpaa          NA</code></pre>
 <span id="cb63-5"><a href="#cb63-5" aria-hidden="true"></a>    <span class="dt">annotations =</span> <span class="kw">list</span>(</span>
 <span id="cb63-6"><a href="#cb63-6" aria-hidden="true"></a>        <span class="st">'Length'</span>=<span class="kw">list</span>(</span>
 <span id="cb63-7"><a href="#cb63-7" aria-hidden="true"></a>            <span class="dt">aes=</span><span class="kw">aes</span>(<span class="dt">x=</span>intersection, <span class="dt">y=</span>length),</span>
-<span id="cb63-8"><a href="#cb63-8" aria-hidden="true"></a>            <span class="dt">geom=</span><span class="kw">geom_boxplot</span>()</span>
+<span id="cb63-8"><a href="#cb63-8" aria-hidden="true"></a>            <span class="dt">geom=</span><span class="kw">geom_boxplot</span>(<span class="dt">na.rm=</span><span class="ot">TRUE</span>)</span>
 <span id="cb63-9"><a href="#cb63-9" aria-hidden="true"></a>        )</span>
 <span id="cb63-10"><a href="#cb63-10" aria-hidden="true"></a>    ),</span>
 <span id="cb63-11"><a href="#cb63-11" aria-hidden="true"></a>    <span class="dt">queries=</span><span class="kw">list</span>(</span>
@@ -2240,7 +2241,7 @@ mpaa          NA</code></pre>
 <span id="cb75-6"><a href="#cb75-6" aria-hidden="true"></a>        <span class="st">'MPAA Rating'</span>=<span class="kw">list</span>(</span>
 <span id="cb75-7"><a href="#cb75-7" aria-hidden="true"></a>            <span class="dt">aes=</span><span class="kw">aes</span>(<span class="dt">x=</span>intersection, <span class="dt">fill=</span>mpaa),</span>
 <span id="cb75-8"><a href="#cb75-8" aria-hidden="true"></a>            <span class="dt">geom=</span><span class="kw">list</span>(</span>
-<span id="cb75-9"><a href="#cb75-9" aria-hidden="true"></a>                <span class="kw">geom_bar</span>(<span class="dt">stat=</span><span class="st">'count'</span>, <span class="dt">position=</span><span class="st">'fill'</span>),</span>
+<span id="cb75-9"><a href="#cb75-9" aria-hidden="true"></a>                <span class="kw">geom_bar</span>(<span class="dt">stat=</span><span class="st">'count'</span>, <span class="dt">position=</span><span class="st">'fill'</span>, <span class="dt">na.rm=</span><span class="ot">TRUE</span>),</span>
 <span id="cb75-10"><a href="#cb75-10" aria-hidden="true"></a>                <span class="kw">geom_text</span>(</span>
 <span id="cb75-11"><a href="#cb75-11" aria-hidden="true"></a>                    <span class="kw">aes</span>(</span>
 <span id="cb75-12"><a href="#cb75-12" aria-hidden="true"></a>                        <span class="dt">label=</span><span class="op">!!</span><span class="kw">aes_percentage</span>(<span class="dt">relative_to=</span><span class="st">'intersection'</span>),</span>
@@ -2269,7 +2270,7 @@ mpaa          NA</code></pre>
 <span id="cb76-6"><a href="#cb76-6" aria-hidden="true"></a>        <span class="st">'MPAA Rating'</span>=<span class="kw">list</span>(</span>
 <span id="cb76-7"><a href="#cb76-7" aria-hidden="true"></a>            <span class="dt">aes=</span><span class="kw">aes</span>(<span class="dt">x=</span>intersection, <span class="dt">fill=</span>mpaa),</span>
 <span id="cb76-8"><a href="#cb76-8" aria-hidden="true"></a>            <span class="dt">geom=</span><span class="kw">list</span>(</span>
-<span id="cb76-9"><a href="#cb76-9" aria-hidden="true"></a>                <span class="kw">geom_bar</span>(<span class="dt">stat=</span><span class="st">'count'</span>, <span class="dt">position=</span><span class="st">'fill'</span>),</span>
+<span id="cb76-9"><a href="#cb76-9" aria-hidden="true"></a>                <span class="kw">geom_bar</span>(<span class="dt">stat=</span><span class="st">'count'</span>, <span class="dt">position=</span><span class="st">'fill'</span>, <span class="dt">na.rm=</span><span class="ot">TRUE</span>),</span>
 <span id="cb76-10"><a href="#cb76-10" aria-hidden="true"></a>                <span class="kw">geom_text</span>(</span>
 <span id="cb76-11"><a href="#cb76-11" aria-hidden="true"></a>                    <span class="kw">aes</span>(</span>
 <span id="cb76-12"><a href="#cb76-12" aria-hidden="true"></a>                        <span class="dt">label=</span><span class="op">!!</span><span class="kw">aes_percentage</span>(<span class="dt">relative_to=</span><span class="st">'group'</span>),</span>
@@ -2299,7 +2300,7 @@ mpaa          NA</code></pre>
 <span id="cb77-6"><a href="#cb77-6" aria-hidden="true"></a>        <span class="st">'MPAA Rating'</span>=<span class="kw">list</span>(</span>
 <span id="cb77-7"><a href="#cb77-7" aria-hidden="true"></a>            <span class="dt">aes=</span><span class="kw">aes</span>(<span class="dt">x=</span>intersection, <span class="dt">fill=</span>mpaa),</span>
 <span id="cb77-8"><a href="#cb77-8" aria-hidden="true"></a>            <span class="dt">geom=</span><span class="kw">list</span>(</span>
-<span id="cb77-9"><a href="#cb77-9" aria-hidden="true"></a>                <span class="kw">geom_bar</span>(<span class="dt">stat=</span><span class="st">'count'</span>, <span class="dt">position=</span><span class="st">'fill'</span>),</span>
+<span id="cb77-9"><a href="#cb77-9" aria-hidden="true"></a>                <span class="kw">geom_bar</span>(<span class="dt">stat=</span><span class="st">'count'</span>, <span class="dt">position=</span><span class="st">'fill'</span>, <span class="dt">na.rm=</span><span class="ot">TRUE</span>),</span>
 <span id="cb77-10"><a href="#cb77-10" aria-hidden="true"></a>                <span class="kw">geom_text</span>(</span>
 <span id="cb77-11"><a href="#cb77-11" aria-hidden="true"></a>                    <span class="kw">aes</span>(</span>
 <span id="cb77-12"><a href="#cb77-12" aria-hidden="true"></a>                        <span class="dt">label=</span><span class="op">!!</span><span class="kw">aes_percentage</span>(<span class="dt">relative_to=</span><span class="st">'all'</span>),</span>
@@ -2332,7 +2333,7 @@ mpaa          NA</code></pre>
 <span id="cb78-6"><a href="#cb78-6" aria-hidden="true"></a>        <span class="st">'MPAA Rating'</span>=<span class="kw">list</span>(</span>
 <span id="cb78-7"><a href="#cb78-7" aria-hidden="true"></a>            <span class="dt">aes=</span><span class="kw">aes</span>(<span class="dt">x=</span>intersection, <span class="dt">fill=</span>mpaa),</span>
 <span id="cb78-8"><a href="#cb78-8" aria-hidden="true"></a>            <span class="dt">geom=</span><span class="kw">list</span>(</span>
-<span id="cb78-9"><a href="#cb78-9" aria-hidden="true"></a>                <span class="kw">geom_bar</span>(<span class="dt">stat=</span><span class="st">'count'</span>, <span class="dt">position=</span><span class="st">'fill'</span>),</span>
+<span id="cb78-9"><a href="#cb78-9" aria-hidden="true"></a>                <span class="kw">geom_bar</span>(<span class="dt">stat=</span><span class="st">'count'</span>, <span class="dt">position=</span><span class="st">'fill'</span>, <span class="dt">na.rm=</span><span class="ot">TRUE</span>),</span>
 <span id="cb78-10"><a href="#cb78-10" aria-hidden="true"></a>                <span class="kw">geom_text</span>(</span>
 <span id="cb78-11"><a href="#cb78-11" aria-hidden="true"></a>                    <span class="kw">aes</span>(<span class="dt">label=</span><span class="kw">ifelse</span>(mpaa <span class="op">==</span><span class="st"> 'R'</span>, <span class="st">'R'</span>, <span class="ot">NA</span>)),</span>
 <span id="cb78-12"><a href="#cb78-12" aria-hidden="true"></a>                    <span class="dt">stat=</span><span class="st">'count'</span>,</span>
