@@ -684,7 +684,18 @@ False
 <div id="region-selection-modes" class="section level3">
 <h3 class="hasAnchor">
 <a href="#region-selection-modes" class="anchor"></a>0.2 Region selection modes</h3>
-<p>There are three modes defining the regions of interest on corresponding Venn diagram: - <code>exclusive_intersection</code> intersection region: intersection elements that belong to the sets defining the intersection but not to any other set (alias: <em>distinct</em>), <strong>default</strong> - <code>inclusive_intersection</code> intersection region: intersection elements that belong to the sets defining the intersection including overlaps with other sets (alias: <em>intersect</em>) - <code>exclusive_union</code> region: union elements that belong to the sets defining the union, <em>excluding</em> those overlapping with any other set - <code>inclusive_union</code> region: union elements that belong to the sets defining the union, <em>including</em> those overlapping with any other set (alias: <em>union</em>)</p>
+<p>There are three modes defining the regions of interest on corresponding Venn diagram:</p>
+<ul>
+<li>
+<code>exclusive_intersection</code> intersection region: intersection elements that belong to the sets defining the intersection but not to any other set (alias: <em>distinct</em>), <strong>default</strong>
+</li>
+<li>
+<code>inclusive_intersection</code> intersection region: intersection elements that belong to the sets defining the intersection including overlaps with other sets (alias: <em>intersect</em>)</li>
+<li>
+<code>exclusive_union</code> region: union elements that belong to the sets defining the union, <em>excluding</em> those overlapping with any other set</li>
+<li>
+<code>inclusive_union</code> region: union elements that belong to the sets defining the union, <em>including</em> those overlapping with any other set (alias: <em>union</em>)</li>
+</ul>
 <p>Example: given three sets <span class="math inline">\(A\)</span>, <span class="math inline">\(B\)</span> and <span class="math inline">\(C\)</span> with number of elements defined by the Venn diagram below</p>
 <div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true"></a><span class="op">%%</span>R</span>
 <span id="cb14-2"><a href="#cb14-2" aria-hidden="true"></a>abc_data =<span class="st"> </span><span class="kw">create_upset_abc_example</span>()</span>
@@ -710,7 +721,17 @@ False
 <span id="cb14-22"><a href="#cb14-22" aria-hidden="true"></a>    <span class="op">+</span><span class="st"> </span><span class="kw">scale_fill_venn_mix</span>(abc_data, <span class="dt">guide=</span><span class="ot">FALSE</span>)</span>
 <span id="cb14-23"><a href="#cb14-23" aria-hidden="true"></a>)</span></code></pre></div>
 <p><img src="Examples_Python_files/Examples_Python_31_0.png"></p>
-<p>For the above sets <span class="math inline">\(A\)</span> and <span class="math inline">\(B\)</span> the region selection modes correspond to region of Venn diagram defined as follows: - exclusive intersection: <span class="math inline">\((A \cap B) \setminus C\)</span> - inclusive intersection: <span class="math inline">\(A \cap B\)</span> - exclusive union: <span class="math inline">\((A \cup B) \setminus C\)</span> - inclusive union: <span class="math inline">\(A \cup B\)</span></p>
+<p>For the above sets <span class="math inline">\(A\)</span> and <span class="math inline">\(B\)</span> the region selection modes correspond to region of Venn diagram defined as follows:</p>
+<ul>
+<li>exclusive intersection: <span class="math inline">\((A \cap B) \setminus C\)</span>
+</li>
+<li>inclusive intersection: <span class="math inline">\(A \cap B\)</span>
+</li>
+<li>exclusive union: <span class="math inline">\((A \cup B) \setminus C\)</span>
+</li>
+<li>inclusive union: <span class="math inline">\(A \cup B\)</span>
+</li>
+</ul>
 <p>and have the total number of elements as in the table below:</p>
 <table class="table">
 <thead><tr class="header">
