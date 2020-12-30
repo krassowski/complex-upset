@@ -30,7 +30,7 @@ test_that("Intersection degree is properly calculated", {
     # see https://github.com/krassowski/complex-upset/issues/73
     expect_equal(
         calculate_degree(c(
-            EMPTY_INTERSECTION, 'a', 'a-b', 'a-b-c'
+            NOT_IN_KNOWN_SETS, 'a', 'a-b', 'a-b-c'
         )),
         c(
             0, 1, 2, 3
@@ -60,9 +60,18 @@ test_that("hyphenated variables give the same results", {
     data_underscored = upset_data(df_underscored, c('a_x', 'b', 'c', 'd'))
     data_hyphenated = upset_data(df_hyphenated, c('a-x', 'b', 'c', 'd'))
 
+    allowed_to_differ = c('sanitized_labels', 'non_sanitized_labels', 'with_sizes')
+
     expect_equal(
-        data_underscored[names(data_underscored) != 'non_sanitized_labels'],
-        data_hyphenated[names(data_hyphenated) != 'non_sanitized_labels']
+        data_underscored[!(names(data_underscored) %in% allowed_to_differ)],
+        data_hyphenated[!(names(data_hyphenated) %in% allowed_to_differ)]
+    )
+
+    colnames(data_hyphenated$with_sizes)[1] = 'a_x'
+
+    expect_equal(
+        data_underscored$with_sizes,
+        data_hyphenated$with_sizes
     )
 
     expect_equal(
@@ -251,20 +260,20 @@ test_that("counts are properly computed in all modes", {
     sizes = sizes[!duplicated(sizes[, sets]), ]
     sizes = sizes[
         order(sizes$A, sizes$B, sizes$C),
-        c(sets, 'size_inclusive_union_mode', 'size_exclusive_union_mode', 'size_distinct_mode', 'size_intersect_mode')
+        c(sets, 'inclusive_union_size', 'exclusive_union_size', 'exclusive_intersection_size', 'inclusive_intersection_size')
     ]
     rownames(sizes) = as.character(1:8)
 
     expected_sizes = read.table(
-        text="A     B     C size_inclusive_union_mode size_exclusive_union_mode size_distinct_mode size_intersect_mode
-        1 FALSE FALSE FALSE                         2                         2                  2                   2
-        2 FALSE FALSE  TRUE                      1013                      1000               1000                1013
-        3 FALSE  TRUE FALSE                       117                       100                100                 117
-        4 FALSE  TRUE  TRUE                      1123                      1106                  6                   7
-        5  TRUE FALSE FALSE                       117                       100                100                 117
-        6  TRUE FALSE  TRUE                      1123                      1106                  6                   7
-        7  TRUE  TRUE FALSE                       223                       210                 10                  11
-        8  TRUE  TRUE  TRUE                      1223                      1223                  1                   1",
+        text="A     B     C  inclusive_union_size exclusive_union_size exclusive_intersection_size inclusive_intersection_size
+        1 FALSE FALSE FALSE                     2                    2                           2                           2
+        2 FALSE FALSE  TRUE                   213                  200                         200                         213
+        3 FALSE  TRUE FALSE                    67                   50                          50                          67
+        4 FALSE  TRUE  TRUE                   273                  256                           6                           7
+        5  TRUE FALSE FALSE                    67                   50                          50                          67
+        6  TRUE FALSE  TRUE                   273                  256                           6                           7
+        7  TRUE  TRUE FALSE                   123                  110                          10                          11
+        8  TRUE  TRUE  TRUE                   323                  323                           1                           1",
         header = TRUE,
         stringsAsFactors = TRUE
     )
@@ -288,18 +297,15 @@ test_that("upset_data() filters by min_size, max_size, min_degree and max_degree
         c=c(FALSE, TRUE, FALSE, FALSE, FALSE, FALSE),
         d=c(FALSE, FALSE, FALSE, TRUE, FALSE, FALSE)
     )
-    empty = 'NOT_IN_EITHER_GROUP'
+    empty = NOT_IN_KNOWN_SETS
 
     old_locale = Sys.getlocale("LC_COLLATE")
     # turn off locale-specific sorting for tests (might not work on some platforms)
     Sys.setlocale("LC_COLLATE", "C")
 
-    result = upset_data(df, c('a', 'b', 'c', 'd'), min_size=2, sort_intersections=FALSE, min_max_early=TRUE)
-    expect_equal(result$sorted$intersections, c('a-b'))
-    expect_equal(result$plot_intersections_subset, c('a-b'))
+    result = upset_data(df, c('a', 'b', 'c', 'd'), min_size=2, sort_intersections=FALSE)
 
-    result = upset_data(df, c('a', 'b', 'c', 'd'), min_size=2, sort_intersections=FALSE, min_max_early=FALSE)
-    expect_equal(result$sorted$intersections, c(empty, 'a', 'a-b', 'a-b-d', 'b-c'))
+    expect_equal(result$sorted$intersections, c('a-b'))
     expect_equal(result$plot_intersections_subset, c('a-b'))
 
     result = upset_data(df, c('a', 'b', 'c', 'd'), max_size=1, sort_intersections=FALSE)

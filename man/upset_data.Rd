@@ -18,12 +18,14 @@ upset_data(
   sort_sets = "descending",
   sort_intersections = "descending",
   sort_intersections_by = "cardinality",
+  sort_ratio_numerator = "exclusive_intersection",
+  sort_ratio_denominator = "inclusive_union",
   group_by = "degree",
-  min_max_early = TRUE,
-  inclusive_intersection_column = "size_intersect_mode",
-  exclusive_intersection_column = "size_distinct_mode",
-  inclusive_union_count_column = "size_inclusive_union_mode",
-  exclusive_union_count_column = "size_exclusive_union_mode"
+  mode = "exclusive_intersection",
+  size_columns_suffix = "_size",
+  encode_sets = FALSE,
+  max_combinations_n = 24,
+  intersections = "observed"
 )
 }
 \arguments{
@@ -53,17 +55,15 @@ upset_data(
 
 \item{sort_intersections_by}{the mode of sorting, the size of the intersection (cardinality) by default; one of: \code{'cardinality'}, \code{'degree'}, \code{'ratio'}, or any combination of these (e.g. \code{c('degree', 'cardinality')})}
 
+\item{sort_ratio_numerator}{the mode for denominator when sorting by ratio}
+
 \item{group_by}{the mode of grouping intersections; one of: \code{'degree'}, \code{'sets'}}
 
-\item{min_max_early}{whether the min and max limits should be applied early (for faster plotting), or late (for accurate depiction of ratios)}
+\item{mode}{region selection mode for sorting and trimming by size. See \code{get_size_mode()} for accepted values.}
 
-\item{inclusive_intersection_column}{name of the column to store the inclusive intersection size (adjust if conflicts with your data)}
+\item{size_columns_suffix}{suffix for the columns to store the sizes (adjust if conflicts with your data)}
 
-\item{exclusive_intersection_column}{name of the column to store the exclusive intersection size (adjust if conflicts with your data)}
-
-\item{inclusive_union_count_column}{name of the column to store the inclusive union size (adjust if conflicts with your data)}
-
-\item{exclusive_union_count_column}{name of the column to store the exclusive union size (adjust if conflicts with your data)}
+\item{encode_sets}{whether set names (column in input data) should be encoded as numbers (set to TRUE to overcome R limitations of max 10 kB for variable names for datasets with huge numbers of sets); default TRUE for upset() and FALSE for upset_data().}
 }
 \description{
 Prepare data for UpSet plots

@@ -20,6 +20,7 @@ upset(
   mode = "distinct",
   queries = list(),
   guides = NULL,
+  encode_sets = TRUE,
   matrix = intersection_matrix(),
   ...
 )
@@ -53,11 +54,13 @@ upset(
 
 \item{set_sizes}{the overall set sizes plot, e.g. from \code{upset_set_size()} (\code{FALSE} to hide)}
 
-\item{mode}{region selection mode for computing the number of elements in intersection fragment See \code{get_size_mode()} for accepted values.}
+\item{mode}{region selection mode for computing the number of elements in intersection fragment. See \code{get_size_mode()} for accepted values.}
 
 \item{queries}{a list of queries generated with \code{upset_query()}}
 
 \item{guides}{action for legends aggregation and placement ('keep', 'collect', 'over' the set sizes)}
+
+\item{encode_sets}{whether set names (column in input data) should be encoded as numbers (set to TRUE to overcome R limitations of max 10 kB for variable names for datasets with huge numbers of sets); default TRUE for upset() and FALSE for upset_data().}
 
 \item{matrix}{the intersection matrix plot}
 
@@ -75,12 +78,9 @@ upset(
     \item{\code{sort_sets}}{whether to sort the rows in the intersection matrix (descending sort by default); one of: \code{'ascending'}, \code{'descending'}, \code{FALSE}}
     \item{\code{sort_intersections}}{whether to sort the columns in the intersection matrix (descending sort by default); one of: \code{'ascending'}, \code{'descending'}, \code{FALSE}}
     \item{\code{sort_intersections_by}}{the mode of sorting, the size of the intersection (cardinality) by default; one of: \code{'cardinality'}, \code{'degree'}, \code{'ratio'}, or any combination of these (e.g. \code{c('degree', 'cardinality')})}
+    \item{\code{sort_ratio_numerator}}{the mode for denominator when sorting by ratio}
     \item{\code{group_by}}{the mode of grouping intersections; one of: \code{'degree'}, \code{'sets'}}
-    \item{\code{min_max_early}}{whether the min and max limits should be applied early (for faster plotting), or late (for accurate depiction of ratios)}
-    \item{\code{inclusive_union_count_column}}{name of the column to store the inclusive union size (adjust if conflicts with your data)}
-    \item{\code{exclusive_union_count_column}}{name of the column to store the exclusive union size (adjust if conflicts with your data)}
-    \item{\code{inclusive_intersection_column}}{name of the column to store the inclusive intersection size (adjust if conflicts with your data)}
-    \item{\code{exclusive_intersection_column}}{name of the column to store the exclusive intersection size (adjust if conflicts with your data)}
+    \item{\code{size_columns_suffix}}{suffix for the columns to store the sizes (adjust if conflicts with your data)}
   }}
 }
 \description{

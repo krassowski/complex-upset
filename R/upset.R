@@ -2,7 +2,7 @@
 #' @importFrom ggplot2 ggplot aes aes_string coord_flip theme xlab ylab
 #' @importFrom ggplot2 scale_color_manual scale_x_discrete scale_y_discrete scale_y_reverse scale_y_continuous
 #' @importFrom ggplot2 geom_text geom_bar geom_col geom_point geom_segment layer position_stack stat_summary
-#' @importFrom ggplot2 is.ggplot %+% sym expr
+#' @importFrom ggplot2 is.ggplot %+% sym expr ggproto Stat quo_name
 #' @importFrom scales log_breaks trans_new
 #' @importFrom patchwork plot_layout plot_spacer guide_area wrap_elements
 NULL
@@ -176,18 +176,45 @@ intersection_size_text = list(vjust=-0.25)
 #' Retrieve symbol for given mode that can be used in aesthetics mapping with double bang (!!)
 #'
 #' @param mode the mode to use. Accepted values: `exclusive_intersection` (alias `distinct`), `inclusive_intersection` (alias `intersect`), `inclusive_union` (alias `union`), `exclusive_union`.
+#' @param suffix the column suffix in use as passed to `upset_data()`
 #' @export
-get_size_mode = function(mode) {
+get_size_mode = function(mode, suffix='_size') {
     mode = solve_mode(mode)
+    sym(paste0(mode, suffix))
+}
 
-    size = switch(
-        mode,
-        exclusive_intersection=sym('size_distinct_mode'),
-        inclusive_intersection=sym('size_intersect_mode'),
-        inclusive_union=sym('size_inclusive_union_mode'),
-        exclusive_union=sym('size_exclusive_union_mode'),
-    )
-    size
+
+get_mode_presence = function(mode, prefix='in_', symbol=TRUE) {
+    column = paste0(prefix, solve_mode(mode))
+    if (symbol) {
+        sym(column)
+    } else {
+        column
+    }
+}
+
+
+StatMode = ggproto(
+    "StatMode",
+    Stat,
+    compute_group = function(data, scales, params, mode='exclusive_intersection') {
+        data
+    }
+)
+
+
+#' Layer defining the intersection mode for the data to be displayed
+#'
+#' By default the annotations are given data corresponding to the same mode as the mode of the passed in the `upset()` call.
+#'
+#' @param mode region selection mode, defines which mode data will be made available for the annotation. See `get_size_mode()` for accepted values.
+#' @export
+upset_mode = function(mode) {
+  layer(
+    stat = StatMode, data = NULL, mapping = NULL, geom = "blank",
+    position = "identity", show.legend = FALSE, inherit.aes = TRUE,
+    params = list(mode=solve_mode(mode))
+  )
 }
 
 
@@ -196,19 +223,23 @@ get_size_mode = function(mode) {
 #' @param counts whether to display count number labels above the bars
 #' @param bar_number_threshold if less than one, labels for bars height greater than this threshold will be placed on (not above) the bars
 #' @param text_colors a name vector of characters specifying the color when `on_background` and `on_bar` (see `bar_number_threshold`)
-#' @param text additional parameters passed to `geom_text`
-#' @param text_aes additional aesthetics for `geom_text`
-#' @param aest additional aesthetics for `geom_bar`
+#' @param text additional parameters passed to `geom_text()`
+#' @param text_mapping additional aesthetics for `geom_text()`
+#' @param mapping additional aesthetics for `geom_bar()`
 #' @param mode region selection mode, defines which intersection regions will be accounted for when computing the size. See `get_size_mode()` for accepted values.
+#' @param position position passed to `geom_bar()`
+#' @inheritDotParams ggplot2::geom_bar
 #' @export
 intersection_size = function(
-  counts=TRUE,
-  bar_number_threshold=0.85,
-  text_colors=c(on_background='black', on_bar='white'),
-  text=list(),
-  text_aes=aes_string(),
-  aest=aes_string(),
-  mode='distinct'
+    mapping=aes(),
+    counts=TRUE,
+    bar_number_threshold=0.85,
+    text_colors=c(on_background='black', on_bar='white'),
+    text=list(),
+    text_mapping=aes(),
+    mode='distinct',
+    position=position_stack(),
+    ...
 ) {
   size = get_size_mode(mode)
 
@@ -222,7 +253,7 @@ intersection_size = function(
 
   if (counts) {
     text = modifyList(intersection_size_text, text)
-    text_aes = modifyList(
+    text_mapping = modifyList(
         aes(
             label=!!size,
             y=ifelse(
@@ -236,7 +267,7 @@ intersection_size = function(
                 'on_bar'
             )
         ),
-        text_aes
+        text_mapping
     )
 
     counts_geoms = list(
@@ -245,7 +276,7 @@ intersection_size = function(
         c(
             list(
                 stat='unique',
-                text_aes,
+                text_mapping,
                 na.rm=TRUE
             ),
             text
@@ -264,8 +295,9 @@ intersection_size = function(
       stat_summary(
           fun=sum,
           geom='bar',
-          position=position_stack(),
-          na.rm=TRUE
+          position=position,
+          na.rm=TRUE,
+          ...
       )
   )
 
@@ -273,14 +305,14 @@ intersection_size = function(
     aes=modifyList(
         aes(
             x=intersection,
-            y=!!size / !!sym('size_distinct_mode')
+            y=!!get_mode_presence(mode)
         ),
-        aest
+        mapping
     ),
     geom=bar_geom,
     highlight_geom=bar_geom,
     top_geom=counts_geoms
-  ) + ylab(lab)
+  ) + ylab(lab) + upset_mode(mode)
 }
 
 
@@ -319,37 +351,39 @@ upset_text_percentage = function(digits=0, sep='', mode='distinct') {
 #' @inheritParams intersection_size
 #' @export
 intersection_ratio = function(
+  mapping=aes(),
   counts=TRUE,
   bar_number_threshold=0.75,
   text_colors=c(on_background='black', on_bar='white'),
   text=list(),
-  text_aes=aes_string(),
-  aest=aes_string(),
+  text_mapping=aes(),
   mode='distinct',
-  denominator_mode='union'
+  denominator_mode='union',
+  ...
 ) {
   size = get_size_mode(mode)
+  presence = get_mode_presence(mode)
   denominator_size = get_size_mode(denominator_mode)
 
   if (counts) {
     ratio = expr(!!size / !!denominator_size)
 
     text = modifyList(intersection_size_text, text)
-    text_aes = modifyList(
+    text_mapping = modifyList(
         aes(
             label=paste(!!size, '/', !!denominator_size),
             y=ifelse(
-                !!ratio <= bar_number_threshold * max((!!ratio)[!!denominator_size != 0]),
+                !!ratio <= bar_number_threshold * max((!!ratio)[!!denominator_size != 0], na.rm=TRUE),
                 !!ratio,
                 bar_number_threshold * !!ratio
             ),
             colour=ifelse(
-                !!ratio <= bar_number_threshold * max((!!ratio)[!!denominator_size != 0]),
+                !!ratio <= bar_number_threshold * max((!!ratio)[!!denominator_size != 0], na.rm=TRUE),
                 'on_background',
                 'on_bar'
             )
         ),
-        text_aes
+        text_mapping
     )
 
     counts_geoms = list(
@@ -357,7 +391,7 @@ intersection_ratio = function(
         geom_text,
         c(
             list(
-                text_aes,
+                text_mapping,
                 check_overlap=TRUE,
                 na.rm=TRUE
             ),
@@ -374,18 +408,23 @@ intersection_ratio = function(
   }
 
   bar_geom = list(geom_col(
-      aes(y=ifelse(!!denominator_size == 0, 0, 1/!!denominator_size)),
+      aes(y=ifelse(
+          !!denominator_size == 0,
+          0,
+          !!presence/!!denominator_size
+      )),
       # does not work, see
       # https://github.com/tidyverse/ggplot2/issues/3532
-      na.rm=TRUE
+      na.rm=TRUE,
+      ...
   ))
 
   convert_annotation(
-    aes=modifyList(aes(x=intersection), aest),
+    aes=modifyList(aes(x=intersection), mapping),
     geom=bar_geom,
     highlight_geom=bar_geom,
     top_geom=counts_geoms
-  )
+  ) + upset_mode(mode)
 }
 
 
@@ -437,24 +476,31 @@ queries_for = function(queries, component) {
 }
 
 
-set_queries = function(queries) {
-    queries[queries$method == 'set', ]
+set_queries = function(queries, sanitized_labels) {
+    queries = queries[queries$method == 'set', ]
+    queries$query = sanitized_labels[unlist(queries$query)]
+    queries
 }
 
 
-group_by_queries = function(queries) {
-    queries[queries$method == 'group_by_group', ]
+group_by_queries = function(queries, sanitized_labels) {
+    queries = queries[queries$method == 'group_by_group', ]
+    queries$group_by_group = sanitized_labels[unlist(queries$group_by_group)]
+    queries$query = sanitized_labels[unlist(queries$query)]
+    queries
 }
 
 
 intersect_queries = function(queries, data) {
     queries = queries[queries$method == 'intersect', ]
+
     queries$intersect = sapply(
         queries$intersect,
         function(sets) {
             if (length(sets) == 1 && is.na(sets)) {
-                'NOT_IN_EITHER_GROUP'
+                NOT_IN_KNOWN_SETS
             } else {
+                sets = unname(data$sanitized_labels[sets])
                 paste(data$sets_ordering_in_ids[data$sets_ordering_in_ids %in% sets], collapse='-')
             }
         }
@@ -502,7 +548,7 @@ extract_geom_params_for = function(queries, geom, preserve_query=FALSE) {
 }
 
 
-get_highlights_data = function(data, key, queries) {
+get_highlights_data = function(data, key, queries, sanitized_labels) {
     if (nrow(queries) > 0) {
         merge(
             data,
@@ -624,8 +670,9 @@ reverse_log_trans = function(base=10) {
 #' @param geom a geom to use
 #' @param position on which side of the plot should the set sizes be displayed ('left' or 'right')
 #' @param mapping additional aesthetics
+#' @param filter_intersections whether the intersections filters (e.g. `n_intersections` or `min_size`) should influnce displayed set sizes
 #' @export
-upset_set_size = function(geom=geom_bar(width=0.6), position='left', mapping=aes()) {
+upset_set_size = function(mapping=aes(), geom=geom_bar(width=0.6), position='left', filter_intersections=FALSE) {
     check_argument(position, allowed=c('left', 'right'), description='position')
 
     annotation = convert_annotation(
@@ -634,6 +681,7 @@ upset_set_size = function(geom=geom_bar(width=0.6), position='left', mapping=aes
         highlight_geom=list(geom)
     ) + ylab('Set size')
     annotation$position = position
+    annotation$filter_intersections = filter_intersections
     annotation
 }
 
@@ -831,7 +879,8 @@ solve_mode = function (mode) {
 #' @param set_sizes the overall set sizes plot, e.g. from `upset_set_size()` (`FALSE` to hide)
 #' @param guides action for legends aggregation and placement ('keep', 'collect', 'over' the set sizes)
 #' @param wrap whether the plot should be wrapped into a group (makes adding a tile/combining with other plots easier)
-#' @param mode region selection mode for computing the number of elements in intersection fragment See `get_size_mode()` for accepted values.
+#' @param mode region selection mode for computing the number of elements in intersection fragment. See `get_size_mode()` for accepted values.
+#' @param encode_sets whether set names (column in input data) should be encoded as numbers (set to TRUE to overcome R limitations of max 10 kB for variable names for datasets with huge numbers of sets); default TRUE for upset() and FALSE for upset_data().
 #' @inheritDotParams upset_data
 #' @export
 upset = function(
@@ -850,6 +899,7 @@ upset = function(
   mode='distinct',
   queries=list(),
   guides=NULL,
+  encode_sets=TRUE,
   matrix=intersection_matrix(),
   ...
 ) {
@@ -871,7 +921,7 @@ upset = function(
 
   annotations = c(annotations, base_annotations)
 
-  data = upset_data(data, intersect, ...)
+  data = upset_data(data, intersect, mode=mode, encode_sets=encode_sets, ...)
 
   intersections_sorted = rev(data$sorted$intersections)
   intersections_limits = intersections_sorted[intersections_sorted %in% data$plot_intersections_subset]
@@ -883,7 +933,7 @@ upset = function(
   show_overall_sizes = !(inherits(set_sizes, 'logical') && set_sizes == FALSE)
 
   matrix_intersect_queries = intersect_queries(queries_for(queries, 'intersections_matrix'), data)
-  matrix_group_by_queries = group_by_queries(queries_for(queries, 'intersections_matrix'))
+  matrix_group_by_queries = group_by_queries(queries_for(queries, 'intersections_matrix'), data$sanitized_labels)
 
   intersection_query_matrix = get_highlights_data(data$matrix_frame, 'intersection', matrix_intersect_queries)
   group_query_matrix = get_highlights_data(data$matrix_frame, 'group_by_group', matrix_group_by_queries)
@@ -1001,7 +1051,18 @@ upset = function(
 
   for (name in names(annotations)) {
     annotation = annotations[[name]]
+
     geoms = annotation$geom
+
+    annotation_mode = mode
+
+    for (layer in annotation$layers) {
+        if (inherits(layer$stat, 'StatMode')) {
+            annotation_mode = layer$stat_params$mode
+        }
+    }
+
+    annotation_data = data$with_sizes[data$with_sizes[get_mode_presence(annotation_mode, symbol=FALSE)] == 1, ]
 
     if (!inherits(geoms, 'list')) {
         geoms = list(geoms)
@@ -1010,7 +1071,7 @@ upset = function(
     annotation_queries = intersect_queries(queries_for(queries, name), data)
 
     if (nrow(annotation_queries) != 0) {
-        highlight_data = merge(data$with_sizes, annotation_queries, by.x='intersection', by.y='intersect', all.y=TRUE)
+        highlight_data = merge(annotation_data, annotation_queries, by.x='intersection', by.y='intersect', all.y=TRUE)
 
         if (is.null(annotation$highlight_geom)) {
             highlight_geom = geoms
@@ -1047,10 +1108,16 @@ upset = function(
     }
 
     if (is.ggplot(annotation)) {
-        annotation_plot = annotation %+% data$with_sizes
+        if (is.null(annotation$mapping$x)) {
+            annotation = annotation + aes(x=intersection)
+        }
+        annotation_plot = annotation %+% annotation_data
         user_theme = annotation_plot$theme
         annotation_plot = annotation_plot + selected_theme + do.call(theme, user_theme)
 
+        if (is.null(annotation_plot$default_y) && !is.null(annotation_plot$mapping$y)) {
+            annotation_plot$default_y = quo_name(annotation_plot$mapping$y)
+        }
         if (
             is.null(annotation_plot$labels$y)
             ||
@@ -1063,12 +1130,16 @@ upset = function(
             annotation_plot = annotation_plot + ylab(name)
         }
     } else {
-        annotation_plot = ggplot(data$with_sizes, annotation$aes) + selected_theme + xlab(name) + ylab(name)
+        annotation_plot = ggplot(annotation_data, annotation$aes) + selected_theme + xlab(name) + ylab(name)
     }
+
+    user_layers = annotation_plot$layers
+    annotation_plot$layers = c()
+    annotation_plot = annotation_plot + geoms_plus_highlights
+    annotation_plot$layers = c(annotation_plot$layers, user_layers)
 
     rows[[length(rows) + 1]] = (
       annotation_plot
-      + geoms_plus_highlights
       + scale_intersections
     )
 
@@ -1080,7 +1151,7 @@ upset = function(
   }
 
   if (show_overall_sizes) {
-      overall_sizes_queries = set_queries(queries_for(queries, 'overall_sizes'))
+      overall_sizes_queries = set_queries(queries_for(queries, 'overall_sizes'), data$sanitized_labels)
       overall_sizes_highlights_data = get_highlights_data(data$presence, 'group', overall_sizes_queries)
 
       if (nrow(overall_sizes_queries) != 0) {
@@ -1106,6 +1177,10 @@ upset = function(
       }
 
       set_sizes_data = data$presence[data$presence$group %in% data$plot_sets_subset, ]
+
+      if (set_sizes$filter_intersections) {
+          set_sizes_data = set_sizes_data[set_sizes_data$intersection %in% data$plot_intersections_subset, ]
+      }
 
       set_sizes$layers = c(
           matrix_background_stripes(data, stripes, 'vertical'),

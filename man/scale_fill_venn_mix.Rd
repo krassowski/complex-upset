@@ -4,7 +4,7 @@
 \alias{scale_fill_venn_mix}
 \title{Fill scale for Venn diagram}
 \usage{
-scale_fill_venn_mix(...)
+scale_fill_venn_mix(..., na.value = "NA")
 }
 \arguments{
 \item{...}{

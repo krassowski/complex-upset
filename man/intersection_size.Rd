@@ -5,29 +5,70 @@
 \title{Barplot annotation of intersections sizes}
 \usage{
 intersection_size(
+  mapping = aes(),
   counts = TRUE,
   bar_number_threshold = 0.85,
   text_colors = c(on_background = "black", on_bar = "white"),
   text = list(),
-  text_aes = aes_string(),
-  aest = aes_string(),
-  mode = "distinct"
+  text_mapping = aes(),
+  mode = "distinct",
+  position = position_stack(),
+  ...
 )
 }
 \arguments{
+\item{mapping}{additional aesthetics for \code{geom_bar()}}
+
 \item{counts}{whether to display count number labels above the bars}
 
 \item{bar_number_threshold}{if less than one, labels for bars height greater than this threshold will be placed on (not above) the bars}
 
 \item{text_colors}{a name vector of characters specifying the color when \code{on_background} and \code{on_bar} (see \code{bar_number_threshold})}
 
-\item{text}{additional parameters passed to \code{geom_text}}
+\item{text}{additional parameters passed to \code{geom_text()}}
 
-\item{text_aes}{additional aesthetics for \code{geom_text}}
-
-\item{aest}{additional aesthetics for \code{geom_bar}}
+\item{text_mapping}{additional aesthetics for \code{geom_text()}}
 
 \item{mode}{region selection mode, defines which intersection regions will be accounted for when computing the size. See \code{get_size_mode()} for accepted values.}
+
+\item{position}{position passed to \code{geom_bar()}}
+
+\item{...}{
+  Arguments passed on to \code{\link[ggplot2:geom_bar]{ggplot2::geom_bar}}
+  \describe{
+    \item{\code{data}}{The data to be displayed in this layer. There are three
+options:
+
+If \code{NULL}, the default, the data is inherited from the plot
+data as specified in the call to \code{\link[ggplot2:ggplot]{ggplot()}}.
+
+A \code{data.frame}, or other object, will override the plot
+data. All objects will be fortified to produce a data frame. See
+\code{\link[ggplot2:fortify]{fortify()}} for which variables will be created.
+
+A \code{function} will be called with a single argument,
+the plot data. The return value must be a \code{data.frame}, and
+will be used as the layer data. A \code{function} can be created
+from a \code{formula} (e.g. \code{~ head(.x, 10)}).}
+    \item{\code{width}}{Bar width. By default, set to 90\% of the resolution of the data.}
+    \item{\code{na.rm}}{If \code{FALSE}, the default, missing values are removed with
+a warning. If \code{TRUE}, missing values are silently removed.}
+    \item{\code{orientation}}{The orientation of the layer. The default (\code{NA})
+automatically determines the orientation from the aesthetic mapping. In the
+rare event that this fails it can be given explicitly by setting \code{orientation}
+to either \code{"x"} or \code{"y"}. See the \emph{Orientation} section for more detail.}
+    \item{\code{show.legend}}{logical. Should this layer be included in the legends?
+\code{NA}, the default, includes if any aesthetics are mapped.
+\code{FALSE} never includes, and \code{TRUE} always includes.
+It can also be a named logical vector to finely select the aesthetics to
+display.}
+    \item{\code{inherit.aes}}{If \code{FALSE}, overrides the default aesthetics,
+rather than combining with them. This is most useful for helper functions
+that define both data and aesthetics and shouldn't inherit behaviour from
+the default plot specification, e.g. \code{\link[ggplot2:borders]{borders()}}.}
+    \item{\code{stat}}{Override the default connection between \code{geom_bar()} and
+\code{stat_count()}.}
+  }}
 }
 \description{
 Barplot annotation of intersections sizes

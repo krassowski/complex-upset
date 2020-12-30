@@ -13,8 +13,6 @@ globalVariables(c(
     'region'
 ))
 
-empty_region = 'NOT_IN_ANY_REGION'
-
 
 get_sets = function(data, sets=NULL) {
     if (is.null(sets)) {
@@ -41,7 +39,7 @@ prepare_colors = function(
         names(colors) = sets
     }
 
-    names(empty_color) = empty_region
+    names(empty_color) = NOT_IN_KNOWN_SETS
 
     present_sets = data[, sets]
     present_sets = present_sets[!duplicated(present_sets), ]
@@ -102,7 +100,7 @@ prepare_colors = function(
 #' @export
 scale_color_venn_mix = function(
     data, sets=NULL, colors=c('red', 'blue', 'green'), na.value='grey40',
-    highlight=NULL, active_color='orange', inactive_color='grey60', scale=scale_color_manual,
+    highlight=NULL, active_color='orange', inactive_color='NA', scale=scale_color_manual,
     ...
 ) {
     values = prepare_colors(data, sets=sets, colors=colors, empty_color=na.value)
@@ -130,8 +128,8 @@ scale_color_venn_mix = function(
     labels = present_sets$label
     names(labels) = present_sets$name
 
-    empty_name = '\u2205'
-    names(empty_name) = empty_region
+    empty_name = 'Not in any'
+    names(empty_name) = NOT_IN_KNOWN_SETS
 
     scale(
         values=values,
@@ -147,13 +145,13 @@ scale_color_venn_mix = function(
 #'
 #' @inheritDotParams scale_color_venn_mix
 #' @export
-scale_fill_venn_mix = function(...) {
-    scale_color_venn_mix(..., scale=scale_fill_manual)
+scale_fill_venn_mix = function(..., na.value='NA') {
+    scale_color_venn_mix(..., scale=scale_fill_manual, na.value=na.value)
 }
 
 
 push_outwards = function(coords, centre_of_mass, mul) {
-    original_coords_for_empty = coords[coords$region == '', ]
+    original_coords_for_empty = coords[coords$region == NOT_IN_KNOWN_SETS, ]
 
     coords$x = coords$x - centre_of_mass['x']
     coords$y = coords$y - centre_of_mass['y']
@@ -161,7 +159,7 @@ push_outwards = function(coords, centre_of_mass, mul) {
     coords$y = coords$y * mul
     coords$x = coords$x + centre_of_mass['x']
     coords$y = coords$y + centre_of_mass['y']
-    coords[coords$region == '', ] = original_coords_for_empty
+    coords[coords$region == NOT_IN_KNOWN_SETS, ] = original_coords_for_empty
 
     coords
 }
@@ -328,7 +326,7 @@ geom_venn_region = function(
     resolution=250,
     ...
 ) {
-    mapping = modifyList(mapping, aes(x=x, y=y, group=region, fill=region))
+    mapping = modifyList(aes(x=x, y=y, group=subregion, fill=region), mapping)
 
     geom_polygon(
         data=approximate_polygon(data, sets=sets, resolution=resolution),
@@ -337,37 +335,64 @@ geom_venn_region = function(
     )
 }
 
-
-approximate_polygon = function(data, sets=NULL, radius=1.5, resolution=100) {
-    sets = get_sets(data, sets)
-
-    layout = compute_layout(data, sets, radius=radius)
-
-    grid = allocate_slots(layout, grid_size_x=resolution, grid_size_y=resolution, store_coordinates=TRUE)
-    grid = grid[, c('region', 'x', 'y')]
+minmax_polygon = function(data, layout, grid, resolution, size=0.01) {
 
     coords = do.call(rbind, sapply(unique(grid$region), function(region) {
         region_grid = grid[grid$region == region, ]
         x_space = unique(region_grid$x)
         x_space = x_space[order(x_space)]
 
+        y_space = unique(region_grid$y)
+        y_space = y_space[order(y_space)]
+
         region_coords_min = do.call(rbind, sapply(x_space, function(x) {
             grid_region_at_x = region_grid[region_grid$x == x, ]
-            grid_region_at_x[grid_region_at_x$y == min(grid_region_at_x$y), ]
+            min_y = grid_region_at_x[grid_region_at_x$y == min(grid_region_at_x$y), ]
+            min_y$y = min_y$y - size
+            min_y
         }, simplify=FALSE))
 
         region_coords_max = do.call(rbind, sapply(x_space, function(x) {
             grid_region_at_x = region_grid[region_grid$x == x, ]
-            grid_region_at_x[grid_region_at_x$y == max(grid_region_at_x$y), ]
+            max_y = grid_region_at_x[grid_region_at_x$y == max(grid_region_at_x$y), ]
+            max_y$y = max_y$y + size
+            max_y
         }, simplify=FALSE))
+
+        region_coords_min_y = do.call(rbind, sapply(y_space, function(y) {
+            grid_region_at_y = region_grid[region_grid$y == y, ]
+            grid_region_at_y[grid_region_at_y$x == min(grid_region_at_y$x), ]
+        }, simplify=FALSE))
+
+        region_coords_max_y = do.call(rbind, sapply(y_space, function(y) {
+            grid_region_at_y = region_grid[region_grid$y == y, ]
+            grid_region_at_y[grid_region_at_y$x == max(grid_region_at_y$x), ]
+        }, simplify=FALSE))
+
 
         region_coords = rbind(
             region_coords_min,
             region_coords_max[nrow(region_coords_max):1, ]
         )
-
+        region_coords[region_coords$x == min(region_coords$x), 'x'] = min(region_coords$x) - size
+        region_coords[region_coords$x == max(region_coords$x), 'x'] = max(region_coords$x) + size
+        region_coords
     }, simplify =FALSE))
 
+    coords$subregion = coords$region
+    coords
+}
+
+
+approximate_polygon = function(data, sets=NULL, radius=1.5, resolution=200) {
+    sets = get_sets(data, sets)
+
+    layout = compute_layout(data, sets, radius=radius)
+
+    grid = allocate_slots(layout, grid_size_x=resolution, grid_size_y=resolution, store_coordinates=TRUE)
+    grid = grid[, c('region', 'x', 'y', 'i', 'j')]
+
+    coords = minmax_polygon(data, layout, grid, resolution)
     coords
 }
 
@@ -472,6 +497,8 @@ allocate_slots = function(layout, grid_size_x, grid_size_y, store_coordinates=FA
             y = c(y, 1:grid_size_y)
             x = c(x, rep(i, grid_size_y))
         }
+        grid_membership$i = x
+        grid_membership$j = y
         grid_membership$x = (x/grid_size_x - 0.5) * width
         grid_membership$y = (y/grid_size_y - 0.5) * height
     }
@@ -516,13 +543,13 @@ arrange_venn = function(
     }
 
     sphere_centres = coords[!duplicated(coords), ]
-    centre_of_mass = colMeans(sphere_centres[sphere_centres$region != '', c('x', 'y')])
+    centre_of_mass = colMeans(sphere_centres[sphere_centres$region != NOT_IN_KNOWN_SETS, c('x', 'y')])
 
-    names(region_sizes)[names(region_sizes) == ''] = empty_region
+    names(region_sizes)[names(region_sizes) == NOT_IN_KNOWN_SETS] = NOT_IN_KNOWN_SETS
 
     if (extract_sets || extract_regions) {
         coords = push_outwards(coords, centre_of_mass, outwards_adjust)
-        coords[coords$region == '', 'region'] = empty_region
+        coords[coords$region == '', 'region'] = NOT_IN_KNOWN_SETS
         coords$size = as.numeric(region_sizes[coords$region])
 
         return (coords)
@@ -541,7 +568,6 @@ arrange_venn = function(
         grid_membership = allocate_slots(layout, grid_size_x, grid_size_y)
 
         grid_slots_by_region = table(grid_membership$region)
-        names(grid_slots_by_region)[names(grid_slots_by_region) == ''] = empty_region
 
         aligned_sizes = grid_slots_by_region[names(region_sizes)]
 
@@ -638,6 +664,5 @@ arrange_venn = function(
         region_coords
     }))
 
-    new_coords$region[new_coords$region == ''] = empty_region
     cbind(new_coords, data[, setdiff(colnames(data), sets)])
 }
