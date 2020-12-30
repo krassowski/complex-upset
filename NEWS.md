@@ -1,22 +1,27 @@
 # Version 1.0.0
 
-*under development*
+2020-12-30
 
 Changes:
 - Lists with computed sizes are now returned in a single list called `sizes` by `upset_data()`
 - Set sizes are now **not** filtered by default when selecting intersections by `min_*` or `max_*` criteria. Pass `filter_intersections=TRUE` to `upset_set_sizes()` to restore the previous behavior
 - Union sizes are now calculated before data trimming which provides more accurate ratio estimates
 - Added examples for Venn diagrams which are now covered by automated tests to protect against regressions
-- Column names are no longer modified when supplying to `ggplot2` allowing to easily use them in annotations (#82)
 - Removed `upset_data()` `intersected` member to avoid needless duplication of the data frames; access `with_sizes` instead
-- Annotations can now access data for any of the available modes by adding `upset_mode()` layer. By default the annotations are given data corresponding to the same mode as the mode of the passed in the `upset()` call.
 - `aest` argument of `intersection_size()` and related functions was renamed to `mapping` and is now the first positional argument
 - `min_max_early` argument is no longer required and was removed
+
+New features:
+- Annotations can now access data for any of the available modes by adding `upset_mode()` layer. By default the annotations are given data corresponding to the same mode as the mode of the passed in the `upset()` call.
+- It is now possible to display all intersections, even if those are not present in the data by passing `intersections='all'` to `upset()`; this is only feasible for <20 sets, but filtering by degree can allow to explore a subset of all intersections when there are many more sets
+- If filtering leads to no intersections, an informative error is shown (#80)
+
 
 Bug fixes:
 - Modes passed to `upset()` are now also used for sorting and trimming
 - Size calculation for modes was optimized for better performance
 - User-added layers are now shown on top of `intersection_size()` and `intersection_union()`
+- Column names are no longer modified when supplying to `ggplot2` allowing to easily use them in annotations (#82)
 
 # Version 0.9.1
 
