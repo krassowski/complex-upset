@@ -229,7 +229,7 @@ test_that("Counts are visible on top of highlighted bars", {
 test_that("Filtering by degree in non-default mode with all intersections shows all observations", {
     abc_data = create_upset_abc_example()
     expect_doppelganger(
-        title='All union members are accounted for with intersections=all, mode=union, and max_degree=1',
+        title='Size for intersections=all, mode=union, and max_degree=1',
         upset(
             abc_data,
             colnames(abc_data),
@@ -243,7 +243,7 @@ test_that("Filtering by degree in non-default mode with all intersections shows 
 
 test_that("Empty sets are removed during filtering with non-default mode", {
     expect_doppelganger(
-        "Empty sets are removed during filtering with non-default mode",
+        "Empty sets are removed when filtering non-default mode",
         (
             upset(
                 movies, genres,
@@ -277,7 +277,26 @@ test_that("Missing values are converted to FALSE", {
     )
 
     expect_doppelganger(
-        "Degrees are filtered (min_degree=1) even if user indicated non-presence by NA",
+        "Degrees are filtered (min_degree=1) even if user used NA",
         upset(df, colnames(df)[1:2], min_degree=1)
+    )
+})
+
+
+test_that("Sets of generated intersections are ok when sets not observed alone", {
+    expect_doppelganger(
+        "Sets with intersections='all' are ok when not observed",
+        upset(
+            # remove movies which belong to one set only
+            movies[rowSums(movies[, genres]) != 1, ],
+            genres,
+            mode='inclusive_union',
+            # generate all possible unions, enabling visualisation of unions with degree = 1
+            intersections='all',
+            keep_empty_groups=FALSE,
+            # require unions of degree 1
+            min_degree=1,
+            max_degree=1
+        )
     )
 })

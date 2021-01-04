@@ -1,3 +1,11 @@
+# Version 1.0.2
+
+2021-01-04
+
+Bug fixes:
+- Fixed regression of non-observed sets causing "no vector columns were selected" caused by fix addressing #90
+- Reduced length of file names for some test doppelgangers
+
 # Version 1.0.1
 
 2021-01-04

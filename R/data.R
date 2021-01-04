@@ -341,6 +341,7 @@ upset_data = function(
 
     if (intersections == 'observed') {
         intersections_matrix = observed_intersections_matrix
+        colnames(intersections_matrix) = intersect
     } else {
         if (length(intersect) > max_combinations_n && max_degree == Inf)  {
             stop('Your memory is likely to explode, please adjust max_combinations_n if you wish to proceed anyways, or better set max_degree')
@@ -528,15 +529,13 @@ upset_data = function(
         # once the unused intersections are removed, we need to decide
         # if the groups not participating in any of the intersections should be kept or removed
         if (!keep_empty_groups) {
-            data_subset = data[
-                data[, paste0('in_', solve_mode(mode))]
-                &
-                # intersections_by_size_trimmed is a partial misnomer, here it means "regions_by_size"
-                # see: https://github.com/krassowski/complex-upset/issues/90
-                (data$exclusive_intersection %in% names(intersections_by_size_trimmed)),
-            ]
+            # see: https://github.com/krassowski/complex-upset/issues/90
+            itersect_data = data.frame(
+                intersections_matrix[names(intersections_by_size_trimmed), ] == 1,
+                check.names=FALSE,
+                check.rows=FALSE
+            )
 
-            itersect_data = data_subset[, intersect]
             is_non_empty = sapply(itersect_data, any)
             empty_groups = names(itersect_data[!is_non_empty])
 
