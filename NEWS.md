@@ -1,3 +1,10 @@
+# Version 1.0.1
+
+*In development*
+
+Bug fixes:
+- Filtering by degree when using non-default mode and `intersections='all'` now correctly accounts for all observations (#89)
+
 # Version 1.0.0
 
 2020-12-30

@@ -224,3 +224,18 @@ test_that("Counts are visible on top of highlighted bars", {
         )
     )
 })
+
+
+test_that("Filtering by degree in non-default mode with all intersections shows all observations", {
+    abc_data = create_upset_abc_example()
+    expect_doppelganger(
+        title='All union members are accounted for with intersections=all, mode=union, and max_degree=1',
+        upset(
+            abc_data,
+            colnames(abc_data),
+            max_degree=1,
+            mode='union',
+            intersections='all'
+        )
+    )
+})

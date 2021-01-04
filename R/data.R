@@ -332,10 +332,10 @@ upset_data = function(
 
     unique_members_matrix = apply(unique_members_matrix, 1, as.numeric)
 
-    intersections_matrix = t(unique_members_matrix)
+    observed_intersections_matrix = t(unique_members_matrix)
 
     if (intersections == 'observed') {
-        intersections_matrix = t(unique_members_matrix)
+        intersections_matrix = observed_intersections_matrix
     } else {
         if (length(intersect) > max_combinations_n && max_degree == Inf)  {
             stop('Your memory is likely to explode, please adjust max_combinations_n if you wish to proceed anyways, or better set max_degree')
@@ -351,6 +351,11 @@ upset_data = function(
             intersections_matrix = do.call(rbind, lapply(min_degree:max_degree, function(degree) {
                 binary_grid(n=length(intersect), m=degree)
             }))
+
+            # need to add observed intersections too, otherwise the observations in intersections with other degrees would disappear
+            # see https://github.com/krassowski/complex-upset/issues/89
+            intersections_matrix = rbind(intersections_matrix, observed_intersections_matrix)
+            intersections_matrix = intersections_matrix[!duplicated(intersections_matrix), ]
         }
 
         colnames(intersections_matrix) = intersect
