@@ -520,18 +520,21 @@ upset_data = function(
             n_intersections=n_intersections
         )
 
-        data_subset = data[
-            data[, paste0('in_', solve_mode(mode))]
-            &
-            (data$intersection %in% names(intersections_by_size_trimmed)),
-        ]
-
         # once the unused intersections are removed, we need to decide
         # if the groups not participating in any of the intersections should be kept or removed
         if (!keep_empty_groups) {
+            data_subset = data[
+                data[, paste0('in_', solve_mode(mode))]
+                &
+                # intersections_by_size_trimmed is a partial misnomer, here it means "regions_by_size"
+                # see: https://github.com/krassowski/complex-upset/issues/90
+                (data$exclusive_intersection %in% names(intersections_by_size_trimmed)),
+            ]
+
             itersect_data = data_subset[, intersect]
             is_non_empty = sapply(itersect_data, any)
             empty_groups = names(itersect_data[!is_non_empty])
+
             if (length(empty_groups) != 0 && warn_when_dropping_groups) {
                 to_display = ifelse(
                     length(empty_groups) <= 5,

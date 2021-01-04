@@ -4,6 +4,7 @@
 
 Bug fixes:
 - Filtering by degree when using non-default mode and `intersections='all'` now correctly accounts for all observations (#89)
+- Empty sets/groups are now correctly removed when filtering with a non-default mode (#90)
 
 # Version 1.0.0
 

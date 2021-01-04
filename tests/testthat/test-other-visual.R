@@ -239,3 +239,23 @@ test_that("Filtering by degree in non-default mode with all intersections shows 
         )
     )
 })
+
+
+test_that("Empty sets are removed during filtering with non-default mode", {
+    expect_doppelganger(
+        "Empty sets are removed during filtering with non-default mode",
+        (
+            upset(
+                movies, genres,
+                n_intersections=5,
+                mode='inclusive_intersection',
+                keep_empty_groups=FALSE
+            ) | upset(
+                movies, genres,
+                n_intersections=5,
+                mode='inclusive_intersection',
+                keep_empty_groups=TRUE
+            )
+        )
+    )
+})
