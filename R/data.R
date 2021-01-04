@@ -311,6 +311,11 @@ upset_data = function(
         data[, non_logical] = sapply(data[, non_logical], as.logical)
     }
 
+    if (any(is.na(data[, intersect]))) {
+        warning('Detected missing values in the columns indicating sets, coercing to FALSE')
+        data[, intersect][is.na(data[, intersect])] = FALSE
+    }
+
     intersect_in_order_of_data = colnames(data)[colnames(data) %in% intersect]
 
     non_sanitized_labels = intersect

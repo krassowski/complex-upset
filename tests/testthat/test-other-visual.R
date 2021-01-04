@@ -259,3 +259,25 @@ test_that("Empty sets are removed during filtering with non-default mode", {
         )
     )
 })
+
+
+test_that("Missing values are converted to FALSE", {
+    # see https://github.com/krassowski/complex-upset/issues/88
+    df = data.frame(
+        set_a = c(1, 1, 1, NA),
+        set_b = c(1, NA, NA, NA),
+        set_c = c(NA, NA, 4, NA),
+        set_d = c(NA, NA, NA, 1),
+        category = c("E", "F", "F", "G")
+    )
+
+    expect_warning(
+        upset(df, colnames(df)[1:2], min_degree=1),
+        regexp='Detected missing values in the columns indicating sets, coercing to FALSE'
+    )
+
+    expect_doppelganger(
+        "Degrees are filtered (min_degree=1) even if user indicated non-presence by NA",
+        upset(df, colnames(df)[1:2], min_degree=1)
+    )
+})
