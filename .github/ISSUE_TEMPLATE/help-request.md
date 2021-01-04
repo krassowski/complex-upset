@@ -30,15 +30,19 @@ ComplexUpset version\*: x.x.x
 
 <details>
 <summary>R version details</summary>
+
 ```R
 <!-- Please replace this line by output of R.Version() -->
 ```
+
 </details>
 
 
 <details>
+
 <summary>R session information</summary>
 ```R
 <!-- Please replace this line by output of sessionInfo() -->
 ```
+
 </details>
