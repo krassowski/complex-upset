@@ -27,7 +27,7 @@ A good example should allow to run the code after simple copy-paste, so please p
 
 <!-- Use packageVersion('ComplexUpset') to check the version you have installed and replace x.x.x below: -->
 
-ComplexUpset version\*: x.x.x
+ComplexUpset version: x.x.x
 
 <details>
 <summary>R version details</summary>

@@ -26,7 +26,7 @@ Please replace this line by any code that may illustrate your attempts at solvin
 
 <!-- Use packageVersion('ComplexUpset') to check the version you have installed and replace x.x.x below: -->
 
-ComplexUpset version\*: x.x.x
+ComplexUpset version: x.x.x
 
 <details>
 <summary>R version details</summary>
