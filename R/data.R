@@ -209,6 +209,45 @@ binary_grid = function(n, m) {
     matrix(unlist(paths), byrow=TRUE, nrow=length(paths))
 }
 
+all_intersections_matrix = function(intersect, observed_intersections_matrix, min_degree, max_degree) {
+    if (max_degree == Inf) {
+        intersections_matrix = do.call(expand.grid, rep(list(0:1), length(intersect)))
+    } else {
+        if (max_degree > length(intersect)) {
+            warning('provided `max_degree` was greater than the number of sets, reducing `max_degree` to the number of sets')
+            max_degree = length(intersect)
+        }
+        intersections_matrix = do.call(rbind, lapply(min_degree:max_degree, function(degree) {
+            binary_grid(n=length(intersect), m=degree)
+        }))
+
+        # need to add observed intersections too, otherwise the observations in intersections with other degrees would disappear
+        # see https://github.com/krassowski/complex-upset/issues/89
+        intersections_matrix = rbind(intersections_matrix, observed_intersections_matrix)
+        intersections_matrix = intersections_matrix[!duplicated(intersections_matrix), ]
+    }
+
+    colnames(intersections_matrix) = intersect
+    rownames(intersections_matrix) = apply(intersections_matrix == TRUE, 1, names_of_members)
+    intersections_matrix = as.matrix(intersections_matrix)
+    intersections_matrix
+}
+
+
+timer = NULL
+profile = FALSE
+
+note_time = function(text) {
+    if (!profile) {
+        return (NULL)
+    }
+    old = timer
+    timer <<- Sys.time()
+    if (!is.null(old))
+        cat(paste(timer - old, text, '\n'))
+}
+
+
 
 #' Prepare data for UpSet plots
 #'
@@ -232,7 +271,7 @@ binary_grid = function(n, m) {
 #' @param size_columns_suffix suffix for the columns to store the sizes (adjust if conflicts with your data)
 #' @param encode_sets whether set names (column in input data) should be encoded as numbers (set to TRUE to overcome R limitations of max 10 kB for variable names for datasets with huge numbers of sets); default TRUE for upset() and FALSE for upset_data().
 #' @param intersections whether only the intersections present in data (`observed`, default), or all intersections (`all`) should be computed; using all intersections for a high number of sets is not computationally feasible - use `min_degree` and `max_degree` to narrow down the selection; this is only useful for modes different from the default exclusive intersection.
-#' @param max_combinations_n the limit preventing accidental use of `intersections='all'` with a high number of sets
+#' @param max_combinations_datapoints_n a fail-safe limit preventing accidental use of `intersections='all'` with a high number of sets and observations
 
 #' @export
 upset_data = function(
@@ -250,7 +289,10 @@ upset_data = function(
     mode='exclusive_intersection',
     size_columns_suffix='_size',
     encode_sets=FALSE,
-    max_combinations_n=24,
+    # 10^10 fail-safe will allow for up to:
+    # - for degree == 2: 500 sets x 100 observations, or 100 sets x 10 000 observations
+    # - for degree <= 3: 150 sets x 100 observations, or 49 sets x 10 000 observations
+    max_combinations_datapoints_n=10^10,
     intersections='observed'
 ) {
     # Check arguments
@@ -280,6 +322,7 @@ upset_data = function(
     }
 
     # Transform data
+    note_time('initialised')
 
     if ('tbl' %in% class(data)) {
         data = as.data.frame(data)
@@ -329,6 +372,7 @@ upset_data = function(
         intersect = sanitize_names(intersect)
     }
     names(non_sanitized_labels) = intersect
+    note_time('converted data')
 
     data$intersection = apply(data[intersect], 1, names_of_members)
 
@@ -342,79 +386,74 @@ upset_data = function(
     if (intersections == 'observed') {
         intersections_matrix = observed_intersections_matrix
         colnames(intersections_matrix) = intersect
+        product_matrix = intersections_matrix %*% unique_members_matrix
     } else {
-        if (length(intersect) > max_combinations_n && max_degree == Inf)  {
-            stop('Your memory is likely to explode, please adjust max_combinations_n if you wish to proceed anyways, or better set max_degree')
+        effective_max_degree = min(length(intersect), max_degree)
+
+        combinations_n = sum(sapply(min_degree:effective_max_degree, function(m) choose(length(intersect), m)))
+        datapoints_n = nrow(data) * ncol(data) * combinations_n
+
+        if (datapoints_n > max_combinations_datapoints_n)  {
+            degrees_text = ifelse(
+                min_degree == max_degree,
+                paste0(' equal ', min_degree),
+                paste0('s between ', min_degree, ' and', effective_max_degree)
+            )
+
+            advice_message = paste0(
+                'The number of combinations with degree', degrees_text,
+                ' (', formatC(combinations_n, format='e', digits=1), ') multiplied by the number of observations',
+                ' (', nrow(data), ') and columns (', ncol(data), ') accounts to an upper bound of ',
+                formatC(datapoints_n, format='e', digits=1), ' datapoints;',
+                ' such a high number may lead to out of memory errors (depending on the available RAM size).',
+                ' Please adjust `min_degree` and `max_degree`, remove unused columns, or',
+                ' adjust `max_combinations_datapoints_n` (if you wish to proceed anyways).',
+                '\nNote: filtering by size (`min_size` and/or `max_size`) or setting `n_intersections`',
+                ' reduces the memory requirements and if you already do that',
+                ' it may be safe to increase `max_combinations_datapoints_n`.'
+            )
+            stop(advice_message)
         }
 
-        if (max_degree == Inf) {
-            intersections_matrix = do.call(expand.grid, rep(list(0:1), length(intersect)))
-        } else {
-            if (max_degree > length(intersect)) {
-                warning('provided max_degree was greater than the number of sets, reducing max_degree to the number of sets')
-                max_degree = length(intersect)
-            }
-            intersections_matrix = do.call(rbind, lapply(min_degree:max_degree, function(degree) {
-                binary_grid(n=length(intersect), m=degree)
-            }))
-
-            # need to add observed intersections too, otherwise the observations in intersections with other degrees would disappear
-            # see https://github.com/krassowski/complex-upset/issues/89
-            intersections_matrix = rbind(intersections_matrix, observed_intersections_matrix)
-            intersections_matrix = intersections_matrix[!duplicated(intersections_matrix), ]
-        }
-
-        colnames(intersections_matrix) = intersect
-        rownames(intersections_matrix) = apply(intersections_matrix == TRUE, 1, names_of_members)
-        intersections_matrix = as.matrix(intersections_matrix)
+        intersections_matrix = all_intersections_matrix(intersect, observed_intersections_matrix, min_degree, max_degree)
         unique_members_matrix = t(intersections_matrix)
+        # note: tcrossprod is significantly faster than: intersections_matrix %*% unique_members_matrix
+        product_matrix = tcrossprod(intersections_matrix)
     }
+    note_time('calculated intersections')
 
     exclusive_intersection = table(data$intersection)
     observed_intersections = names(exclusive_intersection)
+    exclusive_intersection = as.numeric(exclusive_intersection)
+    names(exclusive_intersection) = observed_intersections
 
-    product_matrix = intersections_matrix %*% unique_members_matrix
 
     if (NOT_IN_KNOWN_SETS %in% rownames(product_matrix) && NOT_IN_KNOWN_SETS %in% colnames(product_matrix)) {
         product_matrix[NOT_IN_KNOWN_SETS, NOT_IN_KNOWN_SETS] = 1
     }
 
-    exclusive_intersection_counts = as.numeric(exclusive_intersection[colnames(product_matrix)])
-
-    inclusive_union = apply(product_matrix != 0, 2, as.numeric) * exclusive_intersection_counts
+    exclusive_intersection_counts = exclusive_intersection[colnames(product_matrix)]
+    inclusive_union = (product_matrix != 0) * exclusive_intersection_counts
 
     observed_intersections_degrees = colSums(unique_members_matrix)
     desired_intersections_degrees = rowSums(intersections_matrix)
 
-    exclusive_union = apply(
-        (product_matrix != 0) & (product_matrix >= observed_intersections_degrees),
-        2,
-        as.numeric
-    ) * exclusive_intersection_counts
+    exclusive_union = ((product_matrix != 0) & (product_matrix >= observed_intersections_degrees)) * exclusive_intersection_counts
 
     if (NOT_IN_KNOWN_SETS %in% colnames(product_matrix)) {
         desired_intersections_degrees[NOT_IN_KNOWN_SETS] = 1
     }
 
     intersection_condition = t(t(product_matrix) >= desired_intersections_degrees)
-
-    inclusive_intersection = apply(
-        intersection_condition,
-        2,
-        as.numeric
-    ) * exclusive_intersection_counts
+    inclusive_intersection = intersection_condition * exclusive_intersection_counts
 
     if (intersections != 'observed') {
         exclusive_intersection = t(t(product_matrix) == observed_intersections_degrees) & (product_matrix == observed_intersections_degrees)
-        exclusive_intersection = apply(
-            exclusive_intersection,
-            2,
-            as.numeric
-        ) * exclusive_intersection_counts
+        exclusive_intersection = exclusive_intersection * exclusive_intersection_counts
         exclusive_intersection[is.na(exclusive_intersection)] = 0
         exclusive_intersection = colSums(exclusive_intersection)
     }
-
+    note_time('calculated intersection sizes')
 
     inclusive_intersection[is.na(inclusive_intersection)] = 0
     exclusive_union[is.na(exclusive_union)] = 0
@@ -429,13 +468,53 @@ upset_data = function(
 
     intersections_by_size = sizes[[mode]]
 
+    if (min_size > 0 || max_size != Inf || min_degree > 0 || max_degree != Inf || !is.null(n_intersections)) {
+        intersections_by_size_trimmed = trim_intersections(
+            intersections_by_size,
+            min_size=min_size,
+            max_size=max_size,
+            min_degree=min_degree,
+            max_degree=max_degree,
+            n_intersections=n_intersections
+        )
+        if (length(intersections_by_size_trimmed) == 0) {
+
+            if (min_size > 0) {
+                tip = paste(': the maximal size for `min_size` for this dataset is', max(intersections_by_size))
+            } else if (min_degree > 0) {
+                degrees = calculate_degree(names(intersections_by_size))
+                tip = paste(': the maximal degree for `min_degree` for this dataset is', max(degrees))
+            } else if (!is.null(n_intersections) && n_intersections < 1) {
+                tip = paste0(': provide `n_intersections` >= 1 (you provoided: ', n_intersections, ')')
+            } else if (max_size < 1) {
+                tip = paste0(': provide `max_size` >= 1 (you provoided: ', max_size, ')')
+            } else if (max_degree < 0) {
+                # note: max_degree = 0 returns observations that are not in any of the known sets
+                tip = paste0(': provide `max_degree` >= 0 (you provoided: ', max_degree, ')')
+            } else {
+                tip = ''
+            }
+
+            stop(paste0('No intersections left after filtering', tip))
+        }
+    }
+
+    if (min_size > 0 || max_size != Inf || !is.null(n_intersections)) {
+        regions_to_include = colnames(inclusive_union)[
+            colnames(inclusive_union) %in% names(intersections_by_size_trimmed)
+        ]
+    } else {
+        regions_to_include = colnames(inclusive_union)
+    }
+
+
     rownames(inclusive_union) = rownames(product_matrix)
     selected_intersections = intersect(colnames(inclusive_union), observed_intersections)
 
     original_data_indices = 1:nrow(data)
     indices_by_exclusive_intersection = split(original_data_indices, data$intersection)
 
-    inclusive_union_indices = lapply(colnames(inclusive_union), function(region) {
+    inclusive_union_indices = lapply(regions_to_include, function(region) {
         counts = inclusive_union[selected_intersections[selected_intersections != region], region]
         non_empty_subregions = names(counts[counts != 0])
 
@@ -447,21 +526,20 @@ upset_data = function(
     lengths = sapply(inclusive_union_indices, length)
     all_indices = c(original_data_indices, unlist(inclusive_union_indices))
     offsets = cumsum(c(length(original_data_indices), lengths))
-    names(offsets) = c(colnames(inclusive_union), NaN)
+    names(offsets) = c(regions_to_include, NaN)
 
 
     # the initial length(original_data_indices) entries are only for regions of exclusive intersections
     # and indices here do not need any additional addressing offset. Following indices are for regions
     # that are not exclusive and require additional offest as follows:
-
     rownames(inclusive_intersection) = rownames(product_matrix)
 
     inclusive_intersections_counts = inclusive_intersection[
-        intersect(colnames(inclusive_intersection), observed_intersections),
+        intersect(colnames(inclusive_intersection), observed_intersections), , drop=FALSE
     ]
-    names(inclusive_union_indices) = colnames(inclusive_union)
+    names(inclusive_union_indices) = regions_to_include
 
-    inlusive_intersection_ids = unlist(unname(sapply(colnames(inclusive_intersection), function(region) {
+    inlusive_intersection_ids = unlist(unname(sapply(regions_to_include, function(region) {
         counts = inclusive_intersections_counts[, region]
         non_empty_subregions = names(counts[counts != 0])
 
@@ -471,11 +549,13 @@ upset_data = function(
         offsets[[region]] + additional_indices
     })))
 
-
     rownames(exclusive_union) = rownames(product_matrix)
-    exclusive_intersections_counts = exclusive_union[intersect(colnames(exclusive_union), observed_intersections), ]
 
-    exclusive_union_ids = unlist(unname(sapply(colnames(exclusive_union), function(region) {
+    exclusive_intersections_counts = exclusive_union[
+        intersect(colnames(exclusive_union), observed_intersections), , drop=FALSE
+    ]
+
+    exclusive_union_ids = unlist(unname(sapply(regions_to_include, function(region) {
         counts = exclusive_intersections_counts[, region]
         non_empty_subregions = names(counts[counts != 0])
 
@@ -487,12 +567,11 @@ upset_data = function(
 
 
     data = data[all_indices, ]
-
     data$exclusive_intersection = data$intersection[all_indices]
 
     data$intersection = c(
         data$intersection[original_data_indices],
-        rep(colnames(inclusive_union), times=lengths)
+        rep(regions_to_include, times=lengths)
     )
     exclusive_intersection_indices = original_data_indices
     data$in_exclusive_intersection = c(
@@ -511,20 +590,12 @@ upset_data = function(
 
     data[, 'in_exclusive_union'] = data$in_exclusive_intersection
     data[exclusive_union_ids, 'in_exclusive_union'] = 1
+    note_time('calculated modes')
 
     plot_intersections_subset = names(intersections_by_size)
     plot_sets_subset = intersect
 
     if (min_size > 0 || max_size != Inf || min_degree > 0 || max_degree != Inf || !is.null(n_intersections)) {
-
-        intersections_by_size_trimmed = trim_intersections(
-            intersections_by_size,
-            min_size=min_size,
-            max_size=max_size,
-            min_degree=min_degree,
-            max_degree=max_degree,
-            n_intersections=n_intersections
-        )
 
         # once the unused intersections are removed, we need to decide
         # if the groups not participating in any of the intersections should be kept or removed
@@ -552,26 +623,6 @@ upset_data = function(
             intersect_subset = intersect
         }
 
-        if (length(intersections_by_size_trimmed) == 0) {
-
-            if (min_size > 0) {
-                tip = paste(': the maximal size for `min_size` for this dataset is', max(intersections_by_size))
-            } else if (min_degree > 0) {
-                degrees = calculate_degree(names(intersections_by_size))
-                tip = paste(': the maximal degree for `min_degree` for this dataset is', max(degrees))
-            } else if (!is.null(n_intersections) && n_intersections < 1) {
-                tip = paste0(': provide `n_intersections` >= 1 (you provoided: ', n_intersections, ')')
-            } else if (max_size < 1) {
-                tip = paste0(': provide `max_size` >= 1 (you provoided: ', max_size, ')')
-            } else if (max_degree < 1) {
-                tip = paste0(': provide `max_degree` >= 1 (you provoided: ', max_degree, ')')
-            } else {
-                tip = ''
-            }
-
-            stop(paste0('No intersections left after filtering', tip))
-        }
-
         intersections_by_size = intersections_by_size_trimmed
         for (mode in names(sizes)) {
             sizes[[mode]] = sizes[[mode]][names(sizes[[mode]]) %in% names(intersections_by_size_trimmed)]
@@ -582,6 +633,7 @@ upset_data = function(
         plot_intersections_subset = names(intersections_by_size_trimmed)
         plot_sets_subset = intersect_subset
     }
+    note_time('trimmed')
 
     stacked = stack(data[original_data_indices, ], intersect)
     stacked$id = rep(original_data_indices, length(intersect))
@@ -601,6 +653,7 @@ upset_data = function(
 
     stacked$group = stacked$ind
     groups_by_size = table(stacked$group)
+    note_time('stacked')
 
     if (sort_sets != FALSE) {
         groups_by_size = groups_by_size[get_sort_order(list(groups_by_size), sort_sets)]
@@ -642,6 +695,7 @@ upset_data = function(
 
     unique_sorted_intersections = names(intersections_by_size)
     rm(intersections_by_size)
+    note_time('sorted')
 
     unique_intersection_members = get_intersection_members(unique_sorted_intersections)
     names(unique_intersection_members) = unique_sorted_intersections
@@ -697,6 +751,7 @@ upset_data = function(
         unique_intersection_members = unique_intersection_members[old_intersections_ids]
         names(unique_intersection_members) = new_intersections_ids
     }
+    note_time('grouped')
 
     intersections_as_groups = unique_intersection_members
 
@@ -733,6 +788,7 @@ upset_data = function(
 
   sanitized_labels = names(non_sanitized_labels)
   names(sanitized_labels) = non_sanitized_labels
+  note_time('finished')
 
   list(
     with_sizes=data,

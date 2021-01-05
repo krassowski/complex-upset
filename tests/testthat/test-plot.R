@@ -94,7 +94,7 @@ test_that("upset throws an informative error if filtering leads to empty dataset
     )
     expect_error(
         upset(df, c('a', 'b', 'c', 'd'), max_degree=-1),
-        'No intersections left after filtering: provide `max_degree` >= 1 \\(you provoided: -1\\)'
+        'No intersections left after filtering: provide `max_degree` >= 0 \\(you provoided: -1\\)'
     )
 })
 

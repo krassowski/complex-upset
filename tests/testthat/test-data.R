@@ -334,6 +334,20 @@ test_that("upset_data() filters by min_size, max_size, min_degree and max_degree
     Sys.setlocale("LC_COLLATE", old_locale)
 })
 
+
+test_that("fail-safe protects from out of memory errors when sing observations='all'", {
+    set_data <- create_upset_abc_example()
+
+    expect_error(
+        upset_data(set_data, colnames(set_data), intersections='all', max_combinations_datapoints_n=100),
+        'The number of combinations with degrees between 0 and3 (8.0e+00) multiplied by the number of observations (325) and columns (4) accounts to an upper bound of 1.0e+04 datapoints; such a high number may lead to out of memory errors (depending on the available RAM size). Please adjust `min_degree` and `max_degree`, remove unused columns, or adjust `max_combinations_datapoints_n` (if you wish to proceed anyways).
+Note: filtering by size (`min_size` and/or `max_size`) or setting `n_intersections` reduces the memory requirements and if you already do that it may be safe to increase `max_combinations_datapoints_n`.',
+        fixed=TRUE
+    )
+
+})
+
+
 test_that("upset_data() works with a tibble", {
     # see https://github.com/krassowski/complex-upset/issues/20
     df = data.frame(

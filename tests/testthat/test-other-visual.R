@@ -300,3 +300,16 @@ test_that("Sets of generated intersections are ok when sets not observed alone",
         )
     )
 })
+
+
+test_that("Inclusive union filtering works ok", {
+    expect_doppelganger(
+        "Inclusive union filtering works ok",
+        upset(
+            movies, genres,
+            n_intersections=5,
+            mode='exclusive_union',
+            keep_empty_groups=FALSE
+        )
+    )
+})

@@ -1,3 +1,13 @@
+# Version 1.0.3
+
+2021-01-05
+
+Bug fixes:
+- Major performance and memory use improvements, especially when using `intersections = 'all'`
+- The `max_combinations_n` fail-safe was replaced by a more useful `max_combinations_datapoints_n` with more precise error message
+- The atypical use case of filtering with `max_degree = 0` is now accepted again
+- Fix tests using all the data (effectively union mode) rather than chosen mode data only
+
 # Version 1.0.2
 
 2021-01-04
