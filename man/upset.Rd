@@ -83,7 +83,7 @@ upset(
     \item{\code{group_by}}{the mode of grouping intersections; one of: \code{'degree'}, \code{'sets'}}
     \item{\code{size_columns_suffix}}{suffix for the columns to store the sizes (adjust if conflicts with your data)}
     \item{\code{intersections}}{whether only the intersections present in data (\code{observed}, default), or all intersections (\code{all}) should be computed; using all intersections for a high number of sets is not computationally feasible - use \code{min_degree} and \code{max_degree} to narrow down the selection; this is only useful for modes different from the default exclusive intersection.}
-    \item{\code{max_combinations_n}}{the limit preventing accidental use of \code{intersections='all'} with a high number of sets}
+    \item{\code{max_combinations_datapoints_n}}{a fail-safe limit preventing accidental use of \code{intersections='all'} with a high number of sets and observations}
   }}
 }
 \description{

@@ -24,7 +24,7 @@ upset_data(
   mode = "exclusive_intersection",
   size_columns_suffix = "_size",
   encode_sets = FALSE,
-  max_combinations_n = 24,
+  max_combinations_datapoints_n = 10^10,
   intersections = "observed"
 )
 }
@@ -67,7 +67,7 @@ upset_data(
 
 \item{encode_sets}{whether set names (column in input data) should be encoded as numbers (set to TRUE to overcome R limitations of max 10 kB for variable names for datasets with huge numbers of sets); default TRUE for upset() and FALSE for upset_data().}
 
-\item{max_combinations_n}{the limit preventing accidental use of \code{intersections='all'} with a high number of sets}
+\item{max_combinations_datapoints_n}{a fail-safe limit preventing accidental use of \code{intersections='all'} with a high number of sets and observations}
 
 \item{intersections}{whether only the intersections present in data (\code{observed}, default), or all intersections (\code{all}) should be computed; using all intersections for a high number of sets is not computationally feasible - use \code{min_degree} and \code{max_degree} to narrow down the selection; this is only useful for modes different from the default exclusive intersection.}
 }
