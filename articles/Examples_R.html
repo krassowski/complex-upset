@@ -34,7 +34,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">ComplexUpset</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.0.2</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.0.3</span>
       </span>
     </div>
 
@@ -902,7 +902,7 @@ TRUE
 <p>Use <code>upset_mode</code> to change the mode of the annotation:</p>
 <div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">set_size</span><span class="op">(</span><span class="fl">8</span>, <span class="fl">8</span><span class="op">)</span>
-
+<span class="fu"><a href="https://rdrr.io/r/base/Random.html">set.seed</a></span><span class="op">(</span><span class="fl">0</span><span class="op">)</span>
 <span class="fu"><a href="../reference/upset.html">upset</a></span><span class="op">(</span>
     <span class="va">movies</span>,
     <span class="va">genres</span>,
@@ -989,36 +989,16 @@ length
 length
 </td>
 <td>
-8.604723e-235
+6.511525e-71
 </td>
 <td>
-1206.84816
-</td>
-<td>
-Kruskal-Wallis rank sum test
-</td>
-<td>
-1.462803e-233
-</td>
-</tr>
-<tr>
-<th scope="row">
-budget
-</th>
-<td>
-budget
-</td>
-<td>
-2.671340e-133
-</td>
-<td>
-725.23220
+422.88444
 </td>
 <td>
 Kruskal-Wallis rank sum test
 </td>
 <td>
-1.513759e-132
+1.106959e-69
 </td>
 </tr>
 <tr>
@@ -1029,16 +1009,36 @@ rating
 rating
 </td>
 <td>
-1.853155e-133
+1.209027e-46
 </td>
 <td>
-725.99285
+301.72764
 </td>
 <td>
 Kruskal-Wallis rank sum test
 </td>
 <td>
-1.513759e-132
+1.027673e-45
+</td>
+</tr>
+<tr>
+<th scope="row">
+budget
+</th>
+<td>
+budget
+</td>
+<td>
+3.899860e-44
+</td>
+<td>
+288.97476
+</td>
+<td>
+Kruskal-Wallis rank sum test
+</td>
+<td>
+2.209921e-43
 </td>
 </tr>
 <tr>
@@ -1049,36 +1049,16 @@ r8
 r8
 </td>
 <td>
-6.374777e-111
+9.900004e-39
 </td>
 <td>
-617.69913
-</td>
-<td>
-Kruskal-Wallis rank sum test
-</td>
-<td>
-2.709280e-110
-</td>
-</tr>
-<tr>
-<th scope="row">
-r9
-</th>
-<td>
-r9
-</td>
-<td>
-6.951214e-93
-</td>
-<td>
-530.38115
+261.28815
 </td>
 <td>
 Kruskal-Wallis rank sum test
 </td>
 <td>
-2.363413e-92
+4.207502e-38
 </td>
 </tr>
 <tr>
@@ -1089,76 +1069,36 @@ mpaa
 mpaa
 </td>
 <td>
-1.708287e-92
+3.732200e-35
 </td>
 <td>
-528.48283
+242.77939
 </td>
 <td>
 Kruskal-Wallis rank sum test
 </td>
 <td>
-4.840145e-92
+1.268948e-34
 </td>
 </tr>
 <tr>
 <th scope="row">
-r3
+r9
 </th>
 <td>
-r3
+r9
 </td>
 <td>
-3.658470e-52
+1.433256e-30
 </td>
 <td>
-329.60128
+218.78160
 </td>
 <td>
 Kruskal-Wallis rank sum test
 </td>
 <td>
-8.884856e-52
-</td>
-</tr>
-<tr>
-<th scope="row">
-r4
-</th>
-<td>
-r4
-</td>
-<td>
-4.842690e-50
-</td>
-<td>
-318.91322
-</td>
-<td>
-Kruskal-Wallis rank sum test
-</td>
-<td>
-1.029072e-49
-</td>
-</tr>
-<tr>
-<th scope="row">
-r5
-</th>
-<td>
-r5
-</td>
-<td>
-3.172246e-49
-</td>
-<td>
-314.79244
-</td>
-<td>
-Kruskal-Wallis rank sum test
-</td>
-<td>
-5.992020e-49
+4.060891e-30
 </td>
 </tr>
 <tr>
@@ -1169,76 +1109,76 @@ r1
 r1
 </td>
 <td>
-1.332122e-48
+2.211600e-23
 </td>
 <td>
-311.64301
+180.32740
 </td>
 <td>
 Kruskal-Wallis rank sum test
 </td>
 <td>
-2.264607e-48
+5.371029e-23
 </td>
 </tr>
 <tr>
 <th scope="row">
-r2
+r4
 </th>
 <td>
-r2
+r4
 </td>
 <td>
-2.406459e-42
+1.008119e-18
 </td>
 <td>
-279.83721
+154.62772
 </td>
 <td>
 Kruskal-Wallis rank sum test
 </td>
 <td>
-3.719074e-42
+2.142254e-18
 </td>
 </tr>
 <tr>
 <th scope="row">
-r10
+r3
 </th>
 <td>
-r10
+r3
 </td>
 <td>
-1.074554e-35
+2.568227e-17
 </td>
 <td>
-245.58881
+146.70217
 </td>
 <td>
 Kruskal-Wallis rank sum test
 </td>
 <td>
-1.522285e-35
+4.851095e-17
 </td>
 </tr>
 <tr>
 <th scope="row">
-votes
+r5
 </th>
 <td>
-votes
+r5
 </td>
 <td>
-2.161612e-29
+9.823827e-16
 </td>
 <td>
-212.55452
+137.66310
 </td>
 <td>
 Kruskal-Wallis rank sum test
 </td>
 <td>
-2.826724e-29
+1.670051e-15
 </td>
 </tr>
 <tr>
@@ -1249,16 +1189,76 @@ r7
 r7
 </td>
 <td>
-4.945764e-18
+9.201549e-14
 </td>
 <td>
-150.74594
+126.19243
 </td>
 <td>
 Kruskal-Wallis rank sum test
 </td>
 <td>
-6.005571e-18
+1.422058e-13
+</td>
+</tr>
+<tr>
+<th scope="row">
+r2
+</th>
+<td>
+r2
+</td>
+<td>
+2.159955e-13
+</td>
+<td>
+124.00604
+</td>
+<td>
+Kruskal-Wallis rank sum test
+</td>
+<td>
+3.059936e-13
+</td>
+</tr>
+<tr>
+<th scope="row">
+r10
+</th>
+<td>
+r10
+</td>
+<td>
+1.283470e-11
+</td>
+<td>
+113.38113
+</td>
+<td>
+Kruskal-Wallis rank sum test
+</td>
+<td>
+1.678384e-11
+</td>
+</tr>
+<tr>
+<th scope="row">
+votes
+</th>
+<td>
+votes
+</td>
+<td>
+2.209085e-10
+</td>
+<td>
+105.79588
+</td>
+<td>
+Kruskal-Wallis rank sum test
+</td>
+<td>
+2.682460e-10
 </td>
 </tr>
 <tr>
@@ -1269,16 +1269,16 @@ r6
 r6
 </td>
 <td>
-1.755896e-08
+3.779129e-05
 </td>
 <td>
-93.74755
+70.80971
 </td>
 <td>
 Kruskal-Wallis rank sum test
 </td>
 <td>
-1.990015e-08
+4.283013e-05
 </td>
 </tr>
 <tr>
@@ -1289,16 +1289,16 @@ year
 year
 </td>
 <td>
-2.292028e-02
+2.745818e-02
 </td>
 <td>
-47.36422
+46.55972
 </td>
 <td>
 Kruskal-Wallis rank sum test
 </td>
 <td>
-2.435280e-02
+2.917431e-02
 </td>
 </tr>
 <tr>
@@ -1309,16 +1309,16 @@ title
 title
 </td>
 <td>
-9.955906e-01
+2.600003e-01
 </td>
 <td>
-13.59161
+34.53375
 </td>
 <td>
 Kruskal-Wallis rank sum test
 </td>
 <td>
-9.955906e-01
+2.600003e-01
 </td>
 </tr>
 </tbody>
@@ -1416,16 +1416,16 @@ length
 length
 </td>
 <td>
-8.604723e-235
+6.511525e-71
 </td>
 <td>
-1206.8482
+422.88444
 </td>
 <td>
 Kruskal-Wallis rank sum test
 </td>
 <td>
-1.462803e-233
+1.106959e-69
 </td>
 </tr>
 <tr>
@@ -1436,16 +1436,16 @@ budget
 budget
 </td>
 <td>
-6.486372e-171
+1.348209e-60
 </td>
 <td>
-<span style="white-space:pre-wrap"> 30.6716</span>
+13.66395
 </td>
 <td>
 Analysis of variance Pr(&gt;F)
 </td>
 <td>
-5.513416e-170
+1.145977e-59
 </td>
 </tr>
 <tr>
@@ -1456,36 +1456,16 @@ rating
 rating
 </td>
 <td>
-1.853155e-133
+1.209027e-46
 </td>
 <td>
-725.9929
-</td>
-<td>
-Kruskal-Wallis rank sum test
-</td>
-<td>
-1.050121e-132
-</td>
-</tr>
-<tr>
-<th scope="row">
-r8
-</th>
-<td>
-r8
-</td>
-<td>
-6.374777e-111
-</td>
-<td>
-617.6991
+301.72764
 </td>
 <td>
 Kruskal-Wallis rank sum test
 </td>
 <td>
-2.709280e-110
+6.851151e-46
 </td>
 </tr>
 <tr>
@@ -1496,16 +1476,36 @@ mpaa
 mpaa
 </td>
 <td>
-6.965453e-102
+9.799097e-42
 </td>
 <td>
-735.2915
+406.33814
 </td>
 <td>
 Pearson’s Chi-squared test
 </td>
 <td>
-2.368254e-101
+4.164616e-41
+</td>
+</tr>
+<tr>
+<th scope="row">
+r8
+</th>
+<td>
+r8
+</td>
+<td>
+9.900004e-39
+</td>
+<td>
+261.28815
+</td>
+<td>
+Kruskal-Wallis rank sum test
+</td>
+<td>
+3.366002e-38
 </td>
 </tr>
 <tr>
@@ -1516,16 +1516,16 @@ r9
 r9
 </td>
 <td>
-6.951214e-93
+1.433256e-30
 </td>
 <td>
-530.3812
+218.78160
 </td>
 <td>
 Kruskal-Wallis rank sum test
 </td>
 <td>
-1.969511e-92
+4.060891e-30
 </td>
 </tr>
 </tbody>
@@ -1534,7 +1534,7 @@ Kruskal-Wallis rank sum test
 <div class="sourceCode" id="cb23"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">bartlett_results</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/warning.html">suppressWarnings</a></span><span class="op">(</span><span class="fu"><a href="../reference/upset_test.html">upset_test</a></span><span class="op">(</span><span class="va">movies</span>, <span class="va">genres</span>, test<span class="op">=</span><span class="va">bartlett.test</span>, min_size<span class="op">=</span><span class="fl">2</span><span class="op">)</span><span class="op">)</span>
 <span class="fu"><a href="https://rdrr.io/r/utils/head.html">tail</a></span><span class="op">(</span><span class="va">bartlett_results</span><span class="op">)</span></code></pre></div>
-<pre><code>[1] "NA, year, length, budget, rating, votes, r1, r2, r3, r4, r7, r9, r10, NA differ significantly between intersections"</code></pre>
+<pre><code>[1] "NA, year, length, budget, rating, votes, r1, r2, r3, r4, r5, r6, r7, r8, r9, r10, NA differ significantly between intersections"</code></pre>
 <table class="table">
 <caption>
 A data.frame: 6 × 5
@@ -1582,82 +1582,82 @@ fdr
 <tbody>
 <tr>
 <th scope="row">
-r7
+year
 </th>
 <td>
-r7
+year
 </td>
 <td>
-0.02189348
+1.041955e-67
 </td>
 <td>
-47.56605
+386.53699
 </td>
 <td>
 Bartlett test of homogeneity of variances
 </td>
 <td>
-0.02736685
+1.302444e-67
 </td>
 </tr>
 <tr>
 <th scope="row">
-r6
+length
 </th>
 <td>
-r6
+length
 </td>
 <td>
-0.76136318
+3.982729e-67
 </td>
 <td>
-24.23341
+383.70148
 </td>
 <td>
 Bartlett test of homogeneity of variances
 </td>
 <td>
-0.82894018
+4.595457e-67
 </td>
 </tr>
 <tr>
 <th scope="row">
-r8
+budget
 </th>
 <td>
-r8
+budget
 </td>
 <td>
-0.77367750
+7.637563e-50
 </td>
 <td>
-23.96341
+298.89911
 </td>
 <td>
 Bartlett test of homogeneity of variances
 </td>
 <td>
-0.82894018
+8.183103e-50
 </td>
 </tr>
 <tr>
 <th scope="row">
-r5
+rating
 </th>
 <td>
-r5
+rating
 </td>
 <td>
-0.93684489
+3.980194e-06
 </td>
 <td>
-19.14847
+66.63277
 </td>
 <td>
 Bartlett test of homogeneity of variances
 </td>
 <td>
-0.93684489
+3.980194e-06
 </td>
 </tr>
 <tr>
@@ -1725,31 +1725,34 @@ NA
 ‘length’
 </li>
 <li>
-‘budget’
+‘rating’
 </li>
 <li>
-‘rating’
+‘budget’
 </li>
 <li>
 ‘r8’
 </li>
 <li>
-‘r9’
-</li>
-<li>
 ‘mpaa’
 </li>
 <li>
-‘r3’
+‘r9’
+</li>
+<li>
+‘r1’
 </li>
 <li>
 ‘r4’
 </li>
 <li>
+‘r3’
+</li>
+<li>
 ‘r5’
 </li>
 <li>
-‘r1’
+‘r7’
 </li>
 <li>
 ‘r2’
@@ -1759,9 +1762,6 @@ NA
 </li>
 <li>
 ‘votes’
-</li>
-<li>
-‘r7’
 </li>
 <li>
 ‘r6’

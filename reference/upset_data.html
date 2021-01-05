@@ -75,7 +75,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">ComplexUpset</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.0.2</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.0.3</span>
       </span>
     </div>
 
@@ -152,7 +152,7 @@
   mode <span class='op'>=</span> <span class='st'>"exclusive_intersection"</span>,
   size_columns_suffix <span class='op'>=</span> <span class='st'>"_size"</span>,
   encode_sets <span class='op'>=</span> <span class='cn'>FALSE</span>,
-  max_combinations_n <span class='op'>=</span> <span class='fl'>24</span>,
+  max_combinations_datapoints_n <span class='op'>=</span> <span class='fl'>10</span><span class='op'>^</span><span class='fl'>10</span>,
   intersections <span class='op'>=</span> <span class='st'>"observed"</span>
 <span class='op'>)</span></pre>
 
@@ -236,8 +236,8 @@
       <td><p>whether set names (column in input data) should be encoded as numbers (set to TRUE to overcome R limitations of max 10 kB for variable names for datasets with huge numbers of sets); default TRUE for upset() and FALSE for upset_data().</p></td>
     </tr>
     <tr>
-      <th>max_combinations_n</th>
-      <td><p>the limit preventing accidental use of <code>intersections='all'</code> with a high number of sets</p></td>
+      <th>max_combinations_datapoints_n</th>
+      <td><p>a fail-safe limit preventing accidental use of <code>intersections='all'</code> with a high number of sets and observations</p></td>
     </tr>
     <tr>
       <th>intersections</th>

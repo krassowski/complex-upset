@@ -74,7 +74,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">ComplexUpset</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.0.2</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.0.3</span>
       </span>
     </div>
 
@@ -126,6 +126,20 @@
       <small>Source: <a href='https://github.com/krassowski/complex-upset/blob/master/NEWS.md'><code>NEWS.md</code></a></small>
     </div>
 
+    <div id="version-103" class="section level1">
+<h1 class="page-header" data-toc-text="1.0.3">
+<a href="#version-103" class="anchor"></a>Version 1.0.3<small> Unreleased </small>
+</h1>
+<p>2021-01-05</p>
+<p>Bug fixes:</p>
+<ul>
+<li>Major performance and memory use improvements, especially when using <code>intersections = 'all'</code>
+</li>
+<li>The <code>max_combinations_n</code> fail-safe was replaced by a more useful <code>max_combinations_datapoints_n</code> with more precise error message</li>
+<li>The atypical use case of filtering with <code>max_degree = 0</code> is now accepted again</li>
+<li>Fix tests using all the data (effectively union mode) rather than chosen mode data only</li>
+</ul>
+</div>
     <div id="version-102" class="section level1">
 <h1 class="page-header" data-toc-text="1.0.2">
 <a href="#version-102" class="anchor"></a>Version 1.0.2<small> Unreleased </small>
