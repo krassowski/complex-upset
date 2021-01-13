@@ -248,6 +248,18 @@ note_time = function(text) {
 }
 
 
+intersection_vector_to_id = function (intersection_vector, sanitized_labels, sets_ordering_in_ids) {
+    not_in_known_map = NOT_IN_KNOWN_SETS
+    names(not_in_known_map) = NOT_IN_KNOWN_SETS
+    sanitizer_map = c(sanitized_labels, not_in_known_map)
+    sets = unname(sanitizer_map[intersection_vector])
+    sets_ordering_in_ids = c(
+        sets_ordering_in_ids,
+        NOT_IN_KNOWN_SETS
+    )
+    paste(sets_ordering_in_ids[sets_ordering_in_ids %in% sets], collapse='-')
+}
+
 
 #' Prepare data for UpSet plots
 #'
@@ -383,11 +395,12 @@ upset_data = function(
 
     # sanitize or encode names of intersections selection/order
     if (specific_intersections) {
-        not_in_known_map = NOT_IN_KNOWN_SETS
-        names(not_in_known_map) = NOT_IN_KNOWN_SETS
-        sanitizer_map = c(sanitized_labels, not_in_known_map)
         intersections = sapply(intersections, function(intersection) {
-            paste0(sanitizer_map[intersection], collapse='-')
+            intersection_vector_to_id(
+                intersection,
+                sanitized_labels=sanitized_labels,
+                sets_ordering_in_ids=intersect
+            )
         })
     }
 
