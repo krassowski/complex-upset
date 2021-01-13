@@ -248,6 +248,18 @@ note_time = function(text) {
 }
 
 
+intersection_vector_to_id = function (intersection_vector, sanitized_labels, sets_ordering_in_ids) {
+    not_in_known_map = NOT_IN_KNOWN_SETS
+    names(not_in_known_map) = NOT_IN_KNOWN_SETS
+    sanitizer_map = c(sanitized_labels, not_in_known_map)
+    sets = unname(sanitizer_map[intersection_vector])
+    sets_ordering_in_ids = c(
+        sets_ordering_in_ids,
+        NOT_IN_KNOWN_SETS
+    )
+    paste(sets_ordering_in_ids[sets_ordering_in_ids %in% sets], collapse='-')
+}
+
 
 #' Prepare data for UpSet plots
 #'
@@ -269,8 +281,8 @@ note_time = function(text) {
 #' @param group_by the mode of grouping intersections; one of: `'degree'`, `'sets'`
 #' @param mode region selection mode for sorting and trimming by size. See `get_size_mode()` for accepted values.
 #' @param size_columns_suffix suffix for the columns to store the sizes (adjust if conflicts with your data)
-#' @param encode_sets whether set names (column in input data) should be encoded as numbers (set to TRUE to overcome R limitations of max 10 kB for variable names for datasets with huge numbers of sets); default TRUE for upset() and FALSE for upset_data().
-#' @param intersections whether only the intersections present in data (`observed`, default), or all intersections (`all`) should be computed; using all intersections for a high number of sets is not computationally feasible - use `min_degree` and `max_degree` to narrow down the selection; this is only useful for modes different from the default exclusive intersection.
+#' @param encode_sets whether set names (column in input data) should be encoded as numbers (set to TRUE to overcome R limitations of max 10 kB for variable names for datasets with huge numbers of sets); default TRUE for upset() and FALSE for upset_data()
+#' @param intersections whether only the intersections present in data (`observed`, default), or all intersections (`all`) should be computed; using all intersections for a high number of sets is not computationally feasible - use `min_degree` and `max_degree` to narrow down the selection; this is only useful for modes different from the default exclusive intersection. You can also provide a list with a custom selection of intersections (order is respected when you set `sort_intersections=FALSE`)
 #' @param max_combinations_datapoints_n a fail-safe limit preventing accidental use of `intersections='all'` with a high number of sets and observations
 
 #' @export
@@ -298,11 +310,16 @@ upset_data = function(
     # Check arguments
     mode = solve_mode(mode)
 
-    check_argument(
-        intersections,
-        allowed=c('observed', 'all'),
-        description='intersections'
-    )
+    if (length(intersections) == 1) {
+        check_argument(
+            intersections,
+            allowed=c('observed', 'all'),
+            description='intersections'
+        )
+        specific_intersections = FALSE
+    } else {
+        specific_intersections = TRUE
+    }
 
     check_argument(
         group_by,
@@ -372,6 +389,21 @@ upset_data = function(
         intersect = sanitize_names(intersect)
     }
     names(non_sanitized_labels) = intersect
+
+    sanitized_labels = names(non_sanitized_labels)
+    names(sanitized_labels) = non_sanitized_labels
+
+    # sanitize or encode names of intersections selection/order
+    if (specific_intersections) {
+        intersections = sapply(intersections, function(intersection) {
+            intersection_vector_to_id(
+                intersection,
+                sanitized_labels=sanitized_labels,
+                sets_ordering_in_ids=intersect
+            )
+        })
+    }
+
     note_time('converted data')
 
     data$intersection = apply(data[intersect], 1, names_of_members)
@@ -383,7 +415,7 @@ upset_data = function(
 
     observed_intersections_matrix = t(unique_members_matrix)
 
-    if (intersections == 'observed') {
+    if (specific_intersections || intersections == 'observed') {
         intersections_matrix = observed_intersections_matrix
         colnames(intersections_matrix) = intersect
         product_matrix = intersections_matrix %*% unique_members_matrix
@@ -447,7 +479,7 @@ upset_data = function(
     intersection_condition = t(t(product_matrix) >= desired_intersections_degrees)
     inclusive_intersection = intersection_condition * exclusive_intersection_counts
 
-    if (intersections != 'observed') {
+    if (!specific_intersections && intersections != 'observed') {
         exclusive_intersection = t(t(product_matrix) == observed_intersections_degrees) & (product_matrix == observed_intersections_degrees)
         exclusive_intersection = exclusive_intersection * exclusive_intersection_counts
         exclusive_intersection[is.na(exclusive_intersection)] = 0
@@ -633,6 +665,9 @@ upset_data = function(
         plot_intersections_subset = names(intersections_by_size_trimmed)
         plot_sets_subset = intersect_subset
     }
+    if (specific_intersections) {
+        plot_intersections_subset = plot_intersections_subset[plot_intersections_subset %in% intersections]
+    }
     note_time('trimmed')
 
     stacked = stack(data[original_data_indices, ], intersect)
@@ -662,6 +697,8 @@ upset_data = function(
     }
     sorted_groups = names(groups_by_size)
 
+    sort_order = NULL
+
     if (sort_intersections != FALSE) {
 
         sort_values = lapply(
@@ -685,7 +722,11 @@ upset_data = function(
         )
 
         sort_order = get_sort_order(sort_values, sort_intersections)
+    } else if (specific_intersections) {
+        sort_order = rev(match(intersections, names(intersections_by_size)))
+    }
 
+    if (!is.null(sort_order)) {
         intersections_by_size = intersections_by_size[sort_order]
 
          for (mode in names(sizes)) {
@@ -776,8 +817,7 @@ upset_data = function(
     }
 
     # restore the previous column names
-    sanitized_labels = intersect
-    colnames(data)[colnames(data) %in% sanitized_labels] <- non_sanitized_labels[sanitized_labels]
+    colnames(data)[colnames(data) %in% intersect] <- non_sanitized_labels[intersect]
 
     for (mode in names(sizes)) {
         column_name = paste0(mode, size_columns_suffix)
@@ -786,8 +826,6 @@ upset_data = function(
         )
     }
 
-  sanitized_labels = names(non_sanitized_labels)
-  names(sanitized_labels) = non_sanitized_labels
   note_time('finished')
 
   list(

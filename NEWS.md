@@ -1,3 +1,11 @@
+# Version 1.1.0
+
+2021-01-13
+
+New features:
+- it is now possible to select specific intersections passing `intersections = list('Drama', c('Comedy', 'Romance'))`
+- it is now possible to define custom order of intersections passing `intersections = list('Drama', c('Comedy', 'Romance'))` and `sort_intersections = FALSE`
+
 # Version 1.0.3
 
 2021-01-05

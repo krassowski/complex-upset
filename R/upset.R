@@ -501,8 +501,11 @@ intersect_queries = function(queries, data) {
             if (length(sets) == 1 && is.na(sets)) {
                 NOT_IN_KNOWN_SETS
             } else {
-                sets = unname(data$sanitized_labels[sets])
-                paste(data$sets_ordering_in_ids[data$sets_ordering_in_ids %in% sets], collapse='-')
+                intersection_vector_to_id(
+                    sets,
+                    sanitized_labels=data$sanitized_labels,
+                    sets_ordering_in_ids=data$sets_ordering_in_ids
+                )
             }
         }
     )
