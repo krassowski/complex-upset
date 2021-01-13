@@ -2173,7 +2173,7 @@ mpaa   Bartlett test of homogeneity of variances           NA</code></pre>
 <div class="sourceCode" id="cb68"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb68-1"><a href="#cb68-1" aria-hidden="true"></a><span class="op">%%</span>R <span class="op">-</span>w <span class="dv">800</span> <span class="op">-</span>h <span class="dv">300</span></span>
 <span id="cb68-2"><a href="#cb68-2" aria-hidden="true"></a><span class="kw">upset</span>(movies, genres, <span class="dt">width_ratio=</span><span class="fl">0.1</span>, <span class="dt">sort_intersections_by=</span><span class="kw">c</span>(<span class="st">'degree'</span>, <span class="st">'cardinality'</span>))</span></code></pre></div>
 <p><img src="Examples_Python_files/Examples_Python_157_0.png"></p>
-<p>User specified order:</p>
+<p>User-specified order:</p>
 <div class="sourceCode" id="cb69"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb69-1"><a href="#cb69-1" aria-hidden="true"></a><span class="op">%%</span>R <span class="op">-</span>w <span class="dv">600</span> <span class="op">-</span>h <span class="dv">300</span></span>
 <span id="cb69-2"><a href="#cb69-2" aria-hidden="true"></a><span class="kw">upset</span>(</span>
 <span id="cb69-3"><a href="#cb69-3" aria-hidden="true"></a>    movies,</span>
@@ -2184,7 +2184,7 @@ mpaa   Bartlett test of homogeneity of variances           NA</code></pre>
 <span id="cb69-8"><a href="#cb69-8" aria-hidden="true"></a>        <span class="st">'Comedy'</span>,</span>
 <span id="cb69-9"><a href="#cb69-9" aria-hidden="true"></a>        <span class="st">'Drama'</span>,</span>
 <span id="cb69-10"><a href="#cb69-10" aria-hidden="true"></a>        <span class="kw">c</span>(<span class="st">'Comedy'</span>, <span class="st">'Romance'</span>),</span>
-<span id="cb69-11"><a href="#cb69-11" aria-hidden="true"></a>        <span class="kw">c</span>(<span class="st">'Drama'</span>, <span class="st">'Romance'</span>),</span>
+<span id="cb69-11"><a href="#cb69-11" aria-hidden="true"></a>        <span class="kw">c</span>(<span class="st">'Romance'</span>, <span class="st">'Drama'</span>),</span>
 <span id="cb69-12"><a href="#cb69-12" aria-hidden="true"></a>        <span class="st">'Outside of known sets'</span>,</span>
 <span id="cb69-13"><a href="#cb69-13" aria-hidden="true"></a>        <span class="st">'Action'</span></span>
 <span id="cb69-14"><a href="#cb69-14" aria-hidden="true"></a>    )</span>
