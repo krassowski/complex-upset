@@ -75,7 +75,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">ComplexUpset</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.0.3</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.1.0</span>
       </span>
     </div>
 
@@ -245,7 +245,7 @@
     <dt><code>sort_ratio_denominator</code></dt><dd><p>the mode for denominator when sorting by ratio</p></dd>
     <dt><code>group_by</code></dt><dd><p>the mode of grouping intersections; one of: <code>'degree'</code>, <code>'sets'</code></p></dd>
     <dt><code>size_columns_suffix</code></dt><dd><p>suffix for the columns to store the sizes (adjust if conflicts with your data)</p></dd>
-    <dt><code>intersections</code></dt><dd><p>whether only the intersections present in data (<code>observed</code>, default), or all intersections (<code>all</code>) should be computed; using all intersections for a high number of sets is not computationally feasible - use <code>min_degree</code> and <code>max_degree</code> to narrow down the selection; this is only useful for modes different from the default exclusive intersection.</p></dd>
+    <dt><code>intersections</code></dt><dd><p>whether only the intersections present in data (<code>observed</code>, default), or all intersections (<code>all</code>) should be computed; using all intersections for a high number of sets is not computationally feasible - use <code>min_degree</code> and <code>max_degree</code> to narrow down the selection; this is only useful for modes different from the default exclusive intersection. You can also provide a list with a custom selection of intersections (order is respected when you set <code>sort_intersections=FALSE</code>)</p></dd>
     <dt><code>max_combinations_datapoints_n</code></dt><dd><p>a fail-safe limit preventing accidental use of <code>intersections='all'</code> with a high number of sets and observations</p></dd>
   
 </dl></td>

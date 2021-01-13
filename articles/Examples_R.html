@@ -34,7 +34,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">ComplexUpset</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.0.3</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.1.0</span>
       </span>
     </div>
 
@@ -2449,17 +2449,35 @@ NA
 <code class="sourceCode R"><span class="fu">set_size</span><span class="op">(</span><span class="fl">8</span>, <span class="fl">3</span><span class="op">)</span>
 <span class="fu"><a href="../reference/upset.html">upset</a></span><span class="op">(</span><span class="va">movies</span>, <span class="va">genres</span>, width_ratio<span class="op">=</span><span class="fl">0.1</span>, sort_intersections_by<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">'degree'</span>, <span class="st">'cardinality'</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 <p><img src="Examples_R_files/Examples_R_150_0.png"></p>
+<p>User specified order:</p>
+<div class="sourceCode" id="cb68"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu">set_size</span><span class="op">(</span><span class="fl">6</span>, <span class="fl">3</span><span class="op">)</span>
+<span class="fu"><a href="../reference/upset.html">upset</a></span><span class="op">(</span>
+    <span class="va">movies</span>,
+    <span class="va">genres</span>,
+    width_ratio<span class="op">=</span><span class="fl">0.1</span>,
+    sort_intersections<span class="op">=</span><span class="cn">FALSE</span>,
+    intersections<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>
+        <span class="st">'Comedy'</span>,
+        <span class="st">'Drama'</span>,
+        <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">'Comedy'</span>, <span class="st">'Romance'</span><span class="op">)</span>,
+        <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">'Drama'</span>, <span class="st">'Romance'</span><span class="op">)</span>,
+        <span class="st">'Outside of known sets'</span>,
+        <span class="st">'Action'</span>
+    <span class="op">)</span>
+<span class="op">)</span></code></pre></div>
+<p><img src="Examples_R_files/Examples_R_152_0.png"></p>
 </div>
 <div id="sorting-sets" class="section level3">
 <h3 class="hasAnchor">
 <a href="#sorting-sets" class="anchor"></a>8.2 Sorting sets</h3>
 <p>Ascending:</p>
-<div class="sourceCode" id="cb68"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb69"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">set_size</span><span class="op">(</span><span class="fl">8</span>, <span class="fl">3</span><span class="op">)</span>
 <span class="fu"><a href="../reference/upset.html">upset</a></span><span class="op">(</span><span class="va">movies</span>, <span class="va">genres</span>, width_ratio<span class="op">=</span><span class="fl">0.1</span>, sort_sets<span class="op">=</span><span class="st">'ascending'</span><span class="op">)</span></code></pre></div>
-<p><img src="Examples_R_files/Examples_R_153_0.png"></p>
+<p><img src="Examples_R_files/Examples_R_155_0.png"></p>
 <p>Without sorting - preserving the order as in genres:</p>
-<div class="sourceCode" id="cb69"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb70"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">genres</span></code></pre></div>
 <style>
 .list-inline {list-style: none; margin:0; padding: 0}
@@ -2489,10 +2507,10 @@ NA
 ‘Short’
 </li>
 </ol>
-<div class="sourceCode" id="cb70"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb71"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">set_size</span><span class="op">(</span><span class="fl">8</span>, <span class="fl">3</span><span class="op">)</span>
 <span class="fu"><a href="../reference/upset.html">upset</a></span><span class="op">(</span><span class="va">movies</span>, <span class="va">genres</span>, width_ratio<span class="op">=</span><span class="fl">0.1</span>, sort_sets<span class="op">=</span><span class="cn">FALSE</span><span class="op">)</span></code></pre></div>
-<p><img src="Examples_R_files/Examples_R_156_0.png"></p>
+<p><img src="Examples_R_files/Examples_R_158_0.png"></p>
 </div>
 </div>
 <div id="grouping" class="section level2">
@@ -2502,7 +2520,7 @@ NA
 <h3 class="hasAnchor">
 <a href="#grouping-intersections" class="anchor"></a>9.1 Grouping intersections</h3>
 <p>Use <code>group_by='sets'</code> to group intersections by set. If needed, the intersections will be repeated so that they appear in each set group. Use <code><a href="../reference/upset_query.html">upset_query()</a></code> with <code>group</code> argument to color the intersection matrix accordingly.</p>
-<div class="sourceCode" id="cb71"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb72"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">set_size</span><span class="op">(</span><span class="fl">8</span>, <span class="fl">3</span><span class="op">)</span>
 
 <span class="fu"><a href="../reference/upset.html">upset</a></span><span class="op">(</span>
@@ -2524,14 +2542,14 @@ NA
         <span class="fu"><a href="../reference/upset_query.html">upset_query</a></span><span class="op">(</span>set<span class="op">=</span><span class="st">'Action'</span>, fill<span class="op">=</span><span class="st">'purple'</span><span class="op">)</span>
     <span class="op">)</span>
 <span class="op">)</span></code></pre></div>
-<p><img src="Examples_R_files/Examples_R_160_0.png"></p>
+<p><img src="Examples_R_files/Examples_R_162_0.png"></p>
 </div>
 </div>
 <div id="display-percentages" class="section level2">
 <h2 class="hasAnchor">
 <a href="#display-percentages" class="anchor"></a>10. Display percentages</h2>
 <p>Use <code><a href="../reference/aes_percentage.html">aes_percentage()</a></code> utility preceded with <code>!!</code> syntax to easily display percentages. In the examples below only percentages for the movies with R rating are shown to avoid visual clutter.</p>
-<div class="sourceCode" id="cb72"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb73"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">rating_scale</span> <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_manual.html">scale_fill_manual</a></span><span class="op">(</span>values<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span>
     <span class="st">'R'</span><span class="op">=</span><span class="st">'#E41A1C'</span>, <span class="st">'PG'</span><span class="op">=</span><span class="st">'#377EB8'</span>,
     <span class="st">'PG-13'</span><span class="op">=</span><span class="st">'#4DAF4A'</span>, <span class="st">'NC-17'</span><span class="op">=</span><span class="st">'#FF7F00'</span>
@@ -2540,7 +2558,7 @@ NA
 <div id="within-intersection" class="section level3">
 <h3 class="hasAnchor">
 <a href="#within-intersection" class="anchor"></a>10.1 Within intersection</h3>
-<div class="sourceCode" id="cb73"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb74"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">set_size</span><span class="op">(</span><span class="fl">8</span>, <span class="fl">5</span><span class="op">)</span>
 
 <span class="fu"><a href="../reference/upset.html">upset</a></span><span class="op">(</span>
@@ -2567,12 +2585,12 @@ NA
 <span class="op">)</span></code></pre></div>
 <pre><code>Warning message:
 “Removed 262 rows containing non-finite values (stat_count).”</code></pre>
-<p><img src="Examples_R_files/Examples_R_165_1.png"></p>
+<p><img src="Examples_R_files/Examples_R_167_1.png"></p>
 </div>
 <div id="relative-to-the-group" class="section level3">
 <h3 class="hasAnchor">
 <a href="#relative-to-the-group" class="anchor"></a>10.2 Relative to the group</h3>
-<div class="sourceCode" id="cb75"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb76"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">set_size</span><span class="op">(</span><span class="fl">8</span>, <span class="fl">5</span><span class="op">)</span>
 
 <span class="fu"><a href="../reference/upset.html">upset</a></span><span class="op">(</span>
@@ -2600,12 +2618,12 @@ NA
 <span class="op">)</span></code></pre></div>
 <pre><code>Warning message:
 “Removed 262 rows containing non-finite values (stat_count).”</code></pre>
-<p><img src="Examples_R_files/Examples_R_167_1.png"></p>
+<p><img src="Examples_R_files/Examples_R_169_1.png"></p>
 </div>
 <div id="relative-to-all-observed-values" class="section level3">
 <h3 class="hasAnchor">
 <a href="#relative-to-all-observed-values" class="anchor"></a>10.3 Relative to all observed values</h3>
-<div class="sourceCode" id="cb77"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb78"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">set_size</span><span class="op">(</span><span class="fl">8</span>, <span class="fl">5</span><span class="op">)</span>
 
 <span class="fu"><a href="../reference/upset.html">upset</a></span><span class="op">(</span>
@@ -2632,7 +2650,7 @@ NA
 <span class="op">)</span></code></pre></div>
 <pre><code>Warning message:
 “Removed 262 rows containing non-finite values (stat_count).”</code></pre>
-<p><img src="Examples_R_files/Examples_R_169_1.png"></p>
+<p><img src="Examples_R_files/Examples_R_171_1.png"></p>
 </div>
 </div>
 <div id="advanced-usage-examples" class="section level2">
@@ -2641,7 +2659,7 @@ NA
 <div id="display-text-on-some-bars-only" class="section level3">
 <h3 class="hasAnchor">
 <a href="#display-text-on-some-bars-only" class="anchor"></a>11.1 Display text on some bars only</h3>
-<div class="sourceCode" id="cb79"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb80"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">set_size</span><span class="op">(</span><span class="fl">8</span>, <span class="fl">5</span><span class="op">)</span>
 
 <span class="fu"><a href="../reference/upset.html">upset</a></span><span class="op">(</span>
@@ -2663,12 +2681,12 @@ NA
         <span class="op">)</span>
     <span class="op">)</span>
 <span class="op">)</span></code></pre></div>
-<p><img src="Examples_R_files/Examples_R_172_0.png"></p>
+<p><img src="Examples_R_files/Examples_R_174_0.png"></p>
 </div>
 <div id="combine-multiple-plots-together" class="section level3">
 <h3 class="hasAnchor">
 <a href="#combine-multiple-plots-together" class="anchor"></a>11.2 Combine multiple plots together</h3>
-<div class="sourceCode" id="cb80"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb81"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">set_size</span><span class="op">(</span><span class="fl">8</span>, <span class="fl">5</span><span class="op">)</span>
 <span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://patchwork.data-imaginist.com">patchwork</a></span><span class="op">)</span>
 
@@ -2693,12 +2711,12 @@ NA
 “Removed 16 rows containing non-finite values (stat_count).”
 Warning message:
 “Removed 15 rows containing non-finite values (stat_count).”</code></pre>
-<p><img src="Examples_R_files/Examples_R_174_1.png"></p>
+<p><img src="Examples_R_files/Examples_R_176_1.png"></p>
 </div>
 <div id="change-height-of-the-annotations" class="section level3">
 <h3 class="hasAnchor">
 <a href="#change-height-of-the-annotations" class="anchor"></a>11.3 Change height of the annotations</h3>
-<div class="sourceCode" id="cb82"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb83"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">set_size</span><span class="op">(</span><span class="fl">8</span>, <span class="fl">3.5</span><span class="op">)</span>
 <span class="fu"><a href="../reference/upset.html">upset</a></span><span class="op">(</span>
     <span class="va">movies</span>, <span class="va">genres</span>, name<span class="op">=</span><span class="st">'genre'</span>, width_ratio<span class="op">=</span><span class="fl">0.1</span>, min_size<span class="op">=</span><span class="fl">100</span>,
@@ -2714,14 +2732,14 @@ Warning message:
 <span class="op">)</span> <span class="op">+</span> <span class="fu">patchwork</span><span class="fu">::</span><span class="fu"><a href="https://patchwork.data-imaginist.com/reference/plot_layout.html">plot_layout</a></span><span class="op">(</span>heights<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0.5</span>, <span class="fl">1</span>, <span class="fl">0.5</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 <pre><code>Warning message:
 “Removed 262 rows containing non-finite values (stat_count).”</code></pre>
-<p><img src="Examples_R_files/Examples_R_176_1.png"></p>
+<p><img src="Examples_R_files/Examples_R_178_1.png"></p>
 </div>
 </div>
 <div id="venn-diagrams" class="section level2">
 <h2 class="hasAnchor">
 <a href="#venn-diagrams" class="anchor"></a>12. Venn diagrams</h2>
 <p>Simple implementation of Venn diagrams is provided, taking the same input format as <code><a href="../reference/upset.html">upset()</a></code> but only supporting up to three sets.</p>
-<div class="sourceCode" id="cb84"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb85"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">movies_subset</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">movies</span>, <span class="fl">300</span><span class="op">)</span>
 <span class="va">genres_subset</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">'Comedy'</span>, <span class="st">'Drama'</span>, <span class="st">'Action'</span><span class="op">)</span>
 
@@ -2730,7 +2748,7 @@ Warning message:
 <div id="highlight-specific-elements" class="section level3">
 <h3 class="hasAnchor">
 <a href="#highlight-specific-elements" class="anchor"></a>12.1 Highlight specific elements</h3>
-<div class="sourceCode" id="cb85"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb86"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">set_size</span><span class="op">(</span><span class="fl">8</span>, <span class="fl">5.5</span><span class="op">)</span>
 <span class="op">(</span>
     <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="va">arranged</span><span class="op">)</span>
@@ -2764,12 +2782,12 @@ Warning message:
     <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_gradient.html">scale_fill_gradient</a></span><span class="op">(</span>low<span class="op">=</span><span class="st">'white'</span>, high<span class="op">=</span><span class="st">'black'</span>, name<span class="op">=</span><span class="st">'Length (minutes)'</span><span class="op">)</span>
 
 <span class="op">)</span></code></pre></div>
-<p><img src="Examples_R_files/Examples_R_181_0.png"></p>
+<p><img src="Examples_R_files/Examples_R_183_0.png"></p>
 </div>
 <div id="highlight-all-regions" class="section level3">
 <h3 class="hasAnchor">
 <a href="#highlight-all-regions" class="anchor"></a>12.2 Highlight all regions</h3>
-<div class="sourceCode" id="cb86"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb87"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">set_size</span><span class="op">(</span><span class="fl">8</span>, <span class="fl">5.5</span><span class="op">)</span>
 <span class="op">(</span>
     <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="va">arranged</span><span class="op">)</span>
@@ -2783,12 +2801,12 @@ Warning message:
     <span class="op">+</span> <span class="fu"><a href="../reference/scale_color_venn_mix.html">scale_color_venn_mix</a></span><span class="op">(</span><span class="va">movies</span>, sets<span class="op">=</span><span class="va">genres_subset</span>, guide<span class="op">=</span><span class="cn">FALSE</span><span class="op">)</span>
     <span class="op">+</span> <span class="fu"><a href="../reference/scale_fill_venn_mix.html">scale_fill_venn_mix</a></span><span class="op">(</span><span class="va">movies</span>, sets<span class="op">=</span><span class="va">genres_subset</span>, guide<span class="op">=</span><span class="cn">FALSE</span><span class="op">)</span>
 <span class="op">)</span></code></pre></div>
-<p><img src="Examples_R_files/Examples_R_183_0.png"></p>
+<p><img src="Examples_R_files/Examples_R_185_0.png"></p>
 </div>
 <div id="highlight-specific-regions" class="section level3">
 <h3 class="hasAnchor">
 <a href="#highlight-specific-regions" class="anchor"></a>12.3 Highlight specific regions</h3>
-<div class="sourceCode" id="cb87"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb88"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">set_size</span><span class="op">(</span><span class="fl">8</span>, <span class="fl">5.5</span><span class="op">)</span>
 
 <span class="op">(</span>
@@ -2802,13 +2820,13 @@ Warning message:
     <span class="op">+</span> <span class="fu"><a href="../reference/scale_color_venn_mix.html">scale_color_venn_mix</a></span><span class="op">(</span><span class="va">movies</span>, sets<span class="op">=</span><span class="va">genres_subset</span>, guide<span class="op">=</span><span class="cn">FALSE</span><span class="op">)</span>
     <span class="op">+</span> <span class="fu"><a href="../reference/scale_fill_venn_mix.html">scale_fill_venn_mix</a></span><span class="op">(</span><span class="va">movies</span>, sets<span class="op">=</span><span class="va">genres_subset</span>, guide<span class="op">=</span><span class="cn">FALSE</span>, highlight<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">'Comedy-Action'</span>, <span class="st">'Drama'</span><span class="op">)</span>, inactive_color<span class="op">=</span><span class="st">'white'</span><span class="op">)</span>
 <span class="op">)</span></code></pre></div>
-<p><img src="Examples_R_files/Examples_R_185_0.png"></p>
+<p><img src="Examples_R_files/Examples_R_187_0.png"></p>
 </div>
 <div id="two-sets-venn" class="section level3">
 <h3 class="hasAnchor">
 <a href="#two-sets-venn" class="anchor"></a>12.4 Two sets Venn</h3>
 <p>The density of the points grid is determined in such a way that the all the points from the set with the largest space restrictions are fit into the available area. In case of the diagram below, its the observations that do not belong to any set that define the grid density:</p>
-<div class="sourceCode" id="cb88"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb89"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">set_size</span><span class="op">(</span><span class="fl">6</span>, <span class="fl">4.5</span><span class="op">)</span>
 <span class="va">genres_subset</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">'Action'</span>, <span class="st">'Drama'</span><span class="op">)</span>
 <span class="op">(</span>
@@ -2820,7 +2838,7 @@ Warning message:
     <span class="op">+</span> <span class="fu"><a href="../reference/geom_venn_label_set.html">geom_venn_label_set</a></span><span class="op">(</span><span class="va">movies_subset</span>, sets<span class="op">=</span><span class="va">genres_subset</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>label<span class="op">=</span><span class="va">region</span><span class="op">)</span>, outwards_adjust<span class="op">=</span><span class="fl">2.6</span><span class="op">)</span>
     <span class="op">+</span> <span class="fu"><a href="../reference/scale_color_venn_mix.html">scale_color_venn_mix</a></span><span class="op">(</span><span class="va">movies</span>, sets<span class="op">=</span><span class="va">genres_subset</span>, guide<span class="op">=</span><span class="cn">FALSE</span><span class="op">)</span>
 <span class="op">)</span></code></pre></div>
-<p><img src="Examples_R_files/Examples_R_188_0.png"></p>
+<p><img src="Examples_R_files/Examples_R_190_0.png"></p>
 </div>
 </div>
   </div>

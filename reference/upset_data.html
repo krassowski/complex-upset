@@ -75,7 +75,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">ComplexUpset</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.0.3</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.1.0</span>
       </span>
     </div>
 
@@ -233,7 +233,7 @@
     </tr>
     <tr>
       <th>encode_sets</th>
-      <td><p>whether set names (column in input data) should be encoded as numbers (set to TRUE to overcome R limitations of max 10 kB for variable names for datasets with huge numbers of sets); default TRUE for upset() and FALSE for upset_data().</p></td>
+      <td><p>whether set names (column in input data) should be encoded as numbers (set to TRUE to overcome R limitations of max 10 kB for variable names for datasets with huge numbers of sets); default TRUE for upset() and FALSE for upset_data()</p></td>
     </tr>
     <tr>
       <th>max_combinations_datapoints_n</th>
@@ -241,7 +241,7 @@
     </tr>
     <tr>
       <th>intersections</th>
-      <td><p>whether only the intersections present in data (<code>observed</code>, default), or all intersections (<code>all</code>) should be computed; using all intersections for a high number of sets is not computationally feasible - use <code>min_degree</code> and <code>max_degree</code> to narrow down the selection; this is only useful for modes different from the default exclusive intersection.</p></td>
+      <td><p>whether only the intersections present in data (<code>observed</code>, default), or all intersections (<code>all</code>) should be computed; using all intersections for a high number of sets is not computationally feasible - use <code>min_degree</code> and <code>max_degree</code> to narrow down the selection; this is only useful for modes different from the default exclusive intersection. You can also provide a list with a custom selection of intersections (order is respected when you set <code>sort_intersections=FALSE</code>)</p></td>
     </tr>
     </table>
 
