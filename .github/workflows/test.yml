@@ -27,7 +27,7 @@ jobs:
         run: sudo apt install libcurl4-openssl-dev libgit2-dev
       - name: Install MacOs dependencies
         if: runner.os == 'macOS'
-        run: brew cask install xquartz
+        run: brew install --cask xquartz
       - name: Install dependencies
         run: |
           install.packages(c("remotes", "rcmdcheck"))
