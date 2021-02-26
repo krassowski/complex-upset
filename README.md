@@ -2,6 +2,7 @@
 
 [![test](https://github.com/krassowski/complex-upset/workflows/test/badge.svg)](https://github.com/krassowski/complex-upset/actions?query=workflow%3Atest)
 [![codecov](https://codecov.io/gh/krassowski/complex-upset/branch/master/graph/badge.svg)](https://codecov.io/gh/krassowski/complex-upset)
+[![CRAN_Status](https://www.r-pkg.org/badges/version/ComplexUpset?color=blue)](https://CRAN.R-project.org/package=ComplexUpset)
 [![DOI](https://zenodo.org/badge/236336935.svg)](https://zenodo.org/badge/latestdoi/236336935)
 
 Quick links: [Documentation](https://krassowski.github.io/complex-upset/) | [Installation](https://github.com/krassowski/complex-upset#Install) | [R examples](https://krassowski.github.io/complex-upset/articles/Examples_R.html) | [Python examples](https://krassowski.github.io/complex-upset/articles/Examples_Python.html)
