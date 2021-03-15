@@ -348,8 +348,9 @@ Note: filtering by size (`min_size` and/or `max_size`) or setting `n_intersectio
 })
 
 
-test_that("upset_data() works with a tibble", {
+test_that("upset_data() works with a tibble or a data.table", {
     # see https://github.com/krassowski/complex-upset/issues/20
+    # see https://github.com/krassowski/complex-upset/issues/102
     df = data.frame(
         a=c(1, 0),
         b=c(1, 1),
@@ -358,7 +359,9 @@ test_that("upset_data() works with a tibble", {
         x=c(2, 5)
     )
 
-    result = upset_data(tibble::tibble(df), c('a', 'b', 'c', 'd'))
+    result_tbl = upset_data(tibble::tibble(df), c('a', 'b', 'c', 'd'))
+    
+    result_dt = upset_data(data.table::as.data.table(df), c('a', 'b', 'c', 'd'))
 
     expected_matrix = data.frame(
         `a-b`=c(d=FALSE, a=TRUE, c=FALSE, b=TRUE),
@@ -367,7 +370,12 @@ test_that("upset_data() works with a tibble", {
     )
 
     expect_equal(
-        result$matrix,
+        result_tbl$matrix,
+        expected_matrix
+    )
+    
+    expect_equal(
+        result_dt$matrix,
         expected_matrix
     )
 })
