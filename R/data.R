@@ -341,7 +341,7 @@ upset_data = function(
     # Transform data
     note_time('initialised')
 
-    if ('tbl' %in% class(data)) {
+    if ('tbl' %in% class(data) | 'data.table' %in% class(data)) {
         data = as.data.frame(data)
     }
 
