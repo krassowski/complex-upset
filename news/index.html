@@ -74,7 +74,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">ComplexUpset</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.1.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.2.0</span>
       </span>
     </div>
 
@@ -126,9 +126,34 @@
       <small>Source: <a href='https://github.com/krassowski/complex-upset/blob/master/NEWS.md'><code>NEWS.md</code></a></small>
     </div>
 
+    <div id="version-120" class="section level1">
+<h1 class="page-header" data-toc-text="1.2.0">
+<a href="#version-120" class="anchor"></a>Version 1.2.0<small> Unreleased </small>
+</h1>
+<p>2021-04-03</p>
+<p>Bux fixes:</p>
+<ul>
+<li>[critical] fixed display order of labels when using <code>encode_sets=TRUE</code> <a href='https://github.com/krassowski/complex-upset/issues/110'>#110</a></li>
+<li>encoding of set names will now properly work around name conflicts <a href='https://github.com/krassowski/complex-upset/issues/110'>#110</a></li>
+</ul>
+<p>Major improvements:</p>
+<ul>
+<li>manually specified intersections will now display empty intersections and non-exclusive intersections correctly <a href='https://github.com/krassowski/complex-upset/issues/109'>#109</a></li>
+<li>manually specified intersections do not require modifying the <code>intersect</code> argument to obtain the intended result any longer <a href='https://github.com/krassowski/complex-upset/issues/109'>#109</a></li>
+<li>stripes size and other attributes of underlying <code><a href="https://ggplot2.tidyverse.org/reference/geom_segment.html">geom_segment()</a></code> can now be customized with new function: <code><a href="../reference/upset_stripes.html">upset_stripes()</a></code> <a href='https://github.com/krassowski/complex-upset/issues/111'>#111</a></li>
+<li>stripes color and other attributes can now be mapped to data <a href='https://github.com/krassowski/complex-upset/issues/111'>#111</a></li>
+</ul>
+<p>Minor improvements:</p>
+<ul>
+<li>data.table can be passed instead of data.frame (the conversion will be performed atuomatically) <a href='https://github.com/krassowski/complex-upset/issues/105'>#105</a></li>
+<li>warning will be shown if a vecotor is provided instead of a list to the <code>intersections</code> argument <a href='https://github.com/krassowski/complex-upset/issues/109'>#109</a></li>
+<li>when <code>intersections</code> argument includes sets not specified in <code>intersect</code>, a warning will be issued and execution will proceed as if those were included in <code>intersect</code> <a href='https://github.com/krassowski/complex-upset/issues/109'>#109</a></li>
+<li>when incorrect names of sets are passed to <code>intersections</code> argument, those will be highlighted and plotting will be aborted <a href='https://github.com/krassowski/complex-upset/issues/109'>#109</a></li>
+</ul>
+</div>
     <div id="version-110" class="section level1">
 <h1 class="page-header" data-toc-text="1.1.0">
-<a href="#version-110" class="anchor"></a>Version 1.1.0<small> Unreleased </small>
+<a href="#version-110" class="anchor"></a>Version 1.1.0<small> 2021-02-26 </small>
 </h1>
 <p>2021-01-13</p>
 <p>New features:</p>
