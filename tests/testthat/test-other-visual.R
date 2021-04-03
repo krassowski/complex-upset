@@ -313,3 +313,118 @@ test_that("Inclusive union filtering works ok", {
         )
     )
 })
+
+
+issue_101_reproduction_data = data.frame(matrix(data = TRUE, nrow=10, ncol=4))
+issue_101_reproduction_data[10, 1] = FALSE
+issue_101_reproduction_data[9, 2] = FALSE
+
+
+test_that("Manually specified intersections that are not exclusive work ok", {
+
+    expect_doppelganger(
+        "Non-exclusive, manual intersections work with mode=inclusive",
+        upset(
+            issue_101_reproduction_data,
+            c('X1', 'X2'),
+            mode='inclusive_intersection',
+            intersections=list(
+                'X1',
+                'X2',
+                c('X1', 'X2')
+            )
+        )
+    )
+
+    expect_doppelganger(
+        "Non-exclusive, manual intersections work with mode=inclusive with three sets",
+        upset(
+            issue_101_reproduction_data,
+            c('X1', 'X2', 'X3'),
+            mode='inclusive_intersection',
+            intersections=list(
+                'X1',
+                'X2',
+                c('X1', 'X2'),
+                c('X1', 'X2', 'X3')
+            )
+        )
+    )
+
+    expect_doppelganger(
+        "Non-exclusive, manual intersections work with mode=exclusive",
+        upset(
+            issue_101_reproduction_data,
+            c('X1', 'X2'),
+            mode='exclusive_intersection',
+            intersections=list(
+                'X1',
+                'X2',
+                c('X1', 'X2')
+            )
+        )
+    )
+
+    expect_doppelganger(
+        "Non-exclusive, manual intersections show extra sets when included",
+        upset(
+            issue_101_reproduction_data,
+            c('X1', 'X2', 'X3', 'X4'),
+            mode='inclusive_intersection',
+            intersections=list(
+                'X1',
+                'X2',
+                c('X1', 'X2')
+            )
+        )
+    )
+
+    expect_doppelganger(
+        "Mix of exclusive and non-exclusive manual intersections work with mode=inclusive",
+        upset(
+            issue_101_reproduction_data,
+            c('X1', 'X2', 'X3', 'X4'),
+            mode='inclusive_intersection',
+            intersections=list(
+                'X1',
+                'X2',
+                c('X1', 'X2'),
+                c('X1', 'X2', 'X3', 'X4')
+            )
+        )
+    )
+
+    expect_doppelganger(
+        "Mix of exclusive and non-exclusive manual intersections work with mode=exclusive",
+        upset(
+            issue_101_reproduction_data,
+            c('X1', 'X2', 'X3', 'X4'),
+            mode='exclusive_intersection',
+            intersections=list(
+                'X1',
+                'X2',
+                c('X1', 'X2'),
+                c('X1', 'X2', 'X3', 'X4')
+            )
+        )
+    )
+})
+
+
+test_that("Empty intersection can be included in manually specified intersections", {
+
+    expect_doppelganger(
+        "Empty intersection can be included in manually specified intersections",
+        upset(
+            issue_101_reproduction_data,
+            c('X1', 'X2', 'X3', 'X4'),
+            mode = "inclusive_intersection",
+            intersections = list(
+                'X1',
+                'X2',
+                c('X1', 'X2'),
+                'Outside of known sets'
+            )
+        )
+    )
+})

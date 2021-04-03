@@ -319,6 +319,13 @@ upset_data = function(
         specific_intersections = FALSE
     } else {
         specific_intersections = TRUE
+        if (!is.list(intersections)) {
+            warning(paste0(
+                '`intersections` is not `observed`, `all`, nor a list of vectors;',
+                ' did you mean to use `list(c("A"), c("B"), c("A", "B"))`',
+                ' instead of `c(c("A"), c("B"), c("A", "B"))`?'
+            ))
+        }
     }
 
     check_argument(
@@ -334,6 +341,43 @@ upset_data = function(
     }
 
     intersect = unlist(intersect)
+
+    if (specific_intersections) {
+        sets_from_manual_intersections = setdiff(
+            unique(unlist(intersections)),
+            NOT_IN_KNOWN_SETS
+        )
+        sets_from_intersect = unique(intersect)
+        missing_sets = setdiff(sets_from_manual_intersections, sets_from_intersect)
+        if (length(missing_sets) != 0) {
+            correct_missing_sets = base::intersect(
+                colnames(data),
+                missing_sets
+            )
+            incorrect_missing_sets = base::setdiff(
+                missing_sets,
+                colnames(data)
+            )
+
+            if (length(incorrect_missing_sets) != 0) {
+                stop(
+                    paste(
+                        'Sets provided in `intersections` are missing in both `intersect` and in `data`:',
+                        paste(incorrect_missing_sets, collapse=', ')
+                    )
+                )
+            } else {
+                warning(
+                    paste(
+                        'Following sets provided in `intersections` are missing in `intersect`:',
+                        paste(missing_sets, collapse=', ')
+                    )
+                )
+            }
+
+            intersect = c(intersect, correct_missing_sets)
+        }
+    }
     if (length(intersect) == 1) {
         stop('Needs at least two indicator variables')
     }
@@ -411,15 +455,87 @@ upset_data = function(
     unique_members_matrix = data[!duplicated(data$intersection), intersect]
     rownames(unique_members_matrix) = apply(unique_members_matrix, 1, names_of_members)
 
+    # TODO: maybe use + to convert to numeric for speed (is it faster?)?
     unique_members_matrix = apply(unique_members_matrix, 1, as.numeric)
 
     observed_intersections_matrix = t(unique_members_matrix)
 
-    if (specific_intersections || intersections == 'observed') {
+    if (specific_intersections) {
+
+        if (mode == 'exclusive_intersection') {
+            observed_intersections = rownames(observed_intersections_matrix)
+            non_observed_exclusive_but_requested = setdiff(
+                intersections,
+                observed_intersections
+            )
+
+            translate_to_labels = function(endcoded_intersections) {
+                sapply(
+                    sapply(endcoded_intersections, get_intersection_members),
+                    function(members) {
+                        if (encode_sets) {
+                            members = as.integer(members)
+                        }
+                        paste(non_sanitized_labels[members], collapse='-')
+                    }
+                )
+            }
+
+            if (length(non_observed_exclusive_but_requested) == length(intersections)) {
+                non_observed_exclusive_but_requested_labels = translate_to_labels(
+                    non_observed_exclusive_but_requested
+                )
+                observed_intersections_labels = translate_to_labels(
+                    observed_intersections
+                )
+                warning(
+                    paste0(
+                        'None of the requested exclusive intersections is observed in the data:',
+                        '\n  - requested: ',
+                        paste(non_observed_exclusive_but_requested_labels, collapse =', '),
+                        '\n  - available for exclusive intersection mode: ',
+                        paste(observed_intersections_labels, collapse =', ')
+                    )
+                )
+            }
+        }
+
+        # while this might seem strange to have duplicates, it would be a valid use case
+        # e.g. to add a reference intersection multiple time for ease of comparison
+
+        unique_intersections = unique(intersections)
+        intersections_members = get_intersection_members(unique_intersections)
+
+        sets_from_manual_intersections = setdiff(
+            unique(unlist(intersections_members)),
+            NOT_IN_KNOWN_SETS
+        )
+
+        # TODO: this is slow and memory hungry; ideally we would only get the relevant intersection straight away!
+        possible_intersections = all_intersections_matrix(intersect, NULL, 0, Inf)
+
+        relevant_intersections = rownames(possible_intersections[
+            rowSums(possible_intersections[, sets_from_manual_intersections]) > 0,
+        ])
+        possible_intersections_members = get_intersection_members(relevant_intersections)
+
+        # + to convert to numeric for consistency
+        intersections_matrix = t(+sapply(
+            possible_intersections_members,
+            function(i) {
+                intersect %in% i
+            }
+        ))
+        colnames(intersections_matrix) = intersect
+        rownames(intersections_matrix) = relevant_intersections
+
+        unique_members_matrix = t(intersections_matrix)
+        product_matrix = tcrossprod(intersections_matrix)
+    } else if (intersections == 'observed') {
         intersections_matrix = observed_intersections_matrix
         colnames(intersections_matrix) = intersect
         product_matrix = intersections_matrix %*% unique_members_matrix
-    } else {
+    } else if (intersections == 'all') {
         effective_max_degree = min(length(intersect), max_degree)
 
         combinations_n = sum(sapply(min_degree:effective_max_degree, function(m) choose(length(intersect), m)))
@@ -429,7 +545,7 @@ upset_data = function(
             degrees_text = ifelse(
                 min_degree == max_degree,
                 paste0(' equal ', min_degree),
-                paste0('s between ', min_degree, ' and', effective_max_degree)
+                paste0('s between ', min_degree, ' and ', effective_max_degree)
             )
 
             advice_message = paste0(
@@ -497,6 +613,28 @@ upset_data = function(
         exclusive_union=colSums(exclusive_union),
         inclusive_union=colSums(inclusive_union)
     )
+
+    if (specific_intersections) {
+        # add empty intersections if specified see:
+        # - https://github.com/krassowski/complex-upset/issues/99
+        # - https://github.com/krassowski/complex-upset/issues/104
+        # - https://github.com/krassowski/complex-upset/issues/101
+        for (kind in names(sizes)) {
+            empty_intersections_to_include = setdiff(
+                intersections,
+                names(sizes[[kind]])
+            )
+            if (length(empty_intersections_to_include)) {
+                sizes_of_empties = rep(0, length(empty_intersections_to_include))
+                names(sizes_of_empties) = empty_intersections_to_include
+
+                sizes[[kind]] = c(
+                    sizes[[kind]],
+                    sizes_of_empties
+                )
+            }
+        }
+    }
 
     intersections_by_size = sizes[[mode]]
 
