@@ -3,7 +3,8 @@
 2021-04-03
 
 Bux fixes:
-- [critical] fixed display order of labels when using encode_sets=TRUE
+- [critical] fixed display order of labels when using `encode_sets=TRUE` #110
+- encoding of set names will now properly work around name conflicts #110
 
 Major improvements:
 - manually specified intersections will now display empty intersections and non-exclusive intersections correctly #109

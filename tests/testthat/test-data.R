@@ -562,7 +562,7 @@ test_that("upset_data() works with a tibble or a data.table", {
 test_that("labels retain proper order when encoded", {
     expect_equal(
         unname(encode_names(c('a', 'b', 'c'), avoid=c())),
-        c( '1', '2', '3')
+        c('1', '2', '3')
     )
 
     expect_equal(
@@ -573,5 +573,15 @@ test_that("labels retain proper order when encoded", {
     expect_equal(
         unname(encode_names(c('c', 'a', 'b'), avoid=c())),
         c('3', '1', '2')
+    )
+
+    expect_equal(
+        unname(encode_names(c('a', 'b', 'c'), avoid=c('1'))),
+        c('1x', '2', '3')
+    )
+
+    expect_equal(
+        unname(encode_names(c('c', 'a', 'b'), avoid=c('1'))),
+        c('3', '1x', '2')
     )
 })

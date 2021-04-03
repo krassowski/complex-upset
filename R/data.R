@@ -29,7 +29,7 @@ encode_names = function(variables_names, avoid) {
         as.character(rank(variables_names)),
         function (name) {
             while (any(name %in% avoid)) {
-                name = name + 'x'
+                name = paste0(name, 'x')
             }
             name
         }
