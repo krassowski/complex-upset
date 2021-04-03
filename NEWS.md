@@ -9,6 +9,8 @@ Bux fixes:
 Major improvements:
 - manually specified intersections will now display empty intersections and non-exclusive intersections correctly #109
 - manually specified intersections do not require modifying the `intersect` argument to obtain the intended result any longer #109
+- stripes size and other attributes of underlying `geom_segment()` can now be customized with new function: `upset_stripes()` #111
+- stripes color and other attributes can now be mapped to data #111
 
 Minor improvements:
 - data.table can be passed instead of data.frame (the conversion will be performed atuomatically) #105
