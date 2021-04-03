@@ -335,16 +335,195 @@ test_that("upset_data() filters by min_size, max_size, min_degree and max_degree
 })
 
 
-test_that("fail-safe protects from out of memory errors when sing observations='all'", {
+test_that("fail-safe protects from out of memory errors when pasing observations='all'", {
     set_data <- create_upset_abc_example()
 
     expect_error(
         upset_data(set_data, colnames(set_data), intersections='all', max_combinations_datapoints_n=100),
-        'The number of combinations with degrees between 0 and3 (8.0e+00) multiplied by the number of observations (325) and columns (4) accounts to an upper bound of 1.0e+04 datapoints; such a high number may lead to out of memory errors (depending on the available RAM size). Please adjust `min_degree` and `max_degree`, remove unused columns, or adjust `max_combinations_datapoints_n` (if you wish to proceed anyways).
+        'The number of combinations with degrees between 0 and 3 (8.0e+00) multiplied by the number of observations (325) and columns (4) accounts to an upper bound of 1.0e+04 datapoints; such a high number may lead to out of memory errors (depending on the available RAM size). Please adjust `min_degree` and `max_degree`, remove unused columns, or adjust `max_combinations_datapoints_n` (if you wish to proceed anyways).
 Note: filtering by size (`min_size` and/or `max_size`) or setting `n_intersections` reduces the memory requirements and if you already do that it may be safe to increase `max_combinations_datapoints_n`.',
         fixed=TRUE
     )
 
+})
+
+
+test_that("warns when extra sets are passed in intersections but not in intersect", {
+    test <- data.frame(matrix(data = TRUE, nrow=2, ncol=4))
+    temp <- colnames(test)
+    test[2, 1] = FALSE
+    test[1, 2] = FALSE
+
+    expect_warning(
+        upset(
+            test,
+            c('X1', 'X2'),
+            mode = "inclusive_intersection",
+            intersections = list(
+                'X1',
+                'X2',
+                'X3',
+                'X4'
+            )
+        ),
+        'Following sets provided in `intersections` are missing in `intersect`: X3, X4'
+    )
+
+    expect_error(
+        upset(
+            test,
+            c('X1', 'X2'),
+            mode = "inclusive_intersection",
+            intersections = list(
+                'X1',
+                'X2',
+                'X3',
+                'X4',
+                'WRONG_INTERSECTION_NAME'
+            )
+        ),
+        'Sets provided in `intersections` are missing in both `intersect` and in `data`: WRONG_INTERSECTION_NAME'
+    )
+})
+
+
+test_that("warns when no specified exclusive intersection can be displayed", {
+    test <- data.frame(matrix(data = TRUE, nrow=2, ncol=4))
+    test[2, 1] = FALSE
+    test[1, 2] = FALSE
+
+    expected_warning = 'None of the requested exclusive intersections is observed in the data:\n  - requested: X1, X2, X1-X2\n  - available for exclusive intersection mode: X1-X3-X4, X2-X3-X4'
+
+    expect_warning(
+        upset(
+            test,
+            c('X1', 'X2', 'X3', 'X4'),
+            mode = "exclusive_intersection",
+            intersections = list(
+                'X1',
+                'X2',
+                c('X1', 'X2')
+            ),
+            encode_sets = TRUE
+        ),
+        expected_warning
+    )
+
+    expect_warning(
+        upset(
+            test,
+            c('X1', 'X2', 'X3', 'X4'),
+            mode = "exclusive_intersection",
+            intersections = list(
+                'X1',
+                'X2',
+                c('X1', 'X2')
+            ),
+            encode_sets = FALSE
+        ),
+        expected_warning
+    )
+})
+
+
+test_that("warns when passing intersections using a vector instead of list", {
+    test <- data.frame(matrix(data = TRUE, nrow=2, ncol=4))
+    test[2, 1] = FALSE
+    test[1, 2] = FALSE
+
+    expected_warning = paste0(
+        '`intersections` is not `observed`, `all`, nor a list of vectors;',
+        ' did you mean to use `list(c("A"), c("B"), c("A", "B"))`',
+        ' instead of `c(c("A"), c("B"), c("A", "B"))`?'
+    )
+
+    expect_warning(
+        upset(
+            test,
+            c('X1', 'X2', 'X3', 'X4'),
+            mode = "exclusive_intersection",
+            intersections = c(
+                'X1',
+                'X2',
+                c('X1', 'X2')
+            )
+        ),
+        expected_warning,
+        fixed = TRUE
+    )
+})
+
+
+test_that("custom intersections are included even if empty", {
+    test <- data.frame(matrix(data = TRUE, nrow=2, ncol=4))
+    test[2, 1] = FALSE
+    test[1, 2] = FALSE
+
+    expect_warning({
+        manual_intersections_data = upset_data(
+            test,
+            c('X1', 'X2', 'X3', 'X4'),
+            mode = "exclusive_intersection",
+            intersections = list(
+                'X1',
+                'X2',
+                c('X1', 'X2')
+            ),
+            encode_sets = F
+        )
+    })
+
+    expect_equal(
+        manual_intersections_data$sizes$exclusive_intersection,
+        c(
+            'X1'=0,
+            'X2'=0,
+            'X1-X2'=0,
+            'X1-X3-X4'=1,
+            'X2-X3-X4'=1
+        )
+    )
+
+    expect_equal(
+        manual_intersections_data$plot_intersections_subset,
+        c(
+            'X1',
+            'X2',
+            'X1-X2'
+        )
+    )
+})
+
+
+test_that("external intersection can be included with other empty intersections", {
+    test <- data.frame(matrix(data = TRUE, nrow=2, ncol=4))
+    test[2, 1] = FALSE
+    test[1, 2] = FALSE
+
+    expect_warning({
+        manual_intersections_data = upset_data(
+            test,
+            c('X1', 'X2', 'X3', 'X4'),
+            mode = "exclusive_intersection",
+            intersections = list(
+                'X1',
+                'X2',
+                c('X1', 'X2'),
+                'Outside of known sets'
+            ),
+            encode_sets = F
+        )
+    })
+
+    expect_equal(
+        manual_intersections_data$plot_intersections_subset,
+        c(
+            'X1',
+            'X2',
+            'X1-X2',
+            NOT_IN_KNOWN_SETS
+        )
+    )
 })
 
 
