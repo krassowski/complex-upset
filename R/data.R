@@ -24,9 +24,9 @@ sanitize_names = function(variables_names) {
 
 encode_names = function(variables_names, avoid) {
     sapply(
-        # using order ensures that alphabetic order is retained in case of equal degrees
+        # using rank ensures that alphabetic order is retained in case of equal degrees
         # and that re-ordering columns in the dataframe will not lead to flickering of the result
-        as.character(order(variables_names)),
+        as.character(rank(variables_names)),
         function (name) {
             while (any(name %in% avoid)) {
                 name = name + 'x'

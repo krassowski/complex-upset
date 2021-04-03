@@ -1,6 +1,9 @@
 # Version 1.2.0
 
-Unreleased
+2021-04-03
+
+Bux fixes:
+- [critical] fixed display order of labels when using encode_sets=TRUE
 
 Major improvements:
 - manually specified intersections will now display empty intersections and non-exclusive intersections correctly #109
