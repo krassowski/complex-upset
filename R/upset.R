@@ -147,7 +147,6 @@ segment_end = function(matrix_frame, data, intersection, end) {
   }, MARGIN=1)
 }
 
-upset_stripes = c('white', 'grey95')
 
 matrix_background_stripes = function(data, stripes, orient='horizontal') {
 
@@ -160,14 +159,52 @@ matrix_background_stripes = function(data, stripes, orient='horizontal') {
     aes = aes(y=-Inf, yend=Inf, x=group, xend=group)
   }
   groups = data$sorted$groups[data$sorted$groups %in% data$plot_sets_subset]
-  list(
-    geom_segment(
-      data=data.frame(group=groups),
-      aes,
-      color=rep_len(stripes, length(groups)),
-      size=7
-    )
+  data = data.frame(
+      group=groups,
+      group_name=data$non_sanitized_labels[groups]
   )
+
+  if (!is.null(stripes$data)) {
+      data = merge(
+          data,
+          stripes$data,
+          by.x='group_name',
+          by.y='set',
+          all.x=TRUE
+      )
+  }
+
+  params = list(
+      data=data,
+      mapping=modifyList(aes, stripes$mapping)
+  )
+
+  if (!is.null(stripes$colors) && is.null(names(stripes$colors))) {
+      params$color = rep_len(stripes$colors, length(groups))
+  }
+
+  list(
+    do.call(geom_segment, params) * stripes$geom
+  )
+}
+
+
+#' Define appearence of the stripes
+#'
+#' @param mapping additional aesthetics
+#' @param geom a geom to use, should accept x, y, xend, yend and color aesthetics
+#' @param colors a vector of colors to repeat as many times as needed for the fill of stripes, or a named vector specifying colors for values of the variable mapped to the color aesthetics in the mapping argument
+#' @param data the dataset describing the sets with a column named set and any other columns as needed for mapping
+#' @export
+upset_stripes = function(mapping=aes(), geom=geom_segment(size=7), colors=c('white', 'grey95'), data=NULL) {
+    stripes = list(
+        mapping=mapping,
+        geom=geom,
+        colors=colors,
+        data=data
+    )
+    class(stripes) = 'upset_stripes'
+    stripes
 }
 
 
@@ -878,7 +915,7 @@ solve_mode = function (mode) {
 #' @param labeller function modifying the names of the sets (rows in the matrix)
 #' @param height_ratio ratio of the intersection matrix to intersection size height
 #' @param width_ratio ratio of the overall set size width to intersection matrix width
-#' @param stripes a characters vector, specifying the background colors for rows (e.g. odd and even if two elements)
+#' @param stripes specification of the stripes appearance created with `upset_stripes()`
 #' @param matrix the intersection matrix plot
 #' @param set_sizes the overall set sizes plot, e.g. from `upset_set_size()` (`FALSE` to hide)
 #' @param guides action for legends aggregation and placement ('keep', 'collect', 'over' the set sizes)
@@ -894,7 +931,7 @@ upset = function(
   name='group',
   annotations=list(),
   themes=upset_themes,
-  stripes=upset_stripes,
+  stripes=upset_stripes(),
   labeller=identity,
   height_ratio=0.5,
   width_ratio=0.3,
@@ -921,6 +958,11 @@ upset = function(
                 'Intersection size'=intersection_size(counts=TRUE, mode=mode)
             )
         }
+  }
+
+  # for backwards compatibility pre 1.2
+  if (class(stripes) != 'upset_stripes') {
+      stripes = upset_stripes(colors=stripes)
   }
 
   annotations = c(annotations, base_annotations)
@@ -1029,6 +1071,18 @@ upset = function(
       y_scale = NULL
   }
 
+  matrix_default_colors = list('TRUE'='black', 'FALSE'='grey85')
+  matrix_guide = FALSE
+  matrix_breaks = names(matrix_default_colors)
+  if (!is.null(names(stripes$colors))) {
+      matrix_default_colors = c(
+          matrix_default_colors,
+          stripes$colors
+      )
+      matrix_guide = guide_legend()
+      matrix_breaks = names(stripes$colors)
+  }
+
   intersections_matrix = (
     intersections_matrix
     + xlab(name)
@@ -1038,8 +1092,9 @@ upset = function(
           intersections_matrix,
           'colour',
           scale_color_manual(
-              values=list('TRUE'='black', 'FALSE'='grey85'),
-              guide=FALSE
+              values=matrix_default_colors,
+              guide=matrix_guide,
+              breaks=matrix_breaks
           )
     )
     + themes$intersections_matrix
@@ -1200,6 +1255,14 @@ upset = function(
         + coord_flip()
         + scale_x_discrete(limits=sets_limits)
         + scale_if_missing(set_sizes, axis='y', scale=default_scale)
+        + scale_if_missing(
+            set_sizes,
+            'colour',
+            scale_color_manual(
+              values=matrix_default_colors,
+              guide=FALSE
+            )
+        )
       )
 
       if (is_set_size_on_the_right) {

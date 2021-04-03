@@ -11,7 +11,7 @@ upset(
   name = "group",
   annotations = list(),
   themes = upset_themes,
-  stripes = upset_stripes,
+  stripes = upset_stripes(),
   labeller = identity,
   height_ratio = 0.5,
   width_ratio = 0.3,
@@ -42,7 +42,7 @@ upset(
 
 \item{themes}{a named list of themes for components and annotations, see \code{upset_default_themes()}/\code{upset_modify_themes()}}
 
-\item{stripes}{a characters vector, specifying the background colors for rows (e.g. odd and even if two elements)}
+\item{stripes}{specification of the stripes appearance created with \code{upset_stripes()}}
 
 \item{labeller}{function modifying the names of the sets (rows in the matrix)}
 
