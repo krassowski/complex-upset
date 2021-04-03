@@ -1,3 +1,17 @@
+# Version 1.2.0
+
+Unreleased
+
+Major improvements:
+- manually specified intersections will now display empty intersections and non-exclusive intersections correctly #109
+- manually specified intersections do not require modifying the `intersect` argument to obtain the intended result any longer #109
+
+Minor improvements:
+- data.table can be passed instead of data.frame (the conversion will be performed atuomatically) #105
+- warning will be shown if a vecotor is provided instead of a list to the `intersections` argument #109
+- when `intersections` argument includes sets not specified in `intersect`, a warning will be issued and execution will proceed as if those were included in `intersect` #109
+- when incorrect names of sets are passed to `intersections` argument, those will be highlighted and plotting will be aborted #109
+
 # Version 1.1.0
 
 2021-01-13
