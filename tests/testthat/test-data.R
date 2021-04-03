@@ -539,7 +539,6 @@ test_that("upset_data() works with a tibble or a data.table", {
     )
 
     result_tbl = upset_data(tibble::tibble(df), c('a', 'b', 'c', 'd'))
-    
     result_dt = upset_data(data.table::as.data.table(df), c('a', 'b', 'c', 'd'))
 
     expected_matrix = data.frame(
@@ -552,9 +551,37 @@ test_that("upset_data() works with a tibble or a data.table", {
         result_tbl$matrix,
         expected_matrix
     )
-    
+
     expect_equal(
         result_dt$matrix,
         expected_matrix
+    )
+})
+
+
+test_that("labels retain proper order when encoded", {
+    expect_equal(
+        unname(encode_names(c('a', 'b', 'c'), avoid=c())),
+        c('1', '2', '3')
+    )
+
+    expect_equal(
+        unname(encode_names(c('c', 'b', 'a'), avoid=c())),
+        c('3', '2', '1')
+    )
+
+    expect_equal(
+        unname(encode_names(c('c', 'a', 'b'), avoid=c())),
+        c('3', '1', '2')
+    )
+
+    expect_equal(
+        unname(encode_names(c('a', 'b', 'c'), avoid=c('1'))),
+        c('1x', '2', '3')
+    )
+
+    expect_equal(
+        unname(encode_names(c('c', 'a', 'b'), avoid=c('1'))),
+        c('3', '1x', '2')
     )
 })

@@ -428,3 +428,21 @@ test_that("Empty intersection can be included in manually specified intersection
         )
     )
 })
+
+
+test_that("Labels retain proper order when encoded", {
+    data = data.frame(
+        variable_2t = c(TRUE, FALSE, TRUE, FALSE),
+        variable_1t = c(FALSE, FALSE, FALSE, TRUE),
+        all_true = c(TRUE, TRUE, TRUE, TRUE)
+    )
+
+    expect_doppelganger(
+        "Labels retain proper order when encoded (all_true has all dots)",
+        upset(
+            data,
+            intersect = c("variable_1t", "variable_2t", "all_true"),
+            encode_sets = T
+        )
+    )
+})
