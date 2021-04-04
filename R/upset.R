@@ -1,5 +1,5 @@
 #' @importFrom utils head modifyList tail
-#' @importFrom ggplot2 ggplot aes aes_string coord_flip theme xlab ylab
+#' @importFrom ggplot2 ggplot aes aes_string coord_flip theme xlab ylab guide_legend
 #' @importFrom ggplot2 scale_color_manual scale_x_discrete scale_y_discrete scale_y_reverse scale_y_continuous
 #' @importFrom ggplot2 geom_text geom_bar geom_col geom_point geom_segment layer position_stack stat_summary
 #' @importFrom ggplot2 is.ggplot %+% sym expr ggproto Stat quo_name
