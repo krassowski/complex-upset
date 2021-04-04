@@ -192,9 +192,9 @@ matrix_background_stripes = function(data, stripes, orient='horizontal') {
 #' Define appearence of the stripes
 #'
 #' @param mapping additional aesthetics
-#' @param geom a geom to use, should accept x, y, xend, yend and color aesthetics
+#' @param geom a geom to use, should accept `x`, `y`, `xend`, `yend` and `color` aesthetics
 #' @param colors a vector of colors to repeat as many times as needed for the fill of stripes, or a named vector specifying colors for values of the variable mapped to the color aesthetics in the mapping argument
-#' @param data the dataset describing the sets with a column named set and any other columns as needed for mapping
+#' @param data the dataset describing the sets with a column named `set` and any other columns as needed for mapping
 #' @export
 upset_stripes = function(mapping=aes(), geom=geom_segment(size=7), colors=c('white', 'grey95'), data=NULL) {
     stripes = list(
@@ -210,7 +210,7 @@ upset_stripes = function(mapping=aes(), geom=geom_segment(size=7), colors=c('whi
 
 intersection_size_text = list(vjust=-0.25)
 
-#' Retrieve symbol for given mode that can be used in aesthetics mapping with double bang (!!)
+#' Retrieve symbol for given mode that can be used in aesthetics mapping with double bang (`!!`)
 #'
 #' @param mode the mode to use. Accepted values: `exclusive_intersection` (alias `distinct`), `inclusive_intersection` (alias `intersect`), `inclusive_union` (alias `union`), `exclusive_union`.
 #' @param suffix the column suffix in use as passed to `upset_data()`
@@ -652,8 +652,8 @@ aes_percentage = function(relative_to, digits=0, sep='') {
 #' Highlight sets or intersections matching specified query.
 #'
 #' @param set name of the set to highlight
-#' @param intersect a vector of names for the intersection to highlight; pass 'NA' to select the empty intersection
-#' @param group name of the set to highlight when using group_by='sets'
+#' @param intersect a vector of names for the intersection to highlight; pass `NA` to select the empty intersection
+#' @param group name of the set to highlight when using `group_by='sets'`
 #' @param only_components which components to modify; by default all eligible components will be modified; the available components are 'overall_sizes', 'intersections_matrix', 'Intersection size', and any annotations specified
 #' @param ... - passed to geoms in modified components
 #' @export

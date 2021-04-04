@@ -2,7 +2,7 @@
 % Please edit documentation in R/upset.R
 \name{get_size_mode}
 \alias{get_size_mode}
-\title{Retrieve symbol for given mode that can be used in aesthetics mapping with double bang (!!)}
+\title{Retrieve symbol for given mode that can be used in aesthetics mapping with double bang (\verb{!!})}
 \usage{
 get_size_mode(mode, suffix = "_size")
 }
@@ -12,5 +12,5 @@ get_size_mode(mode, suffix = "_size")
 \item{suffix}{the column suffix in use as passed to \code{upset_data()}}
 }
 \description{
-Retrieve symbol for given mode that can be used in aesthetics mapping with double bang (!!)
+Retrieve symbol for given mode that can be used in aesthetics mapping with double bang (\verb{!!})
 }
