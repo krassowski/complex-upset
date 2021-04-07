@@ -170,7 +170,8 @@ test_set_overlaps_of_degree = function(
     } else {
         expected_overlaps = list()
 
-        for (disease in intersect) {
+        for (i in 1:length(intersect)) {
+            disease = intersect[i]
 
             if (disease %in% diagnosis_rates$name) {
                 next()
@@ -198,7 +199,7 @@ test_set_overlaps_of_degree = function(
 
             expected_overlap = test_set_overlaps_of_degree(
                 data=data,
-                intersect=intersect,
+                intersect=intersect[i:length(intersect)],
                 diagnosis_rates=diagnosis_rates_temp,
                 degree=degree,
                 remaining_degrees=remaining_degrees - 1,
@@ -223,11 +224,18 @@ test_set_overlaps = function(
     encode=FALSE,
     fdr_method='fdr'
 ) {
-    data_subset = data[intersect]
+    data = data[intersect]
+
+    # TODO: shared?
+    is_column_logical = sapply(data[, intersect], is.logical)
+    if (any(!is_column_logical)) {
+        non_logical = names(is_column_logical[is_column_logical == FALSE])
+        data[, non_logical] = sapply(data[, non_logical], as.logical)
+    }
 
     if (encode) {
         intersect = encode_names(intersect, avoid=c())
-        colnames(data_subset) = intersect
+        colnames(data) = intersect
     }
 
     all_expected_overlaps = list()
@@ -235,7 +243,7 @@ test_set_overlaps = function(
     for (degree in seq(min_degre, max_degree)) {
 
         expected_overlaps = test_set_overlaps_of_degree(
-            data=data_subset,
+            data=data,
             intersect=intersect,
             degree=degree,
             remaining_degrees=degree,
