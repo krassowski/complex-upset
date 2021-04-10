@@ -173,7 +173,7 @@ test_set_overlaps_of_degree = function(
                 rep(NA, max_degree - length(diagnosis_rates$name))
             )
             names(sets) = paste0('set_', seq(1, max_degree))
-            result = c(result, sets)
+            result = c(sets, result)
         }
 
         return (result)
