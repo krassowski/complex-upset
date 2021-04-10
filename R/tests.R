@@ -119,7 +119,8 @@ upset_test = function(
 
 
 test_set_overlaps_of_degree = function(
-    data, intersect, degree, remaining_degrees, diagnosis_rates, test, min_size
+    data, intersect, degree, remaining_degrees, diagnosis_rates, test, min_size, max_degree,
+    sets_as_columns=FALSE
 ) {
     if (remaining_degrees == 0) {
         data_subset = data[diagnosis_rates$name]
@@ -155,7 +156,6 @@ test_set_overlaps_of_degree = function(
                 )
             )
         }
-
         result = list(
             'expected_overlap'=expected_overlap,
             'expected_n'=expected_overlap * having_data_for_all,
@@ -166,6 +166,16 @@ test_set_overlaps_of_degree = function(
             'statistic'=p$statistic,
             'p_value'=p$p.value
         )
+
+        if (sets_as_columns) {
+            sets = c(
+                diagnosis_rates$name,
+                rep(NA, max_degree - length(diagnosis_rates$name))
+            )
+            names(sets) = paste0('set_', seq(1, max_degree))
+            result = c(result, sets)
+        }
+
         return (result)
     } else {
         expected_overlaps = list()
@@ -204,7 +214,9 @@ test_set_overlaps_of_degree = function(
                 degree=degree,
                 remaining_degrees=remaining_degrees - 1,
                 test=test,
-                min_size=min_size
+                min_size=min_size,
+                sets_as_columns=sets_as_columns,
+                max_degree=max_degree
             )
 
             if (length(expected_overlap)) {
@@ -222,7 +234,8 @@ test_set_overlaps = function(
     test=chisq.test,
     min_size=0,
     encode=FALSE,
-    fdr_method='fdr'
+    fdr_method='fdr',
+    sets_in_columns=FALSE
 ) {
     data = data[intersect]
 
@@ -249,7 +262,9 @@ test_set_overlaps = function(
             remaining_degrees=degree,
             diagnosis_rates=data.frame(name=character(), rate=numeric()),
             test=test,
-            min_size=min_size
+            min_size=min_size,
+            max_degree=max_degree,
+            sets_as_columns=sets_in_columns
         )
 
         if (length(expected_overlaps)) {
