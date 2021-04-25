@@ -34,7 +34,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">ComplexUpset</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.2.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.2.1</span>
       </span>
     </div>
 
@@ -65,7 +65,7 @@
 <ul class="nav navbar-nav navbar-right">
 <li>
   <a href="https://github.com/krassowski/complex-upset/">
-    <span class="fab fa fab fa-github fa-lg"></span>
+    <span class="fab fa-github fa-lg"></span>
      
   </a>
 </li>
@@ -79,7 +79,7 @@
 
       
 
-      </header><script src="Examples_R_files/header-attrs-2.5/header-attrs.js"></script><script src="Examples_R_files/accessible-code-block-0.0.1/empty-anchor.js"></script><div class="row">
+      </header><script src="Examples_R_files/header-attrs-2.7/header-attrs.js"></script><script src="Examples_R_files/accessible-code-block-0.0.1/empty-anchor.js"></script><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Examples - R</h1>
@@ -101,7 +101,7 @@
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">movies</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/as.data.frame.html">as.data.frame</a></span><span class="op">(</span><span class="fu">ggplot2movies</span><span class="fu">::</span><span class="va"><a href="https://rdrr.io/pkg/ggplot2movies/man/movies.html">movies</a></span><span class="op">)</span>
 <span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">movies</span>, <span class="fl">3</span><span class="op">)</span></code></pre></div>
-<table class="table">
+<table class="table dataframe">
 <caption>
 A data.frame: 3 × 24
 </caption>
@@ -480,7 +480,7 @@ NA
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">movies</span><span class="op">[</span><span class="va">genres</span><span class="op">]</span> <span class="op">=</span> <span class="va">movies</span><span class="op">[</span><span class="va">genres</span><span class="op">]</span> <span class="op">==</span> <span class="fl">1</span>
 <span class="fu"><a href="https://rdrr.io/r/base/t.html">t</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">movies</span><span class="op">[</span><span class="va">genres</span><span class="op">]</span>, <span class="fl">3</span><span class="op">)</span><span class="op">)</span></code></pre></div>
-<table class="table">
+<table class="table dataframe">
 <caption>
 A matrix: 7 × 3 of type lgl
 </caption>
@@ -936,7 +936,7 @@ TRUE
 <div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../reference/upset_test.html">upset_test</a></span><span class="op">(</span><span class="va">movies</span>, <span class="va">genres</span><span class="op">)</span></code></pre></div>
 <pre><code>[1] "year, length, budget, rating, votes, r1, r2, r3, r4, r5, r6, r7, r8, r9, r10, mpaa differ significantly between intersections"</code></pre>
-<table class="table">
+<table class="table dataframe">
 <caption>
 A data.frame: 17 × 5
 </caption>
@@ -1363,7 +1363,7 @@ Kruskal-Wallis rank sum test
 
 
 [1] "year, length, budget, rating, votes, r1, r2, r3, r4, r5, r6, r7, r8, r9, r10, mpaa differ significantly between intersections"</code></pre>
-<table class="table">
+<table class="table dataframe">
 <caption>
 A data.frame: 6 × 5
 </caption>
@@ -1535,7 +1535,7 @@ Kruskal-Wallis rank sum test
 <code class="sourceCode R"><span class="va">bartlett_results</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/warning.html">suppressWarnings</a></span><span class="op">(</span><span class="fu"><a href="../reference/upset_test.html">upset_test</a></span><span class="op">(</span><span class="va">movies</span>, <span class="va">genres</span>, test<span class="op">=</span><span class="va">bartlett.test</span>, min_size<span class="op">=</span><span class="fl">2</span><span class="op">)</span><span class="op">)</span>
 <span class="fu"><a href="https://rdrr.io/r/utils/head.html">tail</a></span><span class="op">(</span><span class="va">bartlett_results</span><span class="op">)</span></code></pre></div>
 <pre><code>[1] "NA, year, length, budget, rating, votes, r1, r2, r3, r4, r5, r6, r7, r8, r9, r10, NA differ significantly between intersections"</code></pre>
-<table class="table">
+<table class="table dataframe">
 <caption>
 A data.frame: 6 × 5
 </caption>
