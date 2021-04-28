@@ -1,8 +1,15 @@
+# Version 1.2.1
+
+2021-04-25
+
+Bug fixes:
+- fixed metadata order in data frame returned by `arrange_venn()` function  #116
+
 # Version 1.2.0
 
 2021-04-03
 
-Bux fixes:
+Bug fixes:
 - [critical] fixed display order of labels when using `encode_sets=TRUE` #110
 - encoding of set names will now properly work around name conflicts #110
 

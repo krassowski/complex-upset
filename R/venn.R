@@ -592,7 +592,7 @@ arrange_venn = function(
 
     }
     iteration = 1
-    prebious_ratios = c()
+    previous_ratios = c()
 
     while (!large_enough) {
 
@@ -609,7 +609,7 @@ arrange_venn = function(
                 # reasonable convergence
                 large_enough = TRUE
             # prevent infinite loops
-            } else if (slots_surplus_ratio < 0.01 || slots_surplus_ratio %in% prebious_ratios) {
+            } else if (slots_surplus_ratio < 0.01 || slots_surplus_ratio %in% previous_ratios) {
                 large_enough = TRUE
             } else {
                 grid_size = new_grid_size
@@ -625,7 +625,7 @@ arrange_venn = function(
             grid_size = as.integer(round(grid_size * factor))
 
         }
-        prebious_ratios = c(slots_surplus_ratio, prebious_ratios)
+        previous_ratios = c(slots_surplus_ratio, previous_ratios)
         iteration = iteration + 1
     }
 
@@ -663,5 +663,5 @@ arrange_venn = function(
         region_coords
     }))
 
-    cbind(new_coords, data[, setdiff(colnames(data), sets)])
+    cbind(new_coords, data[match(rownames(new_coords), rownames(data)), setdiff(colnames(data), sets)])
 }
