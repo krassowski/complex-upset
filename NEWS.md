@@ -1,9 +1,19 @@
+# Version 1.3.0
+
+unreleased
+
+Changes:
+- sets on intersection matrix can now be highlighted using `upset_query()` #115
+
+Bug fixes:
+- alleviate visual glitch of `geom_segment` in intersections matrix showing up with an outline #113
+
 # Version 1.2.1
 
 2021-04-25
 
 Bug fixes:
-- fixed metadata order in data frame returned by `arrange_venn()` function  #116
+- fixed metadata order in data frame returned by `arrange_venn()` function #116
 
 # Version 1.2.0
 
@@ -20,8 +30,8 @@ Major improvements:
 - stripes color and other attributes can now be mapped to data #111
 
 Minor improvements:
-- data.table can be passed instead of data.frame (the conversion will be performed atuomatically) #105
-- warning will be shown if a vecotor is provided instead of a list to the `intersections` argument #109
+- data.table can be passed instead of data.frame (the conversion will be performed automatically) #105
+- warning will be shown if a vector is provided instead of a list to the `intersections` argument #109
 - when `intersections` argument includes sets not specified in `intersect`, a warning will be issued and execution will proceed as if those were included in `intersect` #109
 - when incorrect names of sets are passed to `intersections` argument, those will be highlighted and plotting will be aborted #109
 

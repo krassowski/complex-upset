@@ -980,14 +980,20 @@ upset = function(
 
   matrix_intersect_queries = intersect_queries(queries_for(queries, 'intersections_matrix'), data)
   matrix_group_by_queries = group_by_queries(queries_for(queries, 'intersections_matrix'), data$sanitized_labels)
+  matrix_set_queries = set_queries(queries_for(queries, 'intersections_matrix'), data$sanitized_labels)
 
   intersection_query_matrix = get_highlights_data(data$matrix_frame, 'intersection', matrix_intersect_queries)
   group_query_matrix = get_highlights_data(data$matrix_frame, 'group_by_group', matrix_group_by_queries)
+  set_query_matrix = get_highlights_data(data$matrix_frame, 'group', matrix_set_queries)
+
 
   query_matrix = merge_rows(
-      intersection_query_matrix,
-      group_query_matrix
-  )
+      merge_rows(
+          intersection_query_matrix,
+          group_query_matrix
+      ),
+      set_query_matrix
+    )
 
   query_matrix = query_matrix[query_matrix$value == TRUE, ]
 
@@ -1019,13 +1025,6 @@ upset = function(
         size=dot_size,
         na.rm=TRUE
     )),
-    # the highlighted dot
-    highlight_layer(
-        intersections_matrix$geom,
-        geom_point,
-        query_matrix,
-        args=list(size=dot_size)
-    ),
     # interconnectors on the dots
     list(intersections_matrix$segment * geom_segment(aes(
           x=intersection,
@@ -1047,6 +1046,13 @@ upset = function(
              ),
              na.rm=TRUE
         )
+    ),
+    # the highlighted dot
+    highlight_layer(
+        intersections_matrix$geom,
+        geom_point,
+        query_matrix,
+        args=list(size=dot_size)
     )
   )
 
