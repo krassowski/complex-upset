@@ -473,3 +473,28 @@ test_that("Metadata gets properly reordered for Venn diagrams", {
         )
     )
 })
+
+
+test_that("Sets can be highlighted on intersection matrix", {
+    expect_doppelganger(
+        "Sets can be highlighted on intersection matrix",
+        upset(
+          movies,
+          c('Action', 'Comedy', 'Drama'),
+          min_size=10,
+          width_ratio=0.2,
+          queries=list(
+            upset_query(set='Action', color='orange', fill='orange'),
+            upset_query(set='Comedy', color='blue', fill='blue', only_components = 'overall_sizes'),
+            upset_query(set='Drama', color='coral3', fill='coral3', only_components = 'intersections_matrix')
+          )
+        ) + labs(
+            caption=paste(
+                'Drama should be highlighted ONLY on intersection matrix',
+                'Comedy should be highlighted ONLY on set sizes',
+                'Action should be highlighted on BOTH',
+                sep='\n'
+            )
+        )
+    )
+})
