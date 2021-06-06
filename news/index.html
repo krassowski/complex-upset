@@ -74,7 +74,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">ComplexUpset</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.2.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.3.0</span>
       </span>
     </div>
 
@@ -126,6 +126,21 @@
       <small>Source: <a href='https://github.com/krassowski/complex-upset/blob/master/NEWS.md'><code>NEWS.md</code></a></small>
     </div>
 
+    <div id="version-130" class="section level1">
+<h1 class="page-header" data-toc-text="1.3.0">
+<a href="#version-130" class="anchor"></a>Version 1.3.0<small> Unreleased </small>
+</h1>
+<p>2021-06-06</p>
+<p>Changes:</p>
+<ul>
+<li>sets on intersection matrix can now be highlighted using <code><a href="../reference/upset_query.html">upset_query()</a></code> <a href='https://github.com/krassowski/complex-upset/issues/115'>#115</a></li>
+</ul>
+<p>Bug fixes:</p>
+<ul>
+<li>alleviate visual glitch of <code>geom_segment</code> in intersections matrix showing up with an outline <a href='https://github.com/krassowski/complex-upset/issues/113'>#113</a></li>
+<li>fixed aesthetics assigned by <code><a href="../reference/upset_query.html">upset_query()</a></code> which was sometimes not behaving as expected <a href='https://github.com/krassowski/complex-upset/issues/123'>#123</a></li>
+</ul>
+</div>
     <div id="version-121" class="section level1">
 <h1 class="page-header" data-toc-text="1.2.1">
 <a href="#version-121" class="anchor"></a>Version 1.2.1<small> 2021-04-29 </small>
@@ -150,13 +165,13 @@
 <ul>
 <li>manually specified intersections will now display empty intersections and non-exclusive intersections correctly <a href='https://github.com/krassowski/complex-upset/issues/109'>#109</a></li>
 <li>manually specified intersections do not require modifying the <code>intersect</code> argument to obtain the intended result any longer <a href='https://github.com/krassowski/complex-upset/issues/109'>#109</a></li>
-<li>stripes size and other attributes of underlying <code><a href="https://ggplot2.tidyverse.org/reference/geom_segment.html">geom_segment()</a></code> can now be customized with new function: <code><a href="../reference/upset_stripes.html">upset_stripes()</a></code> <a href='https://github.com/krassowski/complex-upset/issues/111'>#111</a></li>
-<li>stripes color and other attributes can now be mapped to data <a href='https://github.com/krassowski/complex-upset/issues/111'>#111</a></li>
+<li>stripes size and other attributes of underlying <code><a href="https://ggplot2.tidyverse.org/reference/geom_segment.html">geom_segment()</a></code> can now be customised with new function: <code><a href="../reference/upset_stripes.html">upset_stripes()</a></code> <a href='https://github.com/krassowski/complex-upset/issues/111'>#111</a></li>
+<li>stripes colour and other attributes can now be mapped to data <a href='https://github.com/krassowski/complex-upset/issues/111'>#111</a></li>
 </ul>
 <p>Minor improvements:</p>
 <ul>
-<li>data.table can be passed instead of data.frame (the conversion will be performed atuomatically) <a href='https://github.com/krassowski/complex-upset/issues/105'>#105</a></li>
-<li>warning will be shown if a vecotor is provided instead of a list to the <code>intersections</code> argument <a href='https://github.com/krassowski/complex-upset/issues/109'>#109</a></li>
+<li>data.table can be passed instead of data.frame (the conversion will be performed automatically) <a href='https://github.com/krassowski/complex-upset/issues/105'>#105</a></li>
+<li>warning will be shown if a vector is provided instead of a list to the <code>intersections</code> argument <a href='https://github.com/krassowski/complex-upset/issues/109'>#109</a></li>
 <li>when <code>intersections</code> argument includes sets not specified in <code>intersect</code>, a warning will be issued and execution will proceed as if those were included in <code>intersect</code> <a href='https://github.com/krassowski/complex-upset/issues/109'>#109</a></li>
 <li>when incorrect names of sets are passed to <code>intersections</code> argument, those will be highlighted and plotting will be aborted <a href='https://github.com/krassowski/complex-upset/issues/109'>#109</a></li>
 </ul>
@@ -220,7 +235,7 @@
 <ul>
 <li>Lists with computed sizes are now returned in a single list called <code>sizes</code> by <code><a href="../reference/upset_data.html">upset_data()</a></code>
 </li>
-<li>Set sizes are now <strong>not</strong> filtered by default when selecting intersections by <code>min_*</code> or <code>max_*</code> criteria. Pass <code>filter_intersections=TRUE</code> to <code>upset_set_sizes()</code> to restore the previous behavior</li>
+<li>Set sizes are now <strong>not</strong> filtered by default when selecting intersections by <code>min_*</code> or <code>max_*</code> criteria. Pass <code>filter_intersections=TRUE</code> to <code>upset_set_sizes()</code> to restore the previous behaviour</li>
 <li>Union sizes are now calculated before data trimming which provides more accurate ratio estimates</li>
 <li>Added examples for Venn diagrams which are now covered by automated tests to protect against regressions</li>
 <li>Removed <code><a href="../reference/upset_data.html">upset_data()</a></code> <code>intersected</code> member to avoid needless duplication of the data frames; access <code>with_sizes</code> instead</li>
@@ -238,7 +253,7 @@
 <p>Bug fixes:</p>
 <ul>
 <li>Modes passed to <code><a href="../reference/upset.html">upset()</a></code> are now also used for sorting and trimming</li>
-<li>Size calculation for modes was optimized for better performance</li>
+<li>Size calculation for modes was optimised for better performance</li>
 <li>User-added layers are now shown on top of <code><a href="../reference/intersection_size.html">intersection_size()</a></code> and <code>intersection_union()</code>
 </li>
 <li>Column names are no longer modified when supplying to <code>ggplot2</code> allowing to easily use them in annotations (<a href='https://github.com/krassowski/complex-upset/issues/82'>#82</a>)</li>
@@ -261,7 +276,7 @@
 <p>2020-12-20</p>
 <p>New features:</p>
 <ul>
-<li>Intersection modes were formalized with the default remaining <code>exclusive_intersection</code> (alias <code>distinct</code>); additional modes are: <code>inclusive_intersection</code> (alias <code>intersect</code>), <code>inclusive_union</code> and <code>exclusive_union</code>; please read the <a href="https://krassowski.github.io/complex-upset/articles/Examples_R.html<a href='https://github.com/krassowski/complex-upset/issues/0'>#0</a>-2-region-selection-modes">relevant part of the documentation</a> for details (<a href='https://github.com/krassowski/complex-upset/issues/78'>#78</a>).</li>
+<li>Intersection modes were formalised with the default remaining <code>exclusive_intersection</code> (alias <code>distinct</code>); additional modes are: <code>inclusive_intersection</code> (alias <code>intersect</code>), <code>inclusive_union</code> and <code>exclusive_union</code>; please read the <a href="https://krassowski.github.io/complex-upset/articles/Examples_R.html<a href='https://github.com/krassowski/complex-upset/issues/0'>#0</a>-2-region-selection-modes">relevant part of the documentation</a> for details (<a href='https://github.com/krassowski/complex-upset/issues/78'>#78</a>).</li>
 <li>Simple Venn diagrams (for two or three sets) can now be constructed using same input (binary presence data frame) using pseudo geoms: <code><a href="../reference/geom_venn_circle.html">geom_venn_circle()</a></code>, <code><a href="../reference/geom_venn_label_region.html">geom_venn_label_region()</a></code>, <code><a href="../reference/geom_venn_label_set.html">geom_venn_label_set()</a></code>, <code><a href="../reference/geom_venn_region.html">geom_venn_region()</a></code> and scales <code><a href="../reference/scale_color_venn_mix.html">scale_color_venn_mix()</a></code> and <code><a href="../reference/scale_fill_venn_mix.html">scale_fill_venn_mix()</a></code>; while developed mostly for the documentation needs, it provides unique capability of highlighting relevant regions of the Venn diagram and placing observations within appropriate regions (which allows to demonstrate their attributes with appropriate aesthetics mapping).</li>
 </ul>
 <p>Changes:</p>
@@ -295,7 +310,7 @@
 <li><p>Intersections can now be sorted by multiple criteria, e.g. first by degree and then by cardinality: <code>sort_intersections_by=c('degree', 'cardinality')</code> (<a href='https://github.com/krassowski/complex-upset/issues/47'>#47</a>)</p></li>
 <li><p>Breaking: <code>dot_size</code> argument was removed. Use <code>matrix=intersection_matrix(geom=geom_point(size=5))</code> instead</p></li>
 <li>
-<p>Intersection matrix can now be customized, including the points (e.g. changing shape to squares), segments (e.g. using dotted line) and outlines (changing color) allowing to create <a href="https://krassowski.github.io/complex-upset/articles/Examples_R.html">Example 5.4</a>:</p>
+<p>Intersection matrix can now be customised, including the points (e.g. changing shape to squares), segments (e.g. using dotted line) and outlines (changing color) allowing to create <a href="https://krassowski.github.io/complex-upset/articles/Examples_R.html">Example 5.4</a>:</p>
 <blockquote>
 <p><img src="https://raw.githubusercontent.com/krassowski/complex-upset/master/tests/figs/examples/example-5-4-adjusting-the-intersection-matrix-1.svg"></p>
 </blockquote>
