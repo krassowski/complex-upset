@@ -498,3 +498,58 @@ test_that("Sets can be highlighted on intersection matrix", {
         )
     )
 })
+
+
+test_that("Color set by upset_query match", {
+
+    all_genres = c(
+        'Action', 'Animation', 'Comedy', 'Drama',
+        'Documentary', 'Romance', 'Short'
+    )
+
+    expect_doppelganger(
+        "Color of sets sizes bars matches: Drama=blue, Documentary=red",
+        upset(
+          data=head(movies, 80),
+          intersect=all_genres,
+          queries=list(
+            upset_query(set="Drama", fill="blue"),
+            upset_query(set="Documentary", fill="red")
+          )
+        )
+    )
+
+    expect_doppelganger(
+        "Colors match when using multiple queries",
+        upset(
+            data=movies,
+            intersect=all_genres,
+            group_by="sets",
+            width_ratio=0.1,
+            queries=list(
+                upset_query(group="Drama", color="blue"),
+                upset_query(group="Comedy", color="brown1"),
+                upset_query(group="Action", color="green"),
+                upset_query(group="Romance", color="yellow"),
+                upset_query(group="Animation", color="orange"),
+                upset_query(group="Documentary", color="cyan"),
+                upset_query(group="Short", color="darkorchid"),
+                upset_query(set="Drama", fill="blue"),
+                upset_query(set="Comedy", fill="brown1"),
+                upset_query(set="Action", fill="green"),
+                upset_query(set="Romance", fill="yellow"),
+                upset_query(set="Animation", fill="orange"),
+                upset_query(set="Documentary", fill="cyan"),
+                upset_query(set="Short", fill="darkorchid"),
+                upset_query(intersect="Drama", fill="blue"),
+                upset_query(intersect="Comedy", fill="brown1"),
+                upset_query(intersect="Action", fill="green"),
+                upset_query(intersect="Romance", fill="yellow"),
+                upset_query(intersect="Animation", fill="orange"),
+                upset_query(intersect="Documentary", fill="cyan"),
+                upset_query(intersect="Short", fill="darkorchid")
+            )
+        )
+    )
+})
+

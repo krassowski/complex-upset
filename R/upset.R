@@ -817,8 +817,15 @@ add_highlights_to_geoms = function(geoms, highlight_geoms, highlight_data, annot
             }
 
             # reorder to match the data order:
+
+            # fix for the bug https://github.com/krassowski/complex-upset/issues/122
+            if (!is.factor(highlight_data[[kind]])) {
+                highlight_data[[kind]] = as.factor(highlight_data[[kind]])
+            }
+            data_order = levels(highlight_data[, kind])
+
             params = params[
-                match(unique(highlight_data[, kind]), params$query),
+                match(data_order, params$query),
                 colnames(params) != 'query',
                 drop=FALSE
             ]
@@ -1216,14 +1223,20 @@ upset = function(
   }
 
   if (show_overall_sizes) {
-      overall_sizes_queries = set_queries(queries_for(queries, 'overall_sizes'), data$sanitized_labels)
-      overall_sizes_highlights_data = get_highlights_data(data$presence, 'group', overall_sizes_queries)
+      set_sizes_data = data$presence[data$presence$group %in% data$plot_sets_subset, ]
 
+      if (set_sizes$filter_intersections) {
+          set_sizes_data = set_sizes_data[set_sizes_data$intersection %in% data$plot_intersections_subset, ]
+      }
+
+      overall_sizes_queries = set_queries(queries_for(queries, 'overall_sizes'), data$sanitized_labels)
+      overall_sizes_highlights_data = get_highlights_data(set_sizes_data, 'group', overall_sizes_queries)
       if (nrow(overall_sizes_queries) != 0) {
         highlight_geom = set_sizes$highlight_geom
         if (!inherits(highlight_geom, 'list')) {
             highlight_geom = list(highlight_geom)
         }
+        overall_sizes_highlights_data$group = factor(overall_sizes_highlights_data$group)
         geom = add_highlights_to_geoms(
             set_sizes$geom,
             highlight_geom,
@@ -1239,12 +1252,6 @@ upset = function(
           default_scale = scale_y_continuous()
       } else {
           default_scale = scale_y_reverse()
-      }
-
-      set_sizes_data = data$presence[data$presence$group %in% data$plot_sets_subset, ]
-
-      if (set_sizes$filter_intersections) {
-          set_sizes_data = set_sizes_data[set_sizes_data$intersection %in% data$plot_intersections_subset, ]
       }
 
       set_sizes$layers = c(

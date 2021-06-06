@@ -1,12 +1,13 @@
 # Version 1.3.0
 
-unreleased
+2021-06-06
 
 Changes:
 - sets on intersection matrix can now be highlighted using `upset_query()` #115
 
 Bug fixes:
 - alleviate visual glitch of `geom_segment` in intersections matrix showing up with an outline #113
+- fixed aesthetics assigned by `upset_query()` which was sometimes not behaving as expected #123
 
 # Version 1.2.1
 
@@ -26,8 +27,8 @@ Bug fixes:
 Major improvements:
 - manually specified intersections will now display empty intersections and non-exclusive intersections correctly #109
 - manually specified intersections do not require modifying the `intersect` argument to obtain the intended result any longer #109
-- stripes size and other attributes of underlying `geom_segment()` can now be customized with new function: `upset_stripes()` #111
-- stripes color and other attributes can now be mapped to data #111
+- stripes size and other attributes of underlying `geom_segment()` can now be customised with new function: `upset_stripes()` #111
+- stripes colour and other attributes can now be mapped to data #111
 
 Minor improvements:
 - data.table can be passed instead of data.frame (the conversion will be performed automatically) #105
@@ -76,7 +77,7 @@ Bug fixes:
 
 Changes:
 - Lists with computed sizes are now returned in a single list called `sizes` by `upset_data()`
-- Set sizes are now **not** filtered by default when selecting intersections by `min_*` or `max_*` criteria. Pass `filter_intersections=TRUE` to `upset_set_sizes()` to restore the previous behavior
+- Set sizes are now **not** filtered by default when selecting intersections by `min_*` or `max_*` criteria. Pass `filter_intersections=TRUE` to `upset_set_sizes()` to restore the previous behaviour
 - Union sizes are now calculated before data trimming which provides more accurate ratio estimates
 - Added examples for Venn diagrams which are now covered by automated tests to protect against regressions
 - Removed `upset_data()` `intersected` member to avoid needless duplication of the data frames; access `with_sizes` instead
@@ -91,7 +92,7 @@ New features:
 
 Bug fixes:
 - Modes passed to `upset()` are now also used for sorting and trimming
-- Size calculation for modes was optimized for better performance
+- Size calculation for modes was optimised for better performance
 - User-added layers are now shown on top of `intersection_size()` and `intersection_union()`
 - Column names are no longer modified when supplying to `ggplot2` allowing to easily use them in annotations (#82)
 
@@ -107,7 +108,7 @@ Changes:
 2020-12-20
 
 New features:
-- Intersection modes were formalized with the default remaining `exclusive_intersection` (alias `distinct`); additional modes are: `inclusive_intersection` (alias `intersect`), `inclusive_union` and `exclusive_union`; please read the [relevant part of the documentation](https://krassowski.github.io/complex-upset/articles/Examples_R.html#0-2-region-selection-modes) for details (#78).
+- Intersection modes were formalised with the default remaining `exclusive_intersection` (alias `distinct`); additional modes are: `inclusive_intersection` (alias `intersect`), `inclusive_union` and `exclusive_union`; please read the [relevant part of the documentation](https://krassowski.github.io/complex-upset/articles/Examples_R.html#0-2-region-selection-modes) for details (#78).
 - Simple Venn diagrams (for two or three sets) can now be constructed using same input (binary presence data frame) using pseudo geoms: `geom_venn_circle()`, `geom_venn_label_region()`, `geom_venn_label_set()`, `geom_venn_region()` and scales `scale_color_venn_mix()` and `scale_fill_venn_mix()`; while developed mostly for the documentation needs, it provides unique capability of highlighting relevant regions of the Venn diagram and placing observations within appropriate regions (which allows to demonstrate their attributes with appropriate aesthetics mapping).
 
 Changes:
@@ -129,7 +130,7 @@ Bug fixes:
    - `upset_set_size(geom=geom_bar(aes(fill=mpaa, x=group)))`
 - Intersections can now be sorted by multiple criteria, e.g. first by degree and then by cardinality: `sort_intersections_by=c('degree', 'cardinality')` (#47)
 - Breaking: `dot_size` argument was removed. Use `matrix=intersection_matrix(geom=geom_point(size=5))` instead
-- Intersection matrix can now be customized, including the points (e.g. changing shape to squares), segments (e.g. using dotted line) and outlines (changing color) allowing to create [Example 5.4](https://krassowski.github.io/complex-upset/articles/Examples_R.html):
+- Intersection matrix can now be customised, including the points (e.g. changing shape to squares), segments (e.g. using dotted line) and outlines (changing color) allowing to create [Example 5.4](https://krassowski.github.io/complex-upset/articles/Examples_R.html):
  > ![](https://raw.githubusercontent.com/krassowski/complex-upset/master/tests/figs/examples/example-5-4-adjusting-the-intersection-matrix-1.svg)
 
 # Version 0.7.4
