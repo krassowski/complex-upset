@@ -321,7 +321,7 @@ intersection_size = function(
       ),
       scale_color_manual(
         values=text_colors,
-        guide=FALSE
+        guide="none"
       )
     )
   } else {
@@ -438,7 +438,7 @@ intersection_ratio = function(
       ),
       scale_color_manual(
         values=text_colors,
-        guide=FALSE
+        guide="none"
       )
     )
   } else {
@@ -1273,7 +1273,7 @@ upset = function(
             'colour',
             scale_color_manual(
               values=matrix_default_colors,
-              guide=FALSE
+              guide="none"
             )
         )
       )
