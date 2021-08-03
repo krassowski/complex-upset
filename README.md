@@ -115,7 +115,7 @@ The test cases for visual tests are auto-generated from the examples in the docu
 
 - `scripts/prepare_for_tests.sh` to generate updated test cases, and
 - `scripts/manage_visual_tests.sh` to validate the generated images.
-
+ 
 ## Acknowledgments
 
 Originally developed in course of a DPhil programme in Women's & Reproductive Health at [OxfordNuffieldWRH](https://github.com/OxfordNuffieldWRH).
