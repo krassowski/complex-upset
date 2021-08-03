@@ -321,7 +321,7 @@ intersection_size = function(
       ),
       scale_color_manual(
         values=text_colors,
-        guide=FALSE
+        guide="none"
       )
     )
   } else {
@@ -438,7 +438,7 @@ intersection_ratio = function(
       ),
       scale_color_manual(
         values=text_colors,
-        guide=FALSE
+        guide="none"
       )
     )
   } else {
@@ -1085,7 +1085,7 @@ upset = function(
   }
 
   matrix_default_colors = list('TRUE'='black', 'FALSE'='grey85')
-  matrix_guide = FALSE
+  matrix_guide = "none"
   matrix_breaks = names(matrix_default_colors)
   if (!is.null(names(stripes$colors))) {
       matrix_default_colors = c(
@@ -1273,7 +1273,7 @@ upset = function(
             'colour',
             scale_color_manual(
               values=matrix_default_colors,
-              guide=FALSE
+              guide="none"
             )
         )
       )
