@@ -1,3 +1,10 @@
+# Version 1.3.1
+
+2021-08-04
+
+Fixes:
+- use `guide="none"` instead of `guide=FALSE` to silence ggplot2 deprecation warning, thanks @MilouArts!
+
 # Version 1.3.0
 
 2021-06-06
