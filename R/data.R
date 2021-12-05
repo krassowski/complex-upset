@@ -824,8 +824,10 @@ upset_data = function(
 
     stacked = cbind(stacked, metadata)
 
-    stacked$group = stacked$ind
+    names(stacked)[names(stacked) == 'ind'] = 'group'
     groups_by_size = table(stacked$group)
+    groups_by_size[NOT_IN_KNOWN_SETS] = sum(data[original_data_indices, 'intersection'] == NOT_IN_KNOWN_SETS)
+
     note_time('stacked')
 
     if (sort_sets != FALSE) {
@@ -833,7 +835,11 @@ upset_data = function(
     } else {
         groups_by_size = groups_by_size[names(groups_by_size)]
     }
-    sorted_groups = names(groups_by_size)
+
+    sorted_groups_with_not_in_known_sets = names(groups_by_size)
+    sorted_groups = sorted_groups_with_not_in_known_sets[
+        sorted_groups_with_not_in_known_sets != NOT_IN_KNOWN_SETS
+    ]
 
     sort_order = NULL
 
@@ -896,7 +902,8 @@ upset_data = function(
         new_indices = 1:nrow(data)
         indices_by_intersection = split(new_indices, data$intersection)
 
-        for (group in sorted_groups) {
+        for (group in sorted_groups_with_not_in_known_sets) {
+
             for (intersection in names(unique_intersection_members)) {
                 i_groups = unique_intersection_members[[intersection]]
 
