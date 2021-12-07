@@ -575,29 +575,32 @@ upset_data = function(
     exclusive_intersection = as.numeric(exclusive_intersection)
     names(exclusive_intersection) = observed_intersections
 
+    product_matrix[product_matrix == 0] = -1
 
     if (NOT_IN_KNOWN_SETS %in% rownames(product_matrix) && NOT_IN_KNOWN_SETS %in% colnames(product_matrix)) {
-        product_matrix[NOT_IN_KNOWN_SETS, NOT_IN_KNOWN_SETS] = 1
+        product_matrix[NOT_IN_KNOWN_SETS, ] = -1
+        product_matrix[, NOT_IN_KNOWN_SETS] = -1
+        product_matrix[NOT_IN_KNOWN_SETS, NOT_IN_KNOWN_SETS] = 0
     }
 
     exclusive_intersection_counts = exclusive_intersection[colnames(product_matrix)]
-    inclusive_union = (product_matrix != 0) * exclusive_intersection_counts
+    inclusive_union = (product_matrix >= 0) * exclusive_intersection_counts
 
     observed_intersections_degrees = colSums(unique_members_matrix)
     desired_intersections_degrees = rowSums(intersections_matrix)
 
-    exclusive_union = ((product_matrix != 0) & (product_matrix >= observed_intersections_degrees)) * exclusive_intersection_counts
+    exclusive_union = ((product_matrix >= 0) & (product_matrix >= observed_intersections_degrees)) * exclusive_intersection_counts
 
     if (NOT_IN_KNOWN_SETS %in% colnames(product_matrix)) {
-        desired_intersections_degrees[NOT_IN_KNOWN_SETS] = 1
+        desired_intersections_degrees[NOT_IN_KNOWN_SETS] = 0
     }
 
     intersection_condition = t(t(product_matrix) >= desired_intersections_degrees)
     inclusive_intersection = intersection_condition * exclusive_intersection_counts
 
     if (!specific_intersections && intersections != 'observed') {
-        exclusive_intersection = t(t(product_matrix) == observed_intersections_degrees) & (product_matrix == observed_intersections_degrees)
-        exclusive_intersection = exclusive_intersection * exclusive_intersection_counts
+        exclusive_condition = t(t(product_matrix) == observed_intersections_degrees) & (product_matrix == observed_intersections_degrees)
+        exclusive_intersection = exclusive_condition * exclusive_intersection_counts
         exclusive_intersection[is.na(exclusive_intersection)] = 0
         exclusive_intersection = colSums(exclusive_intersection)
     }

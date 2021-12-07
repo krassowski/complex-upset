@@ -284,6 +284,26 @@ test_that("counts are properly computed in all modes", {
     )
 })
 
+
+test_that("zero degree intersection size is computed properly", {
+    df = data.frame(
+        a=c(FALSE, TRUE, FALSE, FALSE),
+        b=c(FALSE, FALSE, FALSE, FALSE),
+        c=c(TRUE, FALSE, FALSE, FALSE)
+    )
+    sizes = upset_data(
+        df,
+        c('a', 'b', 'c'),
+        intersections='all'
+    )$sizes
+
+    modes = c('exclusive_intersection', 'inclusive_intersection', 'exclusive_union', 'inclusive_union')
+    for (mode in modes) {
+        expect_equal(sizes[[mode]][[NOT_IN_KNOWN_SETS]], 2)
+    }
+})
+
+
 test_that("upset_data() filters by min_size, max_size, min_degree and max_degree", {
     # intersection: size, degree
     # a:     1, 1
