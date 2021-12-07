@@ -1,3 +1,13 @@
+# Version 1.3.3
+
+Bug fixes:
+- Makes zero-degree intersection size for `intersections='all'` mode follow the same behavior as the bar plot.
+
+# Version 1.3.2
+
+Bug fixes:
+- Enable displaying degree 0 intersection with `group_by='sets'`. The old behavior of not displaying degree zero intersection can be achieved by using `min_degree=1` argument.
+
 # Version 1.3.1
 
 2021-08-04
