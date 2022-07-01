@@ -1,3 +1,3 @@
 #!/usr/bin/env bash
 ./scripts/prepare_for_tests.sh
-Rscript -e 'vdiffr::manage_cases()'
+Rscript -e 'testthat::snapshot_review()'

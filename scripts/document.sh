@@ -13,7 +13,7 @@ do
     sed 's/```python/```{python eval=FALSE}/g' "vignettes/${v}.Rmd" -i
     sed 's/\[png\]/[ ]/g' "vignettes/${v}.Rmd" -i
     title=${v/_/ - }
-    sed -i "1s/^/---\ntitle: \"${title}\"\nvignette: >\n  %\\\\VignetteEngine{knitr::rmarkdown}\n  %\\\\VignetteIndexEntry{${title}}\n  %\\\\usepackage[utf8]{inputenc}\n---\n/" "vignettes/${v}.Rmd"
+    sed -i "1s/^/---\ntitle: \"${title}\"\nvignette: >\n  %\\\\VignetteEngine{knitr::rmarkdown}\n  %\\\\VignetteIndexEntry{${title}}\n  %\\\\usepackage[utf8]{inputenc}\n---\n\n\`\`\`{r echo=FALSE}\nknitr::opts_chunk\$set\(python.reticulate=FALSE\)\n\`\`\`\n\n/" "vignettes/${v}.Rmd"
 done
 rm -rf docs/articles
 echo "Compressing images"
