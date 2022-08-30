@@ -553,3 +553,26 @@ test_that("Color set by upset_query match", {
     )
 })
 
+
+test_that("Venn can use a tibble as input", {
+  df = tibble::tibble(
+    name = 1:20,
+    A = 1:20 %% 2 == 0,
+    B = 1:20 %% 3 == 0,
+    C = 1:20 %% 5 == 0
+  )
+  
+  df$WasA = df$A
+  
+  sets = c("A", "B", "C")
+  arr = arrange_venn(df, sets)
+  
+  expect_doppelganger(
+    "Venn can use a tibble as input",
+    ggplot(arr) +
+      theme_void() +
+      geom_venn_circle(data=df, sets=sets, size=1)+ 
+      geom_venn_label_set(df, sets=sets, aes(label=region), outwards_adjust=2.6) + 
+      geom_point(aes(x=x, y=y, color=WasA), size=3)
+  )
+})

@@ -527,6 +527,8 @@ arrange_venn = function(
     repeat_in_intersections=FALSE,
     starting_grid_size='auto'
 ) {
+    data = as.data.frame(data)
+  
     sets = get_sets(data, sets)
     layout = compute_layout(data, sets, radius=radius)
 
