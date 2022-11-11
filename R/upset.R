@@ -962,7 +962,7 @@ upset = function(
 
     mode = solve_mode(mode)
 
-    if (class(base_annotations) == 'character') {
+    if (inherits(base_annotations, 'character')) {
         if (base_annotations != 'auto') {
             stop('Unsupported value for `base_annotations`: provide a named list, or `"auto"`')
         } else {
@@ -973,7 +973,7 @@ upset = function(
   }
 
   # for backwards compatibility pre 1.2
-  if (class(stripes) != 'upset_stripes') {
+  if (!inherits(stripes, 'upset_stripes')) {
       stripes = upset_stripes(colors=stripes)
   }
 
