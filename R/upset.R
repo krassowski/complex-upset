@@ -265,6 +265,7 @@ upset_mode = function(mode) {
 #' @param mapping additional aesthetics for `geom_bar()`
 #' @param mode region selection mode, defines which intersection regions will be accounted for when computing the size. See `get_size_mode()` for accepted values.
 #' @param position position passed to `geom_bar()`
+#' @param width bar width, by default set to 90%
 #' @inheritDotParams ggplot2::geom_bar
 #' @export
 intersection_size = function(

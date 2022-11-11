@@ -13,6 +13,7 @@ intersection_ratio(
   text_mapping = aes(),
   mode = "distinct",
   denominator_mode = "union",
+  width = 0.9,
   ...
 )
 }
@@ -32,6 +33,8 @@ intersection_ratio(
 \item{mode}{region selection mode, defines which intersection regions will be accounted for when computing the size. See \code{get_size_mode()} for accepted values.}
 
 \item{denominator_mode}{region selection mode for computing the denominator in ratio. See \code{get_size_mode()} for accepted values.}
+
+\item{width}{bar width, by default set to 90\%}
 
 \item{...}{
   Arguments passed on to \code{\link[=intersection_size]{intersection_size}}
