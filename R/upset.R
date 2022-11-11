@@ -196,7 +196,7 @@ matrix_background_stripes = function(data, stripes, orient='horizontal') {
 #' @param colors a vector of colors to repeat as many times as needed for the fill of stripes, or a named vector specifying colors for values of the variable mapped to the color aesthetics in the mapping argument
 #' @param data the dataset describing the sets with a column named `set` and any other columns as needed for mapping
 #' @export
-upset_stripes = function(mapping=aes(), geom=geom_segment(size=7), colors=c('white', 'grey95'), data=NULL) {
+upset_stripes = function(mapping=aes(), geom=geom_segment(linewidth=7), colors=c('white', 'grey95'), data=NULL) {
     stripes = list(
         mapping=mapping,
         geom=geom,
