@@ -276,6 +276,7 @@ intersection_size = function(
     text_mapping=aes(),
     mode='distinct',
     position=position_stack(),
+    width=0.9,  # required to workaround an upstream bug in `resolution()` when `upset_query` is used.
     ...
 ) {
   size = get_size_mode(mode)
@@ -334,6 +335,7 @@ intersection_size = function(
           geom='bar',
           position=position,
           na.rm=TRUE,
+          width=width,
           ...
       )
   )
@@ -397,6 +399,7 @@ intersection_ratio = function(
   text_mapping=aes(),
   mode='distinct',
   denominator_mode='union',
+  width=0.9,  # required to workaround an upstream bug in `resolution()` when `upset_query` is used.
   ...
 ) {
   size = get_size_mode(mode)
@@ -454,6 +457,7 @@ intersection_ratio = function(
       # does not work, see
       # https://github.com/tidyverse/ggplot2/issues/3532
       na.rm=TRUE,
+      width=width,
       ...
   ))
 
@@ -868,7 +872,7 @@ scale_if_missing = function(annotation, axis, scale) {
         list(scale)
     }
 }
-                          
+
 #' Prepare layers for sets sizes plot
 #'
 #' @param geom a geom_point call, allowing to specify parameters (e.g. `geom=geom_point(shape='square')`)
