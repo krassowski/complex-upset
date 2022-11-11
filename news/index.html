@@ -63,86 +63,150 @@
     <div class="section level2">
 <h2 class="page-header" data-toc-text="1.3.5" id="version-135">Version 1.3.5<a class="anchor" aria-label="anchor" href="#version-135"></a></h2>
 <p>2022-11-11</p>
-<p>Maintenance: - Revert <code>size</code> → <code>linewidth</code> migration for now to retain compatibility with older ggplot2 versions - Use <code>inherits</code> to satisfy CRAN checks</p>
-</div>
+<p>Maintenance:</p>
+<ul><li>Revert <code>size</code> → <code>linewidth</code> migration for now to retain compatibility with older ggplot2 versions</li>
+<li>Use <code>inherits</code> to satisfy CRAN checks</li>
+</ul></div>
     <div class="section level2">
 <h2 class="page-header" data-toc-text="1.3.4" id="version-134">Version 1.3.4<a class="anchor" aria-label="anchor" href="#version-134"></a></h2>
 <p>2022-11-11</p>
-<p>Enhancements: - Accept <code>tibble</code>s in <code>arrange_venn</code>, thanks <a href="https://github.com/maximilian-heeg" class="external-link">@maximilian-heeg</a>! <a href="https://github.com/krassowski/complex-upset/issues/159" class="external-link">#159</a></p>
-<p>Maintenance: - Pass <code>width=0.9</code> to workaround change of behaviour in ggplot2 3.4 overextending the width of bars highlighted with <code>upset_query</code> - Fix deprecation warnings for ggplot 3.4 <code>size</code> to <code>linewidth</code> transition</p>
-</div>
+<p>Enhancements:</p>
+<ul><li>Accept <code>tibble</code>s in <code>arrange_venn</code>, thanks <a href="https://github.com/maximilian-heeg" class="external-link">@maximilian-heeg</a>! <a href="https://github.com/krassowski/complex-upset/issues/159" class="external-link">#159</a></li>
+</ul><p>Maintenance:</p>
+<ul><li>Pass <code>width=0.9</code> to workaround change of behaviour in ggplot2 3.4 overextending the width of bars highlighted with <code>upset_query</code>
+</li>
+<li>Fix deprecation warnings for ggplot 3.4 <code>size</code> to <code>linewidth</code> transition</li>
+</ul></div>
     <div class="section level2">
 <h2 class="page-header" data-toc-text="1.3.3" id="version-133">Version 1.3.3<small>2021-12-11</small><a class="anchor" aria-label="anchor" href="#version-133"></a></h2>
 <p>2021-12-07</p>
-<p>Bug fixes: - Makes zero-degree intersection size for <code>intersections='all'</code> mode follow the same behavior as the bar plot <a href="https://github.com/krassowski/complex-upset/issues/144" class="external-link">#144</a></p>
-</div>
+<p>Bug fixes:</p>
+<ul><li>Makes zero-degree intersection size for <code>intersections='all'</code> mode follow the same behavior as the bar plot <a href="https://github.com/krassowski/complex-upset/issues/144" class="external-link">#144</a></li>
+</ul></div>
     <div class="section level2">
 <h2 class="page-header" data-toc-text="1.3.2" id="version-132">Version 1.3.2<a class="anchor" aria-label="anchor" href="#version-132"></a></h2>
 <p>2021-12-06</p>
-<p>Bug fixes: - Enable displaying degree 0 intersection with <code>group_by='sets'</code>. The old behavior of not displaying degree zero intersection can be achieved by using <code>min_degree=1</code> argument <a href="https://github.com/krassowski/complex-upset/issues/143" class="external-link">#143</a></p>
-</div>
+<p>Bug fixes:</p>
+<ul><li>Enable displaying degree 0 intersection with <code>group_by='sets'</code>. The old behavior of not displaying degree zero intersection can be achieved by using <code>min_degree=1</code> argument <a href="https://github.com/krassowski/complex-upset/issues/143" class="external-link">#143</a></li>
+</ul></div>
     <div class="section level2">
 <h2 class="page-header" data-toc-text="1.3.1" id="version-131">Version 1.3.1<small>2021-08-05</small><a class="anchor" aria-label="anchor" href="#version-131"></a></h2>
 <p>2021-08-04</p>
-<p>Fixes: - use <code>guide="none"</code> instead of <code>guide=FALSE</code> to silence ggplot2 deprecation warning, thanks <a href="https://github.com/MilouArts" class="external-link">@MilouArts</a>! <a href="https://github.com/krassowski/complex-upset/issues/129" class="external-link">#129</a></p>
-</div>
+<p>Fixes:</p>
+<ul><li>use <code>guide="none"</code> instead of <code>guide=FALSE</code> to silence ggplot2 deprecation warning, thanks <a href="https://github.com/MilouArts" class="external-link">@MilouArts</a>! <a href="https://github.com/krassowski/complex-upset/issues/129" class="external-link">#129</a></li>
+</ul></div>
     <div class="section level2">
 <h2 class="page-header" data-toc-text="1.3.0" id="version-130">Version 1.3.0<small>2021-06-06</small><a class="anchor" aria-label="anchor" href="#version-130"></a></h2>
 <p>2021-06-06</p>
-<p>Changes: - sets on intersection matrix can now be highlighted using <code><a href="../reference/upset_query.html">upset_query()</a></code> <a href="https://github.com/krassowski/complex-upset/issues/115" class="external-link">#115</a></p>
-<p>Bug fixes: - alleviate visual glitch of <code>geom_segment</code> in intersections matrix showing up with an outline <a href="https://github.com/krassowski/complex-upset/issues/113" class="external-link">#113</a> - fixed aesthetics assigned by <code><a href="../reference/upset_query.html">upset_query()</a></code> which was sometimes not behaving as expected <a href="https://github.com/krassowski/complex-upset/issues/123" class="external-link">#123</a></p>
-</div>
+<p>Changes:</p>
+<ul><li>sets on intersection matrix can now be highlighted using <code><a href="../reference/upset_query.html">upset_query()</a></code> <a href="https://github.com/krassowski/complex-upset/issues/115" class="external-link">#115</a></li>
+</ul><p>Bug fixes:</p>
+<ul><li>alleviate visual glitch of <code>geom_segment</code> in intersections matrix showing up with an outline <a href="https://github.com/krassowski/complex-upset/issues/113" class="external-link">#113</a></li>
+<li>fixed aesthetics assigned by <code><a href="../reference/upset_query.html">upset_query()</a></code> which was sometimes not behaving as expected <a href="https://github.com/krassowski/complex-upset/issues/123" class="external-link">#123</a></li>
+</ul></div>
     <div class="section level2">
 <h2 class="page-header" data-toc-text="1.2.1" id="version-121">Version 1.2.1<small>2021-04-29</small><a class="anchor" aria-label="anchor" href="#version-121"></a></h2>
 <p>2021-04-25</p>
-<p>Bug fixes: - fixed metadata order in data frame returned by <code><a href="../reference/arrange_venn.html">arrange_venn()</a></code> function <a href="https://github.com/krassowski/complex-upset/issues/116" class="external-link">#116</a></p>
-</div>
+<p>Bug fixes:</p>
+<ul><li>fixed metadata order in data frame returned by <code><a href="../reference/arrange_venn.html">arrange_venn()</a></code> function <a href="https://github.com/krassowski/complex-upset/issues/116" class="external-link">#116</a></li>
+</ul></div>
     <div class="section level2">
 <h2 class="page-header" data-toc-text="1.2.0" id="version-120">Version 1.2.0<small>2021-04-04</small><a class="anchor" aria-label="anchor" href="#version-120"></a></h2>
 <p>2021-04-03</p>
-<p>Bug fixes: - [critical] fixed display order of labels when using <code>encode_sets=TRUE</code> <a href="https://github.com/krassowski/complex-upset/issues/110" class="external-link">#110</a> - encoding of set names will now properly work around name conflicts <a href="https://github.com/krassowski/complex-upset/issues/110" class="external-link">#110</a></p>
-<p>Major improvements: - manually specified intersections will now display empty intersections and non-exclusive intersections correctly <a href="https://github.com/krassowski/complex-upset/issues/109" class="external-link">#109</a> - manually specified intersections do not require modifying the <code>intersect</code> argument to obtain the intended result any longer <a href="https://github.com/krassowski/complex-upset/issues/109" class="external-link">#109</a> - stripes size and other attributes of underlying <code><a href="https://ggplot2.tidyverse.org/reference/geom_segment.html" class="external-link">geom_segment()</a></code> can now be customised with new function: <code><a href="../reference/upset_stripes.html">upset_stripes()</a></code> <a href="https://github.com/krassowski/complex-upset/issues/111" class="external-link">#111</a> - stripes colour and other attributes can now be mapped to data <a href="https://github.com/krassowski/complex-upset/issues/111" class="external-link">#111</a></p>
-<p>Minor improvements: - data.table can be passed instead of data.frame (the conversion will be performed automatically) <a href="https://github.com/krassowski/complex-upset/issues/105" class="external-link">#105</a> - warning will be shown if a vector is provided instead of a list to the <code>intersections</code> argument <a href="https://github.com/krassowski/complex-upset/issues/109" class="external-link">#109</a> - when <code>intersections</code> argument includes sets not specified in <code>intersect</code>, a warning will be issued and execution will proceed as if those were included in <code>intersect</code> <a href="https://github.com/krassowski/complex-upset/issues/109" class="external-link">#109</a> - when incorrect names of sets are passed to <code>intersections</code> argument, those will be highlighted and plotting will be aborted <a href="https://github.com/krassowski/complex-upset/issues/109" class="external-link">#109</a></p>
-</div>
+<p>Bug fixes:</p>
+<ul><li>[critical] fixed display order of labels when using <code>encode_sets=TRUE</code> <a href="https://github.com/krassowski/complex-upset/issues/110" class="external-link">#110</a></li>
+<li>encoding of set names will now properly work around name conflicts <a href="https://github.com/krassowski/complex-upset/issues/110" class="external-link">#110</a></li>
+</ul><p>Major improvements:</p>
+<ul><li>manually specified intersections will now display empty intersections and non-exclusive intersections correctly <a href="https://github.com/krassowski/complex-upset/issues/109" class="external-link">#109</a></li>
+<li>manually specified intersections do not require modifying the <code>intersect</code> argument to obtain the intended result any longer <a href="https://github.com/krassowski/complex-upset/issues/109" class="external-link">#109</a></li>
+<li>stripes size and other attributes of underlying <code><a href="https://ggplot2.tidyverse.org/reference/geom_segment.html" class="external-link">geom_segment()</a></code> can now be customised with new function: <code><a href="../reference/upset_stripes.html">upset_stripes()</a></code> <a href="https://github.com/krassowski/complex-upset/issues/111" class="external-link">#111</a></li>
+<li>stripes colour and other attributes can now be mapped to data <a href="https://github.com/krassowski/complex-upset/issues/111" class="external-link">#111</a></li>
+</ul><p>Minor improvements:</p>
+<ul><li>data.table can be passed instead of data.frame (the conversion will be performed automatically) <a href="https://github.com/krassowski/complex-upset/issues/105" class="external-link">#105</a></li>
+<li>warning will be shown if a vector is provided instead of a list to the <code>intersections</code> argument <a href="https://github.com/krassowski/complex-upset/issues/109" class="external-link">#109</a></li>
+<li>when <code>intersections</code> argument includes sets not specified in <code>intersect</code>, a warning will be issued and execution will proceed as if those were included in <code>intersect</code> <a href="https://github.com/krassowski/complex-upset/issues/109" class="external-link">#109</a></li>
+<li>when incorrect names of sets are passed to <code>intersections</code> argument, those will be highlighted and plotting will be aborted <a href="https://github.com/krassowski/complex-upset/issues/109" class="external-link">#109</a></li>
+</ul></div>
     <div class="section level2">
 <h2 class="page-header" data-toc-text="1.1.0" id="version-110">Version 1.1.0<small>2021-02-26</small><a class="anchor" aria-label="anchor" href="#version-110"></a></h2>
 <p>2021-01-13</p>
-<p>New features: - it is now possible to select specific intersections passing <code>intersections = list('Drama', c('Comedy', 'Romance'))</code> - it is now possible to define custom order of intersections passing <code>intersections = list('Drama', c('Comedy', 'Romance'))</code> and <code>sort_intersections = FALSE</code></p>
-</div>
+<p>New features:</p>
+<ul><li>it is now possible to select specific intersections passing <code>intersections = list('Drama', c('Comedy', 'Romance'))</code>
+</li>
+<li>it is now possible to define custom order of intersections passing <code>intersections = list('Drama', c('Comedy', 'Romance'))</code> and <code>sort_intersections = FALSE</code>
+</li>
+</ul></div>
     <div class="section level2">
 <h2 class="page-header" data-toc-text="1.0.3" id="version-103">Version 1.0.3<small>2021-01-10</small><a class="anchor" aria-label="anchor" href="#version-103"></a></h2>
 <p>2021-01-05</p>
-<p>Bug fixes: - Major performance and memory use improvements, especially when using <code>intersections = 'all'</code> - The <code>max_combinations_n</code> fail-safe was replaced by a more useful <code>max_combinations_datapoints_n</code> with more precise error message - The atypical use case of filtering with <code>max_degree = 0</code> is now accepted again - Fix tests using all the data (effectively union mode) rather than chosen mode data only</p>
-</div>
+<p>Bug fixes:</p>
+<ul><li>Major performance and memory use improvements, especially when using <code>intersections = 'all'</code>
+</li>
+<li>The <code>max_combinations_n</code> fail-safe was replaced by a more useful <code>max_combinations_datapoints_n</code> with more precise error message</li>
+<li>The atypical use case of filtering with <code>max_degree = 0</code> is now accepted again</li>
+<li>Fix tests using all the data (effectively union mode) rather than chosen mode data only</li>
+</ul></div>
     <div class="section level2">
 <h2 class="page-header" data-toc-text="1.0.2" id="version-102">Version 1.0.2<a class="anchor" aria-label="anchor" href="#version-102"></a></h2>
 <p>2021-01-04</p>
-<p>Bug fixes: - Fixed regression of non-observed sets causing “no vector columns were selected” caused by fix addressing <a href="https://github.com/krassowski/complex-upset/issues/90" class="external-link">#90</a> - Reduced length of file names for some test doppelgangers</p>
-</div>
+<p>Bug fixes:</p>
+<ul><li>Fixed regression of non-observed sets causing “no vector columns were selected” caused by fix addressing <a href="https://github.com/krassowski/complex-upset/issues/90" class="external-link">#90</a></li>
+<li>Reduced length of file names for some test doppelgangers</li>
+</ul></div>
     <div class="section level2">
 <h2 class="page-header" data-toc-text="1.0.1" id="version-101">Version 1.0.1<a class="anchor" aria-label="anchor" href="#version-101"></a></h2>
 <p>2021-01-04</p>
-<p>Bug fixes: - Filtering by degree when using non-default mode and <code>intersections='all'</code> now correctly accounts for all observations (<a href="https://github.com/krassowski/complex-upset/issues/89" class="external-link">#89</a>) - Empty sets/groups are now correctly removed when filtering with a non-default mode (<a href="https://github.com/krassowski/complex-upset/issues/90" class="external-link">#90</a>) - Missing values are now converted to FALSE and a warning is issued to the user rather than causing an undefined behavior (<a href="https://github.com/krassowski/complex-upset/issues/88" class="external-link">#88</a>)</p>
-</div>
+<p>Bug fixes:</p>
+<ul><li>Filtering by degree when using non-default mode and <code>intersections='all'</code> now correctly accounts for all observations (<a href="https://github.com/krassowski/complex-upset/issues/89" class="external-link">#89</a>)</li>
+<li>Empty sets/groups are now correctly removed when filtering with a non-default mode (<a href="https://github.com/krassowski/complex-upset/issues/90" class="external-link">#90</a>)</li>
+<li>Missing values are now converted to FALSE and a warning is issued to the user rather than causing an undefined behavior (<a href="https://github.com/krassowski/complex-upset/issues/88" class="external-link">#88</a>)</li>
+</ul></div>
     <div class="section level2">
 <h2 class="page-header" data-toc-text="1.0.0" id="version-100">Version 1.0.0<a class="anchor" aria-label="anchor" href="#version-100"></a></h2>
 <p>2020-12-30</p>
-<p>Changes: - Lists with computed sizes are now returned in a single list called <code>sizes</code> by <code><a href="../reference/upset_data.html">upset_data()</a></code> - Set sizes are now <strong>not</strong> filtered by default when selecting intersections by <code>min_*</code> or <code>max_*</code> criteria. Pass <code>filter_intersections=TRUE</code> to <code>upset_set_sizes()</code> to restore the previous behaviour - Union sizes are now calculated before data trimming which provides more accurate ratio estimates - Added examples for Venn diagrams which are now covered by automated tests to protect against regressions - Removed <code><a href="../reference/upset_data.html">upset_data()</a></code> <code>intersected</code> member to avoid needless duplication of the data frames; access <code>with_sizes</code> instead - <code>aest</code> argument of <code><a href="../reference/intersection_size.html">intersection_size()</a></code> and related functions was renamed to <code>mapping</code> and is now the first positional argument - <code>min_max_early</code> argument is no longer required and was removed</p>
-<p>New features: - Annotations can now access data for any of the available modes by adding <code><a href="../reference/upset_mode.html">upset_mode()</a></code> layer. By default the annotations are given data corresponding to the same mode as the mode of the passed in the <code><a href="../reference/upset.html">upset()</a></code> call. - It is now possible to display all intersections, even if those are not present in the data by passing <code>intersections='all'</code> to <code><a href="../reference/upset.html">upset()</a></code>; this is only feasible for &lt;20 sets, but filtering by degree can allow to explore a subset of all intersections when there are many more sets; this is only useful for modes different from the default exclusive intersection. - If filtering leads to no intersections, an informative error is shown (<a href="https://github.com/krassowski/complex-upset/issues/80" class="external-link">#80</a>)</p>
-<p>Bug fixes: - Modes passed to <code><a href="../reference/upset.html">upset()</a></code> are now also used for sorting and trimming - Size calculation for modes was optimised for better performance - User-added layers are now shown on top of <code><a href="../reference/intersection_size.html">intersection_size()</a></code> and <code>intersection_union()</code> - Column names are no longer modified when supplying to <code>ggplot2</code> allowing to easily use them in annotations (<a href="https://github.com/krassowski/complex-upset/issues/82" class="external-link">#82</a>)</p>
-</div>
+<p>Changes:</p>
+<ul><li>Lists with computed sizes are now returned in a single list called <code>sizes</code> by <code><a href="../reference/upset_data.html">upset_data()</a></code>
+</li>
+<li>Set sizes are now <strong>not</strong> filtered by default when selecting intersections by <code>min_*</code> or <code>max_*</code> criteria. Pass <code>filter_intersections=TRUE</code> to <code>upset_set_sizes()</code> to restore the previous behaviour</li>
+<li>Union sizes are now calculated before data trimming which provides more accurate ratio estimates</li>
+<li>Added examples for Venn diagrams which are now covered by automated tests to protect against regressions</li>
+<li>Removed <code><a href="../reference/upset_data.html">upset_data()</a></code> <code>intersected</code> member to avoid needless duplication of the data frames; access <code>with_sizes</code> instead</li>
+<li>
+<code>aest</code> argument of <code><a href="../reference/intersection_size.html">intersection_size()</a></code> and related functions was renamed to <code>mapping</code> and is now the first positional argument</li>
+<li>
+<code>min_max_early</code> argument is no longer required and was removed</li>
+</ul><p>New features:</p>
+<ul><li>Annotations can now access data for any of the available modes by adding <code><a href="../reference/upset_mode.html">upset_mode()</a></code> layer. By default the annotations are given data corresponding to the same mode as the mode of the passed in the <code><a href="../reference/upset.html">upset()</a></code> call.</li>
+<li>It is now possible to display all intersections, even if those are not present in the data by passing <code>intersections='all'</code> to <code><a href="../reference/upset.html">upset()</a></code>; this is only feasible for &lt;20 sets, but filtering by degree can allow to explore a subset of all intersections when there are many more sets; this is only useful for modes different from the default exclusive intersection.</li>
+<li>If filtering leads to no intersections, an informative error is shown (<a href="https://github.com/krassowski/complex-upset/issues/80" class="external-link">#80</a>)</li>
+</ul><p>Bug fixes:</p>
+<ul><li>Modes passed to <code><a href="../reference/upset.html">upset()</a></code> are now also used for sorting and trimming</li>
+<li>Size calculation for modes was optimised for better performance</li>
+<li>User-added layers are now shown on top of <code><a href="../reference/intersection_size.html">intersection_size()</a></code> and <code>intersection_union()</code>
+</li>
+<li>Column names are no longer modified when supplying to <code>ggplot2</code> allowing to easily use them in annotations (<a href="https://github.com/krassowski/complex-upset/issues/82" class="external-link">#82</a>)</li>
+</ul></div>
     <div class="section level2">
 <h2 class="page-header" data-toc-text="0.9.1" id="version-091">Version 0.9.1<a class="anchor" aria-label="anchor" href="#version-091"></a></h2>
 <p>2020-12-20</p>
-<p>Changes: - Pass metadata to the <code>ggplot2</code> when arranging Venn diagram, allowing to map elements aesthetics details</p>
-</div>
+<p>Changes:</p>
+<ul><li>Pass metadata to the <code>ggplot2</code> when arranging Venn diagram, allowing to map elements aesthetics details</li>
+</ul></div>
     <div class="section level2">
 <h2 class="page-header" data-toc-text="0.9.0" id="version-090">Version 0.9.0<a class="anchor" aria-label="anchor" href="#version-090"></a></h2>
 <p>2020-12-20</p>
-<p>New features: - Intersection modes were formalised with the default remaining <code>exclusive_intersection</code> (alias <code>distinct</code>); additional modes are: <code>inclusive_intersection</code> (alias <code>intersect</code>), <code>inclusive_union</code> and <code>exclusive_union</code>; please read the <a href="https://krassowski.github.io/complex-upset/articles/Examples_R.html#0-2-region-selection-modes" class="external-link">relevant part of the documentation</a> for details (<a href="https://github.com/krassowski/complex-upset/issues/78" class="external-link">#78</a>). - Simple Venn diagrams (for two or three sets) can now be constructed using same input (binary presence data frame) using pseudo geoms: <code><a href="../reference/geom_venn_circle.html">geom_venn_circle()</a></code>, <code><a href="../reference/geom_venn_label_region.html">geom_venn_label_region()</a></code>, <code><a href="../reference/geom_venn_label_set.html">geom_venn_label_set()</a></code>, <code><a href="../reference/geom_venn_region.html">geom_venn_region()</a></code> and scales <code><a href="../reference/scale_color_venn_mix.html">scale_color_venn_mix()</a></code> and <code><a href="../reference/scale_fill_venn_mix.html">scale_fill_venn_mix()</a></code>; while developed mostly for the documentation needs, it provides unique capability of highlighting relevant regions of the Venn diagram and placing observations within appropriate regions (which allows to demonstrate their attributes with appropriate aesthetics mapping).</p>
-<p>Changes: - Breaking: union size for “empty” intersection is now equal to its size</p>
-<p>Bug fixes: - Layers added to <code><a href="../reference/upset_set_size.html">upset_set_size()</a></code> and <code><a href="../reference/intersection_matrix.html">intersection_matrix()</a></code> will now always go on top (avoiding geoms being hidden underneath) - Declare layer in NAMESPACE to allow basic usage without loading <code>ggplot2</code> - <code><a href="../reference/upset_query.html">upset_query()</a></code> will now throw an informative error when the user forgets to pass any aesthetics (<a href="https://github.com/krassowski/complex-upset/issues/79" class="external-link">#79</a>)</p>
-</div>
+<p>New features:</p>
+<ul><li>Intersection modes were formalised with the default remaining <code>exclusive_intersection</code> (alias <code>distinct</code>); additional modes are: <code>inclusive_intersection</code> (alias <code>intersect</code>), <code>inclusive_union</code> and <code>exclusive_union</code>; please read the <a href="https://krassowski.github.io/complex-upset/articles/Examples_R.html#0-2-region-selection-modes" class="external-link">relevant part of the documentation</a> for details (<a href="https://github.com/krassowski/complex-upset/issues/78" class="external-link">#78</a>).</li>
+<li>Simple Venn diagrams (for two or three sets) can now be constructed using same input (binary presence data frame) using pseudo geoms: <code><a href="../reference/geom_venn_circle.html">geom_venn_circle()</a></code>, <code><a href="../reference/geom_venn_label_region.html">geom_venn_label_region()</a></code>, <code><a href="../reference/geom_venn_label_set.html">geom_venn_label_set()</a></code>, <code><a href="../reference/geom_venn_region.html">geom_venn_region()</a></code> and scales <code><a href="../reference/scale_color_venn_mix.html">scale_color_venn_mix()</a></code> and <code><a href="../reference/scale_fill_venn_mix.html">scale_fill_venn_mix()</a></code>; while developed mostly for the documentation needs, it provides unique capability of highlighting relevant regions of the Venn diagram and placing observations within appropriate regions (which allows to demonstrate their attributes with appropriate aesthetics mapping).</li>
+</ul><p>Changes:</p>
+<ul><li>Breaking: union size for “empty” intersection is now equal to its size</li>
+</ul><p>Bug fixes:</p>
+<ul><li>Layers added to <code><a href="../reference/upset_set_size.html">upset_set_size()</a></code> and <code><a href="../reference/intersection_matrix.html">intersection_matrix()</a></code> will now always go on top (avoiding geoms being hidden underneath)</li>
+<li>Declare layer in NAMESPACE to allow basic usage without loading <code>ggplot2</code>
+</li>
+<li>
+<code><a href="../reference/upset_query.html">upset_query()</a></code> will now throw an informative error when the user forgets to pass any aesthetics (<a href="https://github.com/krassowski/complex-upset/issues/79" class="external-link">#79</a>)</li>
+</ul></div>
     <div class="section level2">
 <h2 class="page-header" data-toc-text="0.8.0" id="version-080">Version 0.8.0<a class="anchor" aria-label="anchor" href="#version-080"></a></h2>
 <p>2020-12-06</p>
