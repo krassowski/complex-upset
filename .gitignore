@@ -5,6 +5,7 @@ docs/
 .virtual_documents/
 cran_package/
 data/
+*.ipynb
 
 # History files
 .Rhistory
