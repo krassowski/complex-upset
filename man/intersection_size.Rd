@@ -50,7 +50,13 @@ A \code{function} will be called with a single argument,
 the plot data. The return value must be a \code{data.frame}, and
 will be used as the layer data. A \code{function} can be created
 from a \code{formula} (e.g. \code{~ head(.x, 10)}).}
-    \item{\code{width}}{Bar width. By default, set to 90\% of the resolution of the data.}
+    \item{\code{just}}{Adjustment for column placement. Set to \code{0.5} by default, meaning
+that columns will be centered about axis breaks. Set to \code{0} or \code{1} to place
+columns to the left/right of axis breaks. Note that this argument may have
+unintended behaviour when used with alternative positions, e.g.
+\code{position_dodge()}.}
+    \item{\code{width}}{Bar width. By default, set to 90\% of the \code{\link[ggplot2:resolution]{resolution()}} of the
+data.}
     \item{\code{na.rm}}{If \code{FALSE}, the default, missing values are removed with
 a warning. If \code{TRUE}, missing values are silently removed.}
     \item{\code{orientation}}{The orientation of the layer. The default (\code{NA})
@@ -66,8 +72,6 @@ display.}
 rather than combining with them. This is most useful for helper functions
 that define both data and aesthetics and shouldn't inherit behaviour from
 the default plot specification, e.g. \code{\link[ggplot2:borders]{borders()}}.}
-    \item{\code{stat}}{Override the default connection between \code{geom_bar()} and
-\code{stat_count()}.}
   }}
 }
 \description{
