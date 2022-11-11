@@ -1,3 +1,11 @@
+# Version 1.3.5
+
+2022-11-11
+
+Maintenance:
+- Revert `size` → `linewidth` migration for now to retain compatibility with older ggplot2 versions
+- Use `inherits` to satisfy CRAN checks
+
 # Version 1.3.4
 
 2022-11-11
