@@ -3,6 +3,7 @@
 2022-11-11
 
 Maintenance:
+
 - Revert `size` → `linewidth` migration for now to retain compatibility with older ggplot2 versions
 - Use `inherits` to satisfy CRAN checks
 
@@ -11,9 +12,11 @@ Maintenance:
 2022-11-11
 
 Enhancements:
+
 - Accept `tibble`s in `arrange_venn`, thanks @maximilian-heeg! #159
 
 Maintenance:
+
 - Pass `width=0.9` to workaround change of behaviour in ggplot2 3.4 overextending the width of bars highlighted with `upset_query`
 - Fix deprecation warnings for ggplot 3.4 `size` to `linewidth` transition
 
@@ -22,6 +25,7 @@ Maintenance:
 2021-12-07
 
 Bug fixes:
+
 - Makes zero-degree intersection size for `intersections='all'` mode follow the same behavior as the bar plot #144
 
 # Version 1.3.2
@@ -29,6 +33,7 @@ Bug fixes:
 2021-12-06
 
 Bug fixes:
+
 - Enable displaying degree 0 intersection with `group_by='sets'`. The old behavior of not displaying degree zero intersection can be achieved by using `min_degree=1` argument #143
 
 # Version 1.3.1
@@ -36,6 +41,7 @@ Bug fixes:
 2021-08-04
 
 Fixes:
+
 - use `guide="none"` instead of `guide=FALSE` to silence ggplot2 deprecation warning, thanks @MilouArts! #129
 
 # Version 1.3.0
@@ -43,9 +49,11 @@ Fixes:
 2021-06-06
 
 Changes:
+
 - sets on intersection matrix can now be highlighted using `upset_query()` #115
 
 Bug fixes:
+
 - alleviate visual glitch of `geom_segment` in intersections matrix showing up with an outline #113
 - fixed aesthetics assigned by `upset_query()` which was sometimes not behaving as expected #123
 
@@ -54,6 +62,7 @@ Bug fixes:
 2021-04-25
 
 Bug fixes:
+
 - fixed metadata order in data frame returned by `arrange_venn()` function #116
 
 # Version 1.2.0
@@ -61,16 +70,19 @@ Bug fixes:
 2021-04-03
 
 Bug fixes:
+
 - [critical] fixed display order of labels when using `encode_sets=TRUE` #110
 - encoding of set names will now properly work around name conflicts #110
 
 Major improvements:
+
 - manually specified intersections will now display empty intersections and non-exclusive intersections correctly #109
 - manually specified intersections do not require modifying the `intersect` argument to obtain the intended result any longer #109
 - stripes size and other attributes of underlying `geom_segment()` can now be customised with new function: `upset_stripes()` #111
 - stripes colour and other attributes can now be mapped to data #111
 
 Minor improvements:
+
 - data.table can be passed instead of data.frame (the conversion will be performed automatically) #105
 - warning will be shown if a vector is provided instead of a list to the `intersections` argument #109
 - when `intersections` argument includes sets not specified in `intersect`, a warning will be issued and execution will proceed as if those were included in `intersect` #109
@@ -81,6 +93,7 @@ Minor improvements:
 2021-01-13
 
 New features:
+
 - it is now possible to select specific intersections passing `intersections = list('Drama', c('Comedy', 'Romance'))`
 - it is now possible to define custom order of intersections passing `intersections = list('Drama', c('Comedy', 'Romance'))` and `sort_intersections = FALSE`
 
@@ -89,6 +102,7 @@ New features:
 2021-01-05
 
 Bug fixes:
+
 - Major performance and memory use improvements, especially when using `intersections = 'all'`
 - The `max_combinations_n` fail-safe was replaced by a more useful `max_combinations_datapoints_n` with more precise error message
 - The atypical use case of filtering with `max_degree = 0` is now accepted again
@@ -99,6 +113,7 @@ Bug fixes:
 2021-01-04
 
 Bug fixes:
+
 - Fixed regression of non-observed sets causing "no vector columns were selected" caused by fix addressing #90
 - Reduced length of file names for some test doppelgangers
 
@@ -107,6 +122,7 @@ Bug fixes:
 2021-01-04
 
 Bug fixes:
+
 - Filtering by degree when using non-default mode and `intersections='all'` now correctly accounts for all observations (#89)
 - Empty sets/groups are now correctly removed when filtering with a non-default mode (#90)
 - Missing values are now converted to FALSE and a warning is issued to the user rather than causing an undefined behavior (#88)
@@ -116,6 +132,7 @@ Bug fixes:
 2020-12-30
 
 Changes:
+
 - Lists with computed sizes are now returned in a single list called `sizes` by `upset_data()`
 - Set sizes are now **not** filtered by default when selecting intersections by `min_*` or `max_*` criteria. Pass `filter_intersections=TRUE` to `upset_set_sizes()` to restore the previous behaviour
 - Union sizes are now calculated before data trimming which provides more accurate ratio estimates
@@ -125,12 +142,14 @@ Changes:
 - `min_max_early` argument is no longer required and was removed
 
 New features:
+
 - Annotations can now access data for any of the available modes by adding `upset_mode()` layer. By default the annotations are given data corresponding to the same mode as the mode of the passed in the `upset()` call.
 - It is now possible to display all intersections, even if those are not present in the data by passing `intersections='all'` to `upset()`; this is only feasible for <20 sets, but filtering by degree can allow to explore a subset of all intersections when there are many more sets; this is only useful for modes different from the default exclusive intersection.
 - If filtering leads to no intersections, an informative error is shown (#80)
 
 
 Bug fixes:
+
 - Modes passed to `upset()` are now also used for sorting and trimming
 - Size calculation for modes was optimised for better performance
 - User-added layers are now shown on top of `intersection_size()` and `intersection_union()`
@@ -141,6 +160,7 @@ Bug fixes:
 2020-12-20
 
 Changes:
+
 - Pass metadata to the `ggplot2` when arranging Venn diagram, allowing to map elements aesthetics details
 
 # Version 0.9.0
@@ -148,13 +168,16 @@ Changes:
 2020-12-20
 
 New features:
+
 - Intersection modes were formalised with the default remaining `exclusive_intersection` (alias `distinct`); additional modes are: `inclusive_intersection` (alias `intersect`), `inclusive_union` and `exclusive_union`; please read the [relevant part of the documentation](https://krassowski.github.io/complex-upset/articles/Examples_R.html#0-2-region-selection-modes) for details (#78).
 - Simple Venn diagrams (for two or three sets) can now be constructed using same input (binary presence data frame) using pseudo geoms: `geom_venn_circle()`, `geom_venn_label_region()`, `geom_venn_label_set()`, `geom_venn_region()` and scales `scale_color_venn_mix()` and `scale_fill_venn_mix()`; while developed mostly for the documentation needs, it provides unique capability of highlighting relevant regions of the Venn diagram and placing observations within appropriate regions (which allows to demonstrate their attributes with appropriate aesthetics mapping).
 
 Changes:
+
 - Breaking: union size for "empty" intersection is now equal to its size
 
 Bug fixes:
+
 - Layers added to `upset_set_size()` and `intersection_matrix()` will now always go on top (avoiding geoms being hidden underneath)
 - Declare layer in NAMESPACE to allow basic usage without loading `ggplot2`
 - `upset_query()` will now throw an informative error when the user forgets to pass any aesthetics (#79)
