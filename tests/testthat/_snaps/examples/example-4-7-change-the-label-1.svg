@@ -134,15 +134,11 @@
 <rect x='132.79' y='504.09' width='61.08' height='23.70' style='stroke-width: 1.07; stroke: none; stroke-linecap: butt; stroke-linejoin: miter; fill: #595959;' />
 </g>
 <g clip-path='url(#cpMC4wMHw3MjAuMDB8MC4wMHw1NzYuMDA=)'>
-<polyline points='193.87,542.37 193.87,539.63 ' style='stroke-width: 1.07; stroke-linecap: butt;' />
-<polyline points='146.89,542.37 146.89,539.63 ' style='stroke-width: 1.07; stroke-linecap: butt;' />
-<polyline points='99.90,542.37 99.90,539.63 ' style='stroke-width: 1.07; stroke-linecap: butt;' />
-<polyline points='52.91,542.37 52.91,539.63 ' style='stroke-width: 1.07; stroke-linecap: butt;' />
 <text x='193.87' y='550.62' text-anchor='middle' style='font-size: 8.80px; fill: #4D4D4D; font-family: sans;' textLength='4.89px' lengthAdjust='spacingAndGlyphs'>0</text>
 <text x='146.89' y='550.62' text-anchor='middle' style='font-size: 8.80px; fill: #4D4D4D; font-family: sans;' textLength='14.68px' lengthAdjust='spacingAndGlyphs'>250</text>
 <text x='99.90' y='550.62' text-anchor='middle' style='font-size: 8.80px; fill: #4D4D4D; font-family: sans;' textLength='14.68px' lengthAdjust='spacingAndGlyphs'>500</text>
 <text x='52.91' y='550.62' text-anchor='middle' style='font-size: 8.80px; fill: #4D4D4D; font-family: sans;' textLength='14.68px' lengthAdjust='spacingAndGlyphs'>750</text>
-<text x='108.08' y='562.76' text-anchor='middle' style='font-size: 11.00px; font-family: sans;' textLength='39.14px' lengthAdjust='spacingAndGlyphs'>Set size</text>
+<text x='108.08' y='562.76' text-anchor='middle' style='font-size: 11.00px; font-family: sans;' textLength='49.51px' lengthAdjust='spacingAndGlyphs'>MY TITLE</text>
 </g>
 <defs>
   <clipPath id='cpMjA3LjkzfDcxNC41MnwzNjguMjZ8NTcwLjUy'>
@@ -274,6 +270,6 @@
 <text x='263.68' y='439.97' text-anchor='end' style='font-size: 8.80px; fill: #4D4D4D; font-family: sans;' textLength='32.78px' lengthAdjust='spacingAndGlyphs'>Comedy</text>
 <text x='263.68' y='400.47' text-anchor='end' style='font-size: 8.80px; fill: #4D4D4D; font-family: sans;' textLength='26.41px' lengthAdjust='spacingAndGlyphs'>Drama</text>
 <text x='488.83' y='562.76' text-anchor='middle' style='font-size: 11.00px; font-family: sans;' textLength='28.14px' lengthAdjust='spacingAndGlyphs'>group</text>
-<text x='10.96' y='14.56' style='font-size: 13.20px; font-family: sans;' textLength='172.45px' lengthAdjust='spacingAndGlyphs'>Example: 4.1 Rotate labels: 2</text>
+<text x='10.96' y='14.56' style='font-size: 13.20px; font-family: sans;' textLength='195.21px' lengthAdjust='spacingAndGlyphs'>Example: 4.7 Change the label: 1</text>
 </g>
 </svg>

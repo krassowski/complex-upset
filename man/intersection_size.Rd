@@ -13,6 +13,7 @@ intersection_size(
   text_mapping = aes(),
   mode = "distinct",
   position = position_stack(),
+  width = 0.9,
   ...
 )
 }
@@ -33,6 +34,8 @@ intersection_size(
 
 \item{position}{position passed to \code{geom_bar()}}
 
+\item{width}{bar width, by default set to 90\%}
+
 \item{...}{
   Arguments passed on to \code{\link[ggplot2:geom_bar]{ggplot2::geom_bar}}
   \describe{
@@ -50,7 +53,11 @@ A \code{function} will be called with a single argument,
 the plot data. The return value must be a \code{data.frame}, and
 will be used as the layer data. A \code{function} can be created
 from a \code{formula} (e.g. \code{~ head(.x, 10)}).}
-    \item{\code{width}}{Bar width. By default, set to 90\% of the resolution of the data.}
+    \item{\code{just}}{Adjustment for column placement. Set to \code{0.5} by default, meaning
+that columns will be centered about axis breaks. Set to \code{0} or \code{1} to place
+columns to the left/right of axis breaks. Note that this argument may have
+unintended behaviour when used with alternative positions, e.g.
+\code{position_dodge()}.}
     \item{\code{na.rm}}{If \code{FALSE}, the default, missing values are removed with
 a warning. If \code{TRUE}, missing values are silently removed.}
     \item{\code{orientation}}{The orientation of the layer. The default (\code{NA})
@@ -66,8 +73,6 @@ display.}
 rather than combining with them. This is most useful for helper functions
 that define both data and aesthetics and shouldn't inherit behaviour from
 the default plot specification, e.g. \code{\link[ggplot2:borders]{borders()}}.}
-    \item{\code{stat}}{Override the default connection between \code{geom_bar()} and
-\code{stat_count()}.}
   }}
 }
 \description{

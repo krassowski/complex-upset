@@ -10,7 +10,7 @@ Quick links: [Documentation](https://krassowski.github.io/complex-upset/) | [Ins
 
 ## Showcase
 
-Get all the goodies of `UpSetR`, but with full extensibility of `ggplot2`. 
+Get all the goodies of `UpSetR`, but with full extensibility of `ggplot2`.
 
 ![Example UpSet plot](https://raw.githubusercontent.com/krassowski/complex-upset/master/movies.png)
 
@@ -109,13 +109,13 @@ The list is not meant to be exhaustive, but representative of applications to di
 
 ## Testing
 
-The unit tests are run with testhat, and the visual "doppelganger" tests use vdiffr.
+The unit tests are run with `testhat`, and the visual "doppelganger" tests use `vdiffr`.
 
 The test cases for visual tests are auto-generated from the examples in the documentation; after changing or adding an example, please run:
 
 - `scripts/prepare_for_tests.sh` to generate updated test cases, and
 - `scripts/manage_visual_tests.sh` to validate the generated images.
 
-## Acknowledgments
+## Acknowledgements
 
 Originally developed in course of a DPhil programme in Women's & Reproductive Health at [OxfordNuffieldWRH](https://github.com/OxfordNuffieldWRH).

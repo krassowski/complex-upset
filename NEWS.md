@@ -1,3 +1,14 @@
+# Version 1.3.4
+
+2022-11-11
+
+Enhancements:
+- Accept `tibble`s in `arrange_venn`, thanks @maximilian-heeg! #159
+
+Maintenance:
+- Pass `width=0.9` to workaround change of behaviour in ggplot2 3.4 overextending the width of bars highlighted with `upset_query`
+- Fix deprecation warnings for ggplot 3.4 `size` to `linewidth` transition
+
 # Version 1.3.3
 
 2021-12-07

@@ -34,16 +34,15 @@ geom_venn_label_region(
   Arguments passed on to \code{\link[ggplot2:geom_text]{ggplot2::geom_label}}
   \describe{
     \item{\code{stat}}{The statistical transformation to use on the data for this
-layer, as a string.}
+layer, either as a \code{ggproto} \code{Geom} subclass or as a string naming the
+stat stripped of the \code{stat_} prefix (e.g. \code{"count"} rather than
+\code{"stat_count"})}
     \item{\code{position}}{Position adjustment, either as a string, or the result of
 a call to a position adjustment function. Cannot be jointy specified with
 \code{nudge_x} or \code{nudge_y}.}
     \item{\code{parse}}{If \code{TRUE}, the labels will be parsed into expressions and
 displayed as described in \code{?plotmath}.}
-    \item{\code{nudge_x}}{Horizontal and vertical adjustment to nudge labels by.
-Useful for offsetting text from points, particularly on discrete scales.
-Cannot be jointly specified with \code{position}.}
-    \item{\code{nudge_y}}{Horizontal and vertical adjustment to nudge labels by.
+    \item{\code{nudge_x,nudge_y}}{Horizontal and vertical adjustment to nudge labels by.
 Useful for offsetting text from points, particularly on discrete scales.
 Cannot be jointly specified with \code{position}.}
     \item{\code{label.padding}}{Amount of padding around label. Defaults to 0.25 lines.}

@@ -196,7 +196,7 @@ matrix_background_stripes = function(data, stripes, orient='horizontal') {
 #' @param colors a vector of colors to repeat as many times as needed for the fill of stripes, or a named vector specifying colors for values of the variable mapped to the color aesthetics in the mapping argument
 #' @param data the dataset describing the sets with a column named `set` and any other columns as needed for mapping
 #' @export
-upset_stripes = function(mapping=aes(), geom=geom_segment(size=7), colors=c('white', 'grey95'), data=NULL) {
+upset_stripes = function(mapping=aes(), geom=geom_segment(linewidth=7), colors=c('white', 'grey95'), data=NULL) {
     stripes = list(
         mapping=mapping,
         geom=geom,
@@ -265,6 +265,7 @@ upset_mode = function(mode) {
 #' @param mapping additional aesthetics for `geom_bar()`
 #' @param mode region selection mode, defines which intersection regions will be accounted for when computing the size. See `get_size_mode()` for accepted values.
 #' @param position position passed to `geom_bar()`
+#' @param width bar width, by default set to 90%
 #' @inheritDotParams ggplot2::geom_bar
 #' @export
 intersection_size = function(
@@ -276,6 +277,7 @@ intersection_size = function(
     text_mapping=aes(),
     mode='distinct',
     position=position_stack(),
+    width=0.9,  # required to workaround an upstream bug in `resolution()` when `upset_query` is used.
     ...
 ) {
   size = get_size_mode(mode)
@@ -334,6 +336,7 @@ intersection_size = function(
           geom='bar',
           position=position,
           na.rm=TRUE,
+          width=width,
           ...
       )
   )
@@ -397,6 +400,7 @@ intersection_ratio = function(
   text_mapping=aes(),
   mode='distinct',
   denominator_mode='union',
+  width=0.9,  # required to workaround an upstream bug in `resolution()` when `upset_query` is used.
   ...
 ) {
   size = get_size_mode(mode)
@@ -454,6 +458,7 @@ intersection_ratio = function(
       # does not work, see
       # https://github.com/tidyverse/ggplot2/issues/3532
       na.rm=TRUE,
+      width=width,
       ...
   ))
 
@@ -868,7 +873,7 @@ scale_if_missing = function(annotation, axis, scale) {
         list(scale)
     }
 }
-                          
+
 #' Prepare layers for sets sizes plot
 #'
 #' @param geom a geom_point call, allowing to specify parameters (e.g. `geom=geom_point(shape='square')`)
