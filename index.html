@@ -6,8 +6,8 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>UpSet (Venn diagrams alternative) plots extensible with ggplot2 geoms • ComplexUpset</title>
-<!-- jquery --><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script><!-- Bootstrap --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha256-bZLfwXAP04zRMK2BjiO8iu9pf4FbLqX6zitd+tIvLhE=" crossorigin="anonymous">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha256-nuL8/2cJ5NDSSwnKD8VqreErSWHtnEP9E7AySL+1ev4=" crossorigin="anonymous"></script><!-- bootstrap-toc --><link rel="stylesheet" href="bootstrap-toc.css">
+<!-- jquery --><script src="file:///usr/share/javascript/jquery/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script><!-- Bootstrap --><link rel="stylesheet" href="file:///usr/share/javascript/bootstrap/css/bootstrap.min.css" integrity="sha256-bZLfwXAP04zRMK2BjiO8iu9pf4FbLqX6zitd+tIvLhE=" crossorigin="anonymous">
+<script src="file:///usr/share/javascript/bootstrap/js/bootstrap.min.js" integrity="sha256-nuL8/2cJ5NDSSwnKD8VqreErSWHtnEP9E7AySL+1ev4=" crossorigin="anonymous"></script><!-- bootstrap-toc --><link rel="stylesheet" href="bootstrap-toc.css">
 <script src="bootstrap-toc.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous">
 <!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- pkgdown --><link href="pkgdown.css" rel="stylesheet">
@@ -16,12 +16,13 @@
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:creator" content="@krassowski">
 <meta name="twitter:site" content="@krassowski">
-<!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script><!--[if lt IE 9]>
-<script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+<!-- mathjax --><script src="file:///usr/share/javascript/mathjax/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script><!--[if lt IE 9]>
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 <![endif]-->
 </head>
 <body data-spy="scroll" data-target="#toc">
+    
+
     <div class="container template-home">
       <header><div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
@@ -34,7 +35,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="index.html">ComplexUpset</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.3.3</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.3.4</span>
       </span>
     </div>
 
@@ -44,7 +45,7 @@
   <a href="reference/index.html">Reference</a>
 </li>
 <li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     Articles
      
     <span class="caret"></span>
@@ -64,7 +65,7 @@
       </ul>
 <ul class="nav navbar-nav navbar-right">
 <li>
-  <a href="https://github.com/krassowski/complex-upset/">
+  <a href="https://github.com/krassowski/complex-upset/" class="external-link">
     <span class="fab fa-github fa-lg"></span>
      
   </a>
@@ -81,109 +82,112 @@
 
       </header><div class="row">
   <div class="contents col-md-9">
-<div id="complexupset" class="section level1">
-<div class="page-header"><h1 class="hasAnchor">
-<a href="#complexupset" class="anchor"></a>ComplexUpset</h1></div>
+<div class="section level1">
+<div class="page-header"><h1 id="complexupset">ComplexUpset<a class="anchor" aria-label="anchor" href="#complexupset"></a>
+</h1></div>
 
-<p>Quick links: <a href="https://krassowski.github.io/complex-upset/">Documentation</a> | <a href="https://github.com/krassowski/complex-upset#Install">Installation</a> | <a href="https://krassowski.github.io/complex-upset/articles/Examples_R.html">R examples</a> | <a href="https://krassowski.github.io/complex-upset/articles/Examples_Python.html">Python examples</a></p>
-<div id="showcase" class="section level2">
-<h2 class="hasAnchor">
-<a href="#showcase" class="anchor"></a>Showcase</h2>
+<p>Quick links: <a href="https://krassowski.github.io/complex-upset/" class="external-link">Documentation</a> | <a href="https://github.com/krassowski/complex-upset#Install" class="external-link">Installation</a> | <a href="https://krassowski.github.io/complex-upset/articles/Examples_R.html" class="external-link">R examples</a> | <a href="https://krassowski.github.io/complex-upset/articles/Examples_Python.html" class="external-link">Python examples</a></p>
+<div class="section level2">
+<h2 id="showcase">Showcase<a class="anchor" aria-label="anchor" href="#showcase"></a>
+</h2>
 <p>Get all the goodies of <code>UpSetR</code>, but with full extensibility of <code>ggplot2</code>.</p>
-<p><img src="https://raw.githubusercontent.com/krassowski/complex-upset/master/movies.png" alt="Example UpSet plot"></p>
-<details><p><summary>Click here to display the source code</summary></p>
-<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://ggplot2.tidyverse.org">ggplot2</a></span><span class="op">)</span>
-<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/krassowski/complex-upset">ComplexUpset</a></span><span class="op">)</span>
-
-<span class="kw">if</span><span class="op">(</span><span class="op">!</span><span class="kw"><a href="https://rdrr.io/r/base/library.html">require</a></span><span class="op">(</span><span class="va">ggplot2movies</span><span class="op">)</span><span class="op">)</span> <span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span><span class="op">(</span><span class="st">'ggplot2movies'</span><span class="op">)</span>
-<span class="va">movies</span> <span class="op">=</span> <span class="fu">ggplot2movies</span><span class="fu">::</span><span class="va"><a href="https://rdrr.io/pkg/ggplot2movies/man/movies.html">movies</a></span>
-<span class="va">genres</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">'Action'</span>, <span class="st">'Animation'</span>, <span class="st">'Comedy'</span>, <span class="st">'Drama'</span>, <span class="st">'Documentary'</span>, <span class="st">'Romance'</span><span class="op">)</span>
-
-<span class="fu"><a href="reference/upset.html">upset</a></span><span class="op">(</span>
-    <span class="va">movies</span>,
-    <span class="va">genres</span>,
-    annotations <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>
-        <span class="st">'Length'</span><span class="op">=</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span>mapping<span class="op">=</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x<span class="op">=</span><span class="va">intersection</span>, y<span class="op">=</span><span class="va">length</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_boxplot.html">geom_boxplot</a></span><span class="op">(</span><span class="op">)</span>,
-        <span class="st">'Rating'</span><span class="op">=</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span>mapping<span class="op">=</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x<span class="op">=</span><span class="va">intersection</span>, y<span class="op">=</span><span class="va">rating</span><span class="op">)</span><span class="op">)</span>
-            <span class="co"># if you do not want to install ggbeeswarm, you can use geom_jitter</span>
-            <span class="op">+</span> <span class="fu">ggbeeswarm</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/ggbeeswarm/man/geom_quasirandom.html">geom_quasirandom</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>color<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/Log.html">log10</a></span><span class="op">(</span><span class="va">votes</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>
-            <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_violin.html">geom_violin</a></span><span class="op">(</span>width<span class="op">=</span><span class="fl">1.1</span>, alpha<span class="op">=</span><span class="fl">0.5</span><span class="op">)</span>
-    <span class="op">)</span>,
-    queries<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>
-        <span class="fu"><a href="reference/upset_query.html">upset_query</a></span><span class="op">(</span>
-            intersect<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">'Drama'</span>, <span class="st">'Comedy'</span><span class="op">)</span>,
-            color<span class="op">=</span><span class="st">'red'</span>,
-            fill<span class="op">=</span><span class="st">'red'</span>,
-            only_components<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">'intersections_matrix'</span>, <span class="st">'Intersection size'</span><span class="op">)</span>
-        <span class="op">)</span>,
-        <span class="fu"><a href="reference/upset_query.html">upset_query</a></span><span class="op">(</span>
-            set<span class="op">=</span><span class="st">'Drama'</span>,
-            fill<span class="op">=</span><span class="st">'blue'</span>
-        <span class="op">)</span>,
-        <span class="fu"><a href="reference/upset_query.html">upset_query</a></span><span class="op">(</span>
-            intersect<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">'Romance'</span>, <span class="st">'Drama'</span><span class="op">)</span>,
-            fill<span class="op">=</span><span class="st">'yellow'</span>,
-            only_components<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">'Length'</span><span class="op">)</span>
-        <span class="op">)</span>
-    <span class="op">)</span>,
-    min_size<span class="op">=</span><span class="fl">10</span>,
-    width_ratio<span class="op">=</span><span class="fl">0.1</span>
-<span class="op">)</span></code></pre></div>
-</details><p>The full list of examples is available in the <a href="https://krassowski.github.io/complex-upset/articles/Examples_Python.html">documentation</a>; it also contains instructions for the use from Python.</p>
+<div class="figure">
+<img src="https://raw.githubusercontent.com/krassowski/complex-upset/master/movies.png" alt=""><p class="caption">Example UpSet plot</p>
 </div>
-<div id="install" class="section level2">
-<h2 class="hasAnchor">
-<a href="#install" class="anchor"></a>Install</h2>
+<details><summary>
+Click here to display the source code
+</summary><div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://ggplot2.tidyverse.org" class="external-link">ggplot2</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/krassowski/complex-upset" class="external-link">ComplexUpset</a></span><span class="op">)</span></span>
+<span></span>
+<span><span class="kw">if</span><span class="op">(</span><span class="op">!</span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">require</a></span><span class="op">(</span><span class="va">ggplot2movies</span><span class="op">)</span><span class="op">)</span> <span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">'ggplot2movies'</span><span class="op">)</span></span>
+<span><span class="va">movies</span> <span class="op">=</span> <span class="fu">ggplot2movies</span><span class="fu">::</span><span class="va"><a href="https://rdrr.io/pkg/ggplot2movies/man/movies.html" class="external-link">movies</a></span></span>
+<span><span class="va">genres</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">'Action'</span>, <span class="st">'Animation'</span>, <span class="st">'Comedy'</span>, <span class="st">'Drama'</span>, <span class="st">'Documentary'</span>, <span class="st">'Romance'</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu"><a href="reference/upset.html">upset</a></span><span class="op">(</span></span>
+<span>    <span class="va">movies</span>,</span>
+<span>    <span class="va">genres</span>,</span>
+<span>    annotations <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span>
+<span>        <span class="st">'Length'</span><span class="op">=</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span>mapping<span class="op">=</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>x<span class="op">=</span><span class="va">intersection</span>, y<span class="op">=</span><span class="va">length</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_boxplot.html" class="external-link">geom_boxplot</a></span><span class="op">(</span><span class="op">)</span>,</span>
+<span>        <span class="st">'Rating'</span><span class="op">=</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span>mapping<span class="op">=</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>x<span class="op">=</span><span class="va">intersection</span>, y<span class="op">=</span><span class="va">rating</span><span class="op">)</span><span class="op">)</span></span>
+<span>            <span class="co"># if you do not want to install ggbeeswarm, you can use geom_jitter</span></span>
+<span>            <span class="op">+</span> <span class="fu">ggbeeswarm</span><span class="fu">::</span><span class="fu">geom_quasirandom</span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>color<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/Log.html" class="external-link">log10</a></span><span class="op">(</span><span class="va">votes</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
+<span>            <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_violin.html" class="external-link">geom_violin</a></span><span class="op">(</span>width<span class="op">=</span><span class="fl">1.1</span>, alpha<span class="op">=</span><span class="fl">0.5</span><span class="op">)</span></span>
+<span>    <span class="op">)</span>,</span>
+<span>    queries<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span>
+<span>        <span class="fu"><a href="reference/upset_query.html">upset_query</a></span><span class="op">(</span></span>
+<span>            intersect<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">'Drama'</span>, <span class="st">'Comedy'</span><span class="op">)</span>,</span>
+<span>            color<span class="op">=</span><span class="st">'red'</span>,</span>
+<span>            fill<span class="op">=</span><span class="st">'red'</span>,</span>
+<span>            only_components<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">'intersections_matrix'</span>, <span class="st">'Intersection size'</span><span class="op">)</span></span>
+<span>        <span class="op">)</span>,</span>
+<span>        <span class="fu"><a href="reference/upset_query.html">upset_query</a></span><span class="op">(</span></span>
+<span>            set<span class="op">=</span><span class="st">'Drama'</span>,</span>
+<span>            fill<span class="op">=</span><span class="st">'blue'</span></span>
+<span>        <span class="op">)</span>,</span>
+<span>        <span class="fu"><a href="reference/upset_query.html">upset_query</a></span><span class="op">(</span></span>
+<span>            intersect<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">'Romance'</span>, <span class="st">'Drama'</span><span class="op">)</span>,</span>
+<span>            fill<span class="op">=</span><span class="st">'yellow'</span>,</span>
+<span>            only_components<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">'Length'</span><span class="op">)</span></span>
+<span>        <span class="op">)</span></span>
+<span>    <span class="op">)</span>,</span>
+<span>    min_size<span class="op">=</span><span class="fl">10</span>,</span>
+<span>    width_ratio<span class="op">=</span><span class="fl">0.1</span></span>
+<span><span class="op">)</span></span></code></pre></div>
+</details><p>The full list of examples is available in the <a href="https://krassowski.github.io/complex-upset/articles/Examples_Python.html" class="external-link">documentation</a>; it also contains instructions for the use from Python.</p>
+</div>
+<div class="section level2">
+<h2 id="install">Install<a class="anchor" aria-label="anchor" href="#install"></a>
+</h2>
 <p>To get the most recent version, open <code>R</code> and run:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw">if</span><span class="op">(</span><span class="op">!</span><span class="kw"><a href="https://rdrr.io/r/base/library.html">require</a></span><span class="op">(</span><span class="va"><a href="https://devtools.r-lib.org/">devtools</a></span><span class="op">)</span><span class="op">)</span> <span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span><span class="op">(</span><span class="st">"devtools"</span><span class="op">)</span>
-<span class="fu">devtools</span><span class="fu">::</span><span class="fu"><a href="https://devtools.r-lib.org/reference/remote-reexports.html">install_github</a></span><span class="op">(</span><span class="st">"krassowski/complex-upset"</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="kw">if</span><span class="op">(</span><span class="op">!</span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">require</a></span><span class="op">(</span><span class="va"><a href="https://devtools.r-lib.org/" class="external-link">devtools</a></span><span class="op">)</span><span class="op">)</span> <span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"devtools"</span><span class="op">)</span></span>
+<span><span class="fu">devtools</span><span class="fu">::</span><span class="fu"><a href="https://remotes.r-lib.org/reference/install_github.html" class="external-link">install_github</a></span><span class="op">(</span><span class="st">"krassowski/complex-upset"</span><span class="op">)</span></span></code></pre></div>
 <p>Alternatively, to get a stable CRAN release (which may be one version behind at times):</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span><span class="op">(</span><span class="st">'ComplexUpset'</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">'ComplexUpset'</span><span class="op">)</span></span></code></pre></div>
 <p>Or, if you use conda/mamba:</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true"></a>conda install <span class="op">-</span>c conda<span class="op">-</span>forge r<span class="op">-</span>complexupset</span></code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>conda install <span class="sc">-</span>c conda<span class="sc">-</span>forge r<span class="sc">-</span>complexupset</span></code></pre></div>
 </div>
-<div id="how-it-compares-to-other-packages" class="section level2">
-<h2 class="hasAnchor">
-<a href="#how-it-compares-to-other-packages" class="anchor"></a>How it compares to other packages?</h2>
+<div class="section level2">
+<h2 id="how-it-compares-to-other-packages">How it compares to other packages?<a class="anchor" aria-label="anchor" href="#how-it-compares-to-other-packages"></a>
+</h2>
 <ul>
 <li>
-<a href="https://github.com/hms-dbmi/UpSetR">UpSetR</a> is a powerful tool and the pioneer in the UpSet visualisations; it was not designed to be extended with ggplot components. Unfortunately, the repository is no longer active (for two years now).</li>
+<a href="https://github.com/hms-dbmi/UpSetR" class="external-link">UpSetR</a> is a powerful tool and the pioneer in the UpSet visualisations; it was not designed to be extended with ggplot components. Unfortunately, the repository is no longer active (for two years now).</li>
 <li>
-<a href="https://github.com/const-ae/ggupset">ggupset</a> uses scales to convert a single plot to upsets plots, e.g. with <code>scale_x_upset</code> - a really nice approach, recommended for simple ggplot.</li>
-<li>a cowplot-based upset was demonstrated in an <a href="https://rpubs.com/alexeilutay/upsetr">online publication</a>, however cowplot (a great tool at the time) got superseded by even greater tool: <a href="https://github.com/thomasp85/patchwork">patchwork</a>, which is what is used by ComplexUpset.</li>
+<a href="https://github.com/const-ae/ggupset" class="external-link">ggupset</a> uses scales to convert a single plot to upsets plots, e.g. with <code>scale_x_upset</code> - a really nice approach, recommended for simple ggplot.</li>
+<li>a cowplot-based upset was demonstrated in an <a href="https://rpubs.com/alexeilutay/upsetr" class="external-link">online publication</a>, however cowplot (a great tool at the time) got superseded by even greater tool: <a href="https://github.com/thomasp85/patchwork" class="external-link">patchwork</a>, which is what is used by ComplexUpset.</li>
 <li>
-<a href="https://github.com/jokergoo/ComplexHeatmap">ComplexHeatmap</a> also offers a way to generate <a href="https://jokergoo.github.io/ComplexHeatmap-reference/book/upset-plot.html">UpSet plots with annotations</a>; while not ggplot2-centered, it provides extensive customization options, with a clear API. It may be the best choice if you already use it for heatmaps.</li>
+<a href="https://github.com/jokergoo/ComplexHeatmap" class="external-link">ComplexHeatmap</a> also offers a way to generate <a href="https://jokergoo.github.io/ComplexHeatmap-reference/book/upset-plot.html" class="external-link">UpSet plots with annotations</a>; while not ggplot2-centered, it provides extensive customization options, with a clear API. It may be the best choice if you already use it for heatmaps.</li>
 </ul>
 <p>Use whichever tool you find the most useful for your particular use. The rational of making this repository public is not only to share the code, but also to demonstrate how simple it is now to create complex visualisations with patchwork (without the need to learn the ggplot internals).</p>
-<p>For the interactive use, check out the <a href="https://github.com/VCG/upset">VCG/upset</a>. Regardless of the tool chosen, you may want to cite <a href="https://dx.doi.org/10.1109/TVCG.2014.2346248">(Lex et al, 2014)</a> when using UpSet plots, especially in fields still dominated by Venn diagrams.</p>
+<p>For the interactive use, check out the <a href="https://github.com/VCG/upset" class="external-link">VCG/upset</a>. Regardless of the tool chosen, you may want to cite <a href="https://dx.doi.org/10.1109/TVCG.2014.2346248" class="external-link">(Lex et al, 2014)</a> when using UpSet plots, especially in fields still dominated by Venn diagrams.</p>
 </div>
-<div id="get-inspired" class="section level2">
-<h2 class="hasAnchor">
-<a href="#get-inspired" class="anchor"></a>Get inspired</h2>
+<div class="section level2">
+<h2 id="get-inspired">Get inspired<a class="anchor" aria-label="anchor" href="#get-inspired"></a>
+</h2>
 <p>Here are example publications and preprints including figures generated with this library:</p>
 <ul>
-<li>Martín-Martín et al. (2020). <a href="https://doi.org/10.1007/s11192-020-03690-4">Google Scholar, Microsoft Academic, Scopus, Dimensions, Web of Science, and OpenCitations’ COCI: a multidisciplinary comparison of coverage via citations</a>, <em>Scientometrics</em>: <a href="https://link.springer.com/article/10.1007/s11192-020-03690-4#Fig2">Figure 2</a>
+<li>Martín-Martín et al. (2020). <a href="https://doi.org/10.1007/s11192-020-03690-4" class="external-link">Google Scholar, Microsoft Academic, Scopus, Dimensions, Web of Science, and OpenCitations’ COCI: a multidisciplinary comparison of coverage via citations</a>, <em>Scientometrics</em>: <a href="https://link.springer.com/article/10.1007/s11192-020-03690-4#Fig2" class="external-link">Figure 2</a>
 </li>
-<li>Krassowski et al. (2020). <a href="https://doi.org/10.3389/fgene.2020.610798">Analyses for "State of the field in multi-omics research: from computational needs to data mining and sharing</a>, <em>Frontiers in Genetics</em>: <a href="https://www.frontiersin.org/articles/10.3389/fgene.2020.610798/full#F5">Figure 5</a>
+<li>Krassowski et al. (2020). <a href="https://doi.org/10.3389/fgene.2020.610798" class="external-link">Analyses for “State of the field in multi-omics research: from computational needs to data mining and sharing</a>, <em>Frontiers in Genetics</em>: <a href="https://www.frontiersin.org/articles/10.3389/fgene.2020.610798/full#F5" class="external-link">Figure 5</a>
 </li>
-<li>Green et al. (2020). <a href="https://doi.org/10.1101/2020.11.23.20236463">Metabolic correlates of late midlife cognitive function: findings from the 1946 British Birth Cohort</a>, <em>medRxiv</em>: <a href="https://www.medrxiv.org/content/10.1101/2020.11.23.20236463v2.full#F2">Figure 2</a>
+<li>Green et al. (2020). <a href="https://doi.org/10.1101/2020.11.23.20236463" class="external-link">Metabolic correlates of late midlife cognitive function: findings from the 1946 British Birth Cohort</a>, <em>medRxiv</em>: <a href="https://www.medrxiv.org/content/10.1101/2020.11.23.20236463v2.full#F2" class="external-link">Figure 2</a>
 </li>
-<li>McDaniel et al. (2020). <a href="https://doi.org/10.1101/2020.11.23.394700">Metabolic differentiation of co-occurring Accumulibacter clades revealed through genome-resolved metatranscriptomics</a>, <em>bioRxiv</em> <a href="https://www.biorxiv.org/content/10.1101/2020.11.23.394700v1.full#F3">Figure 3</a>
+<li>McDaniel et al. (2020). <a href="https://doi.org/10.1101/2020.11.23.394700" class="external-link">Metabolic differentiation of co-occurring Accumulibacter clades revealed through genome-resolved metatranscriptomics</a>, <em>bioRxiv</em> <a href="https://www.biorxiv.org/content/10.1101/2020.11.23.394700v1.full#F3" class="external-link">Figure 3</a>
 </li>
-<li>Kozlowski et al. (2020). <a href="https://doi.org/10.1101/2020.04.30.069948">Transposable Elements are an evolutionary force shaping genomic plasticity in the parthenogenetic root-knot nematode Meloidogyne incognita</a>, <em>bioRxiv</em>: <a href="https://www.biorxiv.org/content/10.1101/2020.04.30.069948v4.full#F7">Figure 7</a>
+<li>Kozlowski et al. (2020). <a href="https://doi.org/10.1101/2020.04.30.069948" class="external-link">Transposable Elements are an evolutionary force shaping genomic plasticity in the parthenogenetic root-knot nematode Meloidogyne incognita</a>, <em>bioRxiv</em>: <a href="https://www.biorxiv.org/content/10.1101/2020.04.30.069948v4.full#F7" class="external-link">Figure 7</a>
 </li>
-<li>Swamy et al. (2020). <a href="https://doi.org/10.1101/2020.08.21.261644">A long read optimized de novo transcriptome pipeline reveals novel ocular developmentally regulated gene isoforms and disease targets</a>, <em>bioRxiv</em>: <a href="https://www.biorxiv.org/content/10.1101/2020.08.21.261644v2.full#F4">Figure 4</a>
+<li>Swamy et al. (2020). <a href="https://doi.org/10.1101/2020.08.21.261644" class="external-link">A long read optimized de novo transcriptome pipeline reveals novel ocular developmentally regulated gene isoforms and disease targets</a>, <em>bioRxiv</em>: <a href="https://www.biorxiv.org/content/10.1101/2020.08.21.261644v2.full#F4" class="external-link">Figure 4</a>
 </li>
 </ul>
-<p>The list is not meant to be exhaustive, but representative of applications to different fields, and of different usage ideas. You are welcome to add your own publication by <a href="https://github.com/krassowski/complex-upset/edit/master/README.md">suggesting an edit</a>.</p>
+<p>The list is not meant to be exhaustive, but representative of applications to different fields, and of different usage ideas. You are welcome to add your own publication by <a href="https://github.com/krassowski/complex-upset/edit/master/README.md" class="external-link">suggesting an edit</a>.</p>
 </div>
-<div id="testing" class="section level2">
-<h2 class="hasAnchor">
-<a href="#testing" class="anchor"></a>Testing</h2>
-<p>The unit tests are run with testhat, and the visual “doppelganger” tests use vdiffr.</p>
+<div class="section level2">
+<h2 id="testing">Testing<a class="anchor" aria-label="anchor" href="#testing"></a>
+</h2>
+<p>The unit tests are run with <code>testhat</code>, and the visual “doppelganger” tests use <code>vdiffr</code>.</p>
 <p>The test cases for visual tests are auto-generated from the examples in the documentation; after changing or adding an example, please run:</p>
 <ul>
 <li>
@@ -192,67 +196,71 @@
 <code>scripts/manage_visual_tests.sh</code> to validate the generated images.</li>
 </ul>
 </div>
-<div id="acknowledgments" class="section level2">
-<h2 class="hasAnchor">
-<a href="#acknowledgments" class="anchor"></a>Acknowledgments</h2>
-<p>Originally developed in course of a DPhil programme in Women’s &amp; Reproductive Health at <a href="https://github.com/OxfordNuffieldWRH">OxfordNuffieldWRH</a>.</p>
+<div class="section level2">
+<h2 id="acknowledgements">Acknowledgements<a class="anchor" aria-label="anchor" href="#acknowledgements"></a>
+</h2>
+<p>Originally developed in course of a DPhil programme in Women’s &amp; Reproductive Health at <a href="https://github.com/OxfordNuffieldWRH" class="external-link">OxfordNuffieldWRH</a>.</p>
 </div>
 </div>
   </div>
 
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <div class="links">
-<h2>Links</h2>
+<h2 data-toc-skip>Links</h2>
 <ul class="list-unstyled">
-<li>Download from CRAN at <br><a href="https://cloud.r-project.org/package=ComplexUpset">https://​cloud.r-project.org/​package=ComplexUpset</a>
-</li>
-<li>Browse source code at <br><a href="https://github.com/krassowski/complex-upset/">https://​github.com/​krassowski/​complex-upset/​</a>
-</li>
-<li>Report a bug at <br><a href="https://github.com/krassowski/complex-upset/issues">https://​github.com/​krassowski/​complex-upset/​issues</a>
-</li>
-</ul>
-</div>
-<div class="license">
-<h2>License</h2>
-<ul class="list-unstyled">
-<li>
-<a href="https://opensource.org/licenses/mit-license.php">MIT</a> + file <a href="LICENSE-text.html">LICENSE</a>
-</li>
-</ul>
-</div>
-<div class="citation">
-<h2>Citation</h2>
-<ul class="list-unstyled">
-<li><a href="authors.html">Citing ComplexUpset</a></li>
-</ul>
-</div>
-<div class="developers">
-<h2>Developers</h2>
-<ul class="list-unstyled">
-<li>Michał Krassowski <br><small class="roles"> Author, maintainer </small> <a href="https://orcid.org/0000-0002-9638-7785" target="orcid.widget" aria-label="ORCID"><span class="fab fa-orcid orcid" aria-hidden="true"></span></a> </li>
+<li><a href="https://cloud.r-project.org/package=ComplexUpset" class="external-link">View on CRAN</a></li>
+<li><a href="https://github.com/krassowski/complex-upset/" class="external-link">Browse source code</a></li>
+<li><a href="https://github.com/krassowski/complex-upset/issues" class="external-link">Report a bug</a></li>
 </ul>
 </div>
 
-  <div class="dev-status">
-<h2>Dev status</h2>
+<div class="license">
+<h2 data-toc-skip>License</h2>
 <ul class="list-unstyled">
-<li><a href="https://github.com/krassowski/complex-upset/actions?query=workflow%3Atest"><img src="https://github.com/krassowski/complex-upset/workflows/test/badge.svg" alt="test"></a></li>
-<li><a href="https://codecov.io/gh/krassowski/complex-upset"><img src="https://codecov.io/gh/krassowski/complex-upset/branch/master/graph/badge.svg" alt="codecov"></a></li>
-<li><a href="https://CRAN.R-project.org/package=ComplexUpset"><img src="https://www.r-pkg.org/badges/version/ComplexUpset?color=blue" alt="CRAN_version"></a></li>
-<li><a href="https://anaconda.org/conda-forge/r-complexupset"><img src="https://img.shields.io/conda/vn/conda-forge/r-complexupset.svg" alt="Conda version"></a></li>
-<li><a href="https://zenodo.org/badge/latestdoi/236336935"><img src="https://zenodo.org/badge/236336935.svg" alt="DOI"></a></li>
+<li>
+<a href="https://opensource.org/licenses/mit-license.php" class="external-link">MIT</a> + file <a href="LICENSE-text.html">LICENSE</a>
+</li>
 </ul>
 </div>
+
+
+<div class="citation">
+<h2 data-toc-skip>Citation</h2>
+<ul class="list-unstyled">
+<li><a href="authors.html#citation">Citing ComplexUpset</a></li>
+</ul>
 </div>
+
+<div class="developers">
+<h2 data-toc-skip>Developers</h2>
+<ul class="list-unstyled">
+<li>Michał Krassowski <br><small class="roles"> Author, maintainer </small> <a href="https://orcid.org/0000-0002-9638-7785" target="orcid.widget" aria-label="ORCID" class="external-link"><span class="fab fa-orcid orcid" aria-hidden="true"></span></a> </li>
+</ul>
+</div>
+
+<div class="dev-status">
+<h2 data-toc-skip>Dev status</h2>
+<ul class="list-unstyled">
+<li><a href="https://github.com/krassowski/complex-upset/actions?query=workflow%3Atest" class="external-link"><img src="https://github.com/krassowski/complex-upset/workflows/test/badge.svg" alt="test"></a></li>
+<li><a href="https://app.codecov.io/gh/krassowski/complex-upset" class="external-link"><img src="https://codecov.io/gh/krassowski/complex-upset/branch/master/graph/badge.svg" alt="codecov"></a></li>
+<li><a href="https://CRAN.R-project.org/package=ComplexUpset" class="external-link"><img src="https://www.r-pkg.org/badges/version/ComplexUpset?color=blue" alt="CRAN_version"></a></li>
+<li><a href="https://anaconda.org/conda-forge/r-complexupset" class="external-link"><img src="https://img.shields.io/conda/vn/conda-forge/r-complexupset.svg" alt="Conda version"></a></li>
+<li><a href="https://zenodo.org/badge/latestdoi/236336935" class="external-link"><img src="https://zenodo.org/badge/236336935.svg" alt="DOI"></a></li>
+</ul>
+</div>
+
+  </div>
 </div>
 
 
       <footer><div class="copyright">
-  <p>Developed by Michał Krassowski.</p>
+  <p></p>
+<p>Developed by Michał Krassowski.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.9000.</p>
+  <p></p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
 </div>
 
       </footer>
@@ -260,6 +268,8 @@
 
   
 
+
+  
 
   </body>
 </html>
