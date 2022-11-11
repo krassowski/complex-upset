@@ -196,7 +196,7 @@ matrix_background_stripes = function(data, stripes, orient='horizontal') {
 #' @param colors a vector of colors to repeat as many times as needed for the fill of stripes, or a named vector specifying colors for values of the variable mapped to the color aesthetics in the mapping argument
 #' @param data the dataset describing the sets with a column named `set` and any other columns as needed for mapping
 #' @export
-upset_stripes = function(mapping=aes(), geom=geom_segment(linewidth=7), colors=c('white', 'grey95'), data=NULL) {
+upset_stripes = function(mapping=aes(), geom=geom_segment(size=7), colors=c('white', 'grey95'), data=NULL) {
     stripes = list(
         mapping=mapping,
         geom=geom,
@@ -962,7 +962,7 @@ upset = function(
 
     mode = solve_mode(mode)
 
-    if (class(base_annotations) == 'character') {
+    if (inherits(base_annotations, 'character')) {
         if (base_annotations != 'auto') {
             stop('Unsupported value for `base_annotations`: provide a named list, or `"auto"`')
         } else {
@@ -973,7 +973,7 @@ upset = function(
   }
 
   # for backwards compatibility pre 1.2
-  if (class(stripes) != 'upset_stripes') {
+  if (!inherits(stripes, 'upset_stripes')) {
       stripes = upset_stripes(colors=stripes)
   }
 

@@ -6,7 +6,7 @@
 \usage{
 upset_stripes(
   mapping = aes(),
-  geom = geom_segment(linewidth = 7),
+  geom = geom_segment(size = 7),
   colors = c("white", "grey95"),
   data = NULL
 )
