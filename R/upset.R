@@ -879,16 +879,19 @@ scale_if_missing = function(annotation, axis, scale) {
 #' @param geom a geom_point call, allowing to specify parameters (e.g. `geom=geom_point(shape='square')`)
 #' @param segment a geom_segment call, allowing to specify parameters (e.g. `segment=geom_segment(linetype='dotted')`)
 #' @param outline_color a named list with two colors for outlines of active and inactive dots
+#' @param segment_outline whether to show an outline for the segment connector; if you use it with custom color scale parametrize it with `na.value='transparent'`.
 #' @export
 intersection_matrix = function(
     geom=geom_point(size=3),
     segment=geom_segment(),
-    outline_color=list(active='black', inactive='grey70')
+    outline_color=list(active='black', inactive='grey70'),
+    segment_outline=FALSE
 ) {
     plot = ggplot(mapping=aes(x=intersection, y=group))
     plot$geom = geom
     plot$segment = segment
     plot$outline_color = outline_color
+    plot$segment_outline = segment_outline
     plot
 }
 
@@ -1020,6 +1023,22 @@ upset = function(
       dot_size = 1
   }
 
+  geom_layers = NULL
+
+  if (intersections_matrix$segment_outline) {
+    geom_layers = list(intersections_matrix$segment * geom_segment(
+        aes(
+          x=intersection,
+          xend=intersection,
+          y=segment_end(matrix_frame, data, intersection, head),
+          yend=segment_end(matrix_frame, data, intersection, tail),
+        ),
+        na.rm=TRUE,
+        color=intersections_matrix$outline_color$active,
+        linewidth=as.numeric(intersections_matrix$segment_outline)
+    ))
+  }
+
   geom_layers = c(
     # the dots outline
     list(intersections_matrix$geom * geom_point(
@@ -1033,7 +1052,15 @@ upset = function(
     )),
     # the dot
     list(intersections_matrix$geom * geom_point(
-        aes(color=value),
+        aes(color=ifelse(value, NA, value)),
+        size=dot_size,
+        na.rm=TRUE
+    )),
+    # outline of segment
+    geom_layers,
+    # the dot
+    list(intersections_matrix$geom * geom_point(
+        aes(color=ifelse(value, value, NA)),
         size=dot_size,
         na.rm=TRUE
     )),
@@ -1089,7 +1116,7 @@ upset = function(
       y_scale = NULL
   }
 
-  matrix_default_colors = list('TRUE'='black', 'FALSE'='grey85')
+  matrix_default_colors = list('TRUE'='black', 'FALSE'='grey85', test='blue')
   matrix_guide = "none"
   matrix_breaks = names(matrix_default_colors)
   if (!is.null(names(stripes$colors))) {
@@ -1112,7 +1139,8 @@ upset = function(
           scale_color_manual(
               values=matrix_default_colors,
               guide=matrix_guide,
-              breaks=matrix_breaks
+              breaks=matrix_breaks,
+              na.value='transparent'
           )
     )
     + themes$intersections_matrix
