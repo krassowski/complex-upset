@@ -4,7 +4,7 @@
 #' @importFrom ggplot2 geom_text geom_bar geom_col geom_point geom_segment layer position_stack stat_summary
 #' @importFrom ggplot2 is.ggplot %+% sym expr ggproto Stat quo_name
 #' @importFrom scales log_breaks trans_new
-#' @importFrom patchwork plot_layout plot_spacer guide_area wrap_elements
+#' @importFrom patchwork plot_layout guide_area wrap_elements area
 NULL
 
 globalVariables(c(
@@ -714,12 +714,14 @@ reverse_log_trans = function(base=10) {
 #' Prepare layers for sets sizes plot
 #'
 #' @param geom a geom to use
-#' @param position on which side of the plot should the set sizes be displayed ('left' or 'right')
+#' @param position on which side of the plot should the set sizes be displayed:
+#     - `'left'` (default) or `'right'` with upset orientation 'x',
+#     - `'top'` (default) or 'bottom' with upset orientation 'y'
 #' @param mapping additional aesthetics
 #' @param filter_intersections whether the intersections filters (e.g. `n_intersections` or `min_size`) should influence displayed set sizes
 #' @export
-upset_set_size = function(mapping=aes(), geom=geom_bar(width=0.6), position='left', filter_intersections=FALSE) {
-    check_argument(position, allowed=c('left', 'right'), description='position')
+upset_set_size = function(mapping=aes(), geom=geom_bar(width=0.6), position='auto', filter_intersections=FALSE) {
+    check_argument(position, allowed=c('left', 'right', 'top', 'bottom', 'auto'), description='position')
 
     annotation = convert_annotation(
         geom=list(geom),
@@ -915,6 +917,19 @@ solve_mode = function (mode) {
     )
 }
 
+scaled_area = function(t, l, r, b, scale=1) {
+    #area(t=scale*t, l=scale*l, r=scale*r, b=scale*b)
+    len <- max(length(t), length(l), length(b), length(r))
+    one_area <- list(
+      t = rep_len(t, len),
+      l = rep_len(l, len),
+      b = rep_len(b, len),
+      r = rep_len(r, len)
+    )
+    class(one_area) <- 'patch_area'
+    one_area
+}
+
 #' Compose an UpSet plot
 #' @inheritParams upset_data
 #' @param name the label shown below the intersection matrix
@@ -952,13 +967,17 @@ upset = function(
   mode='distinct',
   queries=list(),
   guides=NULL,
+  orientation='x',
   encode_sets=TRUE,
   matrix=intersection_matrix(),
   ...
 ) {
-  if (!is.null(guides)) {
-     check_argument(guides, allowed = c('keep', 'collect', 'over'), 'guides')
-  }
+    right_or_top = c('right', 'top')
+    check_argument(orientation, allowed = c('x', 'y'), 'orientation')
+
+    if (!is.null(guides)) {
+        check_argument(guides, allowed = c('keep', 'collect', 'over'), 'guides')
+    }
 
     mode = solve_mode(mode)
 
@@ -988,6 +1007,7 @@ upset = function(
 
   sets_limits = data$sorted$groups[data$sorted$groups %in% data$plot_sets_subset]
 
+    # TODO allow 'none' to hide as well
   show_overall_sizes = !(inherits(set_sizes, 'logical') && set_sizes == FALSE)
 
   matrix_intersect_queries = intersect_queries(queries_for(queries, 'intersections_matrix'), data)
@@ -1010,6 +1030,7 @@ upset = function(
   query_matrix = query_matrix[query_matrix$value == TRUE, ]
 
   matrix_frame = data$matrix_frame[data$matrix_frame$group %in% data$plot_sets_subset, ]
+
   intersections_matrix = matrix %+% matrix_frame
 
   point_geom = intersections_matrix$geom
@@ -1119,14 +1140,51 @@ upset = function(
   )
 
   rows = list()
+  areas = list()
 
-  if (show_overall_sizes) {
-    is_set_size_on_the_right = !is.null(set_sizes$position) && set_sizes$position == 'right'
+    if (show_overall_sizes) {
+        if (is.null(set_sizes$position) || set_sizes$position == 'auto') {
+            if (orientation == 'x') {
+                set_sizes$position = 'left'
+            } else {
+                set_sizes$position = 'top'
+            }
+        }
   }
 
-  annotation_number = 1
+    if (show_overall_sizes) {
+        if (set_sizes$position %in% c('right', 'left') && orientation == 'y') {
+            stop(paste0(
+                "set sizes position '",
+                set_sizes$position,
+                "' is not applicable for `orientation='y'`"
+            ))
+        }
+        if (set_sizes$position %in% c('top', 'bottom') && orientation == 'x') {
+            stop(paste0(
+                "set sizes position '",
+                set_sizes$position,
+                "' is not applicable for `orientation='x'`"
+            ))
+        }
 
-  for (name in names(annotations)) {
+        if (set_sizes$position == 'right') {
+            width_ratio = 1 - width_ratio
+        }
+
+    }
+
+    annotations_names = names(annotations)
+
+    if (orientation == 'x') {
+        annotation_number = 1
+    } else {
+        # leave space for matrix
+        annotation_number = 1 + 10*width_ratio
+        annotations_names = rev(annotations_names)
+    }
+
+  for (name in annotations_names) {
     annotation = annotations[[name]]
 
     geoms = annotation$geom
@@ -1174,16 +1232,6 @@ upset = function(
       selected_theme = themes[['default']]
     }
 
-    if (!is.null(guides) && guides == 'over' && ceiling(length(annotations) / 2) == annotation_number) {
-        spacer = guide_area()
-    } else {
-        spacer = plot_spacer()
-    }
-
-    if (show_overall_sizes && !is_set_size_on_the_right) {
-        rows[[length(rows) + 1]] = spacer
-    }
-
     if (is.ggplot(annotation)) {
         if (is.null(annotation$mapping$x)) {
             annotation = annotation + aes(x=intersection)
@@ -1220,11 +1268,29 @@ upset = function(
       + scale_intersections
     )
 
-    if (show_overall_sizes && is_set_size_on_the_right) {
-        rows[[length(rows) + 1]] = spacer
+    if (show_overall_sizes) {
+        if (set_sizes$position == 'right') {
+            row_area = scaled_area(l=1, r=width_ratio * 10, t=annotation_number, b=annotation_number+1)
+        }
+        if (set_sizes$position == 'bottom') {
+            row_area = scaled_area(l=annotation_number, r=annotation_number+1, t=1, b=10 * height_ratio)
+        }
+        if (set_sizes$position == 'left') {
+            row_area = scaled_area(l=1 + width_ratio * 10, r=10, t=annotation_number, b=annotation_number+1)
+        }
+        if (set_sizes$position == 'top') {
+            row_area = scaled_area(l=annotation_number, r=annotation_number+1, t=1 + 10 * height_ratio, b=10)
+        }
+    } else {
+        if (orientation == 'x') {
+            row_area = scaled_area(l=1, r=10, t=annotation_number, b=annotation_number + 1)
+        } else {
+            row_area = scaled_area(l=annotation_number, r=annotation_number+1, t=1, b=10)
+        }
     }
+    areas[[length(areas) + 1]] = row_area
 
-    annotation_number =  annotation_number + 1
+    annotation_number =  annotation_number + 2
   }
 
   if (show_overall_sizes) {
@@ -1253,7 +1319,7 @@ upset = function(
           geom = set_sizes$geom
       }
 
-      if (is_set_size_on_the_right) {
+      if (set_sizes$position %in% c('right', 'top')) {
           default_scale = scale_y_continuous()
       } else {
           default_scale = scale_y_reverse()
@@ -1270,62 +1336,87 @@ upset = function(
         + aes(x=group)
         + themes$overall_sizes
         + do.call(theme, set_sizes$theme)
-        + coord_flip()
-        + scale_x_discrete(limits=sets_limits)
-        + scale_if_missing(set_sizes, axis='y', scale=default_scale)
-        + scale_if_missing(
-            set_sizes,
-            'colour',
-            scale_color_manual(
-              values=matrix_default_colors,
-              guide="none"
-            )
-        )
       )
 
-      if (is_set_size_on_the_right) {
-          matrix_row = list(intersections_matrix, overall_sizes)
+      if (orientation == 'x') {
+          overall_sizes = overall_sizes + coord_flip()
       } else {
-          # on the left by default
-          matrix_row = list(overall_sizes, intersections_matrix)
-      }
-  } else {
-      matrix_row = list(intersections_matrix)
-  }
-
-  if (length(rows)) {
-    annotations_plots = Reduce(f='+', rows)
-    matrix_row = c(list(annotations_plots), matrix_row)
-  } else {
-    annotations_plots = list()
-  }
-
-  plot = Reduce(f='+', matrix_row)
-
-  if (show_overall_sizes) {
-      if (is_set_size_on_the_right) {
-          width_ratio = 1 - width_ratio
+          # no-op
       }
 
-      width_ratios = c(width_ratio, 1 - width_ratio)
-  } else {
-      width_ratios = 1
-  }
+        overall_sizes = (
+            overall_sizes
+            + scale_x_discrete(limits=sets_limits)
+            + scale_if_missing(set_sizes, axis='y', scale=default_scale)
+            + scale_if_missing(
+                set_sizes,
+                'colour',
+                scale_color_manual(
+                  values=matrix_default_colors,
+                  guide="none"
+                )
+            )
+        )
 
-  if (!is.null(guides) && guides == 'over') {
-      guides = 'collect'  # guide_area() works with collect only
-  }
+    }
 
-  plot = plot + plot_layout(
-    widths=width_ratios,
-    ncol=1 + ifelse(show_overall_sizes, 1, 0),
-    nrow=length(annotations) + 1,
-    heights=c(
-      rep(1, length(annotations)),
-      height_ratio
-    ),
-    guides=guides
-  )
+    if (show_overall_sizes) {
+        rows[[length(rows) + 1]] = overall_sizes
+        if (set_sizes$position == 'right') {
+            sizes_area = scaled_area(l=1 + 10 * width_ratio, r=1+10, t=annotation_number, b=annotation_number + height_ratio)
+            matrix_area = scaled_area(l=1, r=10 * width_ratio, t=annotation_number, b=annotation_number + height_ratio)
+        }
+        if (set_sizes$position == 'bottom') {
+            sizes_area = scaled_area(l=1, r=10 * width_ratio, t=1 + 10 * height_ratio, b=10)
+            matrix_area = scaled_area(l=1, r=10 * width_ratio, t=1, b=10 * height_ratio)
+        }
+        if (set_sizes$position == 'left') {
+            sizes_area = scaled_area(l=1, r=10 * width_ratio, t=annotation_number, b=annotation_number + height_ratio)
+            matrix_area = scaled_area(l=1 + 10 * width_ratio, r=10, t=annotation_number, b=annotation_number + height_ratio)
+        }
+        if (set_sizes$position == 'top') {
+            sizes_area = scaled_area(l=1, r=10 * width_ratio, t=1, b=10 * height_ratio)
+            matrix_area = scaled_area(l=1, r=10 * width_ratio, t=1 + 10 * height_ratio, b=10)
+        }
+        areas[[length(areas) + 1]] = sizes_area
+
+    } else {
+        if (orientation == 'x') {
+            matrix_area = scaled_area(l=1, r=10, t=annotation_number, b=annotation_number + 1)
+        } else {
+            matrix_area = scaled_area(l=annotation_number, r=annotation_number+1, t=1, b=10)
+        }
+    }
+    rows[[length(rows) + 1]] = intersections_matrix
+    areas[[length(areas) + 1]] = matrix_area
+
+    if (!is.null(guides) && guides == 'over') {
+        guides = 'collect'  # guide_area() works with collect only
+
+        if (set_sizes$position == 'right') {
+            guides_area = scaled_area(l=1 + 10 * width_ratio, r=10, t=1, b=annotation_number)
+        }
+        if (set_sizes$position == 'bottom') {
+            guides_area = scaled_area(l=10 * width_ratio, r=annotation_number - 1, t=1 + 10 * height_ratio, b=10)
+        }
+        if (set_sizes$position == 'left') {
+            guides_area = scaled_area(l=1, r=10 * width_ratio, t=1, b=annotation_number)
+        }
+        if (set_sizes$position == 'top') {
+            guides_area = scaled_area(l=10 * width_ratio, r=annotation_number - 1, t=1, b=10 * height_ratio)
+        }
+
+        # TODO: change API to allow customizing it with a custom plot
+        rows[[length(rows) + 1]] = guide_area()
+        areas[[length(areas) + 1]] = guides_area
+    }
+
+    plot = Reduce(f='+', rows)
+
+    plot = plot + plot_layout(
+        guides=guides,
+        design=Reduce(c, areas)
+    )
 
   if (wrap) {
     wrap_elements(plot)
