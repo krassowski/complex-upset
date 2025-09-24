@@ -1091,8 +1091,12 @@ upset = function(
       user_y_scale = scale_y_discrete()
   } else {
       user_y_scale = user_y_scale[[1]]
-      user_y_scale$limits = y_scale$limits
-      user_y_scale$labels = y_scale$labels
+      if (is.null(user_y_scale$limits)) {
+          user_y_scale$limits = y_scale$limits
+      }
+      if (length(user_y_scale$labels) == 0) {
+          user_y_scale$labels = y_scale$labels
+      }
       y_scale = NULL
   }
 
