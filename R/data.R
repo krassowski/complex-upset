@@ -510,9 +510,16 @@ upset_data = function(
             unique(unlist(intersections_members)),
             NOT_IN_KNOWN_SETS
         )
+        provided_intersection_sizes = sapply(intersections_members, length)
+        provided_intersection_sizes[intersections_members == NOT_IN_KNOWN_SETS] = 0
 
         # TODO: this is slow and memory hungry; ideally we would only get the relevant intersection straight away!
-        possible_intersections = all_intersections_matrix(intersect, NULL, 0, Inf)
+        possible_intersections = all_intersections_matrix(
+          intersect,
+          NULL,
+          min(provided_intersection_sizes),
+          max(provided_intersection_sizes)
+        )
 
         relevant_intersections = rownames(possible_intersections[
             rowSums(possible_intersections[, sets_from_manual_intersections]) > 0,
