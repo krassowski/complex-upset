@@ -20,7 +20,6 @@ Suggests:
     covr,
     tibble,
     ggplot2movies,
-    vdiffr,
     jsonlite,
     data.table
 Imports:
