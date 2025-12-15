@@ -2,7 +2,7 @@
 #' @importFrom ggplot2 ggplot aes aes_string coord_flip theme xlab ylab guide_legend
 #' @importFrom ggplot2 scale_color_manual scale_x_discrete scale_y_discrete scale_y_reverse scale_y_continuous
 #' @importFrom ggplot2 geom_text geom_bar geom_col geom_point geom_segment layer position_stack stat_summary
-#' @importFrom ggplot2 is.ggplot %+% sym expr ggproto Stat quo_name
+#' @importFrom ggplot2 is.ggplot sym expr ggproto Stat quo_name
 #' @importFrom scales log_breaks trans_new
 #' @importFrom patchwork plot_layout plot_spacer guide_area wrap_elements
 NULL
@@ -26,39 +26,35 @@ upset_themes <- NULL
 
 new_upset_themes <- function() {
   list(
-    intersections_matrix=list(
-      theme_minimal(),
+    intersections_matrix=
+      theme_minimal() +
       theme(
         # hide intersections
         axis.text.x=element_blank(),
         axis.ticks.x=element_blank(),
         # hide group title
         axis.title.y=element_blank()
-      )
     ),
-    'Intersection size'=list(
-      theme_minimal(),
+    'Intersection size'=
+      theme_minimal() +
       theme(
         axis.text.x=element_blank(),
         axis.title.x=element_blank()
-      )
     ),
-    overall_sizes=list(
-      theme_minimal(),
+    overall_sizes=
+      theme_minimal()+
       theme(
         # hide groups
         axis.title.y=element_blank(),
         axis.text.y=element_blank(),
         axis.ticks.y=element_blank()
-      )
     ),
-    default=list(
-      theme_minimal(),
+    default=
+      theme_minimal()+
       theme(
         axis.text.x=element_blank(),
         axis.title.x=element_blank()
       )
-    )
   )
 }
 
@@ -1017,7 +1013,7 @@ upset = function(
   query_matrix = query_matrix[query_matrix$value == TRUE, ]
 
   matrix_frame = data$matrix_frame[data$matrix_frame$group %in% data$plot_sets_subset, ]
-  intersections_matrix = matrix %+% matrix_frame
+  intersections_matrix = matrix + matrix_frame
 
   point_geom = intersections_matrix$geom
 
@@ -1195,7 +1191,7 @@ upset = function(
         if (is.null(annotation$mapping$x)) {
             annotation = annotation + aes(x=intersection)
         }
-        annotation_plot = annotation %+% annotation_data
+        annotation_plot = annotation + annotation_data
         user_theme = annotation_plot$theme
         annotation_plot = annotation_plot + selected_theme + do.call(theme, user_theme)
 
@@ -1273,7 +1269,7 @@ upset = function(
       )
 
       overall_sizes = (
-        set_sizes %+% set_sizes_data
+        set_sizes + set_sizes_data
         + aes(x=group)
         + themes$overall_sizes
         + do.call(theme, set_sizes$theme)
